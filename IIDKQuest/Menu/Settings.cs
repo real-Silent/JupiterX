@@ -57,7 +57,7 @@ namespace JupiterX
 
         public static void Players()
         {
-            buttonsType = 14; // 15
+            buttonsType = 15; // 15
             pageNumber = 0;
 
             List<ButtonInfo> buttons = new List<ButtonInfo> {

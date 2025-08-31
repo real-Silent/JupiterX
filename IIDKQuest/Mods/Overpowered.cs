@@ -231,7 +231,7 @@ namespace JupiterX.Mods
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     if (who)
                     {
-                        //Utility.BetaBanAll(who.photonView.Owner.UserId);
+                        Utility.BetaBanAll(who.photonView.Owner.UserId);
                     }
                 }
             }

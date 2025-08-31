@@ -26,7 +26,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Overpowered", method =() => Settings.MovePage(11), isTogglable = false, toolTip = "Opens the overpowered page for the menu."},
                 new ButtonInfo { buttonText = "Experimental", method =() => Settings.MovePage(12), isTogglable = false, toolTip = "Opens the expermental mods page for the menu."},
                 new ButtonInfo { buttonText = "Master", method =() => Settings.MovePage(13), isTogglable = false, toolTip = "Opens the master mods page for the menu."},
-                //new ButtonInfo { buttonText = "Soundboard", method =() => Settings.Soundboard(), isTogglable = false, toolTip = "Opens the soundboard page for the menu."},
+                new ButtonInfo { buttonText = "Soundboard", method =() => Settings.Soundboard(), isTogglable = false, toolTip = "Opens the soundboard page for the menu."},
                 new ButtonInfo { buttonText = "Player", method =() => Settings.Players(), isTogglable = false, toolTip = "Opens the player mods page for the menu."},
             },
 
@@ -208,9 +208,8 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = false, toolTip = "Spazzes out the targets that are in forest."  },
 
-                // not releasing -- put on beta -- removed code
-               // new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room."  },
-               // new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at."  },
+                new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room."  },
+                new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at."  },
 
                 new ButtonInfo { buttonText = "Crash All [<color=cyan>RT</color>]", method =() => Overpowered.CrashAll(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash All V2 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV2(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
@@ -286,9 +285,9 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Very Fast Lucy", method =() => Utility.BetaSetLucySpeed(15f), isTogglable = true, toolTip = "Changes Lucys speed."  },
             },
 
-           // new ButtonInfo[] { // Soundboard | 14
-            //    new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
-            //},
+            new ButtonInfo[] { // Soundboard | 14
+                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+            },
 
             new ButtonInfo[] { // Players | 15
                 new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
