@@ -1,6 +1,7 @@
 ﻿using easyInputs;
 using JupiterX.Menu;
 using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -91,18 +92,29 @@ namespace JupiterX.Mods
             }
         }
 
-        public static void NoClip()
+        private static List<Collider> colliders = new List<Collider>();
+        private static bool collidersCached = false;
+        private static bool lastState = false;
+
+        public static void NoClip(bool enabled)
         {
-            foreach (MeshCollider col in GameObject.FindObjectsOfType<MeshCollider>())
+            // Cache colliders only once
+            if (!collidersCached)
             {
-                if (Utility.RTrigger)
+                colliders.AddRange(Object.FindObjectsOfType<Collider>()); // include inactive too
+                collidersCached = true;
+            }
+
+            // Only update if the state actually changes
+            if (lastState != enabled)
+            {
+                foreach (var col in colliders)
                 {
-                    col.enabled = false;
+                    if (col != null)
+                        col.enabled = !enabled;
                 }
-                else
-                {
-                    col.enabled = true;
-                }
+
+                lastState = enabled;
             }
         }
 

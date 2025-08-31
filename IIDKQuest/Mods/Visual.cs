@@ -123,6 +123,7 @@ namespace JupiterX.Mods
             }
         }
 
+        static string CProps;
         public static void NameTagESP()
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
@@ -142,7 +143,9 @@ namespace JupiterX.Mods
                     label.anchor = TextAnchor.MiddleCenter;
                     label.alignment = TextAlignment.Center;
 
-                    label.text = $"Name: {rig.photonView.Owner.NickName}\nUserId: {rig.photonView.Owner.UserId}\nMaster: {rig.photonView.Owner.IsMasterClient}\nActorNumber: {rig.photonView.Owner.ActorNumber}\nCustom Props: {rig.photonView.Controller.CustomProperties.Values.ToString()}";
+                    string platform = rig.concatStringOfCosmeticsAllowed.Contains("FIRST LOGIN") ? "QUEST" : "PCVR"; // "PCVR" : "QUEST";
+
+                    label.text = $"Name: {rig.photonView.Owner.NickName}\nUserId: {rig.photonView.Owner.UserId}\nMaster: {rig.photonView.Owner.IsMasterClient}\nActorNumber: {rig.photonView.Owner.ActorNumber}\nPlatform: {platform}";
                     textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0, 1f, 0);
                     textHolder.transform.LookAt(Camera.main.transform.position);
                     textHolder.transform.Rotate(0f, 180f, 0f);
@@ -154,10 +157,12 @@ namespace JupiterX.Mods
 
         public static void Tracers()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            VRRig[] theRigs = GorillaParent.instance.vrrigs.ToArray();
+            foreach (VRRig rig in theRigs)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                for (int i = 0; i < theRigs.Length; i++)
                 {
+                    theRigs[i] = Utility.GetAllVRRigsWithoutMe(rig);
                     GameObject holder;
                     LineRenderer tracer;
                     bool isTagged = rig.mainSkin.material.name.Contains("fected");

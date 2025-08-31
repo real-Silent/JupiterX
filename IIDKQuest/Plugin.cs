@@ -11,8 +11,6 @@ using TMPro;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(Plugin), "JupiterX", "1.0.0", "Silent")]
-[assembly: MelonGame()]
 namespace JupiterX
 {
     internal class Plugin : MelonMod
@@ -155,6 +153,11 @@ namespace JupiterX
             else
             {
                 StumpText.SetActive(false);
+            }
+
+            if (PhotonNetwork.InRoom)
+            {
+                Utility.DoRGBLucyPlz();
             }
         }
 

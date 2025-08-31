@@ -93,6 +93,20 @@ namespace JupiterX
             }
         }
 
+        public static void SendNoti(string notiText)
+        {
+            if (!Settings.disableNotis)
+            {
+                if (Time.time - normtime > cooldown)
+                {
+                    normtime = Time.time;
+                    notiText = $"{notiText}{Environment.NewLine}";
+                    Text.text += notiText;
+                    PreviousNotifi = notiText;
+                    Text.color = Color.white;
+                }
+            }
+        }
 
 
         public static void SendNotification(string colortt, string Type, string NotificationText)

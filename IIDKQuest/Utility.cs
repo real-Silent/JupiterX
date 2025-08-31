@@ -2,6 +2,7 @@
 using ExitGames.Client.Photon;
 using GorillaNetworking;
 using Harmony;
+using HarmonyLib;
 using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
@@ -18,6 +19,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.UI;
 
 namespace JupiterX
@@ -44,8 +46,12 @@ namespace JupiterX
 
                 if (Menu.Main.GetGunInput(true))
                 {
-                    Plugin.StumpText.transform.position = NewPointer.transform.position;
+                    Plugin.StumpText.transform.position = NewPointer.transform.position + new Vector3(0, 0.7f, 0);
                 }
+            }
+            else
+            {
+                Main.DestroyGun();
             }
         }
 
@@ -241,6 +247,17 @@ namespace JupiterX
             }
         }
 
+        private static readonly System.Random _random = new System.Random();
+        private const string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        public static string Generate(int length)
+        {
+            char[] buffer = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                buffer[i] = _chars[_random.Next(_chars.Length)];
+            }
+            return new string(buffer);
+        }
         public static GorillaTagManager BetaDoSmthWithTag(int wat, Photon.Realtime.Player whoToTag = null)
         {
             GorillaTagManager tagman = GorillaGameManager.instance.GetComponent<GorillaTagManager>();
@@ -347,6 +364,12 @@ namespace JupiterX
             GorillaNot.instance.OnMasterClientSwitched(newMaster);
         }
 
+        public static void MakeMeMaster()
+        {
+            if (Utility.IsMaster() == false)
+                Utility.SetMaster(Utility.MyPlayer());
+        }
+
 
         static GameObject sphereeR = null;
         static GameObject sphereeL = null;
@@ -361,10 +384,9 @@ namespace JupiterX
                     sphereeL.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
                     sphereeL.transform.SetParent(Utility.LeftHandTransform(), false);
                     sphereeL.transform.localRotation = Quaternion.identity;
-                    sphereeL.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+                    sphereeL.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                     sphereeL.GetComponent<Renderer>().material.color = Color.grey;
                     GameObject.Destroy(sphereeL.GetComponent<Collider>());
-                    GameObject.Destroy(sphereeL.GetComponent<SphereCollider>());
                 }
 
                 if (sphereeR == null)
@@ -373,10 +395,9 @@ namespace JupiterX
                     sphereeR.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
                     sphereeR.transform.SetParent(Utility.RightHandTransform(), false);
                     sphereeR.transform.localRotation = Quaternion.identity;
-                    sphereeR.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+                    sphereeR.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                     sphereeR.GetComponent<Renderer>().material.color = Color.grey;
                     GameObject.Destroy(sphereeR.GetComponent<Collider>());
-                    GameObject.Destroy(sphereeR.GetComponent<SphereCollider>());
                 }
             }
             else
@@ -424,6 +445,21 @@ namespace JupiterX
         static string[] RPCNames = { "SetTaggedTime", "UpdatePlayerCosmetics", "RequestCosmetics", "ReportTagRPC" };
         static string[] prefabNames = { "gorillaprefabs/gorillaenemy", "Network Player", "STICKABLE TARGET", "bulletPrefab" };
 
+        public static void SlowPlayer(Photon.Realtime.Player who)
+        {
+            Utility.myVRRig().photonView.RPC("SetTaggedTime", who, null);
+        }
+
+        public static void TagPlayer(Photon.Realtime.Player who)
+        {
+            foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
+            {
+                MakeMeMaster();
+                tagman.AddInfectedPlayer(who);
+                tagman.AddInfectedPlayer(who);
+                tagman.AddInfectedPlayer(who);
+            }
+        }
         public static void BetaCrashPlayer(Photon.Realtime.Player crash)
         {
             myVRRig().photonView.RPC(RPCNames[0], crash, null);
@@ -551,7 +587,6 @@ namespace JupiterX
             return GorillaTagger.Instance.GetComponent<Rigidbody>();
         }
 
-
         public static void BetaAddItemToCart(string cosmeticId)
         {
             CosmeticsController.instance.currentCart.Insert(0, CosmeticsController.instance.GetItemFromDict(cosmeticId));
@@ -565,6 +600,113 @@ namespace JupiterX
         {
             HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             lucy.currentSpeed = speed;
+        }
+
+        private static float lastthing = 0f;
+        public static void SpazLucy()
+        {
+            if (Utility.IsMaster() == false)
+                Utility.SetMaster(Utility.MyPlayer());
+            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            if (Time.time > lastthing)
+            {
+                lucy.timeGongStarted = 0f;
+                lucy.currentState = lucy.currentState == HalloweenGhostChaser.ChaseState.Dormant ? HalloweenGhostChaser.ChaseState.Gong : HalloweenGhostChaser.ChaseState.Dormant;
+                lastthing = Time.time + 0.1f;
+            }
+        }
+
+        public static void LucyOrbitSelf()
+        {
+            Utility.MakeMeMaster();
+            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            if (lucy.currentState == HalloweenGhostChaser.ChaseState.Chasing)
+            {
+                lucy.transform.position = Utility.MainCamera().transform.position + new Vector3(0, 0.9f, 0);
+                lucy.transform.RotateAround(Utility.MainCamera().position, (float)Math.Cos(4));
+            }
+        }
+
+        public static void LucySpazAttack()
+        {
+            if (Utility.IsMaster() == false)
+                Utility.SetMaster(Utility.MyPlayer());
+            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            if (Time.time > lastthing)
+            {
+                if (lucy.currentState != HalloweenGhostChaser.ChaseState.Chasing)
+                { 
+                    lucy.currentState = HalloweenGhostChaser.ChaseState.Chasing;
+                    lucy.currentSpeed = 2f;
+                    lucy.gongDuration = 0f;
+                    lucy.targetPlayer = RigManager.GetRandomPlayer(true);
+                }
+            }
+        }
+
+        public static void GetOwnerShipOfPlayer(Photon.Realtime.Player plr)
+        {
+            VRRig thatGuy = RigManager.GetVRRigFromPlayer(plr);
+            PhotonView plrView = RigManager.GetPhotonViewFromVRRig(thatGuy);
+            plrView.OwnershipTransfer = OwnershipOption.Takeover;
+            plrView.RequestOwnership();
+            plrView.TransferOwnership(MyPlayer());
+        }
+
+        public static void MovePlayerToMe(Photon.Realtime.Player plr)
+        {
+            RigManager.GetVRRigFromPlayer(plr).transform.position = MainTransform().transform.position;
+            RigManager.GetVRRigFromPlayer(plr).transform.rotation = MainTransform().transform.rotation;
+        }
+
+        public static void TpSelfToPlayer(Photon.Realtime.Player plr)
+        {
+            MainTransform().transform.position = RigManager.GetVRRigFromPlayer(plr).headConstraint.transform.position;
+        }
+
+        public static void MakeLucyGoToPlayer(Photon.Realtime.Player plr)
+        {
+            if (Utility.IsMaster() == false)
+                Utility.SetMaster(Utility.MyPlayer());
+            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            lucy.targetPlayer = plr;
+            lucy.transform.position = RigManager.GetVRRigFromPlayer(plr).headConstraint.transform.position;
+        }
+
+        public static void LucyFlingGun()
+        {
+            if (Utility.IsMaster() == false)
+                Utility.SetMaster(Utility.MyPlayer());
+            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            lucy.transform.position = new Vector3(lucy.transform.position.x, 100, lucy.transform.position.z);
+        }
+
+
+        public static void LucyAttackGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.NewPointer;
+                RaycastHit Ray = GunData.Ray;
+
+
+                VRRig who = Ray.collider.GetComponentInParent<VRRig>();
+                if (Main.GetGunInput(true))
+                {
+                    if (Utility.IsMaster() == false)
+                        Utility.SetMaster(Utility.MyPlayer());
+                    HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+                    lucy.currentState = HalloweenGhostChaser.ChaseState.Chasing;
+                    lucy.targetPlayer = RigManager.GetPlayerFromVRRig(who);
+                }
+            }
+            else
+            {
+                if (Main.gunLocked)
+                    Main.gunLocked = false;
+                JupiterX.Menu.Main.DestroyGun();
+            }
         }
 
         public static void MoveLucyGun()
@@ -588,15 +730,78 @@ namespace JupiterX
                 JupiterX.Menu.Main.DestroyGun();
             }
         }
-        public static void BetaSpawnLucy(HalloweenGhostChaser.ChaseState state, bool summon, Color color)
+
+        private static float RGBDelayTime = 0f;
+        private static int currentColorIndex = 0;
+        public static Color DoRGBColor()
         {
+            Color[] colors = new Color[]
+            {
+                Color.red,
+                Color.green,
+                Color.blue,
+                Color.yellow,
+                Color.magenta,
+                Color.cyan
+            };
+            if (Time.time > RGBDelayTime)
+            {
+                RGBDelayTime = Time.time + 0.015f;
+                currentColorIndex = (currentColorIndex + 1) % colors.Length;
+            }
+
+            return colors[currentColorIndex];
+        }
+
+        public static void DoRGBLucyPlz()
+        {
+            if (rgbLucy)
+            {
+                HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+                lucy.defaultColor = DoRGBColor();
+                lucy.summonedColor = DoRGBColor();
+            }
+            else { return; }
+        }
+
+        public static bool rgbLucy = false;
+        public static void BetaSpawnLucy(HalloweenGhostChaser.ChaseState state, bool summon, Color color, bool isRgb = false)
+        {
+            Utility.SetMaster(Utility.MyPlayer());
             GameObject.Find("Global/Halloween Ghost").SetActive(summon);
             HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             lucy.currentState = state;
             lucy.isSummoned = summon;
-            lucy.defaultColor = color;
-            lucy.summonedColor = color;
+            lucy.gongDuration = 0.1f;
+            lucy.summoningDuration = 0.1f; // remove if no work
+
+            if (isRgb) 
+            { 
+                rgbLucy = true; 
+            } 
+            else 
+            { 
+                rgbLucy = false;
+                lucy.defaultColor = color;
+                lucy.summonedColor = color;
+            }
         }
+
+        public static VRRig GetAllVRRigsWithoutMe(VRRig who)
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                {
+                    if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                    {
+                        return rig;
+                    }
+                }
+            }
+            return null;
+        }
+
 
         public static VRRig myVRRig()
         {
@@ -1031,6 +1236,6 @@ namespace JupiterX
                 audioSource.Play();
             }
         }
-        public static string Credits = "GunLib/Saving , Loading Mods : [iiDk]";
+        public static string Credits = "GunLib , Saving/Loading Preferneces , PlayerTab : [iiDk]";
     }
 }

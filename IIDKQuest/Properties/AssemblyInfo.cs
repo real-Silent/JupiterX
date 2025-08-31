@@ -1,6 +1,10 @@
-﻿using System.Reflection;
+﻿using JupiterX;
+using MelonLoader;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
+[assembly: MelonInfo(typeof(Plugin), "JupiterX", "1.0.0", "Silent")]
+[assembly: MelonGame()]
 [assembly: AssemblyTitle("JupiterX")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]

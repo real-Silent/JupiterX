@@ -27,7 +27,7 @@ namespace JupiterX.Mods
 
         public static void LoadSoundboard()
         {
-            buttonsType = 2; // Make this your new buttoninfo[] {} number
+            buttonsType = 14; // Make this your new buttoninfo[] {} number
             pageNumber = 0;
             // Change light to your menu name
             string basePath = Path.Combine("light", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
@@ -39,7 +39,7 @@ namespace JupiterX.Mods
                 Directory.CreateDirectory(basePath);
 
             List<string> enabledSounds = new List<string>();
-            foreach (ButtonInfo binfo in Buttons.buttons[2])
+            foreach (ButtonInfo binfo in Buttons.buttons[14])
             {
                 if (binfo.enabled)
                     enabledSounds.Add(binfo.overlapText);
@@ -109,7 +109,7 @@ namespace JupiterX.Mods
             //soundbuttons.Add(new ButtonInfo { buttonText = "Loop Audio", enableMethod = LoopAudioToggleOn, disableMethod = LoopAudioToggleOff, isTogglable = true, toolTip = "Loop the audio." });
             //soundbuttons.Add(new ButtonInfo { buttonText = "Get More Sounds", method = LoadSoundLibrary, isTogglable = false, toolTip = "Opens a public audio library, where you can download your own sounds." });
 
-            Buttons.buttons[2] = soundbuttons.ToArray(); // Make this your new buttoninfo[] {} number
+            Buttons.buttons[14] = soundbuttons.ToArray(); // Make this your new buttoninfo[] {} number
         }
 
         public static void LoadSoundLibrary()

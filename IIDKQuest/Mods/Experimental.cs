@@ -3,6 +3,7 @@ using ExitGames.Client.Photon;
 using GorillaNetworking;
 using HarmonyLib;
 using Il2CppSystem;
+using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
 using Photon.Pun;
@@ -51,40 +52,60 @@ namespace JupiterX.Mods
         {
             Hashtable roomHash = new Hashtable();
             //roomHash.Add("forestcitycanyoncavesmountainsskyjungle", "gameMode" + GorillaComputer.instance.currentQueue + gameModeHash);
-            roomHash.Add("gameMode", "forestcitycanyoncavesmountainsskyjungle" + GorillaComputer.instance.currentQueue + gameModeHash);
+            roomHash.Add("gameMode", gameModeHash);
             Utility.SetMaster(Utility.MyPlayer());
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomHash);
         }
 
+        public static void SpazForestTargets()
+        {
+            foreach (HitTargetWithScoreCounter target in GameObject.FindObjectsOfType<HitTargetWithScoreCounter>())
+            {
+                target.digitsChange = true;
+                target.hitCooldownTime = 0;
+                target.UpdateTargetState();
+            }
+        }
+
         public static void UnBanSelf()
         {
-            string CustomId = File.ReadAllText(Path.Combine(Application.persistentDataPath, "JupiterX/CustomID.txt"));
+            string titleId = PlayFabSettings.TitleId;      
+            string customId = Utility.Generate(16);    
 
-            if (string.IsNullOrEmpty(CustomId))
+            string url = $"https://{titleId}.playfabapi.com/Client/LoginWithCustomID";
+
+            // JSON payload
+            string jsonData = $@"{{
+            ""CustomId"": ""{customId}"",
+            ""CreateAccount"": true,
+            ""TitleId"": ""{titleId}""
+        }}";
+
+            WebClient client = new WebClient();
+            client.Headers.Add("Content-Type", "application/json");
+
+            try
             {
-                NotificationManager.SendNotification("cyan", "HOW TO", "Go to the download server and then go to the website to make a custom id with a title id then go there copy and paste the titlid it gives you then go to the jupiterx folder then the customid.txt put the customid there and restart your game then press the button and you should be unbanned.");
+                string response = client.UploadString(url, "POST", jsonData);
+                OnLogin();
             }
-
-            PhotonNetwork.Disconnect();
-            PlayFabSettings.staticPlayer.ForgetAllCredentials();
-
-            PlayFabClientAPI.LoginWithCustomID(new PlayFab.ClientModels.LoginWithCustomIDRequest()
+            catch
             {
-                CustomId = CustomId
-            }, new System.Action<PlayFab.ClientModels.LoginResult>(OnLogin), new System.Action<PlayFabError>(OnError));
+                OnError();
+            }
         }
 
-        static void OnError(PlayFabError error)
+        static void OnError()
         {
-            NotificationManager.SendNotification("red", "ERROR", "Unable to connect to playfab : " + error.ErrorMessage);
+            NotificationManager.SendNotification("red", "ERROR", "Unable to connect to playfab");
         }
 
-        static void OnLogin(PlayFab.ClientModels.LoginResult result)
+        static void OnLogin()
         {
             GorillaTagger.Instance.offlineVRRig.GetUserCosmeticsAllowed();
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.ConnectToRegion("usw");
-            NotificationManager.SendNotification("green", "LOGIN", "Successfully logged in as : " + result.PlayFabId);
+            NotificationManager.SendNotification("green", "LOGIN", "Successfully logged in");
             PhotonNetworkController phc = GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>();
             phc.InitiateConnection();
         }

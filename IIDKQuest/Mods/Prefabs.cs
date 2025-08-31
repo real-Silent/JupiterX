@@ -47,7 +47,7 @@ namespace JupiterX.Mods
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
-                    if (Main.lockTarget.lerpValueFingers == 1f)
+                    if (Main.lockTarget.rightMiddle.calcT > 0.5f) // fix for this ??
                     {
                         switch (type)
                         {

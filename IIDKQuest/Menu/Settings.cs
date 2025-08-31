@@ -2,6 +2,7 @@
 using JupiterX.Menu;
 using JupiterX.Mods;
 using Mono.CSharp;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,6 +52,123 @@ namespace JupiterX
             buttonsType = buttonType;
             pageNumber = 0;
         }
+
+        public static void Players()
+        {
+            buttonsType = 15;
+            pageNumber = 0;
+
+            List<ButtonInfo> buttons = new List<ButtonInfo> {
+                new ButtonInfo {
+                    buttonText = "Exit Players",
+                    method =() => MovePage(0),
+                    isTogglable = false,
+                    toolTip = "Returns you back to the main page."
+                }
+            };
+
+
+            if (!PhotonNetwork.InRoom)
+                buttons.Add(new ButtonInfo { buttonText = "Not in a Room", isTogglable = false });
+            else
+            {
+                for (int i = 0; i < PhotonNetwork.PlayerListOthers.Length; i++)
+                {
+                    Photon.Realtime.Player player = PhotonNetwork.PlayerListOthers[i];
+                    string playerColor = "#ffffff";
+                    try
+                    {
+                        playerColor = $"#{RigManager.GetVRRigFromPlayer(player).mainSkin.material.color}";
+                    }
+                    catch { }
+
+                    buttons.Add(new ButtonInfo
+                    {
+                        buttonText = $"PlayerButton{i}",
+                        overlapText = $"<color={playerColor}>" + player.NickName.ToUpper() + "</color>",
+                        method = () => NavigatePlayer(player),
+                        isTogglable = false,
+                        toolTip = $"See information on the player {player.NickName}."
+                    });
+                }
+            }
+
+            Buttons.buttons[15] = buttons.ToArray();
+        }
+
+        static void NavigatePlayer(Photon.Realtime.Player plr)
+        {
+            string TargetName = plr.NickName.ToUpper();
+
+            List<ButtonInfo> buttons = new List<ButtonInfo> {
+                new ButtonInfo {
+                    buttonText = "Exit PlayerInspect",
+                    overlapText = $"Exit {TargetName}",
+                    method =() => Players(),
+                    isTogglable = false,
+                    toolTip = "Returns you back to the players tab."
+                },
+
+                /*new ButtonInfo {
+                    buttonText = "Placeholder",
+                    overlapText = $"Does placeholder to {TargetName}",
+                    method =() => Utility.BetaCrashPlayer(plr),
+                    isTogglable = false,
+                },*/
+
+                new ButtonInfo {
+                    buttonText = "Crash Player",
+                    overlapText = $"Crash {TargetName}",
+                    method =() => Utility.BetaCrashPlayer(plr),
+                    isTogglable = true,
+                },
+
+                new ButtonInfo {
+                    buttonText = "Tag Player",
+                    overlapText = $"Tag {TargetName}",
+                    method =() => Utility.TagPlayer(plr),
+                    isTogglable = false,
+                },
+
+                new ButtonInfo {
+                    buttonText = "Slow Player",
+                    overlapText = $"Slow {TargetName}",
+                    method =() => Utility.SlowPlayer(plr),
+                    isTogglable = false,
+                },
+
+                new ButtonInfo {
+                    buttonText = "TP Lucy To",
+                    overlapText = $"TP Lucy To {TargetName}",
+                    method =() => Utility.MakeLucyGoToPlayer(plr),
+                    isTogglable = false,
+                },
+
+                new ButtonInfo {
+                    buttonText = "TP Self To",
+                    overlapText = $"TP Self To {TargetName}",
+                    method =() => Utility.TpSelfToPlayer(plr),
+                    isTogglable = false,
+                },
+
+                new ButtonInfo {
+                    buttonText = "Get Ownership Of",
+                    overlapText = $"Get Ownership Of {TargetName}",
+                    method =() => Utility.GetOwnerShipOfPlayer(plr),
+                    isTogglable = false,
+                },
+
+                new ButtonInfo {
+                    buttonText = "Move Player To Self",
+                    overlapText = $"Move Player To Self {TargetName} [Ownership] W?",
+                    method =() => Utility.MovePlayerToMe(plr),
+                    isTogglable = false,
+                },
+            };
+            Buttons.buttons[16] = buttons.ToArray();
+        }
+
+
         public static void RightHand()
         {
             rightHanded = true;
@@ -103,10 +221,6 @@ namespace JupiterX
 
 
 
-
-
-
-
         // Credits to Scintilla for the idea
         public static void ChangeGunVariation(bool positive = true)
         {
@@ -132,7 +246,7 @@ namespace JupiterX
             if (gunVariation < 0)
                 gunVariation = VariationNames.Length - 1;
 
-            GetIndex("Change Gun Variation").overlapText = "Change Gun Variation <color=grey>[</color><color=green>" + VariationNames[gunVariation] + "</color><color=grey>]</color>";
+            GetIndex("Change Gun Variation").overlapText = "Change Gun Variation <color=cyan>[" + VariationNames[gunVariation] + "]</color>";
         }
 
         public static void ChangeGunDirection(bool positive = true)
@@ -155,7 +269,7 @@ namespace JupiterX
             if (GunDirection < 0)
                 GunDirection = DirectionNames.Length - 1;
 
-            GetIndex("Change Gun Direction").overlapText = "Change Gun Direction <color=grey>[</color><color=green>" + DirectionNames[GunDirection] + "</color><color=grey>]</color>";
+            GetIndex("Change Gun Direction").overlapText = "Change Gun Direction <color=cyan>[" + DirectionNames[GunDirection] + "]</color>";
         }
 
         private static int gunLineQualityIndex = 2;
@@ -189,7 +303,7 @@ namespace JupiterX
                 gunLineQualityIndex = Names.Length - 1;
 
             GunLineQuality = Qualities[gunLineQualityIndex];
-            GetIndex("Change Gun Line Quality").overlapText = "Change Gun Line Quality <color=grey>[</color><color=green>" + Names[gunLineQualityIndex] + "</color><color=grey>]</color>";
+            GetIndex("Change Gun Line Quality").overlapText = "Change Gun Line Quality <color=cyan>[" + Names[gunLineQualityIndex] + "]</color>";
         }
     }
 }
