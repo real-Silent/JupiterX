@@ -11,8 +11,14 @@ using TMPro;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
+[assembly: MelonInfo(typeof(Plugin), "JupiterX", "1.0.0", "Silent")]
+[assembly: MelonGame()]
 namespace JupiterX
 {
+    // this menu was created by Silent (@s1lnt)
+    // if you remove this it counts as skidding
     internal class Plugin : MelonMod
     {
         [Obsolete]

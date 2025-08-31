@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking.Match;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX.Mods
 {
     internal class Visual
@@ -12,7 +14,7 @@ namespace JupiterX.Mods
         static string taggedText;
         static bool isTagged = false;
         static int Tagged = 0;
-        public static void LeftTaggedLabel()
+        public static void LeftTaggedLabel() // creds to iiDk
         {
             GameObject textHolder = new GameObject("TaggedLabel");
 
@@ -61,7 +63,7 @@ namespace JupiterX.Mods
             GameObject.Destroy(textHolder, Time.deltaTime);
         }
 
-        public static void VelocityLabel()
+        public static void VelocityLabel() // creds to iiDk
         {
             GameObject textHolder = new GameObject("VelocityLabel");
 
@@ -123,8 +125,7 @@ namespace JupiterX.Mods
             }
         }
 
-        static string CProps;
-        public static void NameTagESP()
+        public static void NameTagESP() // creds to Saturn
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
@@ -157,17 +158,20 @@ namespace JupiterX.Mods
 
         public static void Tracers()
         {
-            VRRig[] theRigs = GorillaParent.instance.vrrigs.ToArray();
+            VRRig[] theRigs = GorillaParent.instance.vrrigs.ToArray(); // made tracers do this shit lol
             foreach (VRRig rig in theRigs)
             {
                 for (int i = 0; i < theRigs.Length; i++)
                 {
-                    theRigs[i] = Utility.GetAllVRRigsWithoutMe(rig);
-                    GameObject holder;
-                    LineRenderer tracer;
-                    bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                    Color lineColor = isTagged ? Color.red : Color.grey;
-                    (holder, tracer) = Utility.CreateLine(Utility.RightHandTransform(), rig.headMesh.transform, lineColor);
+                    if (theRigs[i] != null && !theRigs[i].isMyPlayer && !theRigs[i].photonView.IsMine)
+                    {
+                        theRigs[i] = Utility.GetAllVRRigsWithoutMe(rig);
+                        GameObject holder;
+                        LineRenderer tracer;
+                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                        Color lineColor = isTagged ? Color.red : Color.grey;
+                        (holder, tracer) = Utility.CreateLine(Utility.RightHandTransform(), rig.headMesh.transform, lineColor);
+                    }
                 }
             }
         }

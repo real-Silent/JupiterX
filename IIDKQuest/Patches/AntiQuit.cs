@@ -2,41 +2,37 @@
 using System;
 using UnityEngine;
 
+
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
+
 [HarmonyPatch]
 public class AntiQuit
 {
-    // 1. Block Application.Quit()
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Application), nameof(Application.Quit))]
-    public static bool BlockApplicationQuit()
+    public static bool BlocQuit()
     {
-        MelonLoader.MelonLogger.Msg("[AntiQuit] Blocked Application.Quit()");
-        return false; // skip original quit
+        return false; 
     }
-
-    // 2. Block Environment.Exit(int)
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Environment), nameof(Environment.Exit))]
-    public static bool BlockEnvironmentExit(int exitCode)
+    public static bool BlockExit(int exitCode)
     {
-        MelonLoader.MelonLogger.Msg($"[AntiQuit] Blocked Environment.Exit({exitCode})");
-        return false; // skip original exit
+        return false; 
     }
 
-    // Optional: block Environment.FailFast as well (crash quit)
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Environment), nameof(Environment.FailFast), typeof(string))]
-    public static bool BlockEnvironmentFailFast(string message)
+    public static bool BlockEnt(string message)
     {
-        MelonLoader.MelonLogger.Msg($"[AntiQuit] Blocked Environment.FailFast: {message}");
         return false;
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Environment), nameof(Environment.FailFast), typeof(string), typeof(Exception))]
-    public static bool BlockEnvironmentFailFastException(string message, Exception exception)
+    public static bool BlockFastException(string message, Exception exception)
     {
-        MelonLoader.MelonLogger.Msg($"[AntiQuit] Blocked Environment.FailFast with exception: {message}");
         return false;
     }
 }

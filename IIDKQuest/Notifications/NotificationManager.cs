@@ -3,9 +3,11 @@ using System.Linq;
 using UnityEngine.UI;
 using UnityEngine;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX
 {
-    public class NotificationManager
+    public class NotificationManager // og creds zinx - saturn - some others idfk atp
     {
         public static float normtime = 0f;
         public static float cooldown = 0.2f;

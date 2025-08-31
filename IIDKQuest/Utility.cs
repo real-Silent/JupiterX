@@ -22,8 +22,12 @@ using UnityEngine.Android;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.UI;
 
+
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX
 {
+    // plz ignore all this shitty ass code you see >w<
     public class Utility
     {
         public static void Log(string msg, int type)
@@ -116,14 +120,14 @@ namespace JupiterX
             }
         }
 
-        public static void BetaBanAll(string userid) // release december 1st 25
+        public static void BetaBanAll(string userid) // release december 1st 25 -- current date 31/08/2025 releasing today ig
         {
             string photonId = userid;
             string titleId = PlayFabSettings.staticSettings.TitleId;
             string msg = "Modding";
             string rsn = "Cheating";
 
-            string url = "https://api-colossal-quest.vercel.app/api/runcloudscript";
+            string url = "https://api-colossal-quest.vercel.app/api/runcloudscript"; // abuse this i will take it down
 
             WebClient client = new WebClient();
             try

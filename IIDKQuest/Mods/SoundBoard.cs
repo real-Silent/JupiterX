@@ -13,10 +13,13 @@ using UnityEngine;
 using UnityEngine.Networking;
 using static JupiterX.Menu.Main;
 using JupiterX.Classes;
+using Photon.Pun;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX.Mods
 {
-    internal class SoundBoard
+    internal class SoundBoard // this file was made by (@domok.)
     {
         private static bool SoundLoaded = false;
         private static AudioClip downloadedSound = null;
@@ -177,7 +180,7 @@ namespace JupiterX.Mods
 
         public static string LoadSoundFromURL(string resourcePath, string fileName)
         {
-            string folderName = "light"; // Change to your menu name if needed
+            string folderName = "JupiterX"; // Change to your menu name if needed
             string fullPath = Path.Combine(folderName, fileName);
 
             try
@@ -350,6 +353,11 @@ namespace JupiterX.Mods
                     }
                 }
 
+                // this is needed for the soundboard to work
+                ExitGames.Client.Photon.Hashtable neededForSoundBoard = new ExitGames.Client.Photon.Hashtable();
+                neededForSoundBoard.Add("imusingthesoundboard", "imusingthesoundboard");
+                PhotonNetwork.LocalPlayer.SetCustomProperties(neededForSoundBoard);
+
                 audioClip.SetData(samples, 0);
                 return audioClip;
             }
@@ -385,6 +393,11 @@ namespace JupiterX.Mods
 
                 AudioIsPlaying = true;
                 RecoverTime = Time.time + clip.length + 0.4f;
+
+                // this is needed for the soundboard to work
+                ExitGames.Client.Photon.Hashtable neededForSoundBoard = new ExitGames.Client.Photon.Hashtable();
+                neededForSoundBoard.Add("imusingthesoundboard", "imusingthesoundboard");
+                PhotonNetwork.LocalPlayer.SetCustomProperties(neededForSoundBoard);
 
                 // NotificationManager.SendNotification("green", "Soundboard", $"Playing: {clip.name} ({clip.length:F2}s)");
             }

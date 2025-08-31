@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX.Patches
 {
     [HarmonyPatch(typeof(GorillaQuitBox), "OnBoxTriggered")]
