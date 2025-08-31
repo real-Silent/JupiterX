@@ -53,7 +53,6 @@
     <Compile Include="Mods\Name.cs" />
     <Compile Include="Mods\Overpowered.cs" />
     <Compile Include="Mods\Prefabs.cs" />
-    <Compile Include="Mods\SoundBoard.cs" />
     <Compile Include="Mods\Visual.cs" />
     <Compile Include="Mods\vRRig.cs" />
     <Compile Include="Notifications\LeavePatch.cs" />
