@@ -15,6 +15,20 @@ using Button = JupiterX.Classes.Button;
 
 namespace JupiterX.Menu
 {
+	// READ ME
+	/*
+	 NOTHING HERE IS SKIDDED
+	 I HAVE GAVE CREDITS TO EVERYONE I NEED TO
+     Extra Credits: Dom - Soundboard 
+	 If you need help with building plz dm me (@s1lnt)
+	 If you would like to become a contributer clone this src and help out
+	 PLEASE Do not skid anythere here
+	 Follow the GPL Licence
+	 Have a good day
+	 IF YOU DO TAKE CODE
+	 Make sure to credit me :)
+	 */
+
 	public class Main
 	{
 		public static void Prefix()
@@ -574,7 +588,7 @@ namespace JupiterX.Menu
 							target.enabled = !target.enabled;
 							if (target.enabled)
 							{
-                                //NotificationManager.SendNotification("green", "ENABLE", target.toolTip);
+                                NotificationManager.SendNoti("<color=grey>[</color><color=green>ENABLED</color><color=grey>]</color> " + target.toolTip);
 								if (target.enableMethod != null)
 								{
 									try { target.enableMethod.Invoke(); } catch { }
@@ -582,8 +596,8 @@ namespace JupiterX.Menu
 							}
 							else
 							{
-                                //NotificationManager.SendNotification("red", "DISABLE", target.toolTip);
-								if (target.disableMethod != null)
+                                NotificationManager.SendNoti("<color=grey>[</color><color=red>DISABLED</color><color=grey>]</color> " + target.toolTip);
+                                if (target.disableMethod != null)
 								{
 									try { target.disableMethod.Invoke(); } catch { }
 								}
@@ -591,8 +605,8 @@ namespace JupiterX.Menu
 						}
 						else
 						{
-							//NotificationManager.SendNotification("green", "ENABLE", target.toolTip);
-							if (target.method != null)
+                            NotificationManager.SendNoti("<color=grey>[</color><color=green>ENABLED</color><color=grey>]</color> " + target.toolTip);
+                            if (target.method != null)
 							{
 								try { target.method.Invoke(); } catch { }
 							}
