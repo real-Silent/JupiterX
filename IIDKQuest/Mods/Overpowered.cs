@@ -246,33 +246,7 @@ namespace JupiterX.Mods
 
         public static void BanGunJXModding()
         {
-            if (Main.GetGunInput(false))
-            {
-                var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
-                RaycastHit Ray = GunData.Ray;
-
-
-                if (Main.GetGunInput(true))
-                {
-                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
-                    if (who)
-                    {
-                        NotificationManager.SendNotification2("Banning User , " + who.photonView.Owner.NickName);
-                        PlayFabClientAPI.ExecuteCloudScript(new PlayFab.ClientModels.ExecuteCloudScriptRequest()
-                        {
-                            FunctionName = "DoMySillyLittleThingyInMyPussy",
-                            FunctionParameter = who.photonView.Owner.UserId,
-                        }, null, null);
-                    }
-                }
-            }
-            else
-            {
-                if (Main.gunLocked)
-                    Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
-            }
+            
         }
 
         public static void SlowAll()
