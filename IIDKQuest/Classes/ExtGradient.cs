@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX.Classes
 {
     public class ExtGradient

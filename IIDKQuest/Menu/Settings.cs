@@ -11,6 +11,8 @@ using UnityEngine;
 using static JupiterX.Menu.Main;
 using static JupiterX.Utility;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX
 {
     internal class Settings
@@ -44,7 +46,7 @@ namespace JupiterX
         {
             buttonsType = 14;
             pageNumber = 0;
-            SoundBoard.LoadSoundboard();
+            //SoundBoard.LoadSoundboard();
         }
 
         public static void MovePage(int buttonType)
@@ -55,7 +57,7 @@ namespace JupiterX
 
         public static void Players()
         {
-            buttonsType = 15;
+            buttonsType = 14; // 15
             pageNumber = 0;
 
             List<ButtonInfo> buttons = new List<ButtonInfo> {

@@ -4,6 +4,8 @@ using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX.Mods
 {
     internal class Movement

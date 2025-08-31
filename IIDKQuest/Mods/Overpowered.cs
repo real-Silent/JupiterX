@@ -8,6 +8,8 @@ using System.Linq;
 using UnityEngine;
 using static UnityEngine.UI.GridLayoutGroup;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX.Mods
 {
     internal class Overpowered
@@ -229,7 +231,7 @@ namespace JupiterX.Mods
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     if (who)
                     {
-                        Utility.BetaBanAll(who.photonView.Owner.UserId);
+                        //Utility.BetaBanAll(who.photonView.Owner.UserId);
                     }
                 }
             }

@@ -13,6 +13,8 @@ using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
 using Button = JupiterX.Classes.Button;
 
+// this menu was created by Silent (@s1lnt)
+// if you remove this it counts as skidding
 namespace JupiterX.Menu
 {
 	// READ ME
