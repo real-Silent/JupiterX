@@ -46,7 +46,7 @@ namespace JupiterX
         {
             buttonsType = 14;
             pageNumber = 0;
-            //SoundBoard.LoadSoundboard();
+            SoundBoard.LoadSoundboard();
         }
 
         public static void MovePage(int buttonType)

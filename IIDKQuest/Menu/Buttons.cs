@@ -51,9 +51,9 @@ namespace JupiterX.Menu
 
                 // Creds to iiDk again <3
                 new ButtonInfo { buttonText = "Credits to iiDk for gun lib/settings", isTogglable = false, toolTip = "Credits to iiDk for the gunlib and gunlib settings <3." },
-                new ButtonInfo { buttonText = "Change Gun Line Quality", overlapText = "Change Gun Line Quality <color=grey>[</color><color=green>Normal</color><color=grey>]</color>", method =() => Settings.ChangeGunLineQuality(), enableMethod =() => Settings.ChangeGunLineQuality(), disableMethod =() => Settings.ChangeGunLineQuality(false), isTogglable = false, toolTip = "Changes the amount of points on your gun."},
-                new ButtonInfo { buttonText = "Change Gun Variation", overlapText = "Change Gun Variation <color=grey>[</color><color=green>Default</color><color=grey>]</color>", method =() => Settings.ChangeGunVariation(), enableMethod =() => Settings.ChangeGunVariation(), disableMethod =() => Settings.ChangeGunVariation(false), isTogglable = false, toolTip = "Changes the look of the gun."},
-                new ButtonInfo { buttonText = "Change Gun Direction", overlapText = "Change Gun Direction <color=grey>[</color><color=green>Default</color><color=grey>]</color>", method =() => Settings.ChangeGunDirection(), enableMethod =() => Settings.ChangeGunDirection(), disableMethod =() => Settings.ChangeGunDirection(false), isTogglable = false, toolTip = "Changes the direction of the gun."},
+                new ButtonInfo { buttonText = "Change Gun Line Quality", overlapText = "Change Gun Line Quality <color=grey>[</color><color=cyan>Normal</color><color=grey>]</color>", method =() => Settings.ChangeGunLineQuality(), enableMethod =() => Settings.ChangeGunLineQuality(), disableMethod =() => Settings.ChangeGunLineQuality(false), isTogglable = false, toolTip = "Changes the amount of points on your gun."},
+                new ButtonInfo { buttonText = "Change Gun Variation", overlapText = "Change Gun Variation <color=grey>[</color><color=cyan>Default</color><color=grey>]</color>", method =() => Settings.ChangeGunVariation(), enableMethod =() => Settings.ChangeGunVariation(), disableMethod =() => Settings.ChangeGunVariation(false), isTogglable = false, toolTip = "Changes the look of the gun."},
+                new ButtonInfo { buttonText = "Change Gun Direction", overlapText = "Change Gun Direction <color=grey>[</color><color=cyan>Default</color><color=grey>]</color>", method =() => Settings.ChangeGunDirection(), enableMethod =() => Settings.ChangeGunDirection(), disableMethod =() => Settings.ChangeGunDirection(false), isTogglable = false, toolTip = "Changes the direction of the gun."},
 
                 new ButtonInfo { buttonText = "Gun Sounds", enableMethod =() => GunSounds = true, disableMethod =() => GunSounds = false, toolTip = "Gives the gun laser sounds for when you press grip and trigger."},
                 new ButtonInfo { buttonText = "Gun Particles", enableMethod =() => GunParticles = true, disableMethod =() => GunParticles = false, toolTip = "Gives the gun particles when you shoot it."},
@@ -206,7 +206,7 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Unban Self", method =() => Experimental.UnBanSelf(), isTogglable = false, toolTip = "Unbans yourself if you get banned."  },
 
-                new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = false, toolTip = "Spazzes out the targets that are in forest."  },
+                new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest."  },
 
                 new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room."  },
                 new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at."  },
@@ -290,6 +290,10 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Players | 15
+                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+            },
+
+             new ButtonInfo[] { // PlayersTab Fixer ? | 16
                 new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
         };
