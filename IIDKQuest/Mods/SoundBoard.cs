@@ -33,10 +33,10 @@ namespace JupiterX.Mods
             buttonsType = 14; // Make this your new buttoninfo[] {} number
             pageNumber = 0;
             // Change light to your menu name
-            string basePath = Path.Combine("light", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
+            string basePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
 
-            if (!Directory.Exists("light")) // Change light to your menu name
-                Directory.CreateDirectory("light"); // Change light to your menu name
+            if (!Directory.Exists("JupiterX")) // Change light to your menu name
+                Directory.CreateDirectory("JupiterX"); // Change light to your menu name
 
             if (!Directory.Exists(basePath))
                 Directory.CreateDirectory(basePath);
@@ -80,7 +80,7 @@ namespace JupiterX.Mods
                 string fileName = Path.GetFileName(file);
                 string cleanName = RemoveFileExtension(fileName).Replace("_", " ");
                 bool isEnabled = enabledSounds.Contains(cleanName);
-                string relativePath = Path.Combine("light", "Sounds", Subdirectory.TrimStart('/'), fileName).Replace("\\", "/");
+                string relativePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/'), fileName).Replace("\\", "/");
                 // Change light to your menu name
                 if (LoopAudio)
                 {
