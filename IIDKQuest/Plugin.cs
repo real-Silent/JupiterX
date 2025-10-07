@@ -30,6 +30,10 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
             ClassInjector.RegisterTypeInIl2Cpp<JupiterX.Classes.Button>();
 
+            GameObject.Destroy(GameObject.Find("GorillaPlayer"));
+            GameObject.Destroy(GameObject.Find("Main Camera"));
+            GameObject.Destroy(GameObject.Find("Level"));
+
             // Set UpText
             Utility.FindObjects();
             Utility.CreateFilesOnStart();
