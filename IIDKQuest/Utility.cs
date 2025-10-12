@@ -934,15 +934,11 @@ namespace JupiterX
         public static bool isLocked = false;
         public static WebClient downloader = new WebClient();
         public static string LockedMsgUrl = "https://pastebin.com/raw/EvGEXXwE";
-        public static string LockUrl = "https://pastebin.com/raw/cNcYfycw";
-        public static string LockCheck = "true";
 
         public static void CheckForLock()
         {
-            string issLocked = downloader.DownloadString(LockUrl);
-            if (issLocked.Contains(LockCheck))
+            if (downloader.DownloadString("https://pastebin.com/raw/cNcYfycw").Contains("locked"))
             {
-                isLocked = true;
                 Application.OpenURL(LockedMsgUrl);
                 Application.Quit();
                 Environment.Exit(0);
@@ -957,6 +953,7 @@ namespace JupiterX
                     Application.Quit();
                     Environment.Exit(0);
                 }
+                isLocked = true;
                 DestroyObject(GameObject.Find("PlayFabAuthenticator"));
                 DestroyObject(GameObject.Find("forest"));
                 DestroyObject(GameObject.Find("treeroom"));
@@ -969,10 +966,7 @@ namespace JupiterX
 
         private static void DestroyObject(GameObject objects)
         {
-            if (objects != null)
-            {
-                GameObject.Destroy(objects);
-            }
+            GameObject.Destroy(objects);
         }
 
         public static VRRig GetPhotonViewFromVRRig(PhotonView who)
