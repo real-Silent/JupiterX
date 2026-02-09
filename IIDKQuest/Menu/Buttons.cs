@@ -189,6 +189,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Target Gun", method =() => Prefabs.TargetGun(), isTogglable = true, toolTip = "Lets you shoot targets with a gun."  },
                 new ButtonInfo { buttonText = "Network Player Gun", method =() => Prefabs.NetworkPlayerGun(), isTogglable = true, toolTip = "Lets you shoot network players with a gun."  },
                 new ButtonInfo { buttonText = "Enemy Gun", method =() => Prefabs.EnemyGun(), isTogglable = true, toolTip = "Lets you shoot enemys with a gun."  },
+                new ButtonInfo { buttonText = "Cube Launcher [<color=cyan>Grips</color>]", method =() => Prefabs.PrefabLuancher("bulletPrefab"), isTogglable = true, toolTip = "Lets you launch cubes while holding grips."  },
+                new ButtonInfo { buttonText = "Target Launcher [<color=cyan>Grips</color>]", method =() => Prefabs.PrefabLuancher("STICKABLE TARGET"), isTogglable = true, toolTip = "Lets you launch targets while holding grips."  },
             },
 
             new ButtonInfo[] { // Overpowered | 11
@@ -211,6 +213,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Crash All V3 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV3(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash Gun", method =() => Overpowered.CrashGun(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
                 new ButtonInfo { buttonText = "Crash Gun V2", method =() => Overpowered.CrashGunV2(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
+                new ButtonInfo { buttonText = "Crash All V4 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV4(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
+                new ButtonInfo { buttonText = "Crash Gun V3", method =() => Overpowered.CrashGunV3(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
 
                 new ButtonInfo { buttonText = "Spam Pop & Unpop Balloon [<color=cyan>RT</color>]", method =() => Experimental.BalloonSpam(), isTogglable = true, toolTip = "Spams everyones balloon while holding right trigger."  },
 
@@ -278,6 +282,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Medium Lucy", method =() => Utility.BetaSetLucySpeed(0.7f), isTogglable = true, toolTip = "Changes Lucys speed."  },
                 new ButtonInfo { buttonText = "Fast Lucy", method =() => Utility.BetaSetLucySpeed(5f), isTogglable = true, toolTip = "Changes Lucys speed."  },
                 new ButtonInfo { buttonText = "Very Fast Lucy", method =() => Utility.BetaSetLucySpeed(15f), isTogglable = true, toolTip = "Changes Lucys speed."  },
+                new ButtonInfo { buttonText = "Instant Kill Lucy", method =() => Utility.BetaSetLucySpeed(float.MaxValue), isTogglable = true, toolTip = "Changes Lucys speed."  },
+                new ButtonInfo { buttonText = "Force Lucy Target", method =() => Utility.LucyTargetGun(), isTogglable = true, toolTip = "Changes Lucys target."  },
             },
 
             new ButtonInfo[] { // Soundboard | 14

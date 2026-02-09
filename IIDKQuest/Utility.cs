@@ -549,9 +549,7 @@ namespace JupiterX
         }
         public static Vector3 ThrowMenu(EasyHand hand)
         {
-            Vector3 thing;
-            thing = EasyInputs.GetDeviceVelocity(hand);
-            return thing;
+            return EasyInputs.GetDeviceVelocity(hand);
         }
 
 
@@ -611,6 +609,29 @@ namespace JupiterX
         {
             HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             lucy.currentSpeed = speed;
+        }
+
+        public static void SetLucyTarget(VRRig rig)
+        {
+            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            lucy.targetPlayer = rig.photonView.Owner;
+            lucy.followTarget = rig.transform;
+        }
+
+        public static void LucyTargetGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                RaycastHit ray = GunData.Ray;
+                GameObject pointer = GunData.NewPointer;
+                VRRig rig = ray.collider.GetComponentInParent<VRRig>();
+
+                if (Main.GetGunInput(true))
+                {
+                    SetLucyTarget(rig);
+                }
+            }
         }
 
         private static float lastthing = 0f;

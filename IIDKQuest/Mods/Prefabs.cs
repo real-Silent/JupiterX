@@ -1,4 +1,6 @@
 ﻿using JupiterX.Menu;
+using Photon.Pun;
+using System.Security.Policy;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -157,6 +159,25 @@ namespace JupiterX.Mods
             else
             {
                 JupiterX.Menu.Main.DestroyGun();
+            }
+        }
+        public static void PrefabLuancher(string prefab)
+        {
+            if (Utility.RGrip)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Vector3 s = GorillaTagger.Instance.rightHandTransform.position + GorillaTagger.Instance.rightHandTransform.forward * (i * 3f);
+                    Utility.BetaSpawnPrefab(prefab, s, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
+                }
+            }
+            if (Utility.LGrip)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Vector3 j = GorillaTagger.Instance.leftHandTransform.position + GorillaTagger.Instance.leftHandTransform.forward * (i * 3f);
+                    Utility.BetaSpawnPrefab(prefab, j, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
+                }
             }
         }
     }

