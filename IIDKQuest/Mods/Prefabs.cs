@@ -48,7 +48,7 @@ namespace JupiterX.Mods
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
-                    if (Main.lockTarget.rightMiddle.calcT > 0.5f) // fix for this ??
+                    if (Main.lockTarget.rightMiddle.calcT > 0.5f) 
                     {
                         switch (type)
                         {
@@ -74,7 +74,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -100,7 +100,7 @@ namespace JupiterX.Mods
             }
             else
             {
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -119,7 +119,7 @@ namespace JupiterX.Mods
             }
             else
             {
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -133,13 +133,13 @@ namespace JupiterX.Mods
 
                 if (Main.GetGunInput(true))
                 {
-                    PlayerPrefs.SetString("username", "JupiterX By Silent\nBest Mod Menu");
+                    PlayerPrefs.SetString("username", "JupiterX V2 By Silent\nBest Mod Menu");
                     Utility.BetaSpawnPrefab("Network Player", NewPointer.transform.position, NewPointer.transform.rotation);
                 }
             }
             else
             {
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -158,7 +158,7 @@ namespace JupiterX.Mods
             }
             else
             {
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
         public static void PrefabLuancher(string prefab)

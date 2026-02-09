@@ -110,7 +110,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -168,7 +168,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -179,7 +179,6 @@ namespace JupiterX.Mods
                 var GunData = Main.RenderGun();
                 GameObject NewPointer = GunData.NewPointer;
                 RaycastHit Ray = GunData.Ray;
-
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
@@ -209,7 +208,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -236,7 +235,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -281,7 +280,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -371,6 +370,10 @@ namespace JupiterX.Mods
                     }
                 }
             }
+            else
+            {
+                Main.DestroyGun();
+            }
         }
 
         public static void CrashAll()
@@ -420,7 +423,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
     }

@@ -85,10 +85,10 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
 
                 Utility.myVRRig().enabled = true;
                 Utility.GhostView(false);
+                Main.DestroyGun();
             }
         }
 
@@ -98,14 +98,11 @@ namespace JupiterX.Mods
 
         public static void NoClip(bool enabled)
         {
-            // Cache colliders only once
             if (!collidersCached)
             {
-                colliders.AddRange(Object.FindObjectsOfType<Collider>()); // include inactive too
+                colliders.AddRange(Object.FindObjectsOfType<Collider>());
                 collidersCached = true;
             }
-
-            // Only update if the state actually changes
             if (lastState != enabled)
             {
                 foreach (var col in colliders)
@@ -214,7 +211,7 @@ namespace JupiterX.Mods
             }
             else
             {
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
     }

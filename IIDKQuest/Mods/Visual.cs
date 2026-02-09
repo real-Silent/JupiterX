@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace JupiterX.Mods
 {
     internal class Visual
     {
         static string taggedText;
-        static bool isTagged = false;
-        static int Tagged = 0;
         public static void LeftTaggedLabel() // creds to iiDk
         {
             GameObject textHolder = new GameObject("TaggedLabel");
@@ -29,22 +28,17 @@ namespace JupiterX.Mods
             {
                 if (rigs[i] != null && !rigs[i].photonView.IsMine && !rigs[i].isMyPlayer)
                 {
-                    if (rigs[i].mainSkin.material.name.Contains("fected") || rigs[i].mainSkin.material.name.ToLower().Contains("It"))
+                    GorillaTagManager[] tagman = GameObject.FindObjectsOfType<GorillaTagManager>();
+                    for (int j = 0; j < tagman.Length; j++)
                     {
-                        isTagged = true;
-                        Tagged += 1;
-                    }
-                    else
-                    {
-                        isTagged = false;
-                    }
-                    if (isTagged)
-                    {
-                        taggedText = $"{Tagged} left";
-                    }
-                    else
-                    {
-                        taggedText = $"<color=lime>0</color> left";
+                        if (tagman[j].currentInfected.Count > 0)
+                        {
+                            taggedText = $"{tagman[j].currentInfected.Count} left";
+                        }
+                        else
+                        {
+                            taggedText = $"<color=lime>0</color> left";
+                        }
                     }
                 }
             }
@@ -85,7 +79,7 @@ namespace JupiterX.Mods
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                 {
                     bool isTagged = rig.mainSkin.material.name.Contains("fected");
                     GameObject box = new GameObject("box");
@@ -103,7 +97,7 @@ namespace JupiterX.Mods
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                 {
                     bool isTagged = rig.mainSkin.material.name.Contains("fected");
                     GameObject sphere = new GameObject("sphere");
@@ -122,7 +116,7 @@ namespace JupiterX.Mods
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                 {
                     GameObject textHolder = new GameObject("NameTagESP");
 
@@ -149,22 +143,18 @@ namespace JupiterX.Mods
             }
         }
 
+
+        static GameObject holder;
+        static LineRenderer tracer;
         public static void Tracers()
         {
-            VRRig[] theRigs = GorillaParent.instance.vrrigs.ToArray(); // made tracers do this shit lol
-            foreach (VRRig rig in theRigs)
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                for (int i = 0; i < theRigs.Length; i++)
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                 {
-                    if (theRigs[i] != null && !theRigs[i].isMyPlayer && !theRigs[i].photonView.IsMine)
-                    {
-                        theRigs[i] = Utility.GetAllVRRigsWithoutMe(rig);
-                        GameObject holder;
-                        LineRenderer tracer;
-                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                        Color lineColor = isTagged ? Color.red : Color.grey;
-                        (holder, tracer) = Utility.CreateLine(Utility.RightHandTransform(), rig.headMesh.transform, lineColor);
-                    }
+                    bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                    Color lineColor = isTagged ? Color.red : Color.grey;
+                    (holder, tracer) = Utility.CreateLine(Utility.RightHandTransform(), rig.headMesh.transform, lineColor);
                 }
             }
         }
@@ -183,7 +173,7 @@ namespace JupiterX.Mods
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                 {
                     bool isTagged = rig.mainSkin.material.name.Contains("fected");
                     if (chams)
@@ -193,8 +183,7 @@ namespace JupiterX.Mods
                     }
                     else
                     {
-                        rig.mainSkin.material.shader = Utility.StandardShader();
-                        rig.currentMatIndex = 0;
+                        rig.ChangeMaterialLocal(rig.currentMatIndex);
                     }
                 }
             }

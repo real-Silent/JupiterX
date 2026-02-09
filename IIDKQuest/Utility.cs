@@ -40,10 +40,6 @@ namespace JupiterX
                     Plugin.StumpText.transform.position = NewPointer.transform.position + new Vector3(0, 0.7f, 0);
                 }
             }
-            else
-            {
-                Main.DestroyGun();
-            }
         }
 
 
@@ -737,7 +733,6 @@ namespace JupiterX
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
             }
         }
 
@@ -759,7 +754,6 @@ namespace JupiterX
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
             }
         }
 
@@ -941,6 +935,24 @@ namespace JupiterX
         public static string author = "Silent";
         public static string version = "2.0.0"; 
         public static bool isBetaRelease = false;
+        public static bool updateneeded = false;
+
+        public static void VersionCheck()
+        {
+            string serverversion = new Il2CppSystem.Net.WebClient().DownloadString("https://pastebin.com/raw/kRd6f5QS");
+            if (version != serverversion)
+            {
+                Application.OpenURL("https://discord.gg/ueFrRsKvVT");
+                updateneeded = true;
+                NotificationManager.SendNotification2("JupiterX is outdated");
+                Application.Quit();
+                Environment.Exit(0);
+            }
+            else
+            {
+                NotificationManager.SendNotification2("JupiterX is up to date");
+            }
+        }
 
         public static string LogMain = "[JUPITERX] (LOG) : ";
         public static string LogWarningMain = "[JUPITERX] (WARNING) : ";

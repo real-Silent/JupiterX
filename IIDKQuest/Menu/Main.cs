@@ -2,7 +2,6 @@
 using JupiterX.Classes;
 using Photon.Pun;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -152,8 +151,6 @@ namespace JupiterX.Menu
             }
             catch { }
 
-
-
             // Constant
             try
             {
@@ -204,6 +201,8 @@ namespace JupiterX.Menu
 			menuBackground.transform.localScale = menuSize;
 			menuBackground.GetComponent<Renderer>().material.color = backgroundColor.colors[0].color;
 			menuBackground.transform.position = new Vector3(0.05f, 0f, 0f);
+
+            RoundMenuObject(menuBackground);
 
 			ColorChanger colorChanger = menuBackground.AddComponent<ColorChanger>();
 			colorChanger.colorInfo = backgroundColor;
@@ -282,7 +281,9 @@ namespace JupiterX.Menu
 				disconnectbutton.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
 				disconnectbutton.AddComponent<Classes.Button>().relatedText = "Disconnect";
 
-				colorChanger = disconnectbutton.AddComponent<ColorChanger>();
+                RoundMenuObject(disconnectbutton);
+
+                colorChanger = disconnectbutton.AddComponent<ColorChanger>();
 				colorChanger.colorInfo = buttonColors[0];
 				colorChanger.Start();
 
@@ -344,18 +345,18 @@ namespace JupiterX.Menu
 			component.localPosition = Utility.PageTextPosLeft; ;
 			component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 
-			gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			GameObject gameObject2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-			UnityEngine.Object.Destroy(gameObject.GetComponent<Rigidbody>());
-			gameObject.GetComponent<BoxCollider>().isTrigger = true;
-			gameObject.transform.parent = menu.transform;
-			gameObject.transform.rotation = Quaternion.identity;
-			gameObject.transform.localScale = Utility.PageObjScale;
-			gameObject.transform.localPosition = Utility.PageObjectPosRight;
-			gameObject.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
-			gameObject.AddComponent<Classes.Button>().relatedText = "PreviousPage"; // NextPage
+			UnityEngine.Object.Destroy(gameObject2.GetComponent<Rigidbody>());
+            gameObject2.GetComponent<BoxCollider>().isTrigger = true;
+            gameObject2.transform.parent = menu.transform;
+            gameObject2.transform.rotation = Quaternion.identity;
+            gameObject2.transform.localScale = Utility.PageObjScale;
+            gameObject2.transform.localPosition = Utility.PageObjectPosRight;
+            gameObject2.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
+            gameObject2.AddComponent<Classes.Button>().relatedText = "PreviousPage"; // NextPage
 
-            colorChanger = gameObject.AddComponent<ColorChanger>();
+            colorChanger = gameObject2.AddComponent<ColorChanger>();
 			colorChanger.colorInfo = buttonColors[0];
 			colorChanger.Start();
 
@@ -379,8 +380,11 @@ namespace JupiterX.Menu
 			component.localPosition = Utility.PageTextPosRight;
 			component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 
-			// Mod Buttons
-			ButtonInfo[] activeButtons = buttons[buttonsType].Skip(pageNumber * buttonsPerPage).Take(buttonsPerPage).ToArray();
+            RoundMenuObject(gameObject);
+            RoundMenuObject(gameObject2);
+
+            // Mod Buttons
+            ButtonInfo[] activeButtons = buttons[buttonsType].Skip(pageNumber * buttonsPerPage).Take(buttonsPerPage).ToArray();
 			for (int i = 0; i < activeButtons.Length; i++)
 			{
 				CreateButton(i * 0.1f, i, activeButtons[i]);
@@ -399,7 +403,9 @@ namespace JupiterX.Menu
 			gameObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - offset);
 			gameObject.AddComponent<Classes.Button>().relatedText = method.buttonText;
 
-			ColorChanger colorChanger = gameObject.AddComponent<ColorChanger>();
+            RoundMenuObject(gameObject);
+
+            ColorChanger colorChanger = gameObject.AddComponent<ColorChanger>();
 			if (method.enabled)
 			{
 				colorChanger.colorInfo = buttonColors[1];
@@ -476,7 +482,7 @@ namespace JupiterX.Menu
 			{
 				try
 				{
-					TPC = GameObject.Find("Player Objects/Third Person Camera/Shoulder Camera").GetComponent<Camera>();
+					TPC = GameObject.Find("Third Person Camera/Shoulder Camera").GetComponent<Camera>();
 				}
 				catch { }
 				if (TPC != null)
@@ -676,6 +682,147 @@ namespace JupiterX.Menu
         public static bool lastGunSpawned;
         public static bool lastGunTrigger;
 
+        public static void RoundMenuObject(GameObject toRound, float Bevel = 0.02f)
+        {
+            if (toRound.transform.parent != menu?.transform)
+            {
+                RoundObject(toRound, Bevel);
+                return;
+            }
+
+            Renderer ToRoundRenderer = toRound.GetComponent<Renderer>();
+            GameObject BaseA = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            BaseA.GetComponent<Renderer>().enabled = ToRoundRenderer.enabled;
+            GameObject.Destroy(BaseA.GetComponent<Collider>());
+
+            BaseA.transform.parent = menu.transform;
+            BaseA.transform.rotation = Quaternion.identity;
+            BaseA.transform.localPosition = toRound.transform.localPosition;
+            BaseA.transform.localScale = toRound.transform.localScale + new Vector3(0f, Bevel * -2.55f, 0f);
+
+            GameObject BaseB = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            BaseB.GetComponent<Renderer>().enabled = ToRoundRenderer.enabled;
+            GameObject.Destroy(BaseB.GetComponent<Collider>());
+
+            BaseB.transform.parent = menu.transform;
+            BaseB.transform.rotation = Quaternion.identity;
+            BaseB.transform.localPosition = toRound.transform.localPosition;
+            BaseB.transform.localScale = toRound.transform.localScale + new Vector3(0f, 0f, -Bevel * 2f);
+
+            GameObject RoundCornerA = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            RoundCornerA.GetComponent<Renderer>().enabled = ToRoundRenderer.enabled;
+            GameObject.Destroy(RoundCornerA.GetComponent<Collider>());
+
+            RoundCornerA.transform.parent = menu.transform;
+            RoundCornerA.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+
+            RoundCornerA.transform.localPosition = toRound.transform.localPosition + new Vector3(0f, toRound.transform.localScale.y / 2f - Bevel * 1.275f, toRound.transform.localScale.z / 2f - Bevel);
+            RoundCornerA.transform.localScale = new Vector3(Bevel * 2.55f, toRound.transform.localScale.x / 2f, Bevel * 2f);
+
+            GameObject RoundCornerB = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            RoundCornerB.GetComponent<Renderer>().enabled = ToRoundRenderer.enabled;
+            GameObject.Destroy(RoundCornerB.GetComponent<Collider>());
+
+            RoundCornerB.transform.parent = menu.transform;
+            RoundCornerB.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+
+            RoundCornerB.transform.localPosition = toRound.transform.localPosition + new Vector3(0f, -(toRound.transform.localScale.y / 2f) + Bevel * 1.275f, toRound.transform.localScale.z / 2f - Bevel);
+            RoundCornerB.transform.localScale = new Vector3(Bevel * 2.55f, toRound.transform.localScale.x / 2f, Bevel * 2f);
+
+            GameObject RoundCornerC = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            RoundCornerC.GetComponent<Renderer>().enabled = ToRoundRenderer.enabled;
+            GameObject.Destroy(RoundCornerC.GetComponent<Collider>());
+
+            RoundCornerC.transform.parent = menu.transform;
+            RoundCornerC.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+
+            RoundCornerC.transform.localPosition = toRound.transform.localPosition + new Vector3(0f, toRound.transform.localScale.y / 2f - Bevel * 1.275f, -(toRound.transform.localScale.z / 2f) + Bevel);
+            RoundCornerC.transform.localScale = new Vector3(Bevel * 2.55f, toRound.transform.localScale.x / 2f, Bevel * 2f);
+
+            GameObject RoundCornerD = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            RoundCornerD.GetComponent<Renderer>().enabled = ToRoundRenderer.enabled;
+            GameObject.Destroy(RoundCornerD.GetComponent<Collider>());
+
+            RoundCornerD.transform.parent = menu.transform;
+            RoundCornerD.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+
+            RoundCornerD.transform.localPosition = toRound.transform.localPosition + new Vector3(0f, -(toRound.transform.localScale.y / 2f) + Bevel * 1.275f, -(toRound.transform.localScale.z / 2f) + Bevel);
+            RoundCornerD.transform.localScale = new Vector3(Bevel * 2.55f, toRound.transform.localScale.x / 2f, Bevel * 2f);
+
+            GameObject[] ToChange = {
+                BaseA,
+                BaseB,
+                RoundCornerA,
+                RoundCornerB,
+                RoundCornerC,
+                RoundCornerD
+            };
+
+            foreach (GameObject Changed in ToChange)
+            {
+                ClampColor TargetChanger = Changed.AddComponent<ClampColor>();
+                TargetChanger.targetRenderer = ToRoundRenderer;
+            }
+
+            ToRoundRenderer.enabled = false;
+        }
+
+        public static void RoundObject(GameObject toRound, float bevel = 0.02f)
+        {
+            static GameObject CreatePrimitive(PrimitiveType type, Transform parent, bool rendererEnabled)
+            {
+                GameObject obj = GameObject.CreatePrimitive(type);
+                obj.GetComponent<Renderer>().enabled = rendererEnabled;
+
+                Collider collider = obj.GetComponent<Collider>();
+                if (collider != null)
+                    GameObject.Destroy(collider);
+
+                obj.transform.SetParent(parent, false);
+                return obj;
+            }
+
+            Renderer renderer = toRound.GetComponent<Renderer>();
+            if (renderer == null) return;
+
+            Transform parent = toRound.transform;
+            Vector3 scale = parent.localScale;
+            bool rendererEnabled = renderer.enabled;
+
+            GameObject baseA = CreatePrimitive(PrimitiveType.Cube, parent, rendererEnabled);
+            baseA.transform.localPosition = Vector3.zero;
+            baseA.transform.localRotation = Quaternion.identity;
+            baseA.transform.localScale = new Vector3(scale.x, scale.y - bevel * 2f, scale.z);
+
+            GameObject baseB = CreatePrimitive(PrimitiveType.Cube, parent, rendererEnabled);
+            baseB.transform.localPosition = Vector3.zero;
+            baseB.transform.localRotation = Quaternion.identity;
+            baseB.transform.localScale = new Vector3(scale.x, scale.y, scale.z - bevel * 2f);
+
+            GameObject[] corners = new GameObject[4];
+            Vector3[] cornerOffsets = {
+                new Vector3(0f, scale.y / 2f - bevel, scale.z / 2f - bevel),
+                new Vector3(0f, -scale.y / 2f + bevel, scale.z / 2f - bevel),
+                new Vector3(0f, scale.y / 2f - bevel, -scale.z / 2f + bevel),
+                new Vector3(0f, -scale.y / 2f + bevel, -scale.z / 2f + bevel)
+            };
+
+            for (int i = 0; i < 4; i++)
+            {
+                corners[i] = CreatePrimitive(PrimitiveType.Cylinder, parent, rendererEnabled);
+                corners[i].transform.localPosition = cornerOffsets[i];
+                corners[i].transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                corners[i].transform.localScale = new Vector3(bevel * 2f, scale.x / 2f, bevel * 2f);
+            }
+
+            GameObject[] allObjects = { baseA, baseB, corners[0], corners[1], corners[2], corners[3] };
+            foreach (GameObject obj in allObjects)
+            {
+                ClampColor clampColor = obj.AddComponent<ClampColor>();
+                clampColor.targetRenderer = renderer;
+            }
+            renderer.enabled = false;
+        }
 
         private static VRRig _giveGunTarget;
         public static VRRig giveGunTarget
@@ -713,284 +860,90 @@ namespace JupiterX.Menu
             return (GorillaTagger.Instance.rightHandTransform.position + GorillaTagger.Instance.rightHandTransform.rotation * (GorillaLocomotion.Player.Instance.rightHandOffset * (scaleWithPlayer ? GorillaLocomotion.Player.Instance.transform.localScale.magnitude : 1f)), rot, rot * Vector3.up, rot * Vector3.forward, rot * Vector3.right);
         }
 
-        public static bool smoothLines;
+        public static void DestroyGun()
+        {
+            if (GunPointer != null)
+            {
+                UnityEngine.Object.Destroy(GunPointer);
+                GunPointer = null;
+            }
+            if (GunLine != null)
+            {
+                UnityEngine.Object.Destroy(GunLine.gameObject);
+                GunLine = null;
+            }
+        }
 
-        private static List<float> volumeArchive = new List<float> { };
-        private static Vector3 GunPositionSmoothed = Vector3.zero;
 
-        private static GameObject GunPointer;
+        public static GameObject GunPointer;
         private static LineRenderer GunLine;
-
         public static (RaycastHit Ray, GameObject NewPointer) RenderGun(int? overrideLayerMask = null)
         {
             GunSpawned = true;
-            Transform GunTransform = SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
+			Transform gunTransform = SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
 
-            Vector3 StartPosition = GunTransform.position;
-            Vector3 Direction = GunTransform.forward;
+			Vector3 startPos = gunTransform.position;
+			Vector3 direction = gunTransform.forward;
 
-            Vector3 Up = -GunTransform.up;
-            Vector3 Right = GunTransform.right;
+			Vector3 up = gunTransform.up;
+			Vector3 right = gunTransform.right;
 
-            switch (GunDirection)
-            {
-                case 1:
-                    Up = GunTransform.forward;
-                    Direction = -GunTransform.up;
-                    break;
-                case 2:
-                    Up = GunTransform.forward;
-                    Right = -GunTransform.up;
-                    Direction = GunTransform.right * (SwapGunHand ? 1f : -1f);
-                    break;
-                case 3:
-                    Up = SwapGunHand ? TrueLeftHand().up : TrueRightHand().up;
-                    Right = SwapGunHand ? TrueLeftHand().right : TrueRightHand().right;
-                    Direction = SwapGunHand ? TrueLeftHand().forward : TrueRightHand().forward;
-                    break;
-                case 4:
-                    Up = GorillaTagger.Instance.headCollider.transform.up;
-                    Right = GorillaTagger.Instance.headCollider.transform.right;
-                    Direction = GorillaTagger.Instance.headCollider.transform.forward;
-                    StartPosition = GorillaTagger.Instance.headCollider.transform.position + (Up * 0.1f);
-                    break;
-            }
+			if (giveGunTarget != null)
+			{
+				gunTransform = SwapGunHand ? giveGunTarget.leftHandTransform : giveGunTarget.rightHandTransform;
 
-            if (giveGunTarget != null)
-            {
-                GunTransform = SwapGunHand ? giveGunTarget.leftHandTransform : giveGunTarget.rightHandTransform;
+				startPos = gunTransform.position;
+				direction = gunTransform.forward;
 
-                StartPosition = GunTransform.position;
-                Direction = GunTransform.up;
+				up = gunTransform.up;
+				right = gunTransform.right;
+			}
 
-                Up = GunTransform.forward;
-                Right = GunTransform.right;
-            }
+			Physics.Raycast(startPos, Quaternion.AngleAxis(45f, right) * direction, out var Ray, 512f);
 
-            Physics.Raycast(StartPosition + ((Direction / 4f) * (scaleWithPlayer ? GorillaLocomotion.Player.Instance.transform.localScale.magnitude : 1f)), Direction, out var Ray, 512f, overrideLayerMask ?? NoInvisLayerMask());
+			Vector3 endPos = gunLocked ? lockTarget.headMesh.transform.position : Ray.point;
 
-            Vector3 EndPosition = gunLocked ? lockTarget.headMesh.transform.position : Ray.point;
+			if (GunPointer == null)
+				GunPointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
-            if (EndPosition == Vector3.zero)
-                EndPosition = StartPosition + (Direction * 512f);
+			GunPointer.SetActive(true);
+			GunPointer.transform.localScale = smallGunPointer ? new Vector3(0.1f, 0.1f, 0.1f) : new Vector3(0.2f, 0.2f, 0.2f);
+			GunPointer.transform.position = endPos;
 
-            if (SmoothGunPointer)
-            {
-                GunPositionSmoothed = Vector3.Lerp(GunPositionSmoothed, EndPosition, Time.deltaTime * 6f);
-                EndPosition = GunPositionSmoothed;
-            }
+			Renderer pointerRend = GunPointer.GetComponent<Renderer>();
+			pointerRend.material.shader = Shader.Find("GUI/Text Shader");
+			pointerRend.material.color = gunLocked || GetGunInput(true) ? buttonColors[1].GetCurrentColor() : buttonColors[0].GetCurrentColor();
 
-            if (GunPointer == null)
-                GunPointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			if (disableGunPointer)
+				pointerRend.enabled = false;
 
-            GunPointer.SetActive(true);
-            GunPointer.transform.localScale = (smallGunPointer ? new Vector3(0.1f, 0.1f, 0.1f) : new Vector3(0.2f, 0.2f, 0.2f)) * (scaleWithPlayer ? GorillaLocomotion.Player.Instance.transform.localScale.magnitude : 1f);
-            GunPointer.transform.position = EndPosition;
+            if (GunPointer.GetComponent<Collider>() != null)
+                UnityEngine.Object.Destroy(GunPointer.GetComponent<Collider>());
 
-            Renderer PointerRenderer = GunPointer.GetComponent<Renderer>();
-            PointerRenderer.material.shader = Shader.Find("GUI/Text Shader");
-            PointerRenderer.material.color = (gunLocked || GetGunInput(true)) ? Color.red : Color.cyan;
 
-            if (disableGunPointer)
-                PointerRenderer.enabled = false;
+            if (disableGunLine) return (Ray, GunPointer);
+			if (GunLine == null)
+			{
+				GameObject line = new GameObject();
+				GunLine = line.AddComponent<LineRenderer>();
+			}
 
-            if (GunParticles && (GetGunInput(true) || gunLocked))
-            {
-                GameObject Particle = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                Particle.transform.position = EndPosition;
-                Particle.transform.localScale = Vector3.one * 0.025f * (scaleWithPlayer ? GorillaLocomotion.Player.Instance.transform.localScale.magnitude : 1f);
-                Particle.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-                GameObject.Destroy(Particle.GetComponent<Collider>());
-            }
+			GunLine.gameObject.SetActive(true);
+			GunLine.material.shader = Shader.Find("GUI/Text Shader");
+			GunLine.startColor = backgroundColor.GetCurrentColor();
+			GunLine.endColor = backgroundColor.GetCurrentColor(0.5f);
+			GunLine.startWidth = 0.02f;
+			GunLine.endWidth = 0.02f;
+			GunLine.useWorldSpace = true;
 
-            GameObject.Destroy(GunPointer.GetComponent<Collider>());
+			GunLine.positionCount = 2;
 
-            if (!disableGunLine)
-            {
-                if (GunLine == null)
-                {
-                    GameObject line = new GameObject("iiMenu_GunLine");
-                    GunLine = line.AddComponent<LineRenderer>();
-                }
+			GunLine.SetPosition(0, startPos);
+			GunLine.SetPosition(1, GunPointer.transform.position);
 
-                GunLine.gameObject.SetActive(true);
-                GunLine.material.shader = Shader.Find("GUI/Text Shader");
-                GunLine.startColor = Color.gray;
-                GunLine.endColor = Color.gray;
-                GunLine.startWidth = 0.025f * (scaleWithPlayer ? GorillaLocomotion.Player.Instance.transform.localScale.magnitude : 1f);
-                GunLine.endWidth = 0.025f * (scaleWithPlayer ? GorillaLocomotion.Player.Instance.transform.localScale.magnitude : 1f);
-                GunLine.positionCount = 2;
-                GunLine.useWorldSpace = true;
-                if (smoothLines)
-                {
-                    GunLine.numCapVertices = 10;
-                    GunLine.numCornerVertices = 5;
-                }
-                GunLine.SetPosition(0, StartPosition);
-                GunLine.SetPosition(1, EndPosition);
-
-                int Step = GunLineQuality;
-                switch (gunVariation)
-                {
-                    case 1: // Lightning
-                        if (GetGunInput(true) || gunLocked)
-                        {
-                            GunLine.positionCount = Step;
-                            GunLine.SetPosition(0, StartPosition);
-
-                            for (int i = 1; i < (Step - 1); i++)
-                            {
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                GunLine.SetPosition(i, Position + (UnityEngine.Random.Range(0f, 1f) > 0.75f ? new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f)) : Vector3.zero));
-                            }
-
-                            GunLine.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 2: // Wavy
-                        if (GetGunInput(true) || gunLocked)
-                        {
-                            GunLine.positionCount = Step;
-                            GunLine.SetPosition(0, StartPosition);
-
-                            for (int i = 1; i < (Step - 1); i++)
-                            {
-                                float value = ((float)i / (float)Step) * 50f;
-
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                GunLine.SetPosition(i, Position + (Up * Mathf.Sin((Time.time * -10f) + value) * 0.1f));
-                            }
-
-                            GunLine.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 3: // Blocky
-                        if (GetGunInput(true) || gunLocked)
-                        {
-                            GunLine.positionCount = Step;
-                            GunLine.SetPosition(0, StartPosition);
-
-                            for (int i = 1; i < (Step - 1); i++)
-                            {
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                GunLine.SetPosition(i, new Vector3(Mathf.Round(Position.x * 25f) / 25f, Mathf.Round(Position.y * 25f) / 25f, Mathf.Round(Position.z * 25f) / 25f));
-                            }
-
-                            GunLine.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 4: // Sinewave
-                        Step = GunLineQuality / 2;
-
-                        if (GetGunInput(true) || gunLocked)
-                        {
-                            GunLine.positionCount = Step;
-                            GunLine.SetPosition(0, StartPosition);
-
-                            for (int i = 1; i < (Step - 1); i++)
-                            {
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                GunLine.SetPosition(i, Position + (Up * Mathf.Sin(Time.time * 10f) * (i % 2 == 0 ? 0.1f : -0.1f)));
-                            }
-
-                            GunLine.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 5: // Spring
-                        if (GetGunInput(true) || gunLocked)
-                        {
-                            GunLine.positionCount = Step;
-                            GunLine.SetPosition(0, StartPosition);
-
-                            for (int i = 1; i < (Step - 1); i++)
-                            {
-                                float value = ((float)i / (float)Step) * 50f;
-
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                GunLine.SetPosition(i, Position + (Right * Mathf.Cos((Time.time * -10f) + value) * 0.1f) + (Up * Mathf.Sin((Time.time * -10f) + value) * 0.1f));
-                            }
-
-                            GunLine.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 6: // Bouncy
-                        if (GetGunInput(true) || gunLocked)
-                        {
-                            GunLine.positionCount = Step;
-                            GunLine.SetPosition(0, StartPosition);
-
-                            for (int i = 1; i < (Step - 1); i++)
-                            {
-                                float value = ((float)i / (float)Step) * 15f;
-                                GunLine.SetPosition(i, Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f)) + (Up * Mathf.Abs(Mathf.Sin((Time.time * -10f) + value)) * 0.3f));
-                            }
-
-                            GunLine.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 7: // Audio
-                        if (GetGunInput(true) || gunLocked)
-                        {
-
-                            volumeArchive.Insert(0, volumeArchive.Count == 0 ? 0 : (5 - volumeArchive[0] * 0.1f));
-
-                            if (volumeArchive.Count > Step)
-                                volumeArchive.Remove(Step);
-
-                            GunLine.positionCount = Step;
-                            GunLine.SetPosition(0, StartPosition);
-
-                            for (int i = 1; i < (Step - 1); i++)
-                            {
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                GunLine.SetPosition(i, Position + (Up * (i >= volumeArchive.Count ? 0 : volumeArchive[i]) * (i % 2 == 0 ? 1f : -1f)));
-                            }
-
-                            GunLine.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 8: // Bezier, credits to Crisp / Kman / Steal / Untitled One of those 4 I don't really know who
-                        Vector3 BaseMid = Vector3.Lerp(StartPosition, EndPosition, 0.5f);
-
-                        float angle = Time.time * 3f;
-                        Vector3 wobbleOffset = Mathf.Sin(angle) * Up * 0.15f + Mathf.Cos(angle * 1.3f) * Right * 0.15f;
-                        Vector3 targetMid = BaseMid + wobbleOffset;
-
-                        if (MidPosition == Vector3.zero) MidPosition = targetMid;
-
-                        Vector3 force = (targetMid - MidPosition) * 40f;
-                        MidVelocity += force * Time.deltaTime;
-                        MidVelocity *= Mathf.Exp(-6f * Time.deltaTime);
-                        MidPosition += MidVelocity * Time.deltaTime;
-
-                        GunLine.positionCount = Step;
-                        GunLine.SetPosition(0, StartPosition);
-
-                        Vector3[] points = new Vector3[Step];
-                        for (int i = 0; i < Step; i++)
-                        {
-                            float t = (float)i / (Step - 1);
-                            points[i] = Mathf.Pow(1 - t, 2) * StartPosition +
-                                        2 * (1 - t) * t * MidPosition +
-                                        Mathf.Pow(t, 2) * EndPosition;
-                        }
-
-                        GunLine.positionCount = Step;
-                        GunLine.SetPositions(points);
-                        break;
-                }
-            }
-
-            return (Ray, GunPointer);
+			return (Ray, GunPointer);
         }
 
-		public static void DestroyGun()
-		{
-			if (GunPointer != null)
-				GameObject.Destroy(GunPointer);
-			if (GunLine != null)
-				GameObject.Destroy(GunLine);
-		}
 
         public static bool GetGunInput(bool isShooting)
         {
@@ -1001,7 +954,6 @@ namespace JupiterX.Menu
                 else
                     return GriplessGuns || (SwapGunHand ? giveGunTarget.leftMiddle.calcT > 0.5f : giveGunTarget.rightMiddle.calcT > 0.5f);
             }
-
             if (isShooting)
                 return TriggerlessGuns || (SwapGunHand ? Utility.LTrigger : Utility.RTrigger) || Mouse.current.leftButton.isPressed;
             else

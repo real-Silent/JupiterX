@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <LangVersion>Latest</LangVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Classes\ButtonCollider.cs" />
     <Compile Include="Classes\ButtonInfo.cs" />
+    <Compile Include="Classes\ClampColor.cs" />
     <Compile Include="Classes\ColorChanger.cs" />
     <Compile Include="Classes\ExtGradient.cs" />
     <Compile Include="Classes\FixedColliders.cs" />

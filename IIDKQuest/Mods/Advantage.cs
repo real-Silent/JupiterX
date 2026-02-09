@@ -95,7 +95,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -132,7 +132,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -150,7 +150,7 @@ namespace JupiterX.Mods
             }
             else
             {
-                DestroyGun();
+                Main.DestroyGun();
             }
         }
     }

@@ -30,40 +30,9 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Settings | 1
                 new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
-                new ButtonInfo { buttonText = "Return to Settings", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the main settings page for the menu."},
-                new ButtonInfo { buttonText = "Right Hand", enableMethod =() => Settings.RightHand(), disableMethod =() => Settings.LeftHand(), toolTip = "Puts the menu on your right hand."},
-                new ButtonInfo { buttonText = "Save Preferences", method =() => Utility.SavePreferences(), isTogglable = false, toolTip = "Saves your enabled mods to file." },
-                new ButtonInfo { buttonText = "Load Preferences", method =() => Utility.LoadPreferences(), isTogglable = false, toolTip = "Loads your saved mods from a file." },
-                new ButtonInfo { buttonText = "Stump Text", method =() => Settings.EnableStumpText(), disableMethod =() => Settings.DisableStumpText(), enabled = stumptext, toolTip = "Toggles the stump text."},
-                new ButtonInfo { buttonText = "Custom Boards", enabled = true, isTogglable = true, toolTip = "Enables the custom boards in stump." },
-                new ButtonInfo { buttonText = "Move Stump Text Gun", method =() => Utility.MoveStumpTextGun(), isTogglable = true, toolTip = "Lets you move the stump text with a gun." },
-                new ButtonInfo { buttonText = "Version Text", enableMethod =() => Settings.EnableFPSCounter(), disableMethod =() => Settings.DisableFPSCounter(), enabled = fpsCounter, toolTip = "Toggles the Version Text."},
-                new ButtonInfo { buttonText = "Notifications", enableMethod =() => Settings.EnableNotis(), disableMethod =() => Settings.DisableNotis(), enabled = !Settings.disableNotis, toolTip = "Toggles the Notifcations."},
-                new ButtonInfo { buttonText = "Disconnect Button", enableMethod =() => Settings.EnableDisconnectButton(), disableMethod =() => Settings.DisableDisconnectButton(), enabled = disconnectButton, toolTip = "Toggles the disconnect button."},
-                new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), overlapText = "Change Page Type <color=cyan>[Side]</color>", isTogglable = false, toolTip = "Changes the page type." },
-                new ButtonInfo { buttonText = "Freeze Player In Menu", method =() => Utility.FreezePlayerInMenu(), isTogglable = true, toolTip = "Lets you float while the menu is open."},
-                new ButtonInfo { buttonText = "Ghost In Menu", method =() => Utility.GhostInMenu(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Makes you have ghost monke when menu is open."},
-
-                new ButtonInfo { buttonText = "Change Fly Speed", method =() => Movement.ChangeFlySpeed(), overlapText = "Change Fly Speed <color=cyan>[Very Slow]</color>", isTogglable = false, toolTip = "Changes the current fly speed." },
-                new ButtonInfo { buttonText = "Change Arm Length", method =() => Movement.ChangeArmLength(), overlapText = "Change Arm Length <color=cyan>[Stean]</color>", isTogglable = false, toolTip = "Changes your arm length." },
-
-                // Creds to iiDk again <3
-                new ButtonInfo { buttonText = "Credits to iiDk for gun lib/settings", isTogglable = false, toolTip = "Credits to iiDk for the gunlib and gunlib settings <3." },
-                new ButtonInfo { buttonText = "Change Gun Line Quality", overlapText = "Change Gun Line Quality <color=grey>[</color><color=cyan>Normal</color><color=grey>]</color>", method =() => Settings.ChangeGunLineQuality(), enableMethod =() => Settings.ChangeGunLineQuality(), disableMethod =() => Settings.ChangeGunLineQuality(false), isTogglable = false, toolTip = "Changes the amount of points on your gun."},
-                new ButtonInfo { buttonText = "Change Gun Variation", overlapText = "Change Gun Variation <color=grey>[</color><color=cyan>Default</color><color=grey>]</color>", method =() => Settings.ChangeGunVariation(), enableMethod =() => Settings.ChangeGunVariation(), disableMethod =() => Settings.ChangeGunVariation(false), isTogglable = false, toolTip = "Changes the look of the gun."},
-                new ButtonInfo { buttonText = "Change Gun Direction", overlapText = "Change Gun Direction <color=grey>[</color><color=cyan>Default</color><color=grey>]</color>", method =() => Settings.ChangeGunDirection(), enableMethod =() => Settings.ChangeGunDirection(), disableMethod =() => Settings.ChangeGunDirection(false), isTogglable = false, toolTip = "Changes the direction of the gun."},
-
-                new ButtonInfo { buttonText = "Gun Sounds", enableMethod =() => GunSounds = true, disableMethod =() => GunSounds = false, toolTip = "Gives the gun laser sounds for when you press grip and trigger."},
-                new ButtonInfo { buttonText = "Gun Particles", enableMethod =() => GunParticles = true, disableMethod =() => GunParticles = false, toolTip = "Gives the gun particles when you shoot it."},
-                new ButtonInfo { buttonText = "Swap Gun Hand", enableMethod =() => SwapGunHand = true, disableMethod =() => SwapGunHand = false, toolTip = "Swaps the hand gun mods work with."},
-                new ButtonInfo { buttonText = "Gripless Guns", enableMethod =() => GriplessGuns = true, disableMethod =() => GriplessGuns = false, toolTip = "Forces your grip to be held for guns."},
-                new ButtonInfo { buttonText = "Triggerless Guns", enableMethod =() => TriggerlessGuns = true, disableMethod =() => TriggerlessGuns = false, toolTip = "Forces your trigger to be held for guns."},
-                new ButtonInfo { buttonText = "Hard Gun Lock", enableMethod =() => HardGunLocks = true, disableMethod =() => HardGunLocks = false, toolTip = "Locks the guns even when letting go of grip until you press <color=green>B</color>."},
-                new ButtonInfo { buttonText = "Small Gun Pointer", enableMethod =() => smallGunPointer = true, disableMethod =() => smallGunPointer = false, toolTip = "Makes the ball at the end of every gun mod smaller."},
-                new ButtonInfo { buttonText = "Smooth Gun Pointer", enableMethod =() => SmoothGunPointer = true, disableMethod =() => SmoothGunPointer = false, toolTip = "Makes the ball at the end of every gun mod smoother."},
-                new ButtonInfo { buttonText = "Disable Gun Pointer", enableMethod =() => disableGunPointer = true, disableMethod =() => disableGunPointer = false, toolTip = "Disables the ball at the end of every gun mod."},
-                new ButtonInfo { buttonText = "Disable Gun Line", enableMethod =() => disableGunLine = true, disableMethod =() => disableGunLine = false, toolTip = "Disables the gun from your hand to the end of every gun mod."},
-
+                new ButtonInfo { buttonText = "Menu Settings", method =() => Settings.MovePage(17), isTogglable = false, toolTip = "Opens the menu settings page for the menu." },
+                new ButtonInfo { buttonText = "Movement Settings", method =() => Settings.MovePage(18), isTogglable = false, toolTip = "Opens the movement settings page for the menu." },
+                new ButtonInfo { buttonText = "Gun Settings", method =() => Settings.MovePage(19), isTogglable = false, toolTip = "Opens the gun settings page for the menu." },
             },
 
             new ButtonInfo[] { // Important | 2
@@ -294,8 +263,41 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-             new ButtonInfo[] { // PlayersTab Fixer ? | 16
+            new ButtonInfo[] { // PlayersTab Fixer ? | 16
                 new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+            },
+
+            new ButtonInfo[] { // Menu Settings | 17
+                new ButtonInfo { buttonText = "Return to Settings", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+                new ButtonInfo { buttonText = "Right Hand", enableMethod =() => Settings.RightHand(), disableMethod =() => Settings.LeftHand(), toolTip = "Puts the menu on your right hand."},
+                new ButtonInfo { buttonText = "Save Preferences", method =() => Utility.SavePreferences(), isTogglable = false, toolTip = "Saves your enabled mods to file." },
+                new ButtonInfo { buttonText = "Load Preferences", method =() => Utility.LoadPreferences(), isTogglable = false, toolTip = "Loads your saved mods from a file." },
+                new ButtonInfo { buttonText = "Stump Text", method =() => Settings.EnableStumpText(), disableMethod =() => Settings.DisableStumpText(), enabled = stumptext, toolTip = "Toggles the stump text."},
+                new ButtonInfo { buttonText = "Custom Boards", enabled = true, isTogglable = true, toolTip = "Enables the custom boards in stump." },
+                new ButtonInfo { buttonText = "Move Stump Text Gun", method =() => Utility.MoveStumpTextGun(), isTogglable = true, toolTip = "Lets you move the stump text with a gun." },
+                new ButtonInfo { buttonText = "Version Text", enableMethod =() => Settings.EnableFPSCounter(), disableMethod =() => Settings.DisableFPSCounter(), enabled = fpsCounter, toolTip = "Toggles the Version Text."},
+                new ButtonInfo { buttonText = "Notifications", enableMethod =() => Settings.EnableNotis(), disableMethod =() => Settings.DisableNotis(), enabled = !Settings.disableNotis, toolTip = "Toggles the Notifcations."},
+                new ButtonInfo { buttonText = "Disconnect Button", enableMethod =() => Settings.EnableDisconnectButton(), disableMethod =() => Settings.DisableDisconnectButton(), enabled = disconnectButton, toolTip = "Toggles the disconnect button."},
+                new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), overlapText = "Change Page Type <color=cyan>[Side]</color>", isTogglable = false, toolTip = "Changes the page type." },
+                new ButtonInfo { buttonText = "Freeze Player In Menu", method =() => Utility.FreezePlayerInMenu(), isTogglable = true, toolTip = "Lets you float while the menu is open."},
+                new ButtonInfo { buttonText = "Ghost In Menu", method =() => Utility.GhostInMenu(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Makes you have ghost monke when menu is open."},
+            },
+
+            new ButtonInfo[] { // Movement Settings | 18
+                new ButtonInfo { buttonText = "Return to Settings", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+                new ButtonInfo { buttonText = "Change Fly Speed", method =() => Movement.ChangeFlySpeed(), overlapText = "Change Fly Speed <color=cyan>[Very Slow]</color>", isTogglable = false, toolTip = "Changes the current fly speed." },
+                new ButtonInfo { buttonText = "Change Arm Length", method =() => Movement.ChangeArmLength(), overlapText = "Change Arm Length <color=cyan>[Stean]</color>", isTogglable = false, toolTip = "Changes your arm length." },
+            },
+
+            new ButtonInfo[] { // Gun Settings | 19
+                new ButtonInfo { buttonText = "Return to Settings", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+                new ButtonInfo { buttonText = "Disable Gun Pointer", enableMethod =() => disableGunPointer = true, disableMethod =() => disableGunPointer = false, isTogglable = true, toolTip = "Disables the gun pointer." },
+                new ButtonInfo { buttonText = "Small Gun Pointer", enableMethod =() => smallGunPointer = true, disableMethod =() => smallGunPointer = false, isTogglable = true, toolTip = "Makes the gun pointer smaller." },
+                new ButtonInfo { buttonText = "Disable Gun Line", enableMethod =() => disableGunLine = true, disableMethod =() => disableGunLine = false, isTogglable = true, toolTip = "Disables the gun line." },
+                new ButtonInfo { buttonText = "Swap Gun Hand", enableMethod =() => SwapGunHand = true, disableMethod =() => SwapGunHand = false, isTogglable = true, toolTip = "Swaps the hand of the gun is on." },
+                new ButtonInfo { buttonText = "Gripless Guns", enableMethod =() => GriplessGuns = true, disableMethod =() => GriplessGuns = false, isTogglable = true, toolTip = "Makes the gun work without holding grip." },
+                new ButtonInfo { buttonText = "Triggerless Guns", enableMethod =() => TriggerlessGuns = true, disableMethod =() => TriggerlessGuns = false, isTogglable = true, toolTip = "Makes the gun shoot without holding trigger." },
+                new ButtonInfo { buttonText = "Destroy Gun", method = DestroyGun, isTogglable = false, toolTip = "Fixes a bug that doesnt make the gun destroy when not in a room." },
             },
         };
     }

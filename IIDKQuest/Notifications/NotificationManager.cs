@@ -50,7 +50,7 @@ namespace JupiterX
 
                 Text = new GameObject { transform = { parent = Notifications.transform } }.AddComponent<Text>();
                 Text.fontSize = 10;
-                Text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                Text.font = GameObject.Find("COC Text").GetComponent<Text>().font ?? Resources.GetBuiltinResource<Font>("Arial.ttf");
                 Text.rectTransform.sizeDelta = new Vector2(260f, 160f);
                 Text.rectTransform.localScale = new Vector3(0.01f, 0.01f, 1f);
                 Text.rectTransform.localPosition = new Vector3(-2.4f, -1.5f, 0f);

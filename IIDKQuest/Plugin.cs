@@ -22,11 +22,8 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<TimedBehaviour>();
             ClassInjector.RegisterTypeInIl2Cpp<RigManager>();
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
+            ClassInjector.RegisterTypeInIl2Cpp<ClampColor>();
             ClassInjector.RegisterTypeInIl2Cpp<JupiterX.Classes.Button>();
-
-            GameObject.Destroy(GameObject.Find("GorillaPlayer"));
-            GameObject.Destroy(GameObject.Find("Main Camera"));
-            GameObject.Destroy(GameObject.Find("Level"));
 
             // Set UpText
             Utility.FindObjects();
@@ -52,14 +49,23 @@ namespace JupiterX
             GorillaTagger.Instance.disableTutorial = true;
         }
 
+        public override void OnApplicationLateStart()
+        {
+            base.OnApplicationLateStart();
+            Utility.VersionCheck();
+        }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
             Menu.Main.Prefix();
             Utility.UpdateFPS();
-
             NotificationManager.LoadNotifications();
+
+            if (Utility.updateneeded)
+            {
+                NotificationManager.SendNotification2("<color=cyan>JupiterX is outdated please go to the discord and update it</color>");
+            }
 
             if (!Utility.HasUsedMenuBeforeNoti)
             {
@@ -105,12 +111,12 @@ namespace JupiterX
                 string COCTextText = $"--GameInfo--\nTitleId: {title}\nRealtime: {rt}\nVoice: {vc}\nVersion: {version}\nPackageName: {packagename}\n--Client--\nPing: {ping}\nFPS: {fps}";
 
                 Utility.cocText.text = COCTextText;
-                Utility.codeOfConduct.text = "JupiterX";
+                Utility.codeOfConduct.text = "<color=cyan>JupiterX V2</color>";
 
                 string v = Utility.version;
                 string creds = Utility.Credits;
-                string MOTDText = $"thank you for using <b>jupiterx</b> you are using version {v}\nthis menu is my second paid menu to be released after qolossal\nthis menu works in spring cleaning and gorilla tag horror type games (i think)\nany bugs report to the discord\ncredits: {creds}\njoin the discord : discord.gg/zmbGV74y8W".ToUpper().Replace("DISCORD.GG/ZMBGV74Y8W", "discord.gg/zmbGV74y8W").Replace("JUPITERX", "JupiterX");
-                Utility.CreateCustomBoards(Utility.motd, Utility.motdText, "JupiterX", MOTDText);
+                string MOTDText = $"thank you for using <b>jupiterx</b> you are using version {v}\nthis menu is my second paid menu to be released after qolossal\nthis menu works in spring cleaning and gorilla tag horror type games (i think)\nany bugs report to the discord\ncredits: {creds}\njoin the discord : discord.gg/ueFrRsKvVT".ToUpper().Replace("DISCORD.GG/UEFRRSKVVT", "discord.gg/ueFrRsKvVT").Replace("JUPITERX", "JupiterX");
+                Utility.CreateCustomBoards(Utility.motd, Utility.motdText, "<color=cyan>JupiterX V2</color>", MOTDText);
             }
             else
             {
@@ -120,7 +126,7 @@ namespace JupiterX
                 Utility.codeOfConduct.text = Utility.ogcoc;
             }
 
-            string stumpText = $"JupiterX\n<size=1>Thank you for using JupiterX\nThe <color=red>Best</color> Gorilla Tag Copy Dll\n<color=yellow>Version: [{Utility.version}] , Beta Build: {Utility.isBetaRelease}</color></size>";
+            string stumpText = $"<color=#00ffff>JupiterX V2</color>\n<size=1>Thank you for using JupiterX V2\nThe <color=red>Best</color> Gorilla Tag Copy Dll\n<color=yellow>Version: [{(Utility.updateneeded ? "<color=red>UPDATE NEEDED</color>" : Utility.version)}] , Beta Build: {Utility.isBetaRelease}</color></size>";
             if (StumpText == null)
             {
                 StumpText = new GameObject("StumpTextObject");

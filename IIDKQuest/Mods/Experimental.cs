@@ -76,7 +76,6 @@ namespace JupiterX.Mods
 
             string url = $"https://{titleId}.playfabapi.com/Client/LoginWithCustomID";
 
-            // JSON payload
             string jsonData = $@"{{
             ""CustomId"": ""{customId}"",
             ""CreateAccount"": true,
@@ -463,7 +462,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 
@@ -504,7 +503,7 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                JupiterX.Menu.Main.DestroyGun();
+                Main.DestroyGun();
             }
         }
 

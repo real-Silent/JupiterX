@@ -14,12 +14,12 @@ namespace JupiterX
         public static ExtGradient[] buttonColors = new ExtGradient[]
         {
             new ExtGradient{colors = GetSolidGradient(Color.black) }, // Disabled
-            new ExtGradient{colors = GetSolidGradient(Color.black)} // Enabled
+            new ExtGradient{colors = GetSolidGradient(Color.grey)} // Enabled
         };
         public static Color[] textColors = new Color[]
         {
             Color.white, // Disabled
-            Color.grey // Enabled
+            Color.white // Enabled
         };
 
         public static Font currentFont = (Resources.GetBuiltinResource<Font>("Arial.ttf") as Font);
@@ -70,17 +70,10 @@ namespace JupiterX
                 for (int i = 0; i < PhotonNetwork.PlayerListOthers.Length; i++)
                 {
                     Photon.Realtime.Player player = PhotonNetwork.PlayerListOthers[i];
-                    string playerColor = "#ffffff";
-                    try
-                    {
-                        playerColor = $"#{RigManager.GetVRRigFromPlayer(player).mainSkin.material.color}";
-                    }
-                    catch { }
-
                     buttons.Add(new ButtonInfo
                     {
                         buttonText = $"PlayerButton{i}",
-                        overlapText = $"<color={playerColor}>" + player.NickName.ToUpper() + "</color>",
+                        overlapText = $"<color=cyan>" + player.NickName.ToUpper() + "</color>",
                         method = () => NavigatePlayer(player),
                         isTogglable = false,
                         toolTip = $"See information on the player {player.NickName}."
@@ -212,93 +205,7 @@ namespace JupiterX
         public static void DisableNotis()
         {
             disableNotis = true;
-        }
-
-
-
-        // Credits to Scintilla for the idea
-        public static void ChangeGunVariation(bool positive = true)
-        {
-            string[] VariationNames = new string[]
-            {
-                "Default",
-                "Lightning",
-                "Wavy",
-                "Blocky",
-                "Zigzag",
-                "Spring",
-                "Bouncy",
-                "Audio",
-                "Bezier"
-            };
-
-            if (positive)
-                gunVariation++;
-            else
-                gunVariation--;
-
-            gunVariation %= VariationNames.Length;
-            if (gunVariation < 0)
-                gunVariation = VariationNames.Length - 1;
-
-            GetIndex("Change Gun Variation").overlapText = "Change Gun Variation <color=cyan>[" + VariationNames[gunVariation] + "]</color>";
-        }
-
-        public static void ChangeGunDirection(bool positive = true)
-        {
-            string[] DirectionNames = new string[]
-            {
-                "Default",
-                "Legacy",
-                "Laser",
-                "Finger",
-                "Face"
-            };
-
-            if (positive)
-                GunDirection++;
-            else
-                GunDirection--;
-
-            GunDirection %= DirectionNames.Length;
-            if (GunDirection < 0)
-                GunDirection = DirectionNames.Length - 1;
-
-            GetIndex("Change Gun Direction").overlapText = "Change Gun Direction <color=cyan>[" + DirectionNames[GunDirection] + "]</color>";
-        }
-
-        private static int gunLineQualityIndex = 2;
-        public static void ChangeGunLineQuality(bool positive = true)
-        {
-            string[] Names = new string[]
-            {
-                "Potato",
-                "Low",
-                "Normal",
-                "High",
-                "Extreme"
-            };
-
-            int[] Qualities = new int[]
-            {
-                10,
-                25,
-                50,
-                100,
-                250
-            };
-
-            if (positive)
-                gunLineQualityIndex++;
-            else
-                gunLineQualityIndex--;
-
-            gunLineQualityIndex %= Names.Length;
-            if (gunLineQualityIndex < 0)
-                gunLineQualityIndex = Names.Length - 1;
-
-            GunLineQuality = Qualities[gunLineQualityIndex];
-            GetIndex("Change Gun Line Quality").overlapText = "Change Gun Line Quality <color=cyan>[" + Names[gunLineQualityIndex] + "]</color>";
+            NotificationManager.ClearAllNotifications();
         }
     }
 }
