@@ -1,6 +1,5 @@
 ﻿using easyInputs;
 using JupiterX.Classes;
-using MelonLoader.ICSharpCode.SharpZipLib.GZip;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -8,29 +7,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.XR;
 using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
-using Button = JupiterX.Classes.Button;
-// test
-// this menu was created by Silent (@s1lnt)
-// if you remove this it counts as skidding
+
 namespace JupiterX.Menu
 {
-	// READ ME
-	/*
-	 NOTHING HERE IS SKIDDED
-	 I HAVE GAVE CREDITS TO EVERYONE I NEED TO
-     Extra Credits: Dom - Soundboard 
-	 If you need help with building plz dm me (@s1lnt)
-	 If you would like to become a contributer clone this src and help out
-	 PLEASE Do not skid anythere here
-	 Follow the GPL Licence
-	 Have a good day
-	 IF YOU DO TAKE CODE
-	 Make sure to credit me :)
-	 */
-
 	public class Main
 	{
 		public static void Prefix()

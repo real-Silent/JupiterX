@@ -14,9 +14,7 @@ using UnityEngine.Networking;
 using static JupiterX.Menu.Main;
 using JupiterX.Classes;
 using Photon.Pun;
-// test
-// this menu was created by Silent (@s1lnt)
-// if you remove this it counts as skidding
+
 namespace JupiterX.Mods
 {
     internal class SoundBoard // this file was made by (@domok.)

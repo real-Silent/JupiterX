@@ -1,17 +1,8 @@
 ﻿using Photon.Pun;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnhollowerBaseLib;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 using static JupiterX.Menu.Main;
 using JupiterX.Menu;
-// test
-// this menu was created by Silent (@s1lnt)
-// if you remove this it counts as skidding
+
 namespace JupiterX.Mods
 {
     internal class Advantage

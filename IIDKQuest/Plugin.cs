@@ -1,6 +1,4 @@
-﻿using GorillaNetworking;
-using HarmonyLib;
-using JupiterX;
+﻿using JupiterX;
 using JupiterX.Classes;
 using MelonLoader;
 using Photon.Pun;
@@ -11,15 +9,10 @@ using TMPro;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
-// test
-// this menu was created by Silent (@s1lnt)
-// if you remove this it counts as skidding
-[assembly: MelonInfo(typeof(Plugin), "JupiterX", "1.0.0", "Silent")]
+[assembly: MelonInfo(typeof(Plugin), "JupiterX", "2.0.0", "Silent")]
 [assembly: MelonGame()]
 namespace JupiterX
 {
-    // this menu was created by Silent (@s1lnt)
-    // if you remove this it counts as skidding
     internal class Plugin : MelonMod
     {
         [Obsolete]
@@ -55,12 +48,6 @@ namespace JupiterX
             else
                 Utility.HasUsedMenuBeforeNoti = false;
 
-            if (Utility.isLocked)
-            {
-                Application.Quit();
-                Environment.Exit(0);
-            }
-
             PlayerPrefs.SetString("tutorial", "done");
             GorillaTagger.Instance.disableTutorial = true;
         }
@@ -70,11 +57,6 @@ namespace JupiterX
         {
             base.OnUpdate();
             Menu.Main.Prefix();
-            if (Utility.isLocked)
-            {
-                Application.Quit();
-                Environment.Exit(0);
-            }
             Utility.UpdateFPS();
 
             NotificationManager.LoadNotifications();

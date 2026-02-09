@@ -72,409 +72,409 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\Refrences\0Harmony.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\GothMenu\TerrorMenu\bin\Debug\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\Videos\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\Refrences\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="AssetRipper.VersionUtilities">
-      <HintPath>..\..\Refrences\AssetRipper.VersionUtilities.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\AssetRipper.VersionUtilities.dll</HintPath>
     </Reference>
     <Reference Include="AssetsTools.NET">
-      <HintPath>..\..\Refrences\AssetsTools.NET.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\AssetsTools.NET.dll</HintPath>
     </Reference>
     <Reference Include="bHapticsLib">
-      <HintPath>..\..\Refrences\bHapticsLib.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\bHapticsLib.dll</HintPath>
     </Reference>
     <Reference Include="I18N">
-      <HintPath>..\..\Refrences\I18N.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\I18N.dll</HintPath>
     </Reference>
     <Reference Include="I18N.CJK">
-      <HintPath>..\..\Refrences\I18N.CJK.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\I18N.CJK.dll</HintPath>
     </Reference>
     <Reference Include="I18N.MidEast">
-      <HintPath>..\..\Refrences\I18N.MidEast.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\I18N.MidEast.dll</HintPath>
     </Reference>
     <Reference Include="I18N.Other">
-      <HintPath>..\..\Refrences\I18N.Other.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\I18N.Other.dll</HintPath>
     </Reference>
     <Reference Include="I18N.Rare">
-      <HintPath>..\..\Refrences\I18N.Rare.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\I18N.Rare.dll</HintPath>
     </Reference>
     <Reference Include="I18N.West">
-      <HintPath>..\..\Refrences\I18N.West.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\I18N.West.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppMono.Security">
-      <HintPath>..\..\Refrences\Il2CppMono.Security.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Il2CppMono.Security.dll</HintPath>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>..\..\Refrences\Il2Cppmscorlib.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Il2Cppmscorlib.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppSystem">
-      <HintPath>..\..\Refrences\Il2CppSystem.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Il2CppSystem.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppSystem.Configuration">
-      <HintPath>..\..\Refrences\Il2CppSystem.Configuration.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Il2CppSystem.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppSystem.Core">
-      <HintPath>..\..\Refrences\Il2CppSystem.Core.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Il2CppSystem.Core.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppSystem.Numerics">
-      <HintPath>..\..\Refrences\Il2CppSystem.Numerics.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Il2CppSystem.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppSystem.Xml">
-      <HintPath>..\..\Refrences\Il2CppSystem.Xml.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Il2CppSystem.Xml.dll</HintPath>
     </Reference>
     <Reference Include="IndexRange">
-      <HintPath>..\..\Refrences\IndexRange.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\IndexRange.dll</HintPath>
     </Reference>
     <Reference Include="JNISharp">
-      <HintPath>..\..\Refrences\JNISharp.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\JNISharp.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>..\..\Refrences\MelonLoader.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Btls.Interface">
-      <HintPath>..\..\Refrences\Mono.Btls.Interface.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.Btls.Interface.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
-      <HintPath>..\..\Refrences\Mono.Cecil.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\..\Refrences\Mono.Cecil.Mdb.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\..\Refrences\Mono.Cecil.Pdb.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\..\Refrences\Mono.Cecil.Rocks.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="Mono.CompilerServices.SymbolWriter">
-      <HintPath>..\..\Refrences\Mono.CompilerServices.SymbolWriter.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.CompilerServices.SymbolWriter.dll</HintPath>
     </Reference>
     <Reference Include="Mono.CSharp">
-      <HintPath>..\..\Refrences\Mono.CSharp.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Sqlite">
-      <HintPath>..\..\Refrences\Mono.Data.Sqlite.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.Data.Sqlite.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Tds">
-      <HintPath>..\..\Refrences\Mono.Data.Tds.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.Data.Tds.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Posix">
-      <HintPath>..\..\Refrences\Mono.Posix.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.Posix.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Security">
-      <HintPath>..\..\Refrences\Mono.Security.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Mono.Security.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>..\..\Refrences\MonoMod.RuntimeDetour.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\MonoMod.RuntimeDetour.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.Utils">
-      <HintPath>..\..\Refrences\MonoMod.Utils.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\MonoMod.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\Refrences\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunitlite">
-      <HintPath>..\..\Refrences\nunitlite.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\nunitlite.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>..\..\Refrences\Photon3Unity3D.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="PhotonChat">
-      <HintPath>..\..\Refrences\PhotonChat.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\PhotonChat.dll</HintPath>
     </Reference>
     <Reference Include="PhotonRealtime">
-      <HintPath>..\..\Refrences\PhotonRealtime.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\PhotonRealtime.dll</HintPath>
     </Reference>
     <Reference Include="PhotonUnityNetworking">
-      <HintPath>..\..\Refrences\PhotonUnityNetworking.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\PhotonUnityNetworking.dll</HintPath>
     </Reference>
     <Reference Include="PhotonUnityNetworking.Utilities">
-      <HintPath>..\..\Refrences\PhotonUnityNetworking.Utilities.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\PhotonUnityNetworking.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="PhotonVoice">
-      <HintPath>..\..\Refrences\PhotonVoice.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\PhotonVoice.dll</HintPath>
     </Reference>
     <Reference Include="PhotonVoice.API">
-      <HintPath>..\..\Refrences\PhotonVoice.API.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\PhotonVoice.API.dll</HintPath>
     </Reference>
     <Reference Include="PhotonVoice.PUN">
-      <HintPath>..\..\Refrences\PhotonVoice.PUN.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\PhotonVoice.PUN.dll</HintPath>
     </Reference>
     <Reference Include="PlayFab">
-      <HintPath>..\..\Refrences\PlayFab.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\PlayFab.dll</HintPath>
     </Reference>
     <Reference Include="Tomlet">
-      <HintPath>..\..\Refrences\Tomlet.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Tomlet.dll</HintPath>
     </Reference>
     <Reference Include="UnhollowerBaseLib">
-      <HintPath>..\..\Refrences\UnhollowerBaseLib.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnhollowerBaseLib.dll</HintPath>
     </Reference>
     <Reference Include="UnhollowerRuntimeLib">
-      <HintPath>..\..\Refrences\UnhollowerRuntimeLib.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnhollowerRuntimeLib.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Animation.Rigging">
-      <HintPath>..\..\Refrences\Unity.Animation.Rigging.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.Animation.Rigging.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
-      <HintPath>..\..\Refrences\Unity.Burst.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.Burst.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
-      <HintPath>..\..\Refrences\Unity.InputSystem.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
-      <HintPath>..\..\Refrences\Unity.Mathematics.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\Refrences\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.CoreUtils">
-      <HintPath>..\..\Refrences\Unity.XR.CoreUtils.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.CoreUtils.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Interaction.Toolkit">
-      <HintPath>..\..\Refrences\Unity.XR.Interaction.Toolkit.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.Interaction.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Interaction.Toolkit.Samples.StarterAssets">
-      <HintPath>..\..\Refrences\Unity.XR.Interaction.Toolkit.Samples.StarterAssets.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.Interaction.Toolkit.Samples.StarterAssets.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Management">
-      <HintPath>..\..\Refrences\Unity.XR.Management.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.Management.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Oculus">
-      <HintPath>..\..\Refrences\Unity.XR.Oculus.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.Oculus.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.OpenXR">
-      <HintPath>..\..\Refrences\Unity.XR.OpenXR.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.OpenXR.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.OpenXR.Features.ConformanceAutomation">
-      <HintPath>..\..\Refrences\Unity.XR.OpenXR.Features.ConformanceAutomation.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.OpenXR.Features.ConformanceAutomation.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.OpenXR.Features.MetaQuestSupport">
-      <HintPath>..\..\Refrences\Unity.XR.OpenXR.Features.MetaQuestSupport.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.OpenXR.Features.MetaQuestSupport.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.OpenXR.Features.MockRuntime">
-      <HintPath>..\..\Refrences\Unity.XR.OpenXR.Features.MockRuntime.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.OpenXR.Features.MockRuntime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.OpenXR.Features.OculusQuestSupport">
-      <HintPath>..\..\Refrences\Unity.XR.OpenXR.Features.OculusQuestSupport.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.OpenXR.Features.OculusQuestSupport.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.OpenXR.Features.RuntimeDebugger">
-      <HintPath>..\..\Refrences\Unity.XR.OpenXR.Features.RuntimeDebugger.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\Unity.XR.OpenXR.Features.RuntimeDebugger.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\Refrences\UnityEngine.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AccessibilityModule">
-      <HintPath>..\..\Refrences\UnityEngine.AccessibilityModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.AccessibilityModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
-      <HintPath>..\..\Refrences\UnityEngine.AIModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.AIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AndroidJNIModule">
-      <HintPath>..\..\Refrences\UnityEngine.AndroidJNIModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.AndroidJNIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>..\..\Refrences\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ARModule">
-      <HintPath>..\..\Refrences\UnityEngine.ARModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.ARModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\..\Refrences\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\..\Refrences\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
-      <HintPath>..\..\Refrences\UnityEngine.ClothModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.ClothModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\Refrences\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CrashReportingModule">
-      <HintPath>..\..\Refrences\UnityEngine.CrashReportingModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.CrashReportingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.DirectorModule">
-      <HintPath>..\..\Refrences\UnityEngine.DirectorModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.DirectorModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.DSPGraphModule">
-      <HintPath>..\..\Refrences\UnityEngine.DSPGraphModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.DSPGraphModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule">
-      <HintPath>..\..\Refrences\UnityEngine.GameCenterModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.GameCenterModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GIModule">
-      <HintPath>..\..\Refrences\UnityEngine.GIModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.GIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GridModule">
-      <HintPath>..\..\Refrences\UnityEngine.GridModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.GridModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HotReloadModule">
-      <HintPath>..\..\Refrences\UnityEngine.HotReloadModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.HotReloadModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Il2CppAssetBundleManager">
-      <HintPath>..\..\Refrences\UnityEngine.Il2CppAssetBundleManager.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.Il2CppAssetBundleManager.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Il2CppImageConversionManager">
-      <HintPath>..\..\Refrences\UnityEngine.Il2CppImageConversionManager.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.Il2CppImageConversionManager.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>..\..\Refrences\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\Refrences\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\..\Refrences\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
-      <HintPath>..\..\Refrences\UnityEngine.InputModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.InputModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.JSONSerializeModule">
-      <HintPath>..\..\Refrences\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.JSONSerializeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.LocalizationModule">
-      <HintPath>..\..\Refrences\UnityEngine.LocalizationModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.LocalizationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>..\..\Refrences\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PerformanceReportingModule">
-      <HintPath>..\..\Refrences\UnityEngine.PerformanceReportingModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.PerformanceReportingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>..\..\Refrences\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\Refrences\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ProfilerModule">
-      <HintPath>..\..\Refrences\UnityEngine.ProfilerModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.ProfilerModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
-      <HintPath>..\..\Refrences\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
-      <HintPath>..\..\Refrences\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.ScreenCaptureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SharedInternalsModule">
-      <HintPath>..\..\Refrences\UnityEngine.SharedInternalsModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.SharedInternalsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>..\..\Refrences\UnityEngine.SpatialTracking.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpriteMaskModule">
-      <HintPath>..\..\Refrences\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.SpriteMaskModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpriteShapeModule">
-      <HintPath>..\..\Refrences\UnityEngine.SpriteShapeModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.SpriteShapeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.StreamingModule">
-      <HintPath>..\..\Refrences\UnityEngine.StreamingModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.StreamingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SubstanceModule">
-      <HintPath>..\..\Refrences\UnityEngine.SubstanceModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.SubstanceModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SubsystemsModule">
-      <HintPath>..\..\Refrences\UnityEngine.SubsystemsModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.SubsystemsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule">
-      <HintPath>..\..\Refrences\UnityEngine.TerrainModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.TerrainModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TerrainPhysicsModule">
-      <HintPath>..\..\Refrences\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.TerrainPhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextCoreFontEngineModule">
-      <HintPath>..\..\Refrences\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextCoreTextEngineModule">
-      <HintPath>..\..\Refrences\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\Refrences\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TilemapModule">
-      <HintPath>..\..\Refrences\UnityEngine.TilemapModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.TilemapModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TLSModule">
-      <HintPath>..\..\Refrences\UnityEngine.TLSModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.TLSModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\Refrences\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\..\Refrences\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIElementsNativeModule">
-      <HintPath>..\..\Refrences\UnityEngine.UIElementsNativeModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UIElementsNativeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\Refrences\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>..\..\Refrences\UnityEngine.UmbraModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UmbraModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UNETModule">
-      <HintPath>..\..\Refrences\UnityEngine.UNETModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UNETModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityAnalyticsCommonModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityAnalyticsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityConnectModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityConnectModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityConnectModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityCurlModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityCurlModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityCurlModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityTestProtocolModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAudioModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityWebRequestModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>..\..\Refrences\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>..\..\Refrences\UnityEngine.VehiclesModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.VehiclesModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VFXModule">
-      <HintPath>..\..\Refrences\UnityEngine.VFXModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.VFXModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-      <HintPath>..\..\Refrences\UnityEngine.VideoModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.VideoModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VRModule">
-      <HintPath>..\..\Refrences\UnityEngine.VRModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.VRModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.WindModule">
-      <HintPath>..\..\Refrences\UnityEngine.WindModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.WindModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XRModule">
-      <HintPath>..\..\Refrences\UnityEngine.XRModule.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="ValueTupleBridge">
-      <HintPath>..\..\Refrences\ValueTupleBridge.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\ValueTupleBridge.dll</HintPath>
     </Reference>
     <Reference Include="WebSocketDotNet">
-      <HintPath>..\..\Refrences\WebSocketDotNet.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\Refrences\WebSocketDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

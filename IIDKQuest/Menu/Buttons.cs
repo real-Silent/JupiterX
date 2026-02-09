@@ -3,9 +3,7 @@ using JupiterX.Mods;
 using static JupiterX.Settings;
 using static JupiterX.Menu.Main;
 using UnityEngine;
-// test
-// this menu was created by Silent (@s1lnt)
-// if you remove this it counts as skidding
+
 namespace JupiterX.Menu
 {
     internal class Buttons
@@ -208,9 +206,6 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest."  },
 
-                new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room."  },
-                new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at."  },
-
                 new ButtonInfo { buttonText = "Crash All [<color=cyan>RT</color>]", method =() => Overpowered.CrashAll(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash All V2 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV2(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash All V3 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV3(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
@@ -327,4 +322,7 @@ new ButtonInfo { buttonText = "Fling Timmy (Forest) [<color=cyan>RT</color>]", m
 new ButtonInfo { buttonText = "Move Timmy To All [<color=cyan>RT</color>]", method =() => GTH.TimmyAllRigs(), isTogglable = true },
 
 new ButtonInfo { buttonText = "Teleport To Slingshot", method =() => Utility.BetaTPToSling(), isTogglable = true },
+
+new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room."  },
+new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at."  },
 */

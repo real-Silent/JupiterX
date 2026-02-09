@@ -1,11 +1,6 @@
 ﻿using JupiterX.Menu;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-// test
-// this menu was created by Silent (@s1lnt)
-// if you remove this it counts as skidding
+
 namespace JupiterX.Classes
 {
     internal class FixedColliders

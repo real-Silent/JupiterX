@@ -2,9 +2,7 @@
 using System.Linq;
 using UnityEngine.UI;
 using UnityEngine;
-// test
-// this menu was created by Silent (@s1lnt)
-// if you remove this it counts as skidding
+
 namespace JupiterX
 {
     public class NotificationManager // og creds zinx - saturn - some others idfk atp

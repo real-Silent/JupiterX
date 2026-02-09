@@ -1,18 +1,11 @@
 ﻿using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Mods;
-using Mono.CSharp;
 using Photon.Pun;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using static JupiterX.Menu.Main;
-using static JupiterX.Utility;
-// test
-// this menu was created by Silent (@s1lnt)
-// if you remove this it counts as skidding
+
 namespace JupiterX
 {
     internal class Settings

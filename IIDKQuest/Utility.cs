@@ -1,33 +1,20 @@
 ﻿using easyInputs;
 using ExitGames.Client.Photon;
 using GorillaNetworking;
-using Harmony;
-using HarmonyLib;
 using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
-using JupiterX.Mods;
-using Mono.Cecil;
-using Mono.CSharp;
-using OVR;
 using Photon.Pun;
 using PlayFab;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.Android;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.UI;
 
-// test
-// this menu was created by Silent (@s1lnt)
-// if you remove this it counts as skidding
 namespace JupiterX
 {
-    // plz ignore all this shitty ass code you see >w<
     public class Utility
     {
         public static void Log(string msg, int type)
@@ -63,25 +50,25 @@ namespace JupiterX
         static Hashtable jupiterxProp = new Hashtable();
         public static void ThisGuyIsUsingJupiter()
         {
-            if (!jupiterxProp.ContainsKey("jupiterxusersosigma"))
+            if (!jupiterxProp.ContainsKey("jupiterx2026revive"))
             {
-                jupiterxProp.Add("jupiterxusersosigma", "jupiterxusersosigma");
+                jupiterxProp.Add("jupiterx2026revive", "jupiterx2026revive");
             }
 
             if (PhotonNetwork.InRoom)
             {
-                if (!GorillaTagger.Instance.myVRRig.photonView.Controller.CustomProperties.ContainsKey("jupiterxusersosigma"))
+                if (!GorillaTagger.Instance.myVRRig.photonView.Controller.CustomProperties.ContainsKey("jupiterx2026revive"))
                 {
                     GorillaTagger.Instance.myVRRig.photonView.Controller.SetCustomProperties(jupiterxProp);
                 }
 
-                if (GorillaTagger.Instance.myVRRig.photonView.Controller.CustomProperties.ContainsKey("jupiterxusersosigma"))
+                if (GorillaTagger.Instance.myVRRig.photonView.Controller.CustomProperties.ContainsKey("jupiterx2026revive"))
                 {
                     string name = "[JUPITERX] " + GorillaTagger.Instance.myVRRig.photonView.Controller.NickName;
                     GorillaTagger.Instance.myVRRig.playerText.text = name;
-                    GorillaTagger.Instance.myVRRig.playerText.color = Color.yellow;
+                    GorillaTagger.Instance.myVRRig.playerText.color = Color.cyan;
                     GorillaTagger.Instance.offlineVRRig.playerText.text = name;
-                    GorillaTagger.Instance.offlineVRRig.playerText.color = Color.yellow;
+                    GorillaTagger.Instance.offlineVRRig.playerText.color = Color.cyan;
                 }
 
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
@@ -91,10 +78,30 @@ namespace JupiterX
                         string nickname = rig.photonView.Owner.NickName;
                         string userId = rig.photonView.Owner.UserId;
 
-                        if (rig.photonView.Controller.CustomProperties.ContainsKey("jupiterxusersosigma"))
+                        if (rig.photonView.Owner.CustomProperties.ContainsKey("jupiterx2026revive"))
                         {
                             rig.playerText.text = "[JUPITERX] " + nickname;
+                            rig.playerText.color = Color.cyan;
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("jupiterxusersosigma"))
+                        {
+                            rig.playerText.text = "[OLD JUPITERX] " + nickname;
                             rig.playerText.color = Color.yellow;
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("qolossal"))
+                        {
+                            rig.playerText.text = "[QCM] " + nickname;
+                            rig.playerText.color = Color.magenta;
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("zyph"))
+                        {
+                            rig.playerText.text = "[ZYPH] " + nickname;
+                            rig.playerText.color = Color.red;
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("solarnovapleasestopdoingdumbshityoudotsallthetimrimgettingpissed"))
+                        {
+                            rig.playerText.text = "[SOLAR] " + nickname;
+                            rig.playerText.color = Color.grey;
                         }
                     }
                 }
@@ -911,8 +918,8 @@ namespace JupiterX
 
         public static string name = "JupiterX";
         public static string author = "Silent";
-        public static string version = "1.0.0"; // every release go up by .1
-        public static bool isBetaRelease = true;
+        public static string version = "2.0.0"; 
+        public static bool isBetaRelease = false;
 
         public static string LogMain = "[JUPITERX] (LOG) : ";
         public static string LogWarningMain = "[JUPITERX] (WARNING) : ";
@@ -930,40 +937,6 @@ namespace JupiterX
         public static Text cocText;
         public static Text codeOfConduct;
         public static GorillaComputer gorillaComputer;
-
-        public static bool isLocked = false;
-        public static WebClient downloader = new WebClient();
-        public static string LockedMsgUrl = "https://pastebin.com/raw/EvGEXXwE";
-
-        public static void CheckForLock()
-        {
-            if (downloader.DownloadString("https://pastebin.com/raw/cNcYfycw").Contains("locked"))
-            {
-                Application.OpenURL(LockedMsgUrl);
-                Application.Quit();
-                Environment.Exit(0);
-                DestroyObject(GameObject.Find("Level"));
-                DestroyObject(Camera.main.gameObject);
-                DestroyObject(GorillaTagger.Instance.gameObject);
-                DestroyObject(Menu.Main.menu);
-                DestroyObject(Menu.Main.menuBackground);
-                DestroyObject(Menu.Main.reference);
-                if (Utility.isLocked)
-                {
-                    Application.Quit();
-                    Environment.Exit(0);
-                }
-                isLocked = true;
-                DestroyObject(GameObject.Find("PlayFabAuthenticator"));
-                DestroyObject(GameObject.Find("forest"));
-                DestroyObject(GameObject.Find("treeroom"));
-                DestroyObject(GameObject.Find("GorillaComputer"));
-                DestroyObject(GameObject.Find("Gorilla Not"));
-                DestroyObject(GameObject.Find("GorillaReporter"));
-                DestroyObject(GameObject.Find("CosmeticsController"));
-            }
-        }
-
         private static void DestroyObject(GameObject objects)
         {
             GameObject.Destroy(objects);
