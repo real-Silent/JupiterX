@@ -600,6 +600,27 @@ namespace JupiterX
             CosmeticsController.instance.UpdateWardrobeModelsAndButtons();
             CosmeticsController.instance.CheckIfMyCosmeticsUpdated(cosmeticId);
         }
+        public static void DickSpawn()
+        {
+            if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
+            {
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.up * 0.5f, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.up * 1, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.up * 1.5f, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.left * 0.5f, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.right * 0.5f, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
+            }
+            if (EasyInputs.GetGripButtonDown(EasyHand.LeftHand))
+            {
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.up * 0.5f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.up * 1, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.up * 1.5f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.left * 0.5f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.right * 0.5f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
+            }
+        }
 
         public static void BetaSetLucySpeed(float speed)
         {
