@@ -10,7 +10,7 @@ namespace JupiterX.Mods
         }
         public static void ChangeName(string name, string color)
         {
-            PhotonNetwork.LocalPlayer.NickName = name;
+            PhotonNetwork.LocalPlayer.NickName = "<color=" + color + ">" + name + "</color>";
         }
     }
 }
