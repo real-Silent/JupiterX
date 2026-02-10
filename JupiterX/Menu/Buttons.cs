@@ -290,7 +290,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), overlapText = "Change Page Type <color=cyan>[Side]</color>", isTogglable = false, toolTip = "Changes the page type." },
                 new ButtonInfo { buttonText = "Freeze Player In Menu", method =() => Utility.FreezePlayerInMenu(), isTogglable = true, toolTip = "Lets you float while the menu is open."},
                 new ButtonInfo { buttonText = "Ghost In Menu", method =() => Utility.GhostInMenu(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Makes you have ghost monke when menu is open."},
-                new ButtonInfo { buttonText = "Toggle Rounding", enableMethod =() => Rounding = true, disableMethod =() => Rounding = false, isTogglable = true, toolTip = "Toggle the menu rounding [<color=red>CAN CAUSE LAG</color>]."},
+                new ButtonInfo { buttonText = "Round Menu", enableMethod =() => Rounding = true, disableMethod =() => Rounding = false, isTogglable = true, toolTip = "Toggle the menu rounding [<color=red>CAN CAUSE LAG</color>]."},
             },
 
             new ButtonInfo[] { // Movement Settings | 18
@@ -340,19 +340,6 @@ new ButtonInfo { buttonText = "Get F'd Spawn", method = () => Experimental.GetFu
 new ButtonInfo { buttonText = "Ban Gun [JX Modding Game]", method =() => Overpowered.BanGunJXModding(), isTogglable = true },
 
 new ButtonInfo { buttonText = "Dynamic Animations", enableMethod =() => dynamicAnimations = true, disableMethod =() => dynamicAnimations = false },
-
-new ButtonInfo { buttonText = "Timmy Spam [<color=cyan>RT</color>]", method =() => GTH.TimmySpam(), isTogglable = true },
-new ButtonInfo { buttonText = "Stalker Spam [<color=cyan>RT</color>]", method =() => GTH.StalkerSpam(), isTogglable = true },
-new ButtonInfo { buttonText = "Timmy All [<color=cyan>RT</color>]", method =() => GTH.TimmyAll(), isTogglable = true },
-new ButtonInfo { buttonText = "Stalker All [<color=cyan>RT</color>]", method =() => GTH.StalkerAll(), isTogglable = true },
-new ButtonInfo { buttonText = "Timmy Gun", method =() => GTH.TimmyGun(), isTogglable = true },
-new ButtonInfo { buttonText = "Stalker Gun", method =() => GTH.StalkerGun(), isTogglable = true },
-new ButtonInfo { buttonText = "Kill Gun", method =() => GTH.KillGun(), isTogglable = true },
-new ButtonInfo { buttonText = "Kill All [<color=cyan>RT</color>]", method =() => GTH.KillAll(), isTogglable = true },
-new ButtonInfo { buttonText = "Timmy Gun (Forest)", method =() => GTH.MoveTimmy(), isTogglable = true },
-new ButtonInfo { buttonText = "Spaz Timmy (Forest) [<color=cyan>RT</color>]", method =() => GTH.SpazTimmy(), isTogglable = true },
-new ButtonInfo { buttonText = "Fling Timmy (Forest) [<color=cyan>RT</color>]", method =() => GTH.FlingTimmy(), isTogglable = true },
-new ButtonInfo { buttonText = "Move Timmy To All [<color=cyan>RT</color>]", method =() => GTH.TimmyAllRigs(), isTogglable = true },
 
 new ButtonInfo { buttonText = "Teleport To Slingshot", method =() => Utility.BetaTPToSling(), isTogglable = true },
 
