@@ -336,8 +336,8 @@ namespace JupiterX
                     break;
                 case 1:
                     isTriggers = false;
-                    PageObjectPosRight = new Vector3(0.56f, -0.44f, -0.6f);
-                    PageObjectPosLeft = new Vector3(0.56f, 0.44f, -0.6f);
+                    PageObjectPosRight = new Vector3(0.56f, 0.44f, -0.6f);
+                    PageObjectPosLeft = new Vector3(0.56f, -0.44f, -0.6f);
                     PageTextPosLeft = new Vector3(0.062f, 0.132f, -0.23f);
                     PageTextPosRight = new Vector3(0.062f, -0.130f, -0.23f);
                     PageObjScale = new Vector3(0.1f, 0.2f, 0.1f);

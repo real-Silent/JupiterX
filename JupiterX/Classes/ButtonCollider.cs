@@ -20,9 +20,8 @@ namespace JupiterX.Classes
 			{
                 buttonCooldown = Time.time + 0.2f;
                 GorillaTagger.Instance.StartVibration(rightHanded, GorillaTagger.Instance.tagHapticStrength / 2f, GorillaTagger.Instance.tagHapticDuration / 2f);
-                //GorillaTagger.Instance.offlineVRRig.PlayHandTap(8, rightHanded, 0.4f);
 				Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.steal.wav");
-                Toggle(this.relatedText);
+                Toggle(relatedText);
             }
 		}
 	}

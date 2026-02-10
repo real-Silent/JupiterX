@@ -68,6 +68,7 @@ namespace JupiterX.Menu
 				UnityEngine.Debug.LogError(string.Format("{0} // Error initializing at {1}: {2}", Utility.name, exc.StackTrace, exc.Message));
 			}
 
+
 			Utility.RPrim = EasyInputs.GetPrimaryButtonDown(Utility.RightHand);
 			Utility.RSec = EasyInputs.GetSecondaryButtonDown(Utility.RightHand);
 			Utility.RGrip = EasyInputs.GetGripButtonDown(Utility.RightHand);

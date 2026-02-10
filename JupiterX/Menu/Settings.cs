@@ -1,4 +1,5 @@
-﻿using JupiterX.Classes;
+﻿using Il2CppSystem.Net;
+using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Mods;
 using Photon.Pun;
