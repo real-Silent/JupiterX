@@ -104,6 +104,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Invis Monke <color=cyan>[B]</color>", method =() => vRRig.InvisMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become invisable."  },
                 new ButtonInfo { buttonText = "Grab Rig <color=cyan>[<color=cyan>Grips</color>]</color>", method =() => vRRig.GrabRig(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you grab your rig while holding right grip."  },
                 new ButtonInfo { buttonText = "Spaz Rig", method =() => vRRig.SpazRig(), disableMethod = vRRig.FixSpazRig, isTogglable = true, toolTip = "Makes your rig spazz out."  },
+                new ButtonInfo { buttonText = "Strobe", method =() => vRRig.Strobe(), isTogglable = true, toolTip = "Makes your color go crazy."  },
+                new ButtonInfo { buttonText = "Move Rig Gun", method =() => vRRig.MoveRigGun(), isTogglable = true, toolTip = "Moves your rig to the gun point."  },
             },
 
             new ButtonInfo[] { // Visual | 8
@@ -162,7 +164,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Enemy Gun", method =() => Prefabs.EnemyGun(), isTogglable = true, toolTip = "Lets you shoot enemys with a gun."  },
                 new ButtonInfo { buttonText = "Cube Launcher [<color=cyan>Grips</color>]", method =() => Prefabs.PrefabLuancher("bulletPrefab"), isTogglable = true, toolTip = "Lets you launch cubes while holding grips."  },
                 new ButtonInfo { buttonText = "Target Launcher [<color=cyan>Grips</color>]", method =() => Prefabs.PrefabLuancher("STICKABLE TARGET"), isTogglable = true, toolTip = "Lets you launch targets while holding grips."  },
-                new ButtonInfo { buttonText = "Target Dick [<color=cyan>Grips</color>]", method =() => Utility.DickSpawn(), isTogglable = true, toolTip = "Lets you spawn a dick out of targets."  },
+                new ButtonInfo { buttonText = "Target Dick Spawner [<color=cyan>Grips</color>]", method =() => Utility.DickSpawn(), isTogglable = true, toolTip = "Lets you spawn a dick out of targets."  },
             },
 
             new ButtonInfo[] { // Overpowered | 11

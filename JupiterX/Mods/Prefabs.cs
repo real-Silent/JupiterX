@@ -1,5 +1,6 @@
 ﻿using JupiterX.Menu;
 using Photon.Pun;
+using Photon.Voice.PUN.UtilityScripts;
 using System.Security.Policy;
 using UnityEngine;
 
@@ -121,6 +122,32 @@ namespace JupiterX.Mods
             {
                 Main.DestroyGun();
             }
+        }
+
+        public static void ScoreboardGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.NewPointer;
+                RaycastHit Ray = GunData.Ray;
+
+                if (Main.GetGunInput(true))
+                {
+                    Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", NewPointer.transform.position, NewPointer.transform.rotation);
+                }
+            }
+            else
+            {
+                Main.DestroyGun();
+            }
+        }
+        public static void SpamScoreboard()
+        {
+            if (Utility.RGrip)
+                Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
+            if (Utility.LGrip)
+                Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
         }
 
         public static void NetworkPlayerGun() 
