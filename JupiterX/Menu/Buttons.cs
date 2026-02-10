@@ -158,7 +158,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Give Network Player Spam Gun", method =() => Prefabs.GiveSpamGun(2), isTogglable = true, toolTip = "Lets you give someone network player spam when they are holding grip."  },
                 new ButtonInfo { buttonText = "Enemy Spam [<color=cyan>Grips</color>]", method =() => Prefabs.EnemySpam(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip."  },
                 new ButtonInfo { buttonText = "Give Enemy Spam Gun", method =() => Prefabs.GiveSpamGun(3), isTogglable = true, toolTip = "Lets you give someone enemy spam when they are holding grip."  },
-                new ButtonInfo { buttonText = "Scoreboard Spam [<color=cyan>Grips</color>]", method =() => Prefabs.ScoreboardSpam(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip."  },
+                new ButtonInfo { buttonText = "Scoreboard Spam [<color=cyan>Grips</color>]", method =() => Prefabs.SpamScoreboard(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip."  },
                 new ButtonInfo { buttonText = "Cube Gun", method =() => Prefabs.CubeGun(), isTogglable = true, toolTip = "Lets you shoot cubes with a gun."  },
                 new ButtonInfo { buttonText = "Target Gun", method =() => Prefabs.TargetGun(), isTogglable = true, toolTip = "Lets you shoot targets with a gun."  },
                 new ButtonInfo { buttonText = "Network Player Gun", method =() => Prefabs.NetworkPlayerGun(), isTogglable = true, toolTip = "Lets you shoot network players with a gun."  },
