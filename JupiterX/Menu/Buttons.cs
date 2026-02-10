@@ -284,6 +284,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), overlapText = "Change Page Type <color=cyan>[Side]</color>", isTogglable = false, toolTip = "Changes the page type." },
                 new ButtonInfo { buttonText = "Freeze Player In Menu", method =() => Utility.FreezePlayerInMenu(), isTogglable = true, toolTip = "Lets you float while the menu is open."},
                 new ButtonInfo { buttonText = "Ghost In Menu", method =() => Utility.GhostInMenu(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Makes you have ghost monke when menu is open."},
+                new ButtonInfo { buttonText = "Toggle Rounding", enableMethod =() => Rounding = true, disableMethod =() => Rounding = false, isTogglable = true, toolTip = "Toggle the menu rounding [<color=red>CAN CAUSE LAG</color>]."},
             },
 
             new ButtonInfo[] { // Movement Settings | 18
@@ -303,7 +304,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Destroy Gun", method = DestroyGun, isTogglable = false, toolTip = "Fixes a bug that doesnt make the gun destroy when not in a room." },
             },
             new ButtonInfo[] { // GTH Mods | 20
-                new ButtonInfo { buttonText = "Return to Settings", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
                 new ButtonInfo { buttonText = "Timmy Spam [<color=cyan>RT</color>]", method =() => GTH.TimmySpam(), isTogglable = true },
                 new ButtonInfo { buttonText = "Stalker Spam [<color=cyan>RT</color>]", method =() => GTH.StalkerSpam(), isTogglable = true },
                 new ButtonInfo { buttonText = "Timmy All [<color=cyan>RT</color>]", method =() => GTH.TimmyAll(), isTogglable = true },

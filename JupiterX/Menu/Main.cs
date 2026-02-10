@@ -281,7 +281,10 @@ namespace JupiterX.Menu
 				disconnectbutton.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
 				disconnectbutton.AddComponent<Classes.Button>().relatedText = "Disconnect";
 
-                RoundMenuObject(disconnectbutton);
+				if (Rounding)
+				{
+					RoundMenuObject(disconnectbutton);
+				}
 
                 colorChanger = disconnectbutton.AddComponent<ColorChanger>();
 				colorChanger.colorInfo = buttonColors[0];
@@ -380,8 +383,11 @@ namespace JupiterX.Menu
 			component.localPosition = Utility.PageTextPosRight;
 			component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 
-            RoundMenuObject(gameObject);
-            RoundMenuObject(gameObject2);
+			if (Rounding)
+			{
+				RoundMenuObject(gameObject);
+				RoundMenuObject(gameObject2);
+			}
 
             // Mod Buttons
             ButtonInfo[] activeButtons = buttons[buttonsType].Skip(pageNumber * buttonsPerPage).Take(buttonsPerPage).ToArray();
@@ -403,7 +409,10 @@ namespace JupiterX.Menu
 			gameObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - offset);
 			gameObject.AddComponent<Classes.Button>().relatedText = method.buttonText;
 
-            RoundMenuObject(gameObject);
+			if (Rounding)
+			{
+				RoundMenuObject(gameObject);
+			}
 
             ColorChanger colorChanger = gameObject.AddComponent<ColorChanger>();
 			if (method.enabled)
