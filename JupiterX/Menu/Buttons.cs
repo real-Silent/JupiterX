@@ -12,6 +12,7 @@ namespace JupiterX.Menu
         {
             new ButtonInfo[] { // Main Mods | 0
                 new ButtonInfo { buttonText = "Settings", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Opens the main settings page for the menu."},
+
                 new ButtonInfo { buttonText = "Important", method =() => Settings.MovePage(2), isTogglable = false, toolTip = "Opens the important mods page for the menu."},
                 new ButtonInfo { buttonText = "Safety", method =() => Settings.MovePage(3), isTogglable = false, toolTip = "Opens the safety mods page for the menu."},
                 new ButtonInfo { buttonText = "Computer", method =() => Settings.MovePage(4), isTogglable = false, toolTip = "Opens the computer mods page for the menu."},
@@ -25,19 +26,20 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Experimental", method =() => Settings.MovePage(12), isTogglable = false, toolTip = "Opens the expermental mods page for the menu."},
                 new ButtonInfo { buttonText = "Master", method =() => Settings.MovePage(13), isTogglable = false, toolTip = "Opens the master mods page for the menu."},
                 new ButtonInfo { buttonText = "GTH", method =() => Settings.MovePage(20), isTogglable = false, toolTip = "Opens the master mods page for the menu."},
+
                 new ButtonInfo { buttonText = "Soundboard", method =() => Settings.Soundboard(), isTogglable = false, toolTip = "Opens the soundboard page for the menu."},
                 new ButtonInfo { buttonText = "Player", method =() => Settings.Players(), isTogglable = false, toolTip = "Opens the player mods page for the menu."},
             },
 
             new ButtonInfo[] { // Settings | 1
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Menu Settings", method =() => Settings.MovePage(17), isTogglable = false, toolTip = "Opens the menu settings page for the menu." },
                 new ButtonInfo { buttonText = "Movement Settings", method =() => Settings.MovePage(18), isTogglable = false, toolTip = "Opens the movement settings page for the menu." },
                 new ButtonInfo { buttonText = "Gun Settings", method =() => Settings.MovePage(19), isTogglable = false, toolTip = "Opens the gun settings page for the menu." },
             },
 
             new ButtonInfo[] { // Important | 2
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Quit Game", method =() => Important.QuitGame(), isTogglable = false, toolTip = "Quits your game." },
                 new ButtonInfo { buttonText = "Anti AFK", method =() => Important.AntiAFK(), isTogglable = true, toolTip = "Disables the afk kick you get." },
                 new ButtonInfo { buttonText = "Clear Notifcations", method =() => NotificationManager.ClearAllNotifications(), isTogglable = false, toolTip = "Clears all the notifications." },
@@ -49,7 +51,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Safety | 3
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Panic", method =() => Utility.Panic(), isTogglable = false, toolTip = "Disables every mod you have enabled." },
                 new ButtonInfo { buttonText = "Anti Report [<color=yellow>Disconnect</color>]", method =() => Utility.BetaAntiReport(false, true), isTogglable = true, toolTip = "Disconnects you when someone is close to the report button." },
                 new ButtonInfo { buttonText = "Anti Report [<color=yellow>Crash</color>]", method =() => Utility.BetaAntiReport(true, false), isTogglable = true, toolTip = "Crashes the person who tries to report you when someone is close to the report button." },
@@ -59,7 +61,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Computer | 4
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Disconnect", method =() => Computer.Leave(), isTogglable = false, toolTip = "Disconnects you from the lobby." },
                 new ButtonInfo { buttonText = "Reconnect", method =() => Important.Reconnect(), isTogglable = false, toolTip = "Reconnects you to the current lobby." },
                 new ButtonInfo { buttonText = "Join Random", method =() => Computer.Jrr(), isTogglable = false, toolTip = "Lets you join a random room." },
@@ -72,7 +74,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Movement | 5
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Fly <color=cyan>[A]</color>", method =() => Movement.Fly(), isTogglable = true, toolTip = "Lets you fly while holding your right primary." },
                 new ButtonInfo { buttonText = "TFly <color=cyan>[<color=cyan>RT</color>]</color>", method =() => Movement.TFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger."  },
                 new ButtonInfo { buttonText = "Excel Fly", method =() => Movement.ExcelFly(), isTogglable = true, toolTip = "Lets you fly like iron man."  },
@@ -90,7 +92,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Advantage | 6
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Tag All", method =() => Advantage.TagAll(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you tag everyone in the lobby."  },
                 new ButtonInfo { buttonText = "Tag Aura", method =() => Advantage.TagAura(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you tag someone when they come close to you."  },
                 new ButtonInfo { buttonText = "Tag Gun", method =() => Advantage.TagGun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you tag someone with a gun."  },
@@ -99,7 +101,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // VRRig | 7
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Ghost Monke <color=cyan>[A]</color>", method =() => vRRig.GhostMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become a ghost."  },
                 new ButtonInfo { buttonText = "Invis Monke <color=cyan>[B]</color>", method =() => vRRig.InvisMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become invisable."  },
                 new ButtonInfo { buttonText = "Grab Rig <color=cyan>[<color=cyan>Grips</color>]</color>", method =() => vRRig.GrabRig(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you grab your rig while holding right grip."  },
@@ -109,7 +111,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Visual | 8
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Chams", method =() => Visual.Chams(true), disableMethod =() => Visual.Chams(false), isTogglable = true, toolTip = "Lets you see players through walls."  },
                 new ButtonInfo { buttonText = "Full Bright", method =() => Visual.fullBright(), disableMethod =() => Visual.fulldrak(), isTogglable = true, toolTip = "Lets you see in the dark."  },
                 new ButtonInfo { buttonText = "Tracers", method =() => Visual.Tracers(), isTogglable = true, toolTip = "Points lines at other players."  },
@@ -121,7 +123,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Name | 9
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Menu Name Tag", method =() => Name.MenuNameTag(), isTogglable = true, toolTip = "Sets your name to the menu name."  },
                 new ButtonInfo { buttonText = "Owner Name", method =() => Name.ChangeName("\nOwner", "white"), isTogglable = true, toolTip = "Sets your name as Owner."  },
                 new ButtonInfo { buttonText = "BSU Skids Name", method =() => Name.ChangeName("BSU Menu is skidded\nBSU Skids", "blue"), isTogglable = true, toolTip = "Sets your name as BSU Skids."  },
@@ -148,7 +150,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Prefabs | 10
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Clear Prefabs", method =() => Prefabs.ClearPrefabs(), isTogglable = false, toolTip = "Clears every prefab with a photon view."  },
                 new ButtonInfo { buttonText = "Cube Spam [<color=cyan>Grips</color>]", method =() => Prefabs.CubeSpam(), isTogglable = true, toolTip = "Lets you spam cubes while holding grip."  },
                 new ButtonInfo { buttonText = "Give Cube Spam Gun", method =() => Prefabs.GiveSpamGun(0), isTogglable = true, toolTip = "Lets you give someone cube spam when they hold grip."  },
@@ -158,7 +160,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Give Network Player Spam Gun", method =() => Prefabs.GiveSpamGun(2), isTogglable = true, toolTip = "Lets you give someone network player spam when they are holding grip."  },
                 new ButtonInfo { buttonText = "Enemy Spam [<color=cyan>Grips</color>]", method =() => Prefabs.EnemySpam(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip."  },
                 new ButtonInfo { buttonText = "Give Enemy Spam Gun", method =() => Prefabs.GiveSpamGun(3), isTogglable = true, toolTip = "Lets you give someone enemy spam when they are holding grip."  },
-                new ButtonInfo { buttonText = "Scoreboard Spam [<color=cyan>Grips</color>]", method =() => Prefabs.ScoreboardSpam(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip."  },
+                new ButtonInfo { buttonText = "Scoreboard Spam [<color=cyan>Grips</color>]", method =() => Prefabs.SpamScoreboard(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip."  },
                 new ButtonInfo { buttonText = "Cube Gun", method =() => Prefabs.CubeGun(), isTogglable = true, toolTip = "Lets you shoot cubes with a gun."  },
                 new ButtonInfo { buttonText = "Target Gun", method =() => Prefabs.TargetGun(), isTogglable = true, toolTip = "Lets you shoot targets with a gun."  },
                 new ButtonInfo { buttonText = "Network Player Gun", method =() => Prefabs.NetworkPlayerGun(), isTogglable = true, toolTip = "Lets you shoot network players with a gun."  },
@@ -170,7 +172,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Overpowered | 11
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Set Master", method =() => Overpowered.SetMaster(), isTogglable = true, toolTip = "Sets you as master client."  },
 
                 new ButtonInfo { buttonText = "RPC Lag All [<color=cyan>RT</color>]", method =() => Overpowered.RPCLag(), isTogglable = true, toolTip = "Lags people using rpcs while holding right trigger."  },
@@ -201,7 +203,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Experimental | 12
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Cube All [<color=cyan>RT</color>]", method =() => Experimental.CumAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger."  },
                 new ButtonInfo { buttonText = "Get Fucked Spawn [Forest, Targets]", method =() => Experimental.GetFucked(), isTogglable = false, toolTip = "Spawns the word 'Get Fucked' using stickable targets in forest."  },
 
@@ -226,7 +228,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Master | 13
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
 
                 new ButtonInfo { buttonText = "Set Master Gun", method =() => Overpowered.SetMasterGun(), isTogglable = true, toolTip = "Lets you set someone as master client."  },
 
@@ -263,19 +265,19 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Soundboard | 14
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
             new ButtonInfo[] { // Players | 15
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
             new ButtonInfo[] { // PlayersTab Fixer ? | 16
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
             new ButtonInfo[] { // Menu Settings | 17
-                new ButtonInfo { buttonText = "Return to Settings", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
                 new ButtonInfo { buttonText = "Right Hand", enableMethod =() => Settings.RightHand(), disableMethod =() => Settings.LeftHand(), toolTip = "Puts the menu on your right hand."},
                 new ButtonInfo { buttonText = "Save Preferences", method =() => Utility.SavePreferences(), isTogglable = false, toolTip = "Saves your enabled mods to file." },
                 new ButtonInfo { buttonText = "Load Preferences", method =() => Utility.LoadPreferences(), isTogglable = false, toolTip = "Loads your saved mods from a file." },
@@ -292,13 +294,13 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // Movement Settings | 18
-                new ButtonInfo { buttonText = "Return to Settings", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
                 new ButtonInfo { buttonText = "Change Fly Speed", method =() => Movement.ChangeFlySpeed(), overlapText = "Change Fly Speed <color=cyan>[Very Slow]</color>", isTogglable = false, toolTip = "Changes the current fly speed." },
                 new ButtonInfo { buttonText = "Change Arm Length", method =() => Movement.ChangeArmLength(), overlapText = "Change Arm Length <color=cyan>[Stean]</color>", isTogglable = false, toolTip = "Changes your arm length." },
             },
 
             new ButtonInfo[] { // Gun Settings | 19
-                new ButtonInfo { buttonText = "Return to Settings", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(1), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
                 new ButtonInfo { buttonText = "Disable Gun Pointer", enableMethod =() => disableGunPointer = true, disableMethod =() => disableGunPointer = false, isTogglable = true, toolTip = "Disables the gun pointer." },
                 new ButtonInfo { buttonText = "Small Gun Pointer", enableMethod =() => smallGunPointer = true, disableMethod =() => smallGunPointer = false, isTogglable = true, toolTip = "Makes the gun pointer smaller." },
                 new ButtonInfo { buttonText = "Disable Gun Line", enableMethod =() => disableGunLine = true, disableMethod =() => disableGunLine = false, isTogglable = true, toolTip = "Disables the gun line." },
@@ -308,7 +310,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Destroy Gun", method = DestroyGun, isTogglable = false, toolTip = "Fixes a bug that doesnt make the gun destroy when not in a room." },
             },
             new ButtonInfo[] { // GTH Mods | 20
-                new ButtonInfo { buttonText = "Return to Main", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+                new ButtonInfo { buttonText = "Back", method =() => Settings.MovePage(0), isTogglable = false, toolTip = "Returns to the settings page of the menu." },
                 new ButtonInfo { buttonText = "Timmy Spam [<color=cyan>RT</color>]", method =() => GTH.TimmySpam(), isTogglable = true },
                 new ButtonInfo { buttonText = "Stalker Spam [<color=cyan>RT</color>]", method =() => GTH.StalkerSpam(), isTogglable = true },
                 new ButtonInfo { buttonText = "Timmy All [<color=cyan>RT</color>]", method =() => GTH.TimmyAll(), isTogglable = true },
