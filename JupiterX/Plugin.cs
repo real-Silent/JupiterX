@@ -53,6 +53,11 @@ namespace JupiterX
         {
             base.OnApplicationLateStart();
             Utility.VersionCheck();
+
+            if (File.Exists($"{Utility.PreferencesPath}"))
+            {
+                Utility.LoadPreferences();
+            }
         }
 
         public override void OnUpdate()

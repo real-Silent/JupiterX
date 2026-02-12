@@ -28,7 +28,6 @@ namespace JupiterX.Mods
 
         public static void LoadSoundboard()
         {
-            buttonsType = 14; // Make this your new buttoninfo[] {} number
             pageNumber = 0;
             // Change light to your menu name
             string basePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
@@ -48,7 +47,7 @@ namespace JupiterX.Mods
 
             List<ButtonInfo> soundbuttons = new List<ButtonInfo>
             {
-                new ButtonInfo { buttonText = "Exit Soundboard", method = () => Settings.MovePage(0), isTogglable = false, toolTip = "Returns you to main menu." }
+                new ButtonInfo { buttonText = "Exit Soundboard", method = () => currentCategoryName = "Main", isTogglable = false, toolTip = "Returns you to main menu." }
             };
 
             int index = 0;
@@ -110,7 +109,7 @@ namespace JupiterX.Mods
             //soundbuttons.Add(new ButtonInfo { buttonText = "Loop Audio", enableMethod = LoopAudioToggleOn, disableMethod = LoopAudioToggleOff, isTogglable = true, toolTip = "Loop the audio." });
             //soundbuttons.Add(new ButtonInfo { buttonText = "Get More Sounds", method = LoadSoundLibrary, isTogglable = false, toolTip = "Opens a public audio library, where you can download your own sounds." });
 
-            Buttons.buttons[14] = soundbuttons.ToArray(); // Make this your new buttoninfo[] {} number
+            Buttons.buttons[GetCategory("Temporary Category")] = soundbuttons.ToArray(); // Make this your new buttoninfo[] {} number
         }
 
         public static void LoadSoundLibrary()
@@ -120,7 +119,6 @@ namespace JupiterX.Mods
 
         private static IEnumerator LoadSoundLibraryCoroutine() // this iiDks btw
         {
-            buttonsType = 3;
             pageNumber = 0;
 
             string url = "https://github.com/iiDk-the-actual/ModInfo/raw/main/SoundLibrary.txt";

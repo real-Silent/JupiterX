@@ -4,6 +4,7 @@ using GorillaNetworking;
 using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
+using Mono.Cecil;
 using Photon.Pun;
 using PlayFab;
 using System;
@@ -12,6 +13,7 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
+using static JupiterX.Menu.Main;
 
 namespace JupiterX
 {
@@ -1021,63 +1023,93 @@ namespace JupiterX
                 File.CreateText(CustomidPath);
         }
 
-        static string SavePreferencesToText()
+        static int loadingPreferencesFrame;
+        static bool hasLoadedPreferences;
+        public static string SavePreferencesToText()
         {
-            string seperator = ";;";
+            const string separator = ";;";
 
-            string enabledtext = "";
-            foreach (ButtonInfo[] buttonlist in Buttons.buttons)
+            List<string> enabledButtons = new List<string>();
+
+            foreach (ButtonInfo[] buttonList in Buttons.buttons)
             {
-                foreach (ButtonInfo v in buttonlist)
+                foreach (ButtonInfo button in buttonList)
                 {
-                    if (v.enabled && v.buttonText != "Save Preferences")
+                    if (button != null && button.enabled && button.buttonText != "Save Preferences")
                     {
-                        if (enabledtext == "")
-                            enabledtext += v.buttonText;
-                        else
-                            enabledtext += seperator + v.buttonText;
+                        enabledButtons.Add(button.buttonText);
                     }
                 }
             }
 
-            string finaltext =
-                enabledtext;
+            string enabledText = string.Join(separator, enabledButtons);
 
-            return finaltext;
+            string favoriteText = favorites != null && favorites.Count > 0 ? string.Join(separator, favorites) : string.Empty;
+
+            string quickActionText = quickActions != null && quickActions.Count > 0 ? string.Join(separator, quickActions) : string.Empty;
+
+            return string.Join("\n", new[]
+            {
+                enabledText,
+                favoriteText,
+                quickActionText
+            });
         }
 
+
         public static void SavePreferences() =>
-            File.WriteAllText($"{Utility.PreferencesPath}", SavePreferencesToText());
+            File.WriteAllText($"{PreferencesPath}", SavePreferencesToText());
 
-
-        static int loadingPreferencesFrame;
-        static bool hasLoadedPreferences;
-        static void LoadPreferencesFromText(string text)
+        public static void LoadPreferencesFromText(string text)
         {
             loadingPreferencesFrame = Time.frameCount;
 
             Panic();
+
+            if (string.IsNullOrEmpty(text))
+                return;
+
             string[] textData = text.Split('\n');
 
+            if (textData.Length < 3)
+                return;
+
+            string[] activebuttons = textData[0].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string button in activebuttons)
+                Main.Toggle(button);
+
+            favorites.Clear();
+            string[] favoritesarray = textData[1].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string favorite in favoritesarray)
+                favorites.Add(favorite);
+
+            quickActions.Clear();
+            string[] quickArray = textData[2].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string quickAction in quickArray)
+            {
+                ButtonInfo button = Main.GetIndex(quickAction);
+                if (button != null)
+                    quickActions.Add(quickAction);
+            }
             hasLoadedPreferences = true;
         }
+
 
         public static void LoadPreferences()
         {
             try
             {
-                if (!File.Exists($"{Utility.PreferencesPath}"))
+                if (!File.Exists($"{PreferencesPath}"))
                 {
                     hasLoadedPreferences = true;
                     return;
                 }
 
-                string text = File.ReadAllText($"{Utility.PreferencesPath}");
+                string text = File.ReadAllText($"{PreferencesPath}");
                 LoadPreferencesFromText(text);
             }
-            catch (Exception e) { Utility.Log("Error loading preferences: " + e.Message, 3); }
+            catch (Exception e) { Log("Error loading preferences: " + e.Message, 1); }
         }
-
 
 
         public static void Panic()

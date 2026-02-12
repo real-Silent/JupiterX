@@ -1,11 +1,15 @@
 ﻿using easyInputs;
 using JupiterX.Classes;
 using Photon.Pun;
+using Photon.Realtime;
+using Steamworks;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
 
@@ -44,22 +48,33 @@ namespace JupiterX.Menu
 					{
 						Rigidbody comp = menu.AddComponent<Rigidbody>();
 
-						if (rightHanded)
-						{
-							comp.velocity = Utility.ThrowMenu(Utility.RightHand);
-						}
-						else
-						{
-                            comp.velocity = Utility.ThrowMenu(Utility.LeftHand);
+                        switch (droptype) 
+                        {
+                            case 0:
+                                UnityEngine.Object.Destroy(menu, Time.deltaTime);
+                                menu = null;
+
+                                UnityEngine.Object.Destroy(reference);
+                                reference = null;
+                                break; // Destroy
+                            case 1: // Throw
+                                if (rightHanded)
+                                {
+                                    comp.velocity = Utility.ThrowMenu(Utility.RightHand);
+                                }
+                                else
+                                {
+                                    comp.velocity = Utility.ThrowMenu(Utility.LeftHand);
+                                }
+                                UnityEngine.Object.Destroy(menu, 5);
+                                menu = null;
+
+                                UnityEngine.Object.Destroy(reference);
+                                reference = null;
+                                break;
                         }
 
                         Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuclose.wav");
-
-                        UnityEngine.Object.Destroy(menu, 5);
-                        menu = null;
-
-                        UnityEngine.Object.Destroy(reference);
-						reference = null;
 					}
 				}
 			}
@@ -203,7 +218,8 @@ namespace JupiterX.Menu
 			menuBackground.GetComponent<Renderer>().material.color = backgroundColor.colors[0].color;
 			menuBackground.transform.position = new Vector3(0.05f, 0f, 0f);
 
-            RoundMenuObject(menuBackground);
+            if (Rounding)
+                RoundMenuObject(menuBackground);
 
 			ColorChanger colorChanger = menuBackground.AddComponent<ColorChanger>();
 			colorChanger.colorInfo = backgroundColor;
@@ -267,52 +283,33 @@ namespace JupiterX.Menu
 				component2.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 			}
 
-			// Buttons
-			// Disconnect
-			if (disconnectButton)
-			{
-				GameObject disconnectbutton = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            float hkbStartTime = -0.3f;
 
-				UnityEngine.Object.Destroy(disconnectbutton.GetComponent<Rigidbody>());
-				disconnectbutton.GetComponent<BoxCollider>().isTrigger = true;
-				disconnectbutton.transform.parent = menu.transform;
-				disconnectbutton.transform.rotation = Quaternion.identity;
-				disconnectbutton.transform.localScale = new Vector3(0.09f, 0.9f, 0.08f);
-				disconnectbutton.transform.localPosition = new Vector3(0.56f, 0f, 0.6f);
-				disconnectbutton.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
-				disconnectbutton.AddComponent<Classes.Button>().relatedText = "Disconnect";
+            if (!disconnectButton)
+            {
+                AddButton(-0.3f, -1, GetIndex("Disconnect"));
+                hkbStartTime -= 0.1f;
+            }
 
-				if (Rounding)
-				{
-					RoundMenuObject(disconnectbutton);
-				}
 
-                colorChanger = disconnectbutton.AddComponent<ColorChanger>();
-				colorChanger.colorInfo = buttonColors[0];
-				colorChanger.Start();
+            if (quickActions.Count > 0)
+            {
+                foreach (string action in quickActions)
+                {
+                    ButtonInfo button = GetIndex(action);
+                    if (button == null)
+                    {
+                        quickActions.Remove(action);
+                        continue;
+                    }
 
-				Text discontext = new GameObject
-				{
-					transform =
-							{
-								parent = canvasObject.transform
-							}
-				}.AddComponent<Text>();
-				discontext.text = "Disconnect";
-				discontext.font = currentFont;
-				discontext.fontSize = 1;
-				discontext.color = textColors[0];
-				discontext.alignment = TextAnchor.MiddleCenter;
-				discontext.resizeTextForBestFit = true;
-				discontext.resizeTextMinSize = 0;
+                    AddButton(hkbStartTime, -1, button);
+                    hkbStartTime -= 0.1f;
+                }
+            }
 
-				RectTransform rectt = discontext.GetComponent<RectTransform>();
-				rectt.localPosition = Vector3.zero;
-				rectt.sizeDelta = new Vector2(0.2f, 0.03f);
-				rectt.localPosition = new Vector3(0.064f, 0f, 0.23f);
-				rectt.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
-			}
-
+            // Buttons
+            
 			// Page Buttons
 			GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -390,76 +387,112 @@ namespace JupiterX.Menu
 				RoundMenuObject(gameObject2);
 			}
 
+            int buttonIndexOffset = 0;
+            ButtonInfo[] renderButtons = new ButtonInfo[] { };
+
+            if (currentCategoryName == "Favorite")
+            {
+                foreach (string favoriteMod in favorites)
+                {
+                    if (GetIndex(favoriteMod) == null)
+                        favorites.Remove(favoriteMod);
+                }
+
+                renderButtons = StringsToInfos(favorites.ToArray());
+            }
+            else if (currentCategoryName == "Enabled")
+            {
+                List<ButtonInfo> enabledMods = new List<ButtonInfo>() { };
+                int categoryIndex = 0;
+                foreach (ButtonInfo[] buttonlist in Buttons.buttons)
+                {
+                    foreach (ButtonInfo v in buttonlist)
+                    {
+                        if (v.enabled && (!Buttons.categoryNames[categoryIndex].Contains("Settings")))
+                            enabledMods.Add(v);
+                    }
+                    categoryIndex++;
+                }
+                enabledMods = enabledMods.OrderBy(v => v.buttonText).ToList();
+                enabledMods.Insert(0, GetIndex("Exit Enabled"));
+
+                renderButtons = enabledMods.ToArray();
+            }
+            else
+                renderButtons = Buttons.buttons[currentCategoryIndex];
+
+            renderButtons = renderButtons.Skip(pageNumber * (buttonsPerPage - buttonIndexOffset)).Take(buttonsPerPage - buttonIndexOffset).ToArray();
+
             // Mod Buttons
-            ButtonInfo[] activeButtons = buttons[buttonsType].Skip(pageNumber * buttonsPerPage).Take(buttonsPerPage).ToArray();
-			for (int i = 0; i < activeButtons.Length; i++)
-			{
-				CreateButton(i * 0.1f, i, activeButtons[i]);
-			}
-		}
-
-		public static void CreateButton(float offset, int buttonIndex, ButtonInfo method)
-		{
-			GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
-			UnityEngine.Object.Destroy(gameObject.GetComponent<Rigidbody>());
-			gameObject.GetComponent<BoxCollider>().isTrigger = true;
-			gameObject.transform.parent = menu.transform;
-			gameObject.transform.rotation = Quaternion.identity;
-			gameObject.transform.localScale = new Vector3(0.09f, 0.9f, 0.08f);
-			gameObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - offset);
-			gameObject.AddComponent<Classes.Button>().relatedText = method.buttonText;
-
-			if (Rounding)
-			{
-				RoundMenuObject(gameObject);
-			}
-
-            ColorChanger colorChanger = gameObject.AddComponent<ColorChanger>();
-			if (method.enabled)
-			{
-				colorChanger.colorInfo = buttonColors[1];
-			}
-			else
-			{
-				colorChanger.colorInfo = buttonColors[0];
-			}
-			colorChanger.Start();
-
-			Text text = new GameObject
-			{
-				transform =
-				{
-					parent = canvasObject.transform
-				}
-			}.AddComponent<Text>();
-			text.font = currentFont;
-			text.text = method.buttonText;
-			if (method.overlapText != null)
-			{
-				text.text = method.overlapText;
-			}
-			text.supportRichText = true;
-			text.fontSize = 1;
-			if (method.enabled)
-			{
-				text.color = textColors[1];
-			}
-			else
-			{
-				text.color = textColors[0];
-			}
-			text.alignment = TextAnchor.MiddleCenter;
-			text.fontStyle = FontStyle.Italic;
-			text.resizeTextForBestFit = true;
-			text.resizeTextMinSize = 0;
-			RectTransform component = text.GetComponent<RectTransform>();
-			component.localPosition = Vector3.zero;
-			component.sizeDelta = new Vector2(.2f, .03f);
-			component.localPosition = new Vector3(.064f, 0, .111f - offset / 2.6f);
-			component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+            for (int i = 0; i < renderButtons.Length; i++)
+                AddButton((i + buttonIndexOffset + 0.1f) * 0.1f, i, renderButtons[i]);
         }
-        public static void RecreateMenu()
+
+        private static void AddButton(float offset, int buttonIndex, ButtonInfo method)
+        {
+            GameObject buttonObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            buttonObject.GetComponent<BoxCollider>().isTrigger = true;
+            buttonObject.transform.parent = menu.transform;
+            buttonObject.transform.rotation = Quaternion.identity;
+
+            buttonObject.transform.localScale = new Vector3(0.09f, 0.9f, 0.1f * 0.8f);
+
+            buttonObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - offset);
+
+            Classes.Button Button = buttonObject.AddComponent<Classes.Button>();
+            Button.relatedText = method.buttonText;
+
+            if (lastClickedName != method.buttonText)
+            {
+                if (method.enabled)
+                {
+                    buttonObject.GetComponent<Renderer>().material.color = Color.grey;
+                }
+                else
+                {
+                    buttonObject.GetComponent<Renderer>().material.color = Color.black;
+                }
+            }
+
+            if (Rounding)
+                RoundMenuObject(buttonObject);
+
+            Text buttonText = new GameObject
+            {
+                transform =
+                {
+                    parent = canvasObject.transform
+                }
+            }.AddComponent<Text>();
+
+            buttonText.font = currentFont;
+            buttonText.text = method.buttonText;
+
+            if (method.overlapText != null)
+                buttonText.text = method.overlapText;
+
+            if (favorites.Contains(method.buttonText))
+                buttonText.text += " ✦";
+
+            buttonText.supportRichText = true;
+            buttonText.fontSize = 1;
+            buttonText.color = method.enabled ? textColors[1] : textColors[0];
+
+            buttonText.alignment = TextAnchor.MiddleCenter;
+            buttonText.fontStyle = FontStyle.Italic;
+            buttonText.resizeTextForBestFit = true;
+            buttonText.resizeTextMinSize = 0;
+
+            RectTransform textTransform = buttonText.GetComponent<RectTransform>();
+            textTransform.localPosition = Vector3.zero;
+            textTransform.sizeDelta = new Vector2(.2f, .03f * (0.1f / 0.1f));
+
+            textTransform.localPosition = new Vector3(.064f, 0, .111f - offset / 2.6f);
+            textTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+        }
+
+        public static void ReloadMenu()
 		{
 			if (menu != null)
 			{
@@ -492,7 +525,7 @@ namespace JupiterX.Menu
 			{
 				try
 				{
-					TPC = GameObject.Find("Third Person Camera/Shoulder Camera").GetComponent<Camera>();
+					TPC = GameObject.Find("Shoulder Camera").GetComponent<Camera>();
 				}
 				catch { }
 				if (TPC != null)
@@ -556,69 +589,135 @@ namespace JupiterX.Menu
 			colorChanger.Start();
 		}
 
-        public static void Toggle(string buttonText)
-		{
-			int lastPage = ((buttons[buttonsType].Length + buttonsPerPage - 1) / buttonsPerPage) - 1;
-			if (buttonText == "PreviousPage")
-			{
-				pageNumber--;
-				if (pageNumber < 0)
-				{
-					pageNumber = lastPage;
-				}
-			}
-			else
-			{
-				if (buttonText == "NextPage")
-				{
-					pageNumber++;
-					if (pageNumber > lastPage)
-					{
-						pageNumber = 0;
-					}
-				}
-				else
-				{
-					ButtonInfo target = GetIndex(buttonText);
-					if (target != null)
-					{
-						if (target.isTogglable)
-						{
-							target.enabled = !target.enabled;
-							if (target.enabled)
-							{
-                                NotificationManager.SendNoti("<color=grey>[</color><color=green>ENABLED</color><color=grey>]</color> " + target.toolTip);
-								if (target.enableMethod != null)
-								{
-									try { target.enableMethod.Invoke(); } catch { }
-								}
-							}
-							else
-							{
-                                NotificationManager.SendNoti("<color=grey>[</color><color=red>DISABLED</color><color=grey>]</color> " + target.toolTip);
-                                if (target.disableMethod != null)
-								{
-									try { target.disableMethod.Invoke(); } catch { }
-								}
-							}
-						}
-						else
-						{
-                            NotificationManager.SendNoti("<color=grey>[</color><color=green>ENABLED</color><color=grey>]</color> " + target.toolTip);
-                            if (target.method != null)
-							{
-								try { target.method.Invoke(); } catch { }
-							}
-						}
-					}
-					else
-					{
-						UnityEngine.Debug.LogError(buttonText + " does not exist");
-					}
-				}
-			}
-			RecreateMenu();
-		}
+        public static void Toggle(string buttonText, bool fromMenu = false, bool ignoreForce = false)
+        {
+            int lastPage = ((Buttons.buttons[currentCategoryIndex].Length + buttonsPerPage - 1) / buttonsPerPage) - 1;
+            if (currentCategoryName == "Favorite")
+                lastPage = ((favorites.Count + buttonsPerPage - 1) / buttonsPerPage) - 1;
+
+            if (currentCategoryName == "Enabled")
+            {
+                List<string> enabledMods = new List<string>() { "Exit Enabled" };
+                int categoryIndex = 0;
+                foreach (ButtonInfo[] buttonlist in Buttons.buttons)
+                {
+                    foreach (ButtonInfo v in buttonlist)
+                    {
+                        if (v.enabled && (!Buttons.categoryNames[categoryIndex].Contains("Settings")))
+                            enabledMods.Add(v.buttonText);
+                    }
+                    categoryIndex++;
+                }
+                lastPage = ((enabledMods.Count + buttonsPerPage - 1) / buttonsPerPage) - 1;
+            }
+
+            if (buttonText == "Disconnect")
+            {
+                PhotonNetwork.Disconnect();
+            }
+            if (buttonText == "Home")
+            {
+                currentCategoryName = "Main";
+                pageNumber = 0;
+            }
+
+            if (buttonText == "PreviousPage")
+            {
+                pageNumber--;
+                if (pageNumber < 0)
+                    pageNumber = lastPage;
+            }
+            else
+            {
+                if (buttonText == "NextPage")
+                {
+                    pageNumber++;
+                    if (pageNumber > lastPage)
+                        pageNumber = 0;
+                }
+                else
+                {
+                    ButtonInfo target = GetIndex(buttonText);
+                    if (target != null)
+                    {
+                        if (fromMenu && !ignoreForce && ((Utility.LGrip) || (Utility.RJoystickAxis.y > 0.5f && Utility.LTriggerFloat > 0.5f)))
+                        {
+                            if (target.buttonText != "Exit Favorite")
+                            {
+                                if (favorites.Contains(target.buttonText))
+                                {
+                                    favorites.Remove(target.buttonText);
+
+                                    if (fromMenu)
+                                        NotificationManager.SendNotification2("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Removed from favorites.");
+                                }
+                                else
+                                {
+                                    favorites.Add(target.buttonText);
+
+                                    if (fromMenu)
+                                        NotificationManager.SendNotification2("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Added to favorites.");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (fromMenu && !ignoreForce && (Utility.LTriggerFloat > 0.5f))
+                            {
+                                if (!quickActions.Contains(target.buttonText))
+                                {
+                                    quickActions.Add(target.buttonText);
+
+                                    if (fromMenu)
+                                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
+                                }
+                                else
+                                {
+                                    quickActions.Remove(target.buttonText);
+
+                                    if (fromMenu)
+                                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
+                                }
+                            }
+                            else
+                            {
+                                if (target.isTogglable)
+                                {
+                                    target.enabled = !target.enabled;
+                                    if (target.enabled)
+                                    {
+                                        if (fromMenu)
+                                            NotificationManager.SendNotification2("<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
+
+                                        if (target.enableMethod != null)
+                                            try { target.enableMethod.Invoke(); } catch (Exception exc) { MelonLoader.MelonLogger.Msg(string.Format("Error with mod enableMethod {0} at {1}: {2}", target.buttonText, exc.StackTrace, exc.Message)); }
+                                    }
+                                    else
+                                    {
+                                        if (fromMenu)
+                                            NotificationManager.SendNotification2("<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> " + target.toolTip);
+
+                                        if (target.disableMethod != null)
+                                            try { target.disableMethod.Invoke(); } catch (Exception exc) { MelonLoader.MelonLogger.Msg(string.Format("Error with mod disableMethod {0} at {1}: {2}", target.buttonText, exc.StackTrace, exc.Message)); }
+                                    }
+                                }
+                                else
+                                {
+                                    if (fromMenu)
+                                        NotificationManager.SendNotification2("<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
+
+                                    if (target.method != null)
+                                        try { target.method.Invoke(); } catch (Exception exc) { MelonLoader.MelonLogger.Msg(string.Format("Error with mod {0} at {1}: {2}", target.buttonText, exc.StackTrace, exc.Message)); }
+                                }
+                            }
+                        }
+                    }
+                    else
+                        MelonLoader.MelonLogger.Msg($"{buttonText} does not exist");
+                }
+            }
+            ReloadMenu();
+        }
 
         public static string lastClickedName = "";
         public static GradientColorKey[] GetSolidGradient(Color color)
@@ -626,26 +725,138 @@ namespace JupiterX.Menu
 			return new GradientColorKey[] { new GradientColorKey(color, 0f), new GradientColorKey(color, 1f) };
 		}
 
-		public static ButtonInfo GetIndex(string buttonText)
-		{
-			foreach (ButtonInfo[] buttons in Menu.Buttons.buttons)
-			{
-				foreach (ButtonInfo button in buttons)
-				{
-					if (button.buttonText == buttonText)
-					{
-						return button;
-					}
-				}
-			}
+        public static string[] InfosToStrings(ButtonInfo[] array) =>
+            array.Select(button => button.buttonText).ToArray();
 
-			return null;
-		}
+        public static ButtonInfo[] StringsToInfos(string[] array) =>
+            array.Select(GetIndex).ToArray();
 
-		// Variables
-		// Important
-		// Objects
-		public static GameObject menu;
+        private static Dictionary<string, (int Category, int Index)> cacheGetIndex = new Dictionary<string, (int Category, int Index)> { }; // Looping through 800 elements is not a light task :/
+        public static ButtonInfo GetIndex(string buttonText)
+        {
+            if (buttonText == null)
+                return null;
+
+            if (cacheGetIndex.ContainsKey(buttonText))
+            {
+                var CacheData = cacheGetIndex[buttonText];
+                try
+                {
+                    if (Buttons.buttons[CacheData.Category][CacheData.Index].buttonText == buttonText)
+                        return Buttons.buttons[CacheData.Category][CacheData.Index];
+                }
+                catch { cacheGetIndex.Remove(buttonText); }
+            }
+
+            int categoryIndex = 0;
+            foreach (ButtonInfo[] buttons in Buttons.buttons)
+            {
+                int buttonIndex = 0;
+                foreach (ButtonInfo button in buttons)
+                {
+                    if (button.buttonText == buttonText)
+                    {
+                        try
+                        {
+                            cacheGetIndex.Add(buttonText, (categoryIndex, buttonIndex));
+                        }
+                        catch
+                        {
+                            if (cacheGetIndex.ContainsKey(buttonText))
+                                cacheGetIndex.Remove(buttonText);
+                        }
+
+                        return button;
+                    }
+                    buttonIndex++;
+                }
+                categoryIndex++;
+            }
+
+            return null;
+        }
+
+        public static int GetCategory(string categoryName) =>
+            Buttons.categoryNames.ToList().IndexOf(categoryName);
+
+        public static int AddCategory(string categoryName)
+        {
+            List<ButtonInfo[]> buttonInfoList = Buttons.buttons.ToList();
+            buttonInfoList.Add(new ButtonInfo[] { });
+            Buttons.buttons = buttonInfoList.ToArray();
+
+            List<string> categoryList = Buttons.categoryNames.ToList();
+            categoryList.Add(categoryName);
+            Buttons.categoryNames = categoryList.ToArray();
+
+            return Buttons.buttons.Length - 1;
+        }
+
+        public static void RemoveCategory(string categoryName)
+        {
+            List<ButtonInfo[]> buttonInfoList = Buttons.buttons.ToList();
+            buttonInfoList.RemoveAt(GetCategory(categoryName));
+            Buttons.buttons = buttonInfoList.ToArray();
+
+            List<string> categoryList = Buttons.categoryNames.ToList();
+            categoryList.Remove(categoryName);
+            Buttons.categoryNames = categoryList.ToArray();
+        }
+
+        public static void AddButton(int category, ButtonInfo button, int index = -1)
+        {
+            List<ButtonInfo> buttonInfoList = Buttons.buttons[category].ToList();
+            if (index > 0)
+                buttonInfoList.Insert(index, button);
+            else
+                buttonInfoList.Add(button);
+
+            Buttons.buttons[category] = buttonInfoList.ToArray();
+        }
+
+        public static void AddButtons(int category, ButtonInfo[] buttons, int index = -1)
+        {
+            List<ButtonInfo> buttonInfoList = Buttons.buttons[category].ToList();
+            if (index > 0)
+            {
+                for (int i = 0; i < buttons.Length; i++)
+                    buttonInfoList.Insert(index + i, buttons[i]);
+            }
+            else
+            {
+                foreach (ButtonInfo button in buttons)
+                    buttonInfoList.Add(button);
+            }
+
+            Buttons.buttons[category] = buttonInfoList.ToArray();
+        }
+
+        public static void RemoveButton(int category, string name, int index = -1)
+        {
+            List<ButtonInfo> buttonInfoList = Buttons.buttons[category].ToList();
+            if (index > 0)
+                buttonInfoList.RemoveAt(index);
+            else
+            {
+                foreach (ButtonInfo button in buttonInfoList)
+                {
+                    if (button.buttonText == name)
+                    {
+                        buttonInfoList.Remove(button);
+                        break;
+                    }
+                }
+            }
+
+            Buttons.buttons[category] = buttonInfoList.ToArray();
+        }
+
+        // Variables
+        // Important
+        // Objects
+        public static int droptype = 0; 
+
+        public static GameObject menu;
 		public static GameObject menuBackground;
 		public static GameObject reference;
 		public static GameObject canvasObject;
@@ -656,7 +867,6 @@ namespace JupiterX.Menu
 
 		// Data
 		public static int pageNumber = 0;
-		public static int buttonsType = 0;
         public static int framePressCooldown;
 
         public static bool lastInRoom = false;
@@ -664,6 +874,27 @@ namespace JupiterX.Menu
         public static string lastRoom = "";
 
 
+        public static List<string> quickActions = new List<string> { };
+
+        public static List<string> favorites = new List<string> { "Exit Favorite" };
+
+        public static int _currentCategoryIndex;
+        public static int currentCategoryIndex
+        {
+            get => _currentCategoryIndex;
+            set
+            {
+                _currentCategoryIndex = value;
+                pageNumber = 0;
+            }
+        }
+
+        public static string currentCategoryName
+        {
+            get => Buttons.categoryNames[currentCategoryIndex];
+            set =>
+                currentCategoryIndex = GetCategory(value);
+        }
 
 
         public static bool scaleWithPlayer;

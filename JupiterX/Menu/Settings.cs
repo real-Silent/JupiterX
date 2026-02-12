@@ -26,7 +26,8 @@ namespace JupiterX
         public static Font currentFont = (Resources.GetBuiltinResource<Font>("Arial.ttf") as Font);
 
         public static bool fpsCounter = true;
-        public static bool disconnectButton = true;
+        public static bool disconnectButton = false;
+        public static bool homeButton = false;
         public static bool rightHanded = false;
         public static bool stumptext = true;
         public static bool disableNotis = false;
@@ -39,26 +40,19 @@ namespace JupiterX
 
         public static void Soundboard()
         {
-            buttonsType = 14;
+            currentCategoryName = "Soundboard";
             pageNumber = 0;
             SoundBoard.LoadSoundboard();
         }
 
-        public static void MovePage(int buttonType)
-        {
-            buttonsType = buttonType;
-            pageNumber = 0;
-        }
-
         public static void Players()
         {
-            buttonsType = 15; // 15
-            pageNumber = 0;
+            currentCategoryName = "Players";
 
             List<ButtonInfo> buttons = new List<ButtonInfo> {
                 new ButtonInfo {
                     buttonText = "Exit Players",
-                    method =() => MovePage(0),
+                    method =() => currentCategoryName = "Main",
                     isTogglable = false,
                     toolTip = "Returns you back to the main page."
                 }
@@ -83,7 +77,7 @@ namespace JupiterX
                 }
             }
 
-            Buttons.buttons[15] = buttons.ToArray();
+            Buttons.buttons[GetCategory("Players")] = buttons.ToArray();
         }
 
         static void NavigatePlayer(Photon.Realtime.Player plr)
@@ -155,7 +149,7 @@ namespace JupiterX
                     isTogglable = false,
                 },
             };
-            Buttons.buttons[16] = buttons.ToArray();
+            Buttons.buttons[GetCategory("Temporary Category")] = buttons.ToArray();
         }
 
 
