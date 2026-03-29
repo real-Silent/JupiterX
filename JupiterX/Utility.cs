@@ -958,7 +958,7 @@ namespace JupiterX
 
         public static string name = "JupiterX";
         public static string author = "Silent";
-        public static string version = "2.0.0"; 
+        public static string version = "2.0.1"; 
         public static bool isBetaRelease = false;
         public static bool updateneeded = false;
 
