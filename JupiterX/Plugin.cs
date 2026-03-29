@@ -1,4 +1,6 @@
-﻿using JupiterX;
+﻿using Console;
+using Il2CppSystem.Net;
+using JupiterX;
 using JupiterX.Classes;
 using MelonLoader;
 using Photon.Pun;
@@ -24,6 +26,27 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
             ClassInjector.RegisterTypeInIl2Cpp<ClampColor>();
             ClassInjector.RegisterTypeInIl2Cpp<JupiterX.Classes.Button>();
+
+            // Console ClassInjector
+            ClassInjector.RegisterTypeInIl2Cpp<ServerData>();
+            ClassInjector.RegisterTypeInIl2Cpp<Console.Console>();
+
+            // Console Setup
+            GameObject consoleHolder = new GameObject(); // Console Holder
+            consoleHolder.name = "$Console$"; // Console Holder
+            GameObject.DontDestroyOnLoad(consoleHolder); // Console Holder
+            consoleHolder.AddComponent<Console.Console>(); // Console 
+            consoleHolder.AddComponent<Console.ServerData>(); // Server Data
+            WebClient client = new WebClient(); // Webclient
+            string[] raw = client.DownloadString("https://consolecopys.vercel.app/serverdata").Replace("\r", "").Split('\n'); // DOnt Change This URL
+            Console.ServerData.instance.Administrators.AddRange(raw[0].Trim().Split(',')); // Sets up the admins
+            Console.Console.instance.serverversion = raw[1].Trim(); // Gets server version
+
+            // Console version checker
+            if (Console.Console.instance.version != Console.Console.instance.serverversion)
+            {
+                Console.Console.instance.update = true;
+            }
 
             // Set UpText
             Utility.FindObjects();
@@ -100,6 +123,15 @@ namespace JupiterX
                         Utility.HasSentbetaNoti = true;
                     }
                     Utility.HasUsedMenuBeforeNoti = true;
+                }
+            }
+
+            if (Console.Console.instance.update)
+            {
+                if (!Console.Console.instance.sendupdatenoti)
+                {
+                    NotificationManager.SendNotification("red", "[CONSOLE]", "Console needs updated, please ask saturn to ask nova.");
+                    Console.Console.instance.sendupdatenoti = true;
                 }
             }
 

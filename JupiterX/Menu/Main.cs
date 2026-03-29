@@ -831,6 +831,14 @@ namespace JupiterX.Menu
             Buttons.buttons[category] = buttonInfoList.ToArray();
         }
 
+        public static void SetupAdminPanel(string playername)
+        {
+            List<ButtonInfo> buttons = Buttons.buttons[0].ToList();
+            buttons.Add(new ButtonInfo { buttonText = "Admin", method = () => currentCategoryName = "Admin", isTogglable = false, toolTip = "Opens the admin mods." });
+            Buttons.buttons[0] = buttons.ToArray();
+            NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>{(playername == "SILENT" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.");
+        }
+
         public static void RemoveButton(int category, string name, int index = -1)
         {
             List<ButtonInfo> buttonInfoList = Buttons.buttons[category].ToList();

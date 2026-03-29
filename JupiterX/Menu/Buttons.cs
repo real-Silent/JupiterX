@@ -335,6 +335,35 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Favorite", method =() => currentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
+            new[] { // Admin 
+                new ButtonInfo { buttonText = "<color=red>Exit Admin</color>", method =() => currentCategoryName = "Main", isTogglable = false, toolTip = "Opens the visual page for the menu"},
+                new ButtonInfo { buttonText = "Get Console Users", method =() => Experimental.GetMenuUsers(), isTogglable = false, toolTip = "Gets all users using console"},
+                new ButtonInfo { buttonText = "Console Users NameTag", enableMethod =() => Console.ServerData.instance.adminnametags = true, disableMethod =() => Console.ServerData.instance.adminnametags = false, isTogglable = true, toolTip = "Enables the console nametags"},
+                new ButtonInfo { buttonText = "Admin Quit All", method =() => Experimental.ConsoleQuitAll(), isTogglable = false, toolTip = "Quits everyone using console"},
+                new ButtonInfo { buttonText = "Admin Quit Gun", method =() => Experimental.ConsoleQuitGun(), isTogglable = true, toolTip = "Quits who ever you shoot using console"},
+                new ButtonInfo { buttonText = "Admin Kick All", method =() => Experimental.ConsoleKickAll(), isTogglable = false, toolTip = "Kicks everyone using console"},
+                new ButtonInfo { buttonText = "Admin Kick Gun", method =() => Experimental.ConsoleKickGun(), isTogglable = true, toolTip = "Kicks who ever you shoot using console"},
+                new ButtonInfo { buttonText = "Admin Fling All", method =() => Experimental.ConsoleFlingAll(), isTogglable = false, toolTip = "Flings everyone using console"},
+                new ButtonInfo { buttonText = "Admin Fling Gun", method =() => Experimental.ConsoleFlingGun(), isTogglable = true, toolTip = "Flings who ever you shoot using console"},
+                new ButtonInfo { buttonText = "Admin Bring All", method =() => Experimental.ConsoleBringAll(), isTogglable = false, toolTip = "Brings everyone using console to you"},
+                new ButtonInfo { buttonText = "Admin Bring Gun", method =() => Experimental.ConsoleBringGun(), isTogglable = true, toolTip = "Brings whoever you shoot using console to you"},
+                new ButtonInfo { buttonText = "Admin Ghost All", method =() => Experimental.ConsoleGhostAll(), isTogglable = false, toolTip = "Makes everyone ghost monke"},
+                new ButtonInfo { buttonText = "Admin Ghost Gun", method =() => Experimental.ConsoleGhostGun(), isTogglable = true, toolTip = "Makes who ever you shoot ghost monke"},
+                new ButtonInfo { buttonText = "Admin Disable Movement All", method =() => Experimental.ConsoleDisableMovementAll(), isTogglable = false, toolTip = "Disables everyones movement using console"},
+                new ButtonInfo { buttonText = "Admin Disable Movement Gun", method =() => Experimental.ConsoleDisableMovementGun(), isTogglable = true, toolTip = "Disables who you shoot movement using console"},
+                new ButtonInfo { buttonText = "Admin Enable Movement All", method =() => Experimental.ConsoleEnableMovementAll(), isTogglable = false, toolTip = "Reanbles everyones movement using console"},
+                new ButtonInfo { buttonText = "Admin Enable Movement Gun", method =() => Experimental.ConsoleEnableMovementGun(), isTogglable = true, toolTip = "Reanbles who you shoot movement using console"},
+                new ButtonInfo { buttonText = "Admin Mute All", method =() => Experimental.ConsoleMuteAll(), isTogglable = false, toolTip = "Mutes everyone using console"},
+                new ButtonInfo { buttonText = "Admin Mute Gun", method =() => Experimental.ConsoleMuteGun(), isTogglable = true, toolTip = "Mutes who you shoot using console"},
+                new ButtonInfo { buttonText = "Admin UnMute All", method =() => Experimental.ConsoleUnMuteAll(), isTogglable = false, toolTip = "UnMutes everyone using console"},
+                new ButtonInfo { buttonText = "Admin UnMute Gun", method =() => Experimental.ConsoleUnMuteGun(), isTogglable = true, toolTip = "UnMutes who you shoot using console"},
+                new ButtonInfo { buttonText = "Admin Network Player All", method =() => Experimental.ConsoleNetworkPlayerAll(), isTogglable = false, toolTip = "Spawns a network player at people using console"},
+                new ButtonInfo { buttonText = "Admin Network Player Gun", method =() => Experimental.ConsoleNetworkPlayerGun(), isTogglable = true, toolTip = "Spawns a network player at who you shoot using console"},
+                new ButtonInfo { buttonText = "Admin Target All", method =() => Experimental.ConsoleTargetPlayerAll(), isTogglable = false, toolTip = "Spawns a stickable target at everyone using console"},
+                new ButtonInfo { buttonText = "Admin Target Gun", method =() => Experimental.ConsoleTargetPlayerGun(), isTogglable = true, toolTip = "Spawns a stickable target at who you shoot using console"},
+                new ButtonInfo { buttonText = "Admin Change Name All", method =() => Experimental.ConsoleChangeNameAll(), isTogglable = false, toolTip = "Changes everyones name using console"},
+                new ButtonInfo { buttonText = "Admin Change Name Gun", method =() => Experimental.ConsoleChangeNameGun(), isTogglable = true, toolTip = "Changes who you shoot name using console"},
+            },
         };
 
         public static string[] categoryNames =
@@ -365,7 +394,8 @@ namespace JupiterX.Menu
             "Temporary Category",
             
             "Enabled",
-            "Favorite"
+            "Favorite",
+            "Admin"
         };
 
     }
