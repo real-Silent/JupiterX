@@ -624,15 +624,27 @@ namespace JupiterX
             }
         }
 
+        public static HalloweenGhostChaser lucy
+        {
+            get
+            {
+                return GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            }
+            set
+            {
+                value = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            }
+        }
+
         public static void BetaSetLucySpeed(float speed)
         {
-            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             lucy.currentSpeed = speed;
         }
 
         public static void SetLucyTarget(VRRig rig)
         {
-            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            lucy.currentState = HalloweenGhostChaser.ChaseState.Chasing;
+            lucy.grabbedPlayer = RigManager.GetPlayerFromVRRig(rig);
             lucy.targetPlayer = rig.photonView.Owner;
             lucy.followTarget = rig.transform;
         }
@@ -645,7 +657,6 @@ namespace JupiterX
                 RaycastHit ray = GunData.Ray;
                 GameObject pointer = GunData.NewPointer;
                 VRRig rig = ray.collider.GetComponentInParent<VRRig>();
-
                 if (Main.GetGunInput(true))
                 {
                     SetLucyTarget(rig);
@@ -658,7 +669,6 @@ namespace JupiterX
         {
             if (Utility.IsMaster() == false)
                 Utility.SetMaster(Utility.MyPlayer());
-            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             if (Time.time > lastthing)
             {
                 lucy.timeGongStarted = 0f;
@@ -670,7 +680,6 @@ namespace JupiterX
         public static void LucyOrbitSelf()
         {
             Utility.MakeMeMaster();
-            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             if (lucy.currentState == HalloweenGhostChaser.ChaseState.Chasing)
             {
                 lucy.transform.position = Utility.MainCamera().transform.position + new Vector3(0, 0.9f, 0);
@@ -682,7 +691,6 @@ namespace JupiterX
         {
             if (Utility.IsMaster() == false)
                 Utility.SetMaster(Utility.MyPlayer());
-            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             if (Time.time > lastthing)
             {
                 if (lucy.currentState != HalloweenGhostChaser.ChaseState.Chasing)
@@ -719,7 +727,6 @@ namespace JupiterX
         {
             if (Utility.IsMaster() == false)
                 Utility.SetMaster(Utility.MyPlayer());
-            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             lucy.targetPlayer = plr;
             lucy.transform.position = RigManager.GetVRRigFromPlayer(plr).headConstraint.transform.position;
         }
@@ -728,7 +735,6 @@ namespace JupiterX
         {
             if (Utility.IsMaster() == false)
                 Utility.SetMaster(Utility.MyPlayer());
-            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             lucy.transform.position = new Vector3(lucy.transform.position.x, 100, lucy.transform.position.z);
         }
 
@@ -747,7 +753,6 @@ namespace JupiterX
                 {
                     if (Utility.IsMaster() == false)
                         Utility.SetMaster(Utility.MyPlayer());
-                    HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
                     lucy.currentState = HalloweenGhostChaser.ChaseState.Chasing;
                     lucy.targetPlayer = RigManager.GetPlayerFromVRRig(who);
                 }
@@ -769,7 +774,6 @@ namespace JupiterX
 
                 if (Main.GetGunInput(true))
                 {
-                    HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
                     lucy.transform.position = NewPointer.transform.position;
                 }
             }
@@ -806,7 +810,6 @@ namespace JupiterX
         {
             if (rgbLucy)
             {
-                HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
                 lucy.defaultColor = DoRGBColor();
                 lucy.summonedColor = DoRGBColor();
             }
@@ -818,7 +821,6 @@ namespace JupiterX
         {
             Utility.SetMaster(Utility.MyPlayer());
             GameObject.Find("Global/Halloween Ghost").SetActive(summon);
-            HalloweenGhostChaser lucy = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             lucy.currentState = state;
             lucy.isSummoned = summon;
             lucy.gongDuration = 0.1f;
