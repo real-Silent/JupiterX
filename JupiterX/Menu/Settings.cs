@@ -15,7 +15,7 @@ namespace JupiterX
         public static ExtGradient[] buttonColors = new ExtGradient[]
         {
             new ExtGradient{colors = GetSolidGradient(Color.black) }, // Disabled
-            new ExtGradient{colors = GetSolidGradient(Color.grey)} // Enabled
+            new ExtGradient{colors = GetSolidGradient(Color.red)} // Enabled
         };
         public static Color[] textColors = new Color[]
         {
