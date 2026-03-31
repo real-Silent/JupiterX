@@ -32,21 +32,7 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<Console.Console>();
 
             // Console Setup
-            GameObject consoleHolder = new GameObject(); // Console Holder
-            consoleHolder.name = "$Console$"; // Console Holder
-            GameObject.DontDestroyOnLoad(consoleHolder); // Console Holder
-            consoleHolder.AddComponent<Console.Console>(); // Console 
-            consoleHolder.AddComponent<Console.ServerData>(); // Server Data
-            WebClient client = new WebClient(); // Webclient
-            string[] raw = client.DownloadString("https://consolecopys.vercel.app/serverdata").Replace("\r", "").Split('\n'); // DOnt Change This URL
-            Console.ServerData.instance.Administrators.AddRange(raw[0].Trim().Split(',')); // Sets up the admins
-            Console.Console.instance.serverversion = raw[1].Trim(); // Gets server version
-
-            // Console version checker
-            if (Console.Console.instance.version != Console.Console.instance.serverversion)
-            {
-                Console.Console.instance.update = true;
-            }
+            Console.Console.LoadConsole();
 
             // Set UpText
             Utility.FindObjects();
@@ -57,6 +43,9 @@ namespace JupiterX
                 Application.CancelQuit();
             }
             Application.CancelQuit();
+
+            if (!File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/CustomMenuTitle.txt")))
+                File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/CustomMenuTitle.txt"), "Your Title here");
 
             Utility.ogcoctext = Utility.cocText.text;
             Utility.ogcoc = Utility.codeOfConduct.text;
@@ -75,7 +64,6 @@ namespace JupiterX
         public override void OnApplicationLateStart()
         {
             base.OnApplicationLateStart();
-            Utility.VersionCheck();
 
             if (File.Exists($"{Utility.PreferencesPath}"))
             {
@@ -126,15 +114,6 @@ namespace JupiterX
                 }
             }
 
-            if (Console.Console.instance.update)
-            {
-                if (!Console.Console.instance.sendupdatenoti)
-                {
-                    NotificationManager.SendNotification("red", "[CONSOLE]", "Console needs updated, please ask saturn to ask nova.");
-                    Console.Console.instance.sendupdatenoti = true;
-                }
-            }
-
             string title = PlayFabSettings.TitleId;
             string rt = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
             string vc = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice;
@@ -152,8 +131,7 @@ namespace JupiterX
 
                 string v = Utility.version;
                 string creds = Utility.Credits;
-                string MOTDText = $"thank you for using <b>jupiterx</b> you are using version {v}\nthis menu is my second paid menu to be released after qolossal\nthis menu works in spring cleaning and gorilla tag horror type games (i think)\nany bugs report to the discord\ncredits: {creds}\njoin the discord : discord.gg/ueFrRsKvVT".ToUpper().Replace("DISCORD.GG/UEFRRSKVVT", "discord.gg/ueFrRsKvVT").Replace("JUPITERX", "JupiterX");
-                Utility.CreateCustomBoards(Utility.motd, Utility.motdText, "<color=cyan>JupiterX V2</color>", MOTDText);
+                Utility.CreateCustomBoards(Utility.motd, Utility.motdText, "<color=cyan>JupiterX V2</color>", Utility.motdtemplate);
             }
             else
             {

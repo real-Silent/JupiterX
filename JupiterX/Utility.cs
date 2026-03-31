@@ -19,6 +19,7 @@ namespace JupiterX
 {
     public class Utility
     {
+        public static void Log(string msg) => MelonLoader.MelonLogger.Msg($"[JUPITERX] Log : {msg}");
         public static void Log(string msg, int type)
         {
             switch (type)
@@ -958,26 +959,15 @@ namespace JupiterX
 
         public static string name = "JupiterX";
         public static string author = "Silent";
-        public static string version = "2.0.1"; 
+
+        public static string version = "2.1.0"; 
+        public static string serverversion; 
+        public static string minversion; 
+        public static string discord; 
+
         public static bool isBetaRelease = false;
         public static bool updateneeded = false;
-
-        public static void VersionCheck()
-        {
-            string serverversion = new Il2CppSystem.Net.WebClient().DownloadString("https://pastebin.com/raw/kRd6f5QS");
-            if (version != serverversion)
-            {
-                Application.OpenURL("https://discord.gg/ueFrRsKvVT");
-                updateneeded = true;
-                NotificationManager.SendNotification2("JupiterX is outdated");
-                Application.Quit();
-                Environment.Exit(0);
-            }
-            else
-            {
-                NotificationManager.SendNotification2("JupiterX is up to date");
-            }
-        }
+        public static string motdtemplate;
 
         public static string LogMain = "[JUPITERX] (LOG) : ";
         public static string LogWarningMain = "[JUPITERX] (WARNING) : ";
