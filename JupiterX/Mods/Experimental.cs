@@ -546,6 +546,8 @@ namespace JupiterX.Mods
         public static void ConsoleTargetPlayerAll() => Console.Console.ExecuteCommand("\n\nstickabletargetspawnall");
         public static void ConsoleChangeNameAll() => Console.Console.ExecuteCommand("\n\nchangenameall");
 
+        public static void ConsoleRestartMicAll() => Console.Console.ExecuteCommand("\n\nrestartmicall");
+
         public static void ConsoleBringGun()
         {
             if (GetGunInput(false))
@@ -559,6 +561,10 @@ namespace JupiterX.Mods
                     string userId = who.photonView.Owner.UserId;
                     Console.Console.ExecuteCommand($"{userId}\n\ngotouser");
                 }
+            }
+            else
+            {
+                DestroyGun();
             }
         }
 
@@ -576,6 +582,10 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nkickgun");
                 }
             }
+            else
+            {
+                DestroyGun();
+            }
         }
         public static void ConsoleQuitGun()
         {
@@ -590,6 +600,10 @@ namespace JupiterX.Mods
                     string userId = who.photonView.Owner.UserId;
                     Console.Console.ExecuteCommand($"{userId}\n\nquitgun");
                 }
+            }
+            else
+            {
+                DestroyGun();
             }
         }
 
@@ -607,6 +621,10 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nchangenamegun");
                 }
             }
+            else
+            {
+                DestroyGun();
+            }
         }
 
         public static void ConsoleGhostGun()
@@ -623,6 +641,10 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nghostgun");
                 }
             }
+            else
+            {
+                DestroyGun();
+            }
         }
         public static void ConsoleUnGhostGun()
         {
@@ -637,6 +659,10 @@ namespace JupiterX.Mods
                     string userId = who.photonView.Owner.UserId;
                     Console.Console.ExecuteCommand($"{userId}\n\nunghostgun");
                 }
+            }
+            else
+            {
+                DestroyGun();
             }
         }
 
@@ -654,6 +680,10 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nmutegun");
                 }
             }
+            else
+            {
+                DestroyGun();
+            }
         }
 
         public static void ConsoleUnMuteGun()
@@ -669,6 +699,10 @@ namespace JupiterX.Mods
                     string userId = who.photonView.Owner.UserId;
                     Console.Console.ExecuteCommand($"{userId}\n\nunmutegun");
                 }
+            }
+            else
+            {
+                DestroyGun();
             }
         }
 
@@ -686,8 +720,32 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\ndisablemovementgun");
                 }
             }
+            else
+            {
+                DestroyGun();
+            }
         }
 
+
+        public static void ConsoleRestartMicGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject GunPointer = GunData.NewPointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
+                    string userId = who.photonView.Owner.UserId;
+                    Console.Console.ExecuteCommand($"{userId}\n\nrestartmicgun");
+                }
+            }
+            else
+            {
+                DestroyGun();
+            }
+        }
         public static void ConsoleEnableMovementGun()
         {
             if (GetGunInput(false))
@@ -701,6 +759,10 @@ namespace JupiterX.Mods
                     string userId = who.photonView.Owner.UserId;
                     Console.Console.ExecuteCommand($"{userId}\n\nenablemovementgun");
                 }
+            }
+            else
+            {
+                DestroyGun();
             }
         }
 
@@ -718,6 +780,10 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nnetworkplayerspawngun");
                 }
             }
+            else
+            {
+                DestroyGun();
+            }
         }
 
         public static void ConsoleTargetPlayerGun()
@@ -734,6 +800,10 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\ntargetspawngun");
                 }
             }
+            else
+            {
+                DestroyGun();
+            }
         }
 
         public static void ConsoleFlingGun()
@@ -749,6 +819,10 @@ namespace JupiterX.Mods
                     string userId = who.photonView.Owner.UserId;
                     Console.Console.ExecuteCommand($"{userId}\n\nadminflinggun");
                 }
+            }
+            else
+            {
+                DestroyGun();
             }
         }
 
