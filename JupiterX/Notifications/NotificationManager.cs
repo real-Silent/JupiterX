@@ -59,7 +59,7 @@ namespace JupiterX
             }
 
 
-            if (!Settings.disableNotis)
+            if (Settings.Notifications)
             {
                 if (Text.text != "")
                 {
@@ -95,7 +95,7 @@ namespace JupiterX
 
         public static void SendNoti(string notiText)
         {
-            if (!Settings.disableNotis)
+            if (Settings.Notifications)
             {
                 if (Time.time - normtime > cooldown)
                 {
@@ -113,7 +113,7 @@ namespace JupiterX
         {
             try
             {
-                if (!Settings.disableNotis)
+                if (Settings.Notifications)
                 {
                     if (Time.time - normtime > cooldown)
                     {
@@ -135,7 +135,7 @@ namespace JupiterX
         {
             try
             {
-                if (!Settings.disableNotis)
+                if (Settings.Notifications)
                 {
                     if (Time.time - normtime > cooldown)
                     {

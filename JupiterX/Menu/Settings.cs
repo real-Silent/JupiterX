@@ -25,12 +25,12 @@ namespace JupiterX
 
         public static Font currentFont = (Resources.GetBuiltinResource<Font>("Arial.ttf") as Font);
 
-        public static bool fpsCounter = true;
-        public static bool disconnectButton = false;
+        public static bool VersionText = true;
+        public static bool DisconnectButton = false;
         public static bool homeButton = false;
-        public static bool rightHanded = false;
-        public static bool stumptext = true;
-        public static bool disableNotis = false;
+        public static bool RightHanded = false;
+        public static bool StumpText = true;
+        public static bool Notifications = true;
         public static bool Rounding = false;
 
         public static KeyCode keyboardButton = KeyCode.Q;
@@ -150,58 +150,6 @@ namespace JupiterX
                 },
             };
             Buttons.buttons[GetCategory("Temporary Category")] = buttons.ToArray();
-        }
-
-
-        public static void RightHand()
-        {
-            rightHanded = true;
-        }
-
-        public static void LeftHand()
-        {
-            rightHanded = false;
-        }
-
-        public static void EnableFPSCounter()
-        {
-            fpsCounter = true;
-        }
-
-        public static void DisableFPSCounter()
-        {
-            fpsCounter = false;
-        }
-
-        public static void EnableStumpText()
-        {
-            stumptext = true;
-        }
-
-        public static void DisableStumpText()
-        {
-            stumptext = false;
-        }
-
-        public static void EnableDisconnectButton()
-        {
-            disconnectButton = true;
-        }
-
-        public static void DisableDisconnectButton()
-        {
-            disconnectButton = false;
-        }
-
-        public static void EnableNotis()
-        {
-            disableNotis = false;
-        }
-
-        public static void DisableNotis()
-        {
-            disableNotis = true;
-            NotificationManager.ClearAllNotifications();
         }
     }
 }

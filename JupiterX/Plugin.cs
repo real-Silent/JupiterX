@@ -158,7 +158,7 @@ namespace JupiterX
                 sstumpText.text = stumpText;
             }
 
-            if (Settings.stumptext)
+            if (Settings.StumpText)
             {
                 StumpText.SetActive(true);
                 sstumpText.transform.LookAt(Utility.MainCamera().transform);

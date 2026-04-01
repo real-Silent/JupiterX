@@ -9,7 +9,7 @@ namespace JupiterX
     {
         private static void Prefix(Player newPlayer)
         {
-            if (newPlayer != oldnewplayer && !Settings.disableNotis)
+            if (newPlayer != oldnewplayer && Settings.Notifications)
             {
                 NotificationManager.SendNotification("green", "JOIN",  "Name: " + newPlayer.NickName);
                 oldnewplayer = newPlayer;

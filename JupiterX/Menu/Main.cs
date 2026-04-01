@@ -21,7 +21,7 @@ namespace JupiterX.Menu
 		{
 			try
 			{
-				Utility.toOpen = (!rightHanded && Utility.LSec || (rightHanded && Utility.RSec));
+				Utility.toOpen = (!RightHanded && Utility.LSec || (RightHanded && Utility.RSec));
 				bool keyboardOpen = false;
 
 				if (menu == null)
@@ -31,10 +31,10 @@ namespace JupiterX.Menu
                         Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuopen.wav");
                         CreateMenu();
 
-                        RecenterMenu(rightHanded, keyboardOpen);
+                        RecenterMenu(RightHanded, keyboardOpen);
 						if (reference == null)
 						{
-							CreateReference(rightHanded);
+							CreateReference(RightHanded);
 						}
 					}
 				}
@@ -42,7 +42,7 @@ namespace JupiterX.Menu
 				{
 					if ((Utility.toOpen || keyboardOpen))
 					{
-						RecenterMenu(rightHanded, keyboardOpen);
+						RecenterMenu(RightHanded, keyboardOpen);
 					}
 					else
 					{
@@ -58,7 +58,7 @@ namespace JupiterX.Menu
                                 reference = null;
                                 break; // Destroy
                             case 1: // Throw
-                                if (rightHanded)
+                                if (RightHanded)
                                 {
                                     comp.velocity = Utility.ThrowMenu(Utility.RightHand);
                                 }
@@ -257,7 +257,7 @@ namespace JupiterX.Menu
 			component.position = new Vector3(0.06f, 0f, 0.165f);
 			component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 
-			if (fpsCounter)
+			if (VersionText)
 			{
 				fpsObject = new GameObject
 				{
@@ -285,7 +285,7 @@ namespace JupiterX.Menu
 
             float hkbStartTime = -0.3f;
 
-            if (!disconnectButton)
+            if (!DisconnectButton)
             {
                 AddButton(-0.3f, -1, GetIndex("Disconnect"));
                 hkbStartTime -= 0.1f;
@@ -500,7 +500,7 @@ namespace JupiterX.Menu
 				menu = null;
 
 				CreateMenu();
-				RecenterMenu(rightHanded, false);
+				RecenterMenu(RightHanded, false);
 			}
 		}
 
