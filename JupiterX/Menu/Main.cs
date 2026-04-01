@@ -6,6 +6,7 @@ using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -158,6 +159,11 @@ namespace JupiterX.Menu
             {
                 if (PhotonNetwork.InRoom)
                 {
+                    if (PhotonNetwork.LocalPlayer.IsMasterClient)
+                        GetIndex("MasterLabel").overlapText = "You are not master client.";
+                    else
+                        GetIndex("MasterLabel").overlapText = "You are master client.";
+
                     if (PhotonNetwork.LocalPlayer.IsMasterClient && !lastMasterClient)
                     {
                         NotificationManager.SendNotification("purple", "MASTER", "You are now master client.");
@@ -432,31 +438,34 @@ namespace JupiterX.Menu
         {
             GameObject buttonObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-            buttonObject.GetComponent<BoxCollider>().isTrigger = true;
-            buttonObject.transform.parent = menu.transform;
-            buttonObject.transform.rotation = Quaternion.identity;
-
-            buttonObject.transform.localScale = new Vector3(0.09f, 0.9f, 0.1f * 0.8f);
-
-            buttonObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - offset);
-
-            Classes.Button Button = buttonObject.AddComponent<Classes.Button>();
-            Button.relatedText = method.buttonText;
-
-            if (lastClickedName != method.buttonText)
+            if (!method.label)
             {
-                if (method.enabled)
-                {
-                    buttonObject.GetComponent<Renderer>().material.color = buttonColors[1].GetCurrentColor();
-                }
-                else
-                {
-                    buttonObject.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
-                }
-            }
+                buttonObject.GetComponent<BoxCollider>().isTrigger = true;
+                buttonObject.transform.parent = menu.transform;
+                buttonObject.transform.rotation = Quaternion.identity;
 
-            if (Rounding)
-                RoundMenuObject(buttonObject);
+                buttonObject.transform.localScale = new Vector3(0.09f, 0.9f, 0.1f * 0.8f);
+
+                buttonObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - offset);
+
+                Classes.Button Button = buttonObject.AddComponent<Classes.Button>();
+                Button.relatedText = method.buttonText;
+
+                if (lastClickedName != method.buttonText)
+                {
+                    if (method.enabled)
+                    {
+                        buttonObject.GetComponent<Renderer>().material.color = buttonColors[1].GetCurrentColor();
+                    }
+                    else
+                    {
+                        buttonObject.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
+                    }
+                }
+
+                if (Rounding)
+                    RoundMenuObject(buttonObject);
+            }
 
             Text buttonText = new GameObject
             {

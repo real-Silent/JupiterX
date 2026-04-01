@@ -15,5 +15,7 @@ namespace JupiterX.Classes
 
         public bool enabled;
         public bool isTogglable = true;
+
+        public bool label = false;
     }
 }

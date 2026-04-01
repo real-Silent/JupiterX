@@ -212,6 +212,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Overpowered | 11
                 new ButtonInfo { buttonText = "Exit Overpowered", method =() => currentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "MasterLabel", label = true },
                 new ButtonInfo { buttonText = "Set Master", method =() => Overpowered.SetMaster(), isTogglable = true, toolTip = "Sets you as master client."  },
 
                 new ButtonInfo { buttonText = "RPC Lag All [<color=cyan>RT</color>]", method =() => Overpowered.RPCLag(), isTogglable = true, toolTip = "Lags people using rpcs while holding right trigger."  },

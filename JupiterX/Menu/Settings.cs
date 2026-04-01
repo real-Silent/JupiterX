@@ -60,7 +60,7 @@ namespace JupiterX
 
 
             if (!PhotonNetwork.InRoom)
-                buttons.Add(new ButtonInfo { buttonText = "Not in a Room", isTogglable = false });
+                buttons.Add(new ButtonInfo { buttonText = "Not in a Room", label = true, isTogglable = false });
             else
             {
                 for (int i = 0; i < PhotonNetwork.PlayerListOthers.Length; i++)
