@@ -447,11 +447,11 @@ namespace JupiterX.Menu
             {
                 if (method.enabled)
                 {
-                    buttonObject.GetComponent<Renderer>().material.color = Color.grey;
+                    buttonObject.GetComponent<Renderer>().material.color = buttonColors[1].GetCurrentColor();
                 }
                 else
                 {
-                    buttonObject.GetComponent<Renderer>().material.color = Color.black;
+                    buttonObject.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
                 }
             }
 

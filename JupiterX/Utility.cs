@@ -1066,6 +1066,8 @@ namespace JupiterX
             if (textData.Length < 3)
                 return;
 
+            Toggle("Notifications");
+
             string[] activebuttons = textData[0].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string button in activebuttons)
                 Main.Toggle(button);
