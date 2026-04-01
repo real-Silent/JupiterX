@@ -27,6 +27,7 @@ namespace JupiterX
 
         public static bool VersionText = true;
         public static bool DisconnectButton = false;
+        public static bool MenuTitle = true;
         public static bool homeButton = false;
         public static bool RightHanded = false;
         public static bool StumpText = true;
