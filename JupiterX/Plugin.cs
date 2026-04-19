@@ -69,6 +69,8 @@ namespace JupiterX
             {
                 Utility.LoadPreferences();
             }
+
+            PhotonNetwork.ConnectUsingSettings();
         }
 
         public override void OnUpdate()
