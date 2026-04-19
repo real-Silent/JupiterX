@@ -1,16 +1,12 @@
 ﻿using easyInputs;
 using JupiterX.Classes;
 using Photon.Pun;
-using Photon.Realtime;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
 
@@ -730,12 +726,215 @@ namespace JupiterX.Menu
             }
             ReloadMenu();
         }
+        public static Material promptMat;
 
         public static string lastClickedName = "";
         public static GradientColorKey[] GetSolidGradient(Color color)
 		{
 			return new GradientColorKey[] { new GradientColorKey(color, 0f), new GradientColorKey(color, 1f) };
 		}
+
+        // Prompt Stuff
+        public static string ExtractPromptImage(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return null;
+            var match = System.Text.RegularExpressions.Regex.Match(input, @"<(?<url>https?://[^>]+)>");
+            if (match.Success)
+                return match.Groups["url"].Value;
+            return null;
+        }
+
+        public static string GetFileExtension(string fileName) =>
+            fileName.ToLower().Split('.')[fileName.Split('.').Length - 1];
+
+        private static void RenderPrompt()
+        {
+            Text promptText = new GameObject
+            {
+                transform =
+                {
+                    parent = canvasObject.transform
+                }
+            }.AddComponent<Text>();
+            promptText.font = currentFont;
+            promptText.text = CurrentPrompt.Message;
+
+            string promptImageUrl = ExtractPromptImage(CurrentPrompt.Message);
+            if (promptImageUrl != null)
+                promptText.text = promptText.text.Replace($"<{promptImageUrl}>", "");
+
+            promptText.fontSize = 1;
+            promptText.lineSpacing = 0.8f;
+            promptText.color = textColors[0];
+
+            promptText.supportRichText = true;
+            promptText.fontStyle = FontStyle.Normal;
+            promptText.alignment = TextAnchor.MiddleCenter;
+            promptText.resizeTextForBestFit = true;
+            promptText.resizeTextMinSize = 0;
+            RectTransform component = promptText.GetComponent<RectTransform>();
+            component.sizeDelta = new Vector2(0.28f, CurrentPrompt.IsText ? 0.25f : 0.28f);
+
+            component.localPosition = new Vector3(0.06f, 0f, CurrentPrompt.IsText ? -0.025f : 0f);
+            component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+
+            if (promptImageUrl != null)
+            {
+                string fileName = promptImageUrl.Split('/')[^1];
+                string fileExtension = GetFileExtension(fileName);
+
+                Image promptImage = new GameObject
+                {
+                    transform =
+                    {
+                        parent = canvasObject.transform
+                    }
+                }.AddComponent<Image>();
+
+                component.sizeDelta = new Vector2(component.sizeDelta.x, 0.03f);
+                component.localPosition = new Vector3(0.06f, 0f, 0.1f);
+
+                if (promptMat == null)
+                    promptMat = new Material(promptImage.material);
+
+                promptImage.material = promptMat;
+
+                RectTransform imageTransform = promptImage.GetComponent<RectTransform>();
+                imageTransform.localPosition = Vector3.zero;
+                imageTransform.sizeDelta = new Vector2(.2f, .2f);
+
+                imageTransform.localPosition = new Vector3(0.06f, 0f, string.IsNullOrEmpty(promptText.text) ? 0f : -0.03f);
+                imageTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+
+            }
+            {
+                GameObject button = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+                button.GetComponent<BoxCollider>().isTrigger = true;
+                button.transform.parent = menu.transform;
+                button.transform.rotation = Quaternion.identity;
+                button.transform.localScale = new Vector3(0.09f, CurrentPrompt.DeclineText == null ? 0.9f : 0.4375f, 0.08f);
+                button.transform.localPosition = new Vector3(0.56f, CurrentPrompt.DeclineText == null ? 0f : 0.2375f, -0.43f);
+
+                button.AddComponent<Classes.Button>().relatedText = "Accept Prompt";
+
+                if (lastClickedName != "Accept Prompt")
+                {
+                    button.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
+                }
+
+                Text text = new GameObject { transform = { parent = canvasObject.transform } }.AddComponent<Text>();
+                text.font = currentFont;
+                text.fontStyle = FontStyle.Normal;
+                text.text = CurrentPrompt.AcceptText;
+                text.fontSize = 1;
+                text.alignment = TextAnchor.MiddleCenter;
+                text.resizeTextForBestFit = true;
+                text.resizeTextMinSize = 0;
+                text.color = textColors[1];
+
+                RectTransform textRect = text.GetComponent<RectTransform>();
+                textRect.sizeDelta = new Vector2(0.2f, 0.03f);
+                textRect.localPosition = new Vector3(0.064f, CurrentPrompt.DeclineText != null ? 0.075f : 0f, -0.16f);
+                textRect.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+
+                if (Rounding)
+                    RoundMenuObject(button);
+            }
+
+            if (CurrentPrompt.DeclineText != null)
+            {
+                GameObject button = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+                button.GetComponent<BoxCollider>().isTrigger = true;
+                button.transform.parent = menu.transform;
+                button.transform.rotation = Quaternion.identity;
+                button.transform.localScale = new Vector3(0.09f, 0.4375f, 0.08f);
+                button.transform.localPosition = new Vector3(0.56f, -0.2375f, -0.43f);
+
+                button.AddComponent<Classes.Button>().relatedText = "Decline Prompt";
+
+                if (lastClickedName != "Decline Prompt")
+                    button.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
+                Text text = new GameObject { transform = { parent = canvasObject.transform } }.AddComponent<Text>();
+                text.font = currentFont;
+                text.fontStyle = FontStyle.Normal;
+                text.text = CurrentPrompt.DeclineText;
+                text.fontSize = 1;
+                text.alignment = TextAnchor.MiddleCenter;
+                text.resizeTextForBestFit = true;
+                text.resizeTextMinSize = 0;
+
+                text.color = textColors[1];
+
+                RectTransform textRect = text.GetComponent<RectTransform>();
+                textRect.sizeDelta = new Vector2(0.2f, 0.03f);
+
+                textRect.localPosition = new Vector3(0.064f, -0.075f, -0.16f);
+                textRect.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+
+                if (Rounding)
+                    RoundMenuObject(button);
+            }
+        }
+
+        public class PromptData
+        {
+            public bool IsText;
+            public string Message;
+
+            public string AcceptText;
+            public string DeclineText;
+
+            public Action AcceptAction;
+            public Action DeclineAction;
+        }
+
+        public static List<PromptData> prompts = new List<PromptData>();
+
+        public static PromptData CurrentPrompt
+        {
+            get
+            {
+                if (prompts.Count > 0)
+                    return prompts[0];
+                else
+                    return null;
+            }
+        }
+
+        public static Material promptMaterial;
+        public static void Prompt(string Message, Action Accept = null, Action Decline = null, string AcceptButton = "Yes", string DeclineButton = "No")
+        {
+            prompts.Add(new PromptData { Message = Message, AcceptAction = Accept, DeclineAction = Decline, AcceptText = AcceptButton, DeclineText = DeclineButton, IsText = false });
+
+            if (menu != null && prompts.Count <= 1)
+                ReloadMenu();
+        }
+        public static void PromptSingle(string Message, Action Accept = null, string AcceptButton = "Yes")
+        {
+            prompts.Add(new PromptData { Message = Message, AcceptAction = Accept, DeclineAction = null, AcceptText = AcceptButton, DeclineText = null, IsText = false });
+
+            if (menu != null && prompts.Count <= 1)
+                ReloadMenu();
+        }
+        public static void PromptText(string Message, Action Accept = null, Action Decline = null, string AcceptButton = "Yes", string DeclineButton = "No")
+        {
+            prompts.Add(new PromptData { Message = Message, AcceptAction = Accept, DeclineAction = Decline, AcceptText = AcceptButton, DeclineText = DeclineButton, IsText = true });
+
+            if (menu != null && prompts.Count <= 1)
+                ReloadMenu();
+        }
+        public static void PromptSingleText(string Message, Action Accept = null, string AcceptButton = "Yes")
+        {
+            prompts.Add(new PromptData { Message = Message, AcceptAction = Accept, DeclineAction = null, AcceptText = AcceptButton, DeclineText = null, IsText = true });
+
+            if (menu != null && prompts.Count <= 1)
+                ReloadMenu();
+        }
+
+
 
         public static string[] InfosToStrings(ButtonInfo[] array) =>
             array.Select(button => button.buttonText).ToArray();
