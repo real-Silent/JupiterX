@@ -31,6 +31,9 @@ namespace JupiterX
             }
         }
 
+        public static void StopCurrentPrompt() =>
+            prompts.RemoveAt(0);
+
         public static void MoveStumpTextGun()
         {
             if (Menu.Main.GetGunInput(false))
