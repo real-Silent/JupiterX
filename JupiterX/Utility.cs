@@ -370,8 +370,6 @@ namespace JupiterX
         public static void SetMaster(Photon.Realtime.Player newMaster)
         {
             PhotonNetwork.SetMasterClient(newMaster);
-            GorillaNot.instance.currentMasterClient = newMaster;
-            GorillaNot.instance.OnMasterClientSwitched(newMaster);
         }
 
         public static void MakeMeMaster()
@@ -432,11 +430,11 @@ namespace JupiterX
 
         public static void BetaDestroyPlayers(Photon.Realtime.Player who)
         {
-            if (!IsMaster())
-                SetMaster(PhotonNetwork.LocalPlayer);
+            SetMaster(PhotonNetwork.LocalPlayer);
 
             PhotonNetwork.DestroyPlayerObjects(who);
             PhotonNetwork.DestroyPlayerObjects(who);
+            PhotonNetwork.SendDestroyOfPlayer(who.ActorNumber);
         }
 
         static List<GameObject> Prefabs = new List<GameObject>();
@@ -473,6 +471,9 @@ namespace JupiterX
         public static void BetaCrashPlayer(Photon.Realtime.Player crash)
         {
             SetMaster(PhotonNetwork.LocalPlayer);
+            BetaDestroyPlayers(crash);
+            BetaDestroyPlayers(crash);
+            BetaDestroyPlayers(crash);
             myVRRig().photonView.RPC(RPCNames[0], crash, null);
             myVRRig().photonView.RPC(RPCNames[0], crash, null);
             myVRRig().photonView.RPC(RPCNames[1], crash, null);
@@ -483,8 +484,6 @@ namespace JupiterX
             myVRRig().photonView.RPC(RPCNames[3], crash, null);
             myVRRig().photonView.RPC(RPCNames[4], crash, null);
             myVRRig().photonView.RPC(RPCNames[4], crash, null);
-            BetaDestroyPlayers(crash);
-            BetaDestroyPlayers(crash);
             BetaDestroyPlayers(crash);
             BetaDoPrefab(prefabNames[0]);
             BetaDoPrefab(prefabNames[0]);
@@ -496,7 +495,7 @@ namespace JupiterX
         public static void ChangeName(string name)
         {
             PhotonNetwork.LocalPlayer.NickName = name;
-            GorillaComputer.instance.savedName = name;
+            GorillaComputer.instance.currentName = name;
             PlayerPrefs.SetString("playerName", name);
             PlayerPrefs.Save();
         }

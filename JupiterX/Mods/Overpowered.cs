@@ -396,8 +396,7 @@ namespace JupiterX.Mods
                 GameObject NewPointer = GunData.NewPointer;
                 RaycastHit Ray = GunData.Ray;
 
-                if (Utility.IsMaster() == false)
-                    Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                Utility.SetMaster(PhotonNetwork.LocalPlayer);
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
