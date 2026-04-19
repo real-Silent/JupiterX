@@ -395,42 +395,47 @@ namespace JupiterX.Menu
             int buttonIndexOffset = 0;
             ButtonInfo[] renderButtons = new ButtonInfo[] { };
 
-            if (currentCategoryName == "Favorite")
-            {
-                foreach (string favoriteMod in favorites)
-                {
-                    if (GetIndex(favoriteMod) == null)
-                        favorites.Remove(favoriteMod);
-                }
-
-                renderButtons = StringsToInfos(favorites.ToArray());
-            }
-            else if (currentCategoryName == "Enabled")
-            {
-                List<ButtonInfo> enabledMods = new List<ButtonInfo>() { };
-                int categoryIndex = 0;
-                foreach (ButtonInfo[] buttonlist in Buttons.buttons)
-                {
-                    foreach (ButtonInfo v in buttonlist)
-                    {
-                        if (v.enabled && (!Buttons.categoryNames[categoryIndex].Contains("Settings")))
-                            enabledMods.Add(v);
-                    }
-                    categoryIndex++;
-                }
-                enabledMods = enabledMods.OrderBy(v => v.buttonText).ToList();
-                enabledMods.Insert(0, GetIndex("Exit Enabled"));
-
-                renderButtons = enabledMods.ToArray();
-            }
+            if (CurrentPrompt != null)
+                RenderPrompt();
             else
-                renderButtons = Buttons.buttons[currentCategoryIndex];
+            {
+                if (currentCategoryName == "Favorite")
+                {
+                    foreach (string favoriteMod in favorites)
+                    {
+                        if (GetIndex(favoriteMod) == null)
+                            favorites.Remove(favoriteMod);
+                    }
 
-            renderButtons = renderButtons.Skip(pageNumber * (buttonsPerPage - buttonIndexOffset)).Take(buttonsPerPage - buttonIndexOffset).ToArray();
+                    renderButtons = StringsToInfos(favorites.ToArray());
+                }
+                else if (currentCategoryName == "Enabled")
+                {
+                    List<ButtonInfo> enabledMods = new List<ButtonInfo>() { };
+                    int categoryIndex = 0;
+                    foreach (ButtonInfo[] buttonlist in Buttons.buttons)
+                    {
+                        foreach (ButtonInfo v in buttonlist)
+                        {
+                            if (v.enabled && (!Buttons.categoryNames[categoryIndex].Contains("Settings")))
+                                enabledMods.Add(v);
+                        }
+                        categoryIndex++;
+                    }
+                    enabledMods = enabledMods.OrderBy(v => v.buttonText).ToList();
+                    enabledMods.Insert(0, GetIndex("Exit Enabled"));
 
-            // Mod Buttons
-            for (int i = 0; i < renderButtons.Length; i++)
-                AddButton((i + buttonIndexOffset + 0.1f) * 0.1f, i, renderButtons[i]);
+                    renderButtons = enabledMods.ToArray();
+                }
+                else
+                    renderButtons = Buttons.buttons[currentCategoryIndex];
+
+                renderButtons = renderButtons.Skip(pageNumber * (buttonsPerPage - buttonIndexOffset)).Take(buttonsPerPage - buttonIndexOffset).ToArray();
+
+                // Mod Buttons
+                for (int i = 0; i < renderButtons.Length; i++)
+                    AddButton((i + buttonIndexOffset + 0.1f) * 0.1f, i, renderButtons[i]);
+            }
         }
 
         private static void AddButton(float offset, int buttonIndex, ButtonInfo method)
