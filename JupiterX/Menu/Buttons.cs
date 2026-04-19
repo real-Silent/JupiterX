@@ -85,6 +85,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Anti AFK", method =() => Important.AntiAFK(), isTogglable = true, toolTip = "Disables the afk kick you get." },
                 new ButtonInfo { buttonText = "Clear Notifcations", method =() => NotificationManager.ClearAllNotifications(), isTogglable = false, toolTip = "Clears all the notifications." },
 
+                new ButtonInfo { buttonText = "Turning", method =() => Important.Turning(), isTogglable = true, toolTip = "Lets you turn." },
+
                 new ButtonInfo { buttonText = "Mute Gun", method =() => Experimental.MuteGun(), isTogglable = true, toolTip = "Lets you mute the player you shoot the gun at." },
                 new ButtonInfo { buttonText = "UnMute Gun", method =() => Experimental.UnMuteGun(), isTogglable = true, toolTip = "Lets you unmute the player you shoot the gun at." },
                 new ButtonInfo { buttonText = "Mute All", method =() => Experimental.MuteAll(), isTogglable = false, toolTip = "Lets you mute everyone in the current room." },
