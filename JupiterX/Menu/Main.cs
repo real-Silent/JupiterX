@@ -1310,8 +1310,20 @@ namespace JupiterX.Menu
         public static int GorillaCosmetics = LayerMask.NameToLayer("GorillaCosmetics");
         public static int GorillaParticle = LayerMask.NameToLayer("GorillaParticle");
 
-        public static int NoInvisLayerMask() =>
-            ~(1 << TransparentFX | 1 << IgnoreRaycast | 1 << Zone | 1 << GorillaTrigger | 1 << GorillaBoundary | 1 << GorillaCosmetics | 1 << GorillaParticle);
+        private static int? noInvisLayerMask;
+        public static int NoInvisLayerMask()
+        {
+            noInvisLayerMask ??= ~(
+                1 << LayerMask.NameToLayer("TransparentFX") |
+                1 << LayerMask.NameToLayer("Ignore Raycast") |
+                1 << LayerMask.NameToLayer("Zone") |
+                1 << LayerMask.NameToLayer("Gorilla Trigger") |
+                1 << LayerMask.NameToLayer("Gorilla Boundary") |
+                1 << LayerMask.NameToLayer("GorillaCosmetics") |
+                1 << LayerMask.NameToLayer("GorillaParticle"));
+
+            return noInvisLayerMask ?? GorillaLocomotion.Player.Instance.locomotionEnabledLayers;
+        }
 
         public static (Vector3 position, Quaternion rotation, Vector3 up, Vector3 forward, Vector3 right) TrueLeftHand()
         {
@@ -1364,7 +1376,7 @@ namespace JupiterX.Menu
 				right = gunTransform.right;
 			}
 
-			Physics.Raycast(startPos, Quaternion.AngleAxis(45f, right) * direction, out var Ray, 512f);
+			Physics.Raycast(startPos, Quaternion.AngleAxis(45f, right) * direction, out var Ray, 512f, NoInvisLayerMask());
 
 			Vector3 endPos = gunLocked ? lockTarget.headMesh.transform.position : Ray.point;
 
