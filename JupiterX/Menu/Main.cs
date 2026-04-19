@@ -155,7 +155,7 @@ namespace JupiterX.Menu
             {
                 if (PhotonNetwork.InRoom)
                 {
-                    if (PhotonNetwork.LocalPlayer.IsMasterClient)
+                    if (!PhotonNetwork.LocalPlayer.IsMasterClient)
                         GetIndex("MasterLabel").overlapText = "You are not master client.";
                     else
                         GetIndex("MasterLabel").overlapText = "You are master client.";

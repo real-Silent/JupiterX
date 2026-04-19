@@ -218,6 +218,14 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "MasterLabel", label = true },
                 new ButtonInfo { buttonText = "Set Master", method =() => Overpowered.SetMaster(), isTogglable = true, toolTip = "Sets you as master client."  },
 
+                new ButtonInfo { buttonText = "Rig Spam [<color=cyan>RT</color>]", method =() => Overpowered.RigSpam(), isTogglable = true, toolTip = "Lets you spam rigs."  },
+
+                new ButtonInfo { buttonText = "Material Spam All", method =() => Overpowered.MatSpamAll(), isTogglable = true, toolTip = "Lets you spaz out the infection material on others."  },
+                new ButtonInfo { buttonText = "Material Spam Gun", method =() => Overpowered.MatSpamAll(), isTogglable = true, toolTip = "Lets you spaz out the infection material on who you shoot."  },
+
+                new ButtonInfo { buttonText = "Mat All V1", method =() => Overpowered.DoMatStuffIdk(), isTogglable = true, toolTip = "Changes everyones mat index."  },
+                new ButtonInfo { buttonText = "Mat All V2", method =() => Experimental.ChangeMatIndexAll(), isTogglable = true, toolTip = "Changes everyones mat index."  },
+
                 new ButtonInfo { buttonText = "RPC Lag All [<color=cyan>RT</color>]", method =() => Overpowered.RPCLag(), isTogglable = true, toolTip = "Lags people using rpcs while holding right trigger."  },
 
                 new ButtonInfo { buttonText = "Kick Gun [<color=red>W</color>]", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump."  },
@@ -232,6 +240,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Crash Gun", method =() => Overpowered.CrashGun(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
                 new ButtonInfo { buttonText = "Crash Gun V2", method =() => Overpowered.CrashGunV2(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
                 new ButtonInfo { buttonText = "Crash Gun V3", method =() => Overpowered.CrashGunV3(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
+                new ButtonInfo { buttonText = "Crash Gun V4", method =() => Overpowered.CrashGunV4(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
 
                 new ButtonInfo { buttonText = "Crash All [<color=cyan>RT</color>]", method =() => Overpowered.CrashAll(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash All V2 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV2(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
@@ -277,9 +286,6 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Slow Gun", method =() => Overpowered.SlowGun(), isTogglable = true, toolTip = "Lets you slow someone with a gun."  },
                 new ButtonInfo { buttonText = "Slow All", method =() => Overpowered.SlowAll(), isTogglable = true, toolTip = "Lets you slow everyone in the lobby."  },
-
-                new ButtonInfo { buttonText = "Mat All V1", method =() => Overpowered.DoMatStuffIdk(), isTogglable = true, toolTip = "Changes everyones mat index."  },
-                new ButtonInfo { buttonText = "Mat All V2", method =() => Experimental.ChangeMatIndexAll(), isTogglable = true, toolTip = "Changes everyones mat index."  },
 
                 new ButtonInfo { buttonText = "Spawn Lucy", method =() => Utility.BetaSpawnLucy(HalloweenGhostChaser.ChaseState.Gong, true, Color.cyan), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest."  },
                 new ButtonInfo { buttonText = "Spawn Blue Lucy", method =() => Utility.BetaSpawnLucy(HalloweenGhostChaser.ChaseState.Gong, true, Color.blue), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest." },

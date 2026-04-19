@@ -63,9 +63,86 @@ namespace JupiterX.Mods
                 Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
             }
         }
+
+        public static void RigSpam()
+        {
+            SetMaster();
+            if (Utility.RTrigger)
+            {
+                PhotonNetwork.Destroy(Utility.myVRRig().gameObject);
+            }
+        }
+
         public static void SetMaster()
         {
             Utility.SetMaster(PhotonNetwork.LocalPlayer);
+        }
+
+        public static void MatSpamAll()
+        {
+            SetMaster();
+            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+            {
+                foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
+                {
+                    if (tagman.currentInfected.Contains(plr))
+                    {
+                        tagman.currentInfected.Remove(plr);
+                        tagman.EndInfectionGame();
+                    }
+                    else
+                    {
+                        tagman.AddInfectedPlayer(plr);
+                        tagman.UpdateInfectionState();
+                    }
+                    tagman.UpdateInfectionState();
+                }
+            }
+        }
+
+        public static void MatSpamGun()
+        {
+            SetMaster();
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.NewPointer;
+                RaycastHit Ray = GunData.Ray;
+
+                if (Main.gunLocked && Main.lockTarget != null)
+                {
+                    foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
+                    {
+                        if (tagman.currentInfected.Contains(Main.lockTarget.photonView.Owner))
+                        {
+                            tagman.currentInfected.Remove(Main.lockTarget.photonView.Owner);
+                            tagman.EndInfectionGame();
+                        }
+                        else
+                        {
+                            tagman.AddInfectedPlayer(Main.lockTarget.photonView.Owner);
+                            tagman.UpdateInfectionState();
+                        }
+                        tagman.UpdateInfectionState();
+                    }
+                }
+
+                if (Main.GetGunInput(true))
+                {
+                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
+                    if (who)
+                    {
+                        Main.gunLocked = true;
+                        Main.lockTarget = who;
+                    }
+                }
+            }
+            else
+            {
+                if (Main.gunLocked)
+                    Main.gunLocked = false;
+                Main.DestroyGun();
+            }
         }
 
         public static void DoMatStuffIdk()
@@ -367,6 +444,30 @@ namespace JupiterX.Mods
                     {
                         PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
                         PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                    }
+                }
+            }
+            else
+            {
+                Main.DestroyGun();
+            }
+        }
+
+        public static void CrashGunV4()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.NewPointer;
+                RaycastHit Ray = GunData.Ray;
+                Photon.Realtime.Player plr = Ray.collider.GetComponentInParent<PhotonView>().Owner;
+
+                if (Main.GetGunInput(true))
+                {
+                    for (int i = 0; i < 150; i++)
+                    {
+                        PhotonNetwork.RaiseEvent((byte)UnityEngine.Random.Range(200, 214), null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent((byte)UnityEngine.Random.Range(200, 214), null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
                     }
                 }
             }
