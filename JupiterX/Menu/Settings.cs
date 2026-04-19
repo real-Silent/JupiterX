@@ -1,8 +1,11 @@
-﻿using Il2CppSystem.Net;
+﻿using Console;
+using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Mods;
+using Mono.CSharp;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using static JupiterX.Menu.Main;
@@ -84,6 +87,7 @@ namespace JupiterX
         static void NavigatePlayer(Photon.Realtime.Player plr)
         {
             string TargetName = plr.NickName.ToUpper();
+            string UserId = plr.UserId;
 
             List<ButtonInfo> buttons = new List<ButtonInfo> {
                 new ButtonInfo {
@@ -100,57 +104,85 @@ namespace JupiterX
                     method =() => Utility.BetaCrashPlayer(plr),
                     isTogglable = false,
                 },*/
-
                 new ButtonInfo {
                     buttonText = "Crash Player",
                     overlapText = $"Crash {TargetName}",
                     method =() => Utility.BetaCrashPlayer(plr),
                     isTogglable = true,
                 },
-
                 new ButtonInfo {
                     buttonText = "Tag Player",
                     overlapText = $"Tag {TargetName}",
                     method =() => Utility.TagPlayer(plr),
                     isTogglable = false,
                 },
-
                 new ButtonInfo {
                     buttonText = "Slow Player",
                     overlapText = $"Slow {TargetName}",
                     method =() => Utility.SlowPlayer(plr),
                     isTogglable = false,
                 },
-
-                new ButtonInfo {
-                    buttonText = "TP Lucy To",
-                    overlapText = $"TP Lucy To {TargetName}",
-                    method =() => Utility.MakeLucyGoToPlayer(plr),
-                    isTogglable = false,
-                },
-
                 new ButtonInfo {
                     buttonText = "TP Self To",
                     overlapText = $"TP Self To {TargetName}",
                     method =() => Utility.TpSelfToPlayer(plr),
                     isTogglable = false,
                 },
-
-                new ButtonInfo {
-                    buttonText = "Get Ownership Of",
-                    overlapText = $"Get Ownership Of {TargetName}",
-                    method =() => Utility.GetOwnerShipOfPlayer(plr),
-                    isTogglable = false,
-                },
-
-                new ButtonInfo {
-                    buttonText = "Move Player To Self",
-                    overlapText = $"Move Player To Self {TargetName} [Ownership] W?",
-                    method =() => Utility.MovePlayerToMe(plr),
-                    isTogglable = false,
-                },
             };
+
+            if (ServerData.Administrators.ContainsKey(PhotonNetwork.LocalPlayer.UserId))
+            {
+                buttons.AddRange(
+                    new[]
+                    {
+                        new ButtonInfo {
+                            buttonText = "Admin Kick Player",
+                            overlapText = $"Admin Kick {TargetName}",
+                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nkickgun"),
+                            isTogglable = false,
+                            toolTip = $"Kicks {TargetName} if they're using the menu."
+                        },
+                        new ButtonInfo {
+                            buttonText = "Admin Quit Player",
+                            overlapText = $"Admin Quit {TargetName}",
+                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nquitgun"),
+                            isTogglable = false,
+                            toolTip = $"Quits {TargetName} if they're using the menu."
+                        },
+                        new ButtonInfo {
+                            buttonText = "Admin Ghost Player",
+                            overlapText = $"Admin Ghost {TargetName}",
+                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nghostgun"),
+                            isTogglable = false,
+                            toolTip = $"Ghosts {TargetName} if they're using the menu."
+                        },
+                        new ButtonInfo {
+                            buttonText = "Admin Unghost Player",
+                            overlapText = $"Admin Unghost {TargetName}",
+                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nunghostgun"),
+                            isTogglable = false,
+                            toolTip = $"Unghosts {TargetName} if they're using the menu."
+                        },
+                        new ButtonInfo {
+                            buttonText = "Admin Bring Player",
+                            overlapText = $"Admin Bring {TargetName}",
+                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\ngotouser"),
+                            isTogglable = false,
+                            toolTip = $"Brings {TargetName} if they're using the menu."
+                        },
+                        new ButtonInfo {
+                            buttonText = "Admin Fling Player",
+                            overlapText = $"Admin Fling {TargetName}",
+                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nadminflinggun"),
+                            isTogglable = false,
+                            toolTip = $"Flings {TargetName} if they're using the menu."
+                        },
+                    }
+                );
+            }
+
             Buttons.buttons[GetCategory("Temporary Category")] = buttons.ToArray();
+            currentCategoryName = "Temporary Category";
         }
     }
 }

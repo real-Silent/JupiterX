@@ -376,8 +376,7 @@ namespace JupiterX
 
         public static void MakeMeMaster()
         {
-            if (Utility.IsMaster() == false)
-                Utility.SetMaster(Utility.MyPlayer());
+            SetMaster(PhotonNetwork.LocalPlayer);
         }
 
 
@@ -457,6 +456,7 @@ namespace JupiterX
 
         public static void SlowPlayer(Photon.Realtime.Player who)
         {
+            SetMaster(PhotonNetwork.LocalPlayer);
             Utility.myVRRig().photonView.RPC("SetTaggedTime", who, null);
         }
 
@@ -472,6 +472,7 @@ namespace JupiterX
         }
         public static void BetaCrashPlayer(Photon.Realtime.Player crash)
         {
+            SetMaster(PhotonNetwork.LocalPlayer);
             myVRRig().photonView.RPC(RPCNames[0], crash, null);
             myVRRig().photonView.RPC(RPCNames[0], crash, null);
             myVRRig().photonView.RPC(RPCNames[1], crash, null);
