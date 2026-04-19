@@ -214,6 +214,7 @@
     <Reference Include="PlayFab">
       <HintPath>..\..\QolossalStuff\Refrences\PlayFab.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="Tomlet">
       <HintPath>..\..\QolossalStuff\Refrences\Tomlet.dll</HintPath>
     </Reference>

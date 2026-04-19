@@ -985,6 +985,8 @@ namespace JupiterX
         public static Text cocText;
         public static Text codeOfConduct;
         public static GorillaComputer gorillaComputer;
+
+        public static bool FirstLaunch;
         private static void DestroyObject(GameObject objects)
         {
             GameObject.Destroy(objects);

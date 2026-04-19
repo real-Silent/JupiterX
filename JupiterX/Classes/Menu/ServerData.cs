@@ -2,11 +2,14 @@
 using Il2CppSystem.Net;
 using JupiterX;
 using MelonLoader;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -40,6 +43,11 @@ namespace Console
 
         private ExitGames.Client.Photon.Hashtable consoleHash; // KEEP THIS FOR OTHER INSTANCES OF CONSOLE AS WELL // DO NOT EVER REMOVE
 
+        private static string LastPollAnswered;
+
+        private static string CurrentPoll = "Do you like jupiterx?";
+        private static string OptionA = "yes";
+        private static string OptionB = "no";
         public virtual void Awake()
         {
             instance = this;
@@ -48,6 +56,9 @@ namespace Console
             consoleHash = new ExitGames.Client.Photon.Hashtable(); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
             consoleHash.Add("console", "console"); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
             PhotonNetwork.LocalPlayer.SetCustomProperties(consoleHash); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
+
+            if (File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/LastPollAnswered.txt")))
+                LastPollAnswered = File.ReadAllText(Path.Combine(Application.persistentDataPath, "JupiterX/LastPollAnswered.txt"));
         }
 
         private readonly Dictionary<VRRig, TextMeshPro> activeTags = new Dictionary<VRRig, TextMeshPro>();
@@ -209,6 +220,8 @@ namespace Console
             Version serverVersion = new Version(Utility.serverversion);
             Version minimumVersion = new Version(Utility.minversion);
 
+            bool shownPrompt = false;
+
             Utility.motdtemplate = string.Format(Utility.motdtemplate, Utility.version, Utility.discord);
 
             if (currentVersion < minimumVersion)
@@ -223,6 +236,7 @@ namespace Console
             {
                 NotificationManager.SendNotification("red", "UPDATE", $"JupiterX Needs an update please update to latest version {Utility.serverversion}");
                 Application.OpenURL("https://discord.gg/Ev5c9xDq2J");
+                shownPrompt = true;
             }
 
             string minConsoleVersion = (string)data["min-console-version"];
@@ -265,6 +279,24 @@ namespace Console
                 {
                     isadmin = false;
                     GivenAdminMods = false;
+                }
+
+
+                // Polls
+                CurrentPoll = (string)data["poll"];
+                OptionA = (string)data["option-a"];
+                OptionB = (string)data["option-b"];
+
+                if (!Utility.FirstLaunch && LastPollAnswered != CurrentPoll)
+                {
+                    if (!shownPrompt)
+                    {
+                        JupiterX.Menu.Main.Prompt(CurrentPoll, () => SendVote("a-votes"), () => SendVote("b-votes"), OptionA, OptionB);
+                        Console.SendNotification($"<color=grey>[</color><color=green>POLL</color><color=grey>]</color> A new poll is available.", 10000);
+                    }
+
+                    LastPollAnswered = CurrentPoll;
+                    File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/LastPollAnswered.txt"), CurrentPoll);
                 }
             }
             else
@@ -312,6 +344,48 @@ namespace Console
         public void Log(string msg)
         {
             MelonLogger.Msg($"[CONSOLE::LOG] {msg}");
+        }
+
+        public void SendVote(string category)
+        {
+            try
+            {
+                WebClient client = new WebClient();
+                {
+                    client.Headers.Add("Content-Type", "application/json"); // FIXED
+
+                    string json = JsonConvert.SerializeObject(new { option = category });
+
+                    string responseText = client.UploadString($"{ServerEndpoint}/vote", "POST", json);
+
+                    Dictionary<string, object> responseJson =
+                        JsonConvert.DeserializeObject<Dictionary<string, object>>(responseText);
+
+                    int avotes = Convert.ToInt32(responseJson["a-votes"]);
+                    int bvotes = Convert.ToInt32(responseJson["b-votes"]);
+
+                    int total = avotes + bvotes;
+
+                    string result;
+                    if (total > 0)
+                    {
+                        double aPercent = (double)avotes / total * 100;
+                        double bPercent = (double)bvotes / total * 100;
+
+                        result = $"Total Votes: {total}\n{OptionA}: {aPercent:F2}%\n{OptionB}: {bPercent:F2}%";
+                    }
+                    else
+                    {
+                        result = "No votes yet.";
+                    }
+
+                    JupiterX.Menu.Main.PromptSingle(result, null, "Ok");
+                }
+            }
+            catch (Exception e)
+            {
+                Log($"Error doing voting {e.Message}");
+            }
         }
     }
 }
