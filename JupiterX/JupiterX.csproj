@@ -482,5 +482,9 @@
       <HintPath>..\..\QolossalStuff\Refrences\WebSocketDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\crown.png" />
+    <EmbeddedResource Include="Resources\icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
