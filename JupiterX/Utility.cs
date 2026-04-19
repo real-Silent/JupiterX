@@ -963,14 +963,14 @@ namespace JupiterX
         public static string name = "JupiterX";
         public static string author = "Silent";
 
-        public static string version = "2.1.0"; 
+        public static string version = "2.2.0"; 
         public static string serverversion; 
         public static string minversion; 
         public static string discord; 
 
         public static bool isBetaRelease = false;
         public static bool updateneeded = false;
-        public static string motdtemplate;
+        public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {Utility.version}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD discord.gg/bCjKrZaT2T";
 
         public static string LogMain = "[JUPITERX] (LOG) : ";
         public static string LogWarningMain = "[JUPITERX] (WARNING) : ";
@@ -1133,8 +1133,8 @@ namespace JupiterX
             line.positionCount = 2;
             line.material.shader = Utility.GUIShader();
             line.useWorldSpace = true;
-            line.startWidth = 0.02f;
-            line.endWidth = 0.02f;
+            line.startWidth = 0.01f;
+            line.endWidth = 0.01f;
             line.startColor = color;
             line.endColor = color;
 
@@ -1204,6 +1204,8 @@ namespace JupiterX
 
             motd = GameObject.Find("motd")?.GetComponent<Text>();
             motdText = GameObject.Find("motdtext")?.GetComponent<Text>();
+
+            motdText.text = Utility.motdtemplate;
 
             codeOfConduct = GameObject.Find("CodeOfConduct")?.GetComponent<Text>();
             cocText = GameObject.Find("COC Text")?.GetComponent<Text>();
