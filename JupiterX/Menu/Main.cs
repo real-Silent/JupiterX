@@ -399,7 +399,7 @@ namespace JupiterX.Menu
                 RenderPrompt();
             else
             {
-                if (currentCategoryName == "Favorite")
+                if (Buttons.CurrentCategoryName == "Favorite")
                 {
                     foreach (string favoriteMod in favorites)
                     {
@@ -409,7 +409,7 @@ namespace JupiterX.Menu
 
                     renderButtons = StringsToInfos(favorites.ToArray());
                 }
-                else if (currentCategoryName == "Enabled")
+                else if (Buttons.CurrentCategoryName == "Enabled")
                 {
                     List<ButtonInfo> enabledMods = new List<ButtonInfo>() { };
                     int categoryIndex = 0;
@@ -428,7 +428,7 @@ namespace JupiterX.Menu
                     renderButtons = enabledMods.ToArray();
                 }
                 else
-                    renderButtons = Buttons.buttons[currentCategoryIndex];
+                    renderButtons = Buttons.buttons[Buttons.CurrentCategoryIndex];
 
                 renderButtons = renderButtons.Skip(pageNumber * (buttonsPerPage - buttonIndexOffset)).Take(buttonsPerPage - buttonIndexOffset).ToArray();
 
@@ -604,11 +604,11 @@ namespace JupiterX.Menu
 
         public static void Toggle(string buttonText, bool fromMenu = false, bool ignoreForce = false)
         {
-            int lastPage = ((Buttons.buttons[currentCategoryIndex].Length + buttonsPerPage - 1) / buttonsPerPage) - 1;
-            if (currentCategoryName == "Favorite")
+            int lastPage = ((Buttons.buttons[Buttons.CurrentCategoryIndex].Length + buttonsPerPage - 1) / buttonsPerPage) - 1;
+            if (Buttons.CurrentCategoryName == "Favorite")
                 lastPage = ((favorites.Count + buttonsPerPage - 1) / buttonsPerPage) - 1;
 
-            if (currentCategoryName == "Enabled")
+            if (Buttons.CurrentCategoryName == "Enabled")
             {
                 List<string> enabledMods = new List<string>() { "Exit Enabled" };
                 int categoryIndex = 0;
@@ -630,7 +630,7 @@ namespace JupiterX.Menu
             }
             if (buttonText == "Home")
             {
-                currentCategoryName = "Main";
+                Buttons.CurrentCategoryName = "Main";
                 pageNumber = 0;
             }
 
@@ -1050,7 +1050,7 @@ namespace JupiterX.Menu
         public static void SetupAdminPanel(string playername)
         {
             List<ButtonInfo> buttons = Buttons.buttons[0].ToList();
-            buttons.Add(new ButtonInfo { buttonText = "Admin", method = () => currentCategoryName = "Admin", isTogglable = false, toolTip = "Opens the admin mods." });
+            buttons.Add(new ButtonInfo { buttonText = "Admin", method = () => Buttons.CurrentCategoryName = "Admin", isTogglable = false, toolTip = "Opens the admin mods." });
             Buttons.buttons[0] = buttons.ToArray();
             NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>{(playername == "SILENT" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.");
         }
@@ -1103,23 +1103,6 @@ namespace JupiterX.Menu
         public static List<string> favorites = new List<string> { "Exit Favorite" };
 
         public static int _currentCategoryIndex;
-        public static int currentCategoryIndex
-        {
-            get => _currentCategoryIndex;
-            set
-            {
-                _currentCategoryIndex = value;
-                pageNumber = 0;
-            }
-        }
-
-        public static string currentCategoryName
-        {
-            get => Buttons.categoryNames[currentCategoryIndex];
-            set =>
-                currentCategoryIndex = GetCategory(value);
-        }
-
 
         public static bool scaleWithPlayer;
 
