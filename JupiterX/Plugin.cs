@@ -2,6 +2,7 @@
 using Il2CppSystem.Net;
 using JupiterX;
 using JupiterX.Classes;
+using JupiterX.Menu;
 using MelonLoader;
 using Photon.Pun;
 using PlayFab;
@@ -124,7 +125,7 @@ namespace JupiterX
             string ping = PhotonNetwork.GetPing().ToString("F2");
             string fps = Utility.fps;
 
-            if (JupiterX.Menu.Main.GetIndex("Custom Boards").enabled) // do ! if buggy tf
+            if (Buttons.GetIndex("Custom Boards").enabled) // do ! if buggy tf
             {
                 string COCTextText = $"--GameInfo--\nTitleId: {title}\nRealtime: {rt}\nVoice: {vc}\nVersion: {version}\nPackageName: {packagename}\n--Client--\nPing: {ping}\nFPS: {fps}";
 

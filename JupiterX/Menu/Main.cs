@@ -939,113 +939,11 @@ namespace JupiterX.Menu
                 ReloadMenu();
         }
 
-
-
         public static string[] InfosToStrings(ButtonInfo[] array) =>
             array.Select(button => button.buttonText).ToArray();
 
         public static ButtonInfo[] StringsToInfos(string[] array) =>
-            array.Select(GetIndex).ToArray();
-
-        private static Dictionary<string, (int Category, int Index)> cacheGetIndex = new Dictionary<string, (int Category, int Index)> { }; // Looping through 800 elements is not a light task :/
-        public static ButtonInfo GetIndex(string buttonText)
-        {
-            if (buttonText == null)
-                return null;
-
-            if (cacheGetIndex.ContainsKey(buttonText))
-            {
-                var CacheData = cacheGetIndex[buttonText];
-                try
-                {
-                    if (Buttons.buttons[CacheData.Category][CacheData.Index].buttonText == buttonText)
-                        return Buttons.buttons[CacheData.Category][CacheData.Index];
-                }
-                catch { cacheGetIndex.Remove(buttonText); }
-            }
-
-            int categoryIndex = 0;
-            foreach (ButtonInfo[] buttons in Buttons.buttons)
-            {
-                int buttonIndex = 0;
-                foreach (ButtonInfo button in buttons)
-                {
-                    if (button.buttonText == buttonText)
-                    {
-                        try
-                        {
-                            cacheGetIndex.Add(buttonText, (categoryIndex, buttonIndex));
-                        }
-                        catch
-                        {
-                            if (cacheGetIndex.ContainsKey(buttonText))
-                                cacheGetIndex.Remove(buttonText);
-                        }
-
-                        return button;
-                    }
-                    buttonIndex++;
-                }
-                categoryIndex++;
-            }
-
-            return null;
-        }
-
-        public static int GetCategory(string categoryName) =>
-            Buttons.categoryNames.ToList().IndexOf(categoryName);
-
-        public static int AddCategory(string categoryName)
-        {
-            List<ButtonInfo[]> buttonInfoList = Buttons.buttons.ToList();
-            buttonInfoList.Add(new ButtonInfo[] { });
-            Buttons.buttons = buttonInfoList.ToArray();
-
-            List<string> categoryList = Buttons.categoryNames.ToList();
-            categoryList.Add(categoryName);
-            Buttons.categoryNames = categoryList.ToArray();
-
-            return Buttons.buttons.Length - 1;
-        }
-
-        public static void RemoveCategory(string categoryName)
-        {
-            List<ButtonInfo[]> buttonInfoList = Buttons.buttons.ToList();
-            buttonInfoList.RemoveAt(GetCategory(categoryName));
-            Buttons.buttons = buttonInfoList.ToArray();
-
-            List<string> categoryList = Buttons.categoryNames.ToList();
-            categoryList.Remove(categoryName);
-            Buttons.categoryNames = categoryList.ToArray();
-        }
-
-        public static void AddButton(int category, ButtonInfo button, int index = -1)
-        {
-            List<ButtonInfo> buttonInfoList = Buttons.buttons[category].ToList();
-            if (index > 0)
-                buttonInfoList.Insert(index, button);
-            else
-                buttonInfoList.Add(button);
-
-            Buttons.buttons[category] = buttonInfoList.ToArray();
-        }
-
-        public static void AddButtons(int category, ButtonInfo[] buttons, int index = -1)
-        {
-            List<ButtonInfo> buttonInfoList = Buttons.buttons[category].ToList();
-            if (index > 0)
-            {
-                for (int i = 0; i < buttons.Length; i++)
-                    buttonInfoList.Insert(index + i, buttons[i]);
-            }
-            else
-            {
-                foreach (ButtonInfo button in buttons)
-                    buttonInfoList.Add(button);
-            }
-
-            Buttons.buttons[category] = buttonInfoList.ToArray();
-        }
+            array.Select(Buttons.GetIndex).ToArray();
 
         public static void SetupAdminPanel(string playername)
         {
@@ -1053,26 +951,6 @@ namespace JupiterX.Menu
             buttons.Add(new ButtonInfo { buttonText = "Admin", method = () => Buttons.CurrentCategoryName = "Admin", isTogglable = false, toolTip = "Opens the admin mods." });
             Buttons.buttons[0] = buttons.ToArray();
             NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>{(playername == "SILENT" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.");
-        }
-
-        public static void RemoveButton(int category, string name, int index = -1)
-        {
-            List<ButtonInfo> buttonInfoList = Buttons.buttons[category].ToList();
-            if (index > 0)
-                buttonInfoList.RemoveAt(index);
-            else
-            {
-                foreach (ButtonInfo button in buttonInfoList)
-                {
-                    if (button.buttonText == name)
-                    {
-                        buttonInfoList.Remove(button);
-                        break;
-                    }
-                }
-            }
-
-            Buttons.buttons[category] = buttonInfoList.ToArray();
         }
 
         // Variables

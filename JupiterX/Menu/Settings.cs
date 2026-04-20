@@ -44,19 +44,19 @@ namespace JupiterX
 
         public static void Soundboard()
         {
-            currentCategoryName = "Soundboard";
+            Buttons.CurrentCategoryName = "Soundboard";
             pageNumber = 0;
             SoundBoard.LoadSoundboard();
         }
 
         public static void Players()
         {
-            currentCategoryName = "Players";
+            Buttons.CurrentCategoryName = "Players";
 
             List<ButtonInfo> buttons = new List<ButtonInfo> {
                 new ButtonInfo {
                     buttonText = "Exit Players",
-                    method =() => currentCategoryName = "Main",
+                    method =() => Buttons.CurrentCategoryName = "Main",
                     isTogglable = false,
                     toolTip = "Returns you back to the main page."
                 }
@@ -81,7 +81,7 @@ namespace JupiterX
                 }
             }
 
-            Buttons.buttons[GetCategory("Players")] = buttons.ToArray();
+            Buttons.buttons[Buttons.GetCategory("Players")] = buttons.ToArray();
         }
 
         static void NavigatePlayer(Photon.Realtime.Player plr)
@@ -181,8 +181,8 @@ namespace JupiterX
                 );
             }
 
-            Buttons.buttons[GetCategory("Temporary Category")] = buttons.ToArray();
-            currentCategoryName = "Temporary Category";
+            Buttons.buttons[Buttons.GetCategory("Temporary Category")] = buttons.ToArray();
+            Buttons.CurrentCategoryName = "Temporary Category";
         }
     }
 }

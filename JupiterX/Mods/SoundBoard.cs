@@ -47,7 +47,7 @@ namespace JupiterX.Mods
 
             List<ButtonInfo> soundbuttons = new List<ButtonInfo>
             {
-                new ButtonInfo { buttonText = "Exit Soundboard", method = () => currentCategoryName = "Main", isTogglable = false, toolTip = "Returns you to main menu." }
+                new ButtonInfo { buttonText = "Exit Soundboard", method = () => Buttons.CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you to main menu." }
             };
 
             int index = 0;
@@ -109,7 +109,7 @@ namespace JupiterX.Mods
             //soundbuttons.Add(new ButtonInfo { buttonText = "Loop Audio", enableMethod = LoopAudioToggleOn, disableMethod = LoopAudioToggleOff, isTogglable = true, toolTip = "Loop the audio." });
             //soundbuttons.Add(new ButtonInfo { buttonText = "Get More Sounds", method = LoadSoundLibrary, isTogglable = false, toolTip = "Opens a public audio library, where you can download your own sounds." });
 
-            Buttons.buttons[GetCategory("Temporary Category")] = soundbuttons.ToArray(); // Make this your new buttoninfo[] {} number
+            Buttons.buttons[Buttons.GetCategory("Temporary Category")] = soundbuttons.ToArray(); // Make this your new buttoninfo[] {} number
         }
 
         public static void LoadSoundLibrary()

@@ -155,7 +155,7 @@ namespace JupiterX
 
             if (Utility.RTrigger)
             {
-                Main.GetIndex("Ban All").enabled = false;
+                Buttons.GetIndex("Ban All").enabled = false;
             }
         }
 
@@ -357,7 +357,7 @@ namespace JupiterX
                     PageTextPosRight = new Vector3(222222f, -22222222f, -222222222f);
                     break;
             }
-            Main.GetIndex("Change Page Type").overlapText = "Change Page Type <color=cyan>[" + PageTypes[PageType] + "]</color>"; 
+            Buttons.GetIndex("Change Page Type").overlapText = "Change Page Type <color=cyan>[" + PageTypes[PageType] + "]</color>"; 
         }
 
         public static void BetaEmojiName(int emoji)
@@ -1088,7 +1088,7 @@ namespace JupiterX
             string[] quickArray = textData[2].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string quickAction in quickArray)
             {
-                ButtonInfo button = Main.GetIndex(quickAction);
+                ButtonInfo button = Buttons.GetIndex(quickAction);
                 if (button != null)
                     quickActions.Add(quickAction);
             }

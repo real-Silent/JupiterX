@@ -25,7 +25,7 @@ namespace JupiterX.Mods
                 case 4: FlySpeed = 18f; break;  
                 case 5: FlySpeed = 30f; break;  
             }
-            Main.GetIndex("Change Fly Speed").overlapText =
+            Buttons.GetIndex("Change Fly Speed").overlapText =
                 $"Change Fly Speed <color=cyan>[{FlySpeeds[FlySpeedAmount]}]</color>";
         }
 
@@ -163,7 +163,7 @@ namespace JupiterX.Mods
                 case 4: ArmSize = new Vector3(0.8f, 0.8f, 0.8f); break;
             }
 
-            Main.GetIndex("Change Arm Length").overlapText = $"Change Arm Length <color=cyan>[{ArmSizes[ArmSizeAmount]}]</color>";
+            Buttons.GetIndex("Change Arm Length").overlapText = $"Change Arm Length <color=cyan>[{ArmSizes[ArmSizeAmount]}]</color>";
         }
         public static void LongArms(bool off)
         {
