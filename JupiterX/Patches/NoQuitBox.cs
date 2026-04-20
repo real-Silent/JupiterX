@@ -9,7 +9,7 @@ using UnityEngine;
 namespace JupiterX.Patches
 {
     [HarmonyPatch(typeof(GorillaQuitBox), "OnBoxTriggered")]
-    internal class NoQuitBox
+    public class NoQuitBox
     {
         [HarmonyPrefix]
         private static bool Prefix()

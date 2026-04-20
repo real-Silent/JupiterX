@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace JupiterX.Mods
 {
-    internal class Movement
+    public class Movement
     {
         public static string[] FlySpeeds = { "Very Slow", "Slow", "Normal", "Fast", "Very Fast", "Way Too Fast" };
         public static int FlySpeedAmount = 0;

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace JupiterX.Mods
 {
-    internal class Overpowered
+    public class Overpowered
     {
         public static void BetaChangeShinyRock(int ammount)
         {

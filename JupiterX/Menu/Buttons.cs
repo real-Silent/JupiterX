@@ -1,4 +1,5 @@
 ﻿using JupiterX.Classes;
+using JupiterX.Managers;
 using JupiterX.Mods;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using static JupiterX.Settings;
 
 namespace JupiterX.Menu
 {
-    internal class Buttons
+    public class Buttons
     {
         public static ButtonInfo[][] buttons = new ButtonInfo[][]
         {
@@ -42,6 +43,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Menu Settings", method =() => CurrentCategoryName = "Menu Settings", isTogglable = false, toolTip = "Opens the menu settings page for the menu." },
                 new ButtonInfo { buttonText = "Movement Settings", method =() => CurrentCategoryName = "Movement Settings", isTogglable = false, toolTip = "Opens the movement settings page for the menu." },
                 new ButtonInfo { buttonText = "Gun Settings", method =() => CurrentCategoryName = "Gun Settings", isTogglable = false, toolTip = "Opens the gun settings page for the menu." },
+                new ButtonInfo { buttonText = "Plugin Settings", method =() => CurrentCategoryName = "Plugin Settings", isTogglable = false, toolTip = "Opens the settings for the plugins."},
             },
 
             new ButtonInfo[] { // Menu Settings | 17
@@ -54,7 +56,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Version Text", enableMethod =() => VersionText = true, disableMethod =() => VersionText = false, enabled = VersionText, toolTip = "Toggles the Version Text."},
                 new ButtonInfo { buttonText = "Notifications", enableMethod =() => Notifications = true, disableMethod =() => Notifications = false, enabled = Notifications, toolTip = "Toggles the Notifcations."},
                 new ButtonInfo { buttonText = "Disable Disconnect Button", enableMethod =() => DisconnectButton = true, disableMethod =() => DisconnectButton = false, enabled = DisconnectButton, toolTip = "Toggles the disconnect button."},
-                new ButtonInfo { buttonText = "Disable Menu Title", enableMethod =() => MenuTitle = true, disableMethod =() => MenuTitle = false, enabled = MenuTitle, toolTip = "Toggles the menu title."},
+                new ButtonInfo { buttonText = "Disable Menu Title", enableMethod =() => MenuTitle = false, disableMethod =() => MenuTitle = true, enabled = MenuTitle, toolTip = "Toggles the menu title."},
                 new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), overlapText = "Change Page Type <color=cyan>[Side]</color>", isTogglable = false, toolTip = "Changes the page type." },
 
                 new ButtonInfo { buttonText = "Freeze Player In Menu", method =() => Utility.FreezePlayerInMenu(), isTogglable = true, toolTip = "Lets you float while the menu is open."},
@@ -386,7 +388,12 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Admin Restart Mic Gun", method =() => Experimental.ConsoleRestartMicGun(), isTogglable = true, toolTip = "Makes who you shoot mic normal"},
             },
 
-            new [] // Internal not seen to user
+            new[] { // Plugin Settings [33]
+                new ButtonInfo { buttonText = "Exit Plugin Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns you back to the settings menu."},
+                new ButtonInfo { buttonText = "Reload Plugins", method = PluginManager.ReloadPlugins, isTogglable = false, toolTip = "Reloads all of your plugins." }
+            },
+
+            new [] // public not seen to user
             {
                 new ButtonInfo { buttonText = "Accept Prompt", method =() => { NotificationManager.ClearAllNotifications(); CurrentPrompt.AcceptAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},
                 new ButtonInfo { buttonText = "Decline Prompt", method =() => { NotificationManager.ClearAllNotifications(); CurrentPrompt.DeclineAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},
@@ -422,7 +429,8 @@ namespace JupiterX.Menu
             
             "Enabled",
             "Favorite",
-            "Admin"
+            "Admin",
+            "Plugin Settings",
         };
 
         public static int _currentCategoryIndex;

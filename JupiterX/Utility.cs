@@ -46,6 +46,10 @@ namespace JupiterX
                     Plugin.StumpText.transform.position = NewPointer.transform.position + new Vector3(0, 0.7f, 0);
                 }
             }
+            else
+            {
+                DestroyGun();
+            }
         }
 
 
@@ -963,7 +967,7 @@ namespace JupiterX
         public static string name = "JupiterX";
         public static string author = "Silent";
 
-        public static string version = "2.2.0"; 
+        public static string version = "2.3.0"; 
         public static string serverversion; 
         public static string minversion; 
         public static string discord; 

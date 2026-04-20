@@ -5,7 +5,7 @@ using JupiterX.Menu;
 
 namespace JupiterX.Mods
 {
-    internal class Advantage
+    public class Advantage
     {
         public static void TagAll()
         {

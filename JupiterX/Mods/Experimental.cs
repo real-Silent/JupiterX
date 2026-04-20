@@ -20,7 +20,7 @@ using static JupiterX.Utility;
 // if you remove this it counts as skidding
 namespace JupiterX.Mods
 {
-    internal class Experimental
+    public class Experimental
     {
         public static void BalloonSpam()
         {

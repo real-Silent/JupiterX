@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace JupiterX.Classes
 {
-    internal class FixedColliders
+    public class FixedColliders
     {
         public static void CheckButton()
         {

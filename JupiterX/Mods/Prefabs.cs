@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace JupiterX.Mods
 {
-    internal class Prefabs
+    public class Prefabs
     {
         public static void NetworkPlayerSpam()
         {

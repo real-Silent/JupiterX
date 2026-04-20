@@ -4,7 +4,7 @@ using UnityEngine.Animations.Rigging;
 
 namespace JupiterX.Mods
 {
-    internal class GTH
+    public class GTH
     {
         public static void FullBright(bool enabled)
         {

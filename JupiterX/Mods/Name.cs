@@ -2,7 +2,7 @@
 
 namespace JupiterX.Mods
 {
-    internal class Name
+    public class Name
     {
         public static void MenuNameTag()
         {

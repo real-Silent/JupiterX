@@ -17,7 +17,7 @@ using Photon.Pun;
 
 namespace JupiterX.Mods
 {
-    internal class SoundBoard // this file was made by (@domok.)
+    public class SoundBoard // this file was made by (@domok.)
     {
         private static bool SoundLoaded = false;
         private static AudioClip downloadedSound = null;

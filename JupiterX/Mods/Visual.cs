@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace JupiterX.Mods
 {
-    internal class Visual
+    public class Visual
     {
         static string taggedText;
         public static void LeftTaggedLabel() // creds to iiDk

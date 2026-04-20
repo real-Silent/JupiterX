@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace JupiterX.Mods
 {
-    internal class vRRig
+    public class vRRig
     {
         public static void InvisMonke()
         {

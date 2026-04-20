@@ -12,7 +12,7 @@ using static JupiterX.Menu.Main;
 
 namespace JupiterX
 {
-    internal class Settings
+    public class Settings
     {
         public static ExtGradient backgroundColor = new ExtGradient{isRainbow = false};
         public static ExtGradient[] buttonColors = new ExtGradient[]

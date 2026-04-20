@@ -16,7 +16,7 @@ using UnityEngine;
 [assembly: MelonGame()]
 namespace JupiterX
 {
-    internal class Plugin : MelonMod
+    public class Plugin : MelonMod
     {
         [Obsolete]
         public override void OnApplicationStart()
@@ -59,7 +59,16 @@ namespace JupiterX
                 Utility.HasUsedMenuBeforeNoti = false;
 
             PlayerPrefs.SetString("tutorial", "done");
-            GorillaTagger.Instance.disableTutorial = true;
+
+            try
+            {
+                JupiterX.Managers.PluginManager.LoadPlugins();
+            }
+            catch (Exception exc)
+            {
+                Utility.Log(
+                $"Error with PluginManager.LoadPlugins() at {exc.StackTrace}: {exc.Message}");
+            }
         }
 
         public override void OnApplicationLateStart()
@@ -176,6 +185,8 @@ namespace JupiterX
             {
                 Utility.DoRGBLucyPlz();
             }
+
+            JupiterX.Managers.PluginManager.ExecuteUpdate();
         }
 
         public override void OnFixedUpdate()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace JupiterX.Mods
 {
-    internal class Important
+    public class Important
     {
         public static void QuitGame()
         {

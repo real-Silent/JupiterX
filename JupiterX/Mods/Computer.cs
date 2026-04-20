@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JupiterX.Mods
 {
-    internal class Computer
+    public class Computer
     {
         public static void Reconnect()
         {
