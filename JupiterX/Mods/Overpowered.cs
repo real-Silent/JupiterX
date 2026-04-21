@@ -78,6 +78,28 @@ namespace JupiterX.Mods
             Utility.SetMaster(PhotonNetwork.LocalPlayer);
         }
 
+        public static void AlawysMaster()
+        {
+            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+            PhotonNetwork.CurrentRoom.SetMasterClient(PhotonNetwork.LocalPlayer);
+            GorillaNot.instance.currentMasterClient = PhotonNetwork.LocalPlayer;
+            GorillaNot.instance.OnMasterClientSwitched(PhotonNetwork.LocalPlayer);
+        }
+
+        public static void CreatePublic(string roomName)
+        {
+            Hashtable customProps = new Hashtable();
+            customProps.Add("gameMode", GorillaComputer.instance.currentQueue + GorillaComputer.instance.currentGameMode);
+            RoomOptions roomOptions = new RoomOptions()
+            {
+                SuppressPlayerInfo = false,
+                MaxPlayers = 10,
+                PublishUserId = false,
+                CustomRoomProperties = customProps
+            };
+            PhotonNetwork.CreateRoom(roomName, roomOptions);
+        }
+
         public static void MatSpamAll()
         {
             SetMaster();

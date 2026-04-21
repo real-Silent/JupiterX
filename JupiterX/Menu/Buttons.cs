@@ -223,7 +223,12 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Overpowered | 11
                 new ButtonInfo { buttonText = "Exit Overpowered", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "MasterLabel", label = true },
+
                 new ButtonInfo { buttonText = "Set Master", method =() => Overpowered.SetMaster(), isTogglable = true, toolTip = "Sets you as master client."  },
+                new ButtonInfo { buttonText = "Always Set Master", method =() => Overpowered.AlawysMaster(), isTogglable = true, toolTip = "Always sets you as master no matter who tries to take it."  },
+
+                new ButtonInfo { buttonText = "Create Modded Public", method =() => Overpowered.CreatePublic("\n\n\n\nMODDED\n\n\n\n"), isTogglable = true, toolTip = "Creates a public room that is modded." },
+                new ButtonInfo { buttonText = "Create JupiterX Public", method =() => Overpowered.CreatePublic("\n\nJupiterX on top\n\n\n"), isTogglable = true, toolTip = "Creates a public room that says jupiterx on top." },
 
                 new ButtonInfo { buttonText = "Rig Spam [<color=cyan>RT</color>]", method =() => Overpowered.RigSpam(), isTogglable = true, toolTip = "Lets you spam rigs."  },
 
