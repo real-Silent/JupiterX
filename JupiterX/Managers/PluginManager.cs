@@ -1,12 +1,10 @@
 ﻿using MelonLoader;
 using JupiterX.Menu;
-using JupiterX.Classes;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using static JupiterX.Menu.Main;
 using UnityEngine;
 
 namespace JupiterX.Managers
@@ -25,32 +23,22 @@ namespace JupiterX.Managers
 
         public static readonly List<Plugin> Plugins = new List<Plugin>();
 
-        // Path adjusted for LemonLoader/Android
         private static string PluginsPath => Path.Combine(Application.persistentDataPath, "JupiterX/Plugins");
 
         public static void ReloadPlugins()
         {
-            // 1. Play the "Voice" or Notification
-            // If you have a notification system:
             NotificationManager.SendNotification2("<color=yellow>[SYSTEM]</color> Reloading all plugins...");
-
-            // 2. Perform the reload logic
             Utility.SavePreferences();
-
             try
             {
                 LoadPlugins();
-                // Voice success message
                 MelonLogger.Msg("Plugins reloaded successfully.");
             }
             catch (Exception e)
             {
                 MelonLogger.Error("Failed to reload: " + e.Message);
             }
-
             Utility.LoadPreferences();
-
-            // 3. Reset UI
             Buttons.CurrentCategoryName = "Main";
         }
 
@@ -58,13 +46,10 @@ namespace JupiterX.Managers
         {
             if (!Directory.Exists(PluginsPath))
                 Directory.CreateDirectory(PluginsPath);
-
-            // NEW: Tell old instances to clean up their buttons before clearing them
             foreach (var p in Plugins)
             {
                 foreach (var mod in p.Instances)
                 {
-                    // This looks for the OnUnload method in your template
                     mod.GetType().GetMethod("OnUnload")?.Invoke(mod, null);
                 }
                 p.Instances.Clear();
