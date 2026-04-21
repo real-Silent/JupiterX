@@ -295,6 +295,7 @@ namespace JupiterX
         {
             if (myVRRig().enabled == false)
                 myVRRig().enabled = true;
+            Utility.GhostView(false);
         }
 
         static Vector3 closePosition;

@@ -38,11 +38,34 @@ namespace JupiterX.Mods
             }
         }
 
+        private static float delaytimebeesbleh;
+        public static void Bees()
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                Utility.myVRRig().enabled = false;
+                Utility.GhostView(true);
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                {
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        if (Time.time > delaytimebeesbleh)
+                        {
+                            Utility.myVRRig().rightHandTransform.position -= Utility.myVRRig().transform.position * 0.3f;
+                            Utility.myVRRig().leftHandTransform.position -= Utility.myVRRig().transform.position * 0.3f;
+                            Utility.myVRRig().transform.position = rig.headMesh.transform.position + new Vector3(0f, 0.6f, 0f);
+                            delaytimebeesbleh = Time.time + 0.3f;
+                        }
+                    }
+                }
+            }
+        }
+
         public static void FixSpazRig()
         {
-            Utility.myVRRig().head.trackingRotationOffset += Utility.myVRRig().head.trackingRotationOffset = Vector3.zero;
-            Utility.myVRRig().rightHand.trackingRotationOffset += Utility.myVRRig().rightHand.trackingRotationOffset = Vector3.zero;
-            Utility.myVRRig().leftHand.trackingRotationOffset += Utility.myVRRig().leftHand.trackingRotationOffset = Vector3.zero;
+            Utility.myVRRig().head.trackingRotationOffset = Vector3.zero;
+            Utility.myVRRig().rightHand.trackingRotationOffset = Vector3.zero;
+            Utility.myVRRig().leftHand.trackingRotationOffset = Vector3.zero;
             Utility.GhostView(false);
         }
 
