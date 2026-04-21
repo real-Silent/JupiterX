@@ -337,17 +337,11 @@ namespace JupiterX.Mods
                 Main.DestroyGun();
             }
         }
-
-
-        public static void BanGunJXModding()
-        {
-            
-        }
-
         public static void SlowAll()
         {
             Utility.SetMaster(PhotonNetwork.LocalPlayer);
             Utility.myVRRig().photonView.RPC("SetSlowedTime", Main.lockTarget.photonView.Owner, null);
+            Utility.myVRRig().photonView.RPC("SetJoinTaggedTime", Main.lockTarget.photonView.Owner, null);
         }
 
         public static void SlowGun()
@@ -363,6 +357,7 @@ namespace JupiterX.Mods
                 {
                     Utility.SetMaster(PhotonNetwork.LocalPlayer);
                     Utility.myVRRig().photonView.RPC("SetSlowedTime", Main.lockTarget.photonView.Owner, null);
+                    Utility.myVRRig().photonView.RPC("SetJoinTaggedTime", Main.lockTarget.photonView.Owner, null);
                 }
 
                 if (Main.GetGunInput(true))
@@ -373,6 +368,7 @@ namespace JupiterX.Mods
                         Main.gunLocked = true;
                         Main.lockTarget = who;
                     }
+                    PhotonNetwork.SendAllOutgoingCommands();
                 }
             }
             else
@@ -396,6 +392,7 @@ namespace JupiterX.Mods
                         Utility.BetaCrashAllV2(rig);
                         Utility.BetaCrashAllV2(rig);
                         Utility.BetaCrashAllV2(rig);
+                        PhotonNetwork.SendAllOutgoingCommands();
                     }
                 }
             }
@@ -433,6 +430,7 @@ namespace JupiterX.Mods
                         PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
                         PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
                         PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
+                        PhotonNetwork.SendAllOutgoingCommands();
                     }
                 }
             }
@@ -448,6 +446,55 @@ namespace JupiterX.Mods
                     PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
                 }
                 PhotonNetwork.SendAllOutgoingCommands();
+            }
+        }
+
+        public static void CrashAllV5()
+        {
+            if (Utility.RTrigger)
+            {
+                foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+                {
+                    PhotonNetwork.DestroyPlayerObjects(plr);
+                    PhotonNetwork.SendDestroyOfPlayer(plr.ActorNumber);
+                    PhotonNetwork.OpRemoveCompleteCacheOfPlayer(plr.ActorNumber);
+                }
+                for (int i = 0; i < 150; i++)
+                {
+                    PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    PhotonNetwork.RaiseEvent((byte)UnityEngine.Random.Range(200, 212), null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                }
+                PhotonNetwork.SendAllOutgoingCommands();
+            }
+        }
+
+        public static void CrashGunV5()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.NewPointer;
+                RaycastHit Ray = GunData.Ray;
+                Photon.Realtime.Player plr = Ray.collider.GetComponentInParent<PhotonView>().Owner;
+
+                if (Main.GetGunInput(true))
+                {
+                    for (int i = 0; i < 150; i++)
+                    {
+                        PhotonNetwork.DestroyPlayerObjects(plr);
+                        PhotonNetwork.SendDestroyOfPlayer(plr.ActorNumber);
+                        PhotonNetwork.OpRemoveCompleteCacheOfPlayer(plr.ActorNumber);
+                        PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent((byte)UnityEngine.Random.Range(200, 212), null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                    }
+                    PhotonNetwork.SendAllOutgoingCommands();
+                }
+            }
+            else
+            {
+                Main.DestroyGun();
             }
         }
 
@@ -467,6 +514,7 @@ namespace JupiterX.Mods
                         PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
                         PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
                     }
+                    PhotonNetwork.SendAllOutgoingCommands();
                 }
             }
             else
@@ -491,6 +539,7 @@ namespace JupiterX.Mods
                         PhotonNetwork.RaiseEvent((byte)UnityEngine.Random.Range(200, 214), null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
                         PhotonNetwork.RaiseEvent((byte)UnityEngine.Random.Range(200, 214), null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
                     }
+                    PhotonNetwork.SendAllOutgoingCommands();
                 }
             }
             else
@@ -507,6 +556,7 @@ namespace JupiterX.Mods
                 if (Utility.RTrigger)
                 {
                     Utility.BetaCrashPlayer(player);
+                    PhotonNetwork.SendAllOutgoingCommands();
                 }
             }
         }
@@ -539,6 +589,7 @@ namespace JupiterX.Mods
                         Main.gunLocked = true;
                         Main.lockTarget = who;
                     }
+                    PhotonNetwork.SendAllOutgoingCommands();
                 }
             }
             else

@@ -253,11 +253,13 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Crash Gun V2", method =() => Overpowered.CrashGunV2(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
                 new ButtonInfo { buttonText = "Crash Gun V3", method =() => Overpowered.CrashGunV3(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
                 new ButtonInfo { buttonText = "Crash Gun V4", method =() => Overpowered.CrashGunV4(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
+                new ButtonInfo { buttonText = "Crash Gun V5", method =() => Overpowered.CrashGunV5(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
 
                 new ButtonInfo { buttonText = "Crash All [<color=cyan>RT</color>]", method =() => Overpowered.CrashAll(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash All V2 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV2(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash All V3 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV3(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash All V4 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV4(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
+                new ButtonInfo { buttonText = "Crash All V5 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV5(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
 
                 new ButtonInfo { buttonText = "Spam Pop & Unpop Balloon [<color=cyan>RT</color>]", method =() => Experimental.BalloonSpam(), isTogglable = true, toolTip = "Spams everyones balloon while holding right trigger."  },
 
