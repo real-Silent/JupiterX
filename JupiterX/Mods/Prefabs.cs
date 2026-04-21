@@ -160,7 +160,7 @@ namespace JupiterX.Mods
 
                 if (Main.GetGunInput(true))
                 {
-                    PlayerPrefs.SetString("username", "JupiterX V2 By Silent\nBest Mod Menu");
+                    PlayerPrefs.SetString("username", "JupiterX V2 By Nova\nBest Mod Menu");
                     Utility.BetaSpawnPrefab("Network Player", NewPointer.transform.position, NewPointer.transform.rotation);
                 }
             }

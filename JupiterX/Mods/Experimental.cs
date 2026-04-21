@@ -15,8 +15,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using static JupiterX.Menu.Main;
 using static JupiterX.Utility;
-// test
-// this menu was created by Silent (@s1lnt)
+
+// this menu was created by Nova (@novaissilly)
 // if you remove this it counts as skidding
 namespace JupiterX.Mods
 {

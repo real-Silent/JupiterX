@@ -966,7 +966,7 @@ namespace JupiterX
         public static bool HasUsedMenuBeforeNoti = false;
 
         public static string name = "JupiterX";
-        public static string author = "Silent";
+        public static string author = "Nova";
 
         public static string version = "2.3.0"; 
         public static string serverversion; 

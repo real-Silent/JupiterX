@@ -12,7 +12,9 @@ using TMPro;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(Plugin), "JupiterX", "2.0.0", "Silent")]
+// this menu was created by Nova (@novaissilly)
+// if you remove this it counts as skidding
+[assembly: MelonInfo(typeof(Plugin), "JupiterX", "2.0.0", "Novaissilly")]
 [assembly: MelonGame()]
 namespace JupiterX
 {

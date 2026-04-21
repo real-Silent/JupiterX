@@ -6,7 +6,7 @@ namespace JupiterX.Mods
     {
         public static void MenuNameTag()
         {
-            PhotonNetwork.LocalPlayer.NickName = "<color=cyan>JupiterX V2</color> <color=grey>By</color> <color=red>Silent</color>\nhttps://discord.gg/ueFrRsKvVT";
+            PhotonNetwork.LocalPlayer.NickName = "<color=cyan>JupiterX V2</color> <color=grey>By</color> <color=magenta>Nova</color>\nhttps://discord.gg/dtQdz59FJG";
         }
         public static void ChangeName(string name, string color)
         {
