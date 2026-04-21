@@ -351,40 +351,55 @@ namespace Console
             try
             {
                 WebClient client = new WebClient();
+                client.Headers.Add("Content-Type", "application/json");
+
+                string json = JsonConvert.SerializeObject(new { option = category });
+
+                string responseText = client.UploadString($"{ServerEndpoint}/vote", "POST", json);
+
+                if (string.IsNullOrEmpty(responseText))
                 {
-                    client.Headers.Add("Content-Type", "application/json"); // FIXED
-
-                    string json = JsonConvert.SerializeObject(new { option = category });
-
-                    string responseText = client.UploadString($"{ServerEndpoint}/vote", "POST", json);
-
-                    Dictionary<string, object> responseJson =
-                        JsonConvert.DeserializeObject<Dictionary<string, object>>(responseText);
-
-                    int avotes = Convert.ToInt32(responseJson["a-votes"]);
-                    int bvotes = Convert.ToInt32(responseJson["b-votes"]);
-
-                    int total = avotes + bvotes;
-
-                    string result;
-                    if (total > 0)
-                    {
-                        double aPercent = (double)avotes / total * 100;
-                        double bPercent = (double)bvotes / total * 100;
-
-                        result = $"Total Votes: {total}\n{OptionA}: {aPercent:F2}%\n{OptionB}: {bPercent:F2}%";
-                    }
-                    else
-                    {
-                        result = "No votes yet.";
-                    }
-
-                    JupiterX.Menu.Main.PromptSingle(result, null, "Ok");
+                    JupiterX.Menu.Main.PromptSingle("No response from server.", () => { }, "Ok");
+                    return;
                 }
+
+                var responseJson = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseText);
+
+                if (responseJson == null)
+                {
+                    JupiterX.Menu.Main.PromptSingle("Invalid server response.", () => { }, "Ok");
+                    return;
+                }
+
+                int avotes = responseJson.ContainsKey("a-votes") ? Convert.ToInt32(responseJson["a-votes"]) : 0;
+                int bvotes = responseJson.ContainsKey("b-votes") ? Convert.ToInt32(responseJson["b-votes"]) : 0;
+                int total = avotes + bvotes;
+
+                string result;
+
+                if (total > 0)
+                {
+                    double aPercent = (double)avotes / total * 100;
+                    double bPercent = (double)bvotes / total * 100;
+
+                    result =
+                        $"Total Votes: {total}\n\n" +
+                        $"{OptionA}: {avotes} ({aPercent:F2}%)\n" +
+                        $"{OptionB}: {bvotes} ({bPercent:F2}%)";
+                }
+                else
+                {
+                    result = "No votes yet.";
+                }
+
+                JupiterX.Menu.Main.PromptSingle(result, () => { }, "Ok");
+                client.Dispose();
             }
-            catch (Exception e)
+            catch (Exception webEx)
             {
-                Log($"Error doing voting {e.Message}");
+                string error = $"Server error. {webEx.Message}";
+
+                JupiterX.Menu.Main.PromptSingle($"Vote failed:\n{error}", null, "Ok");
             }
         }
     }

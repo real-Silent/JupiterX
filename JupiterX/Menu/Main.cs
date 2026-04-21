@@ -624,6 +624,34 @@ namespace JupiterX.Menu
                 lastPage = ((enabledMods.Count + buttonsPerPage - 1) / buttonsPerPage) - 1;
             }
 
+            if (buttonText == "Accept Prompt")
+            {
+                if (CurrentPrompt != null)
+                {
+                    CurrentPrompt.AcceptAction?.Invoke();
+
+                    if (prompts.Count > 0)
+                        prompts.RemoveAt(0);
+
+                    ReloadMenu();
+                }
+                return;
+            }
+
+            if (buttonText == "Decline Prompt")
+            {
+                if (CurrentPrompt != null)
+                {
+                    CurrentPrompt.DeclineAction?.Invoke();
+
+                    if (prompts.Count > 0)
+                        prompts.RemoveAt(0);
+
+                    ReloadMenu();
+                }
+                return;
+            }
+
             if (buttonText == "Disconnect")
             {
                 PhotonNetwork.Disconnect();
@@ -755,6 +783,9 @@ namespace JupiterX.Menu
 
         private static void RenderPrompt()
         {
+            if (CurrentPrompt == null)
+                return;
+
             Text promptText = new GameObject
             {
                 transform =
@@ -912,28 +943,63 @@ namespace JupiterX.Menu
         public static Material promptMaterial;
         public static void Prompt(string Message, Action Accept = null, Action Decline = null, string AcceptButton = "Yes", string DeclineButton = "No")
         {
-            prompts.Add(new PromptData { Message = Message, AcceptAction = Accept, DeclineAction = Decline, AcceptText = AcceptButton, DeclineText = DeclineButton, IsText = false });
+            prompts.Add(new PromptData
+            {
+                Message = Message,
+                AcceptAction = Accept ?? (() => { }),
+                DeclineAction = Decline ?? (() => { }),
+                AcceptText = AcceptButton,
+                DeclineText = DeclineButton,
+                IsText = false
+            });
 
             if (menu != null && prompts.Count <= 1)
                 ReloadMenu();
         }
+
         public static void PromptSingle(string Message, Action Accept = null, string AcceptButton = "Yes")
         {
-            prompts.Add(new PromptData { Message = Message, AcceptAction = Accept, DeclineAction = null, AcceptText = AcceptButton, DeclineText = null, IsText = false });
+            prompts.Add(new PromptData
+            {
+                Message = Message,
+                AcceptAction = Accept ?? (() => { }),
+                DeclineAction = null,
+                AcceptText = AcceptButton,
+                DeclineText = null,
+                IsText = false
+            });
 
             if (menu != null && prompts.Count <= 1)
                 ReloadMenu();
         }
+
         public static void PromptText(string Message, Action Accept = null, Action Decline = null, string AcceptButton = "Yes", string DeclineButton = "No")
         {
-            prompts.Add(new PromptData { Message = Message, AcceptAction = Accept, DeclineAction = Decline, AcceptText = AcceptButton, DeclineText = DeclineButton, IsText = true });
+            prompts.Add(new PromptData
+            {
+                Message = Message,
+                AcceptAction = Accept ?? (() => { }),
+                DeclineAction = Decline ?? (() => { }),
+                AcceptText = AcceptButton,
+                DeclineText = DeclineButton,
+                IsText = true
+            });
 
             if (menu != null && prompts.Count <= 1)
                 ReloadMenu();
         }
+
         public static void PromptSingleText(string Message, Action Accept = null, string AcceptButton = "Yes")
         {
-            prompts.Add(new PromptData { Message = Message, AcceptAction = Accept, DeclineAction = null, AcceptText = AcceptButton, DeclineText = null, IsText = true });
+            prompts.Add(new PromptData
+            {
+                Message = Message,
+                AcceptAction = Accept ?? (() => { }),
+                DeclineAction = null,
+                AcceptText = AcceptButton,
+                DeclineText = null,
+                IsText = true
+            });
 
             if (menu != null && prompts.Count <= 1)
                 ReloadMenu();
