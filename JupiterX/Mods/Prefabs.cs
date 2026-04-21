@@ -10,7 +10,7 @@ namespace JupiterX.Mods
     {
         public static void NetworkPlayerSpam()
         {
-            PlayerPrefs.SetString("username", "JupiterX By Silent\nBest Mod Menu");
+            PlayerPrefs.SetString("username", "JupiterX By Nova\nBest Mod Menu");
 
             if (Utility.RGrip)
                 Utility.BetaSpawnPrefab("Network Player", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);

@@ -950,7 +950,7 @@ namespace JupiterX.Menu
             List<ButtonInfo> buttons = Buttons.buttons[0].ToList();
             buttons.Add(new ButtonInfo { buttonText = "Admin", method = () => Buttons.CurrentCategoryName = "Admin", isTogglable = false, toolTip = "Opens the admin mods." });
             Buttons.buttons[0] = buttons.ToArray();
-            NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>{(playername == "SILENT" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.");
+            NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>{(playername == "NOVA" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.");
         }
 
         // Variables
