@@ -363,7 +363,7 @@ namespace JupiterX.Menu
             },
 
             new[] { // Admin 
-                new ButtonInfo { buttonText = "<color=red>Exit Admin</color>", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Opens the visual page for the menu"},
+                new ButtonInfo { buttonText = "Exit Admin", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Opens the visual page for the menu"},
                 new ButtonInfo { buttonText = "Get Console Users", method =() => Experimental.GetMenuUsers(), isTogglable = false, toolTip = "Gets all users using console"},
                 new ButtonInfo { buttonText = "Console Users NameTag", enableMethod =() => Console.ServerData.instance.adminnametags = true, disableMethod =() => Console.ServerData.instance.adminnametags = false, isTogglable = true, toolTip = "Enables the console nametags"},
                 new ButtonInfo { buttonText = "Admin Quit All", method =() => Experimental.ConsoleQuitAll(), isTogglable = false, toolTip = "Quits everyone using console"},
