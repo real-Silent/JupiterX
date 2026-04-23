@@ -12,9 +12,16 @@ namespace JupiterX.Mods
         public static int FlySpeedAmount = 0;
         public static float FlySpeed = 1f;
 
-        public static void ChangeFlySpeed()
+        public static void ChangeFlySpeed(bool increment = true)
         {
-            FlySpeedAmount = (FlySpeedAmount + 1) % FlySpeeds.Length;
+            if (increment)
+            {
+                FlySpeedAmount = (FlySpeedAmount + 1) % FlySpeeds.Length;
+            }
+            else
+            {
+                FlySpeedAmount = (FlySpeedAmount - 1 + FlySpeeds.Length) % FlySpeeds.Length;
+            }
 
             switch (FlySpeedAmount)
             {
@@ -150,9 +157,16 @@ namespace JupiterX.Mods
         public static string[] ArmSizes = { "Steam", "Long", "Very Long", "Ghost", "Small" };
         public static int ArmSizeAmount = 0;
         public static Vector3 ArmSize = new Vector3(1.15f, 1.15f, 1.15f);
-        public static void ChangeArmLength()
+        public static void ChangeArmLength(bool increment = true)
         {
-            ArmSizeAmount = (ArmSizeAmount + 1) % ArmSizes.Length;
+            if (increment)
+            {
+                ArmSizeAmount = (ArmSizeAmount + 1) % ArmSizes.Length;
+            }
+            else
+            {
+                ArmSizeAmount = (ArmSizeAmount - 1 + ArmSizes.Length) % ArmSizes.Length;
+            }
 
             switch (ArmSizeAmount)
             {
