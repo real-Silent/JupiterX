@@ -227,7 +227,7 @@ namespace Console
             if (currentVersion < minimumVersion)
             {
                 NotificationManager.SendNotification("red", "OUTDATED", "On Extreme outdated version of jupiterx please update the menu now.");
-                Application.OpenURL("https://discord.gg/Ev5c9xDq2J");
+                Application.OpenURL("https://discord.gg/dtQdz59FJG");
                 Application.Quit();
                 Environment.Exit(0);
                 Application.CallLowMemory();
@@ -235,7 +235,7 @@ namespace Console
             else if (currentVersion < serverVersion)
             {
                 NotificationManager.SendNotification("red", "UPDATE", $"JupiterX Needs an update please update to latest version {Utility.serverversion}");
-                Application.OpenURL("https://discord.gg/Ev5c9xDq2J");
+                Application.OpenURL("https://discord.gg/dtQdz59FJG");
                 shownPrompt = true;
             }
 
