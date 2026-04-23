@@ -64,10 +64,10 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Disable Room Notifications", enableMethod =() => disableRoomNotifications = true, disableMethod =() => disableRoomNotifications = false, toolTip = "Disables all notifications regarding the room."},
                 new ButtonInfo { buttonText = "Clear Notifications on Disconnect", enableMethod =() => clearNotificationsOnDisconnect = true, disableMethod =() => clearNotificationsOnDisconnect = false, toolTip = "Clears all notifications on disconnect."},
 
+                new ButtonInfo { buttonText = "Custom Boards", enabled = true, isTogglable = true, toolTip = "Enables the custom boards in stump." },
                 new ButtonInfo { buttonText = "Move Stump Text Gun", method =() => Utility.MoveStumpTextGun(), isTogglable = true, toolTip = "Lets you move the stump text with a gun." },
                 new ButtonInfo { buttonText = "Version Text", enableMethod =() => VersionText = true, disableMethod =() => VersionText = false, enabled = VersionText, toolTip = "Toggles the Version Text."},
                 new ButtonInfo { buttonText = "Stump Text", enableMethod =() => StumpText = true, disableMethod =() => StumpText = false, enabled = StumpText, toolTip = "Toggles the stump text."},
-                new ButtonInfo { buttonText = "Custom Boards", enabled = true, isTogglable = true, toolTip = "Enables the custom boards in stump." },
 
                 new ButtonInfo { buttonText = "Save Preferences", method =() => Utility.SavePreferences(), isTogglable = false, toolTip = "Saves your enabled mods to file." },
                 new ButtonInfo { buttonText = "Load Preferences", method =() => Utility.LoadPreferences(), isTogglable = false, toolTip = "Loads your saved mods from a file." },
