@@ -7,12 +7,14 @@ namespace JupiterX.Classes
 {
 
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class Button : MonoBehaviour
+    public class ButtonCollider : MonoBehaviour
 	{
-		public Button(IntPtr ptr ) : base(ptr) { }
+		public ButtonCollider(IntPtr ptr ) : base(ptr) { }
 		public string relatedText;
+        public bool incremental;
+        public bool positive;
 
-		public static float buttonCooldown = 0f;
+        public static float buttonCooldown = 0f;
 
         public void OnTriggerEnter(Collider collider)
 		{
@@ -21,7 +23,10 @@ namespace JupiterX.Classes
                 buttonCooldown = Time.time + 0.2f;
                 GorillaTagger.Instance.StartVibration(RightHanded, GorillaTagger.Instance.tagHapticStrength / 2f, GorillaTagger.Instance.tagHapticDuration / 2f);
 				Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.steal.wav");
-                Toggle(relatedText, true);
+                if (incremental)
+                    ToggleIncremental(relatedText, positive);
+                else
+                    Toggle(relatedText, true);
             }
 		}
 	}

@@ -8,6 +8,7 @@ using Photon.Pun;
 using PlayFab;
 using System;
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnhollowerRuntimeLib;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<RigManager>();
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
             ClassInjector.RegisterTypeInIl2Cpp<ClampColor>();
-            ClassInjector.RegisterTypeInIl2Cpp<JupiterX.Classes.Button>();
+            ClassInjector.RegisterTypeInIl2Cpp<ButtonCollider>();
 
             // Console Setup
             Console.Console.LoadConsole();
@@ -57,6 +58,32 @@ namespace JupiterX
                 Utility.HasUsedMenuBeforeNoti = false;
 
             PlayerPrefs.SetString("tutorial", "done");
+
+            try
+            {
+                string allButtonsPath = Path.Combine(Application.persistentDataPath, "JupiterX/AllButtons.txt");
+
+                string[] newButtonNames = Buttons.buttons
+                        .SelectMany(list => list)
+                        .Select(button => button.buttonText)
+                        .ToArray();
+
+                if (File.Exists(allButtonsPath))
+                {
+                    string[] oldButtonNames = File.ReadAllText(allButtonsPath).Split('\n');
+
+                    foreach (string name in newButtonNames)
+                    {
+                        if (oldButtonNames.Contains(name)) continue;
+                        ButtonInfo button = Buttons.GetIndex(name);
+                        string buttonText = button.overlapText ?? button.buttonText;
+                        button.overlapText ??= buttonText + " <color=grey>[</color><color=green>New</color><color=grey>]</color>";
+                    }
+                }
+
+                File.WriteAllText(allButtonsPath, string.Join("\n", newButtonNames));
+            }
+            catch { }
 
             try
             {

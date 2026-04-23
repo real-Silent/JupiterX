@@ -4,6 +4,7 @@ using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -325,7 +326,7 @@ namespace JupiterX.Menu
 			gameObject.transform.localScale = Utility.PageObjScale;
 			gameObject.transform.localPosition = Utility.PageObjectPosLeft;
 			gameObject.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
-			gameObject.AddComponent<Classes.Button>().relatedText = "NextPage"; // PreviousPage
+			gameObject.AddComponent<ButtonCollider>().relatedText = "NextPage"; // PreviousPage
 
             colorChanger = gameObject.AddComponent<ColorChanger>();
 			colorChanger.colorInfo = buttonColors[0];
@@ -360,7 +361,7 @@ namespace JupiterX.Menu
             gameObject2.transform.localScale = Utility.PageObjScale;
             gameObject2.transform.localPosition = Utility.PageObjectPosRight;
             gameObject2.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
-            gameObject2.AddComponent<Classes.Button>().relatedText = "PreviousPage"; // NextPage
+            gameObject2.AddComponent<ButtonCollider>().relatedText = "PreviousPage"; // NextPage
 
             colorChanger = gameObject2.AddComponent<ColorChanger>();
 			colorChanger.colorInfo = buttonColors[0];
@@ -440,10 +441,9 @@ namespace JupiterX.Menu
 
         private static void AddButton(float offset, int buttonIndex, ButtonInfo method)
         {
-            GameObject buttonObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
             if (!method.label)
             {
+                GameObject buttonObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 buttonObject.GetComponent<BoxCollider>().isTrigger = true;
                 buttonObject.transform.parent = menu.transform;
                 buttonObject.transform.rotation = Quaternion.identity;
@@ -452,8 +452,20 @@ namespace JupiterX.Menu
 
                 buttonObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - offset);
 
-                Classes.Button Button = buttonObject.AddComponent<Classes.Button>();
+                ButtonCollider Button = buttonObject.AddComponent<ButtonCollider>();
                 Button.relatedText = method.buttonText;
+
+                if (incrementalButtons)
+                {
+                    if (method.incremental)
+                    {
+                        buttonObject.transform.localScale -= new Vector3(0f, 0.254f, 0f);
+                        GameObject.Destroy(Button);
+
+                        RenderIncrementalButton(false, offset, buttonIndex, method);
+                        RenderIncrementalButton(true, offset, buttonIndex, method);
+                    }
+                }
 
                 if (lastClickedName != method.buttonText)
                 {
@@ -499,9 +511,68 @@ namespace JupiterX.Menu
 
             RectTransform textTransform = buttonText.GetComponent<RectTransform>();
             textTransform.localPosition = Vector3.zero;
-            textTransform.sizeDelta = new Vector2(.2f, .03f * (0.1f / 0.1f));
+            textTransform.sizeDelta = new Vector2(method.incremental && incrementalButtons ? .18f : .2f, .03f * (0.1f / 0.1f));
 
             textTransform.localPosition = new Vector3(.064f, 0, .111f - offset / 2.6f);
+            textTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+        }
+
+        private static void RenderIncrementalButton(bool increment, float offset, int buttonIndex, ButtonInfo method)
+        {
+            if (!method.label)
+            {
+                GameObject buttonObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+                buttonObject.GetComponent<BoxCollider>().isTrigger = true;
+                buttonObject.transform.parent = menu.transform;
+                buttonObject.transform.rotation = Quaternion.identity;
+
+                buttonObject.transform.localScale = new Vector3(0.09f, 0.102f, 0.1f * 0.8f);
+                buttonObject.transform.localPosition = new Vector3(0.56f, 0.399f, 0.28f - offset);
+
+                ButtonCollider button = buttonObject.AddComponent<ButtonCollider>();
+                button.relatedText = method.buttonText;
+                button.incremental = true;
+                button.positive = increment;
+
+                if (increment)
+                    buttonObject.transform.localPosition = new Vector3(buttonObject.transform.localPosition.x, -buttonObject.transform.localPosition.y, buttonObject.transform.localPosition.z);
+
+                if (lastClickedName != method.buttonText + (increment ? "+" : "-"))
+                {
+                    buttonObject.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
+                }
+            }
+
+            RenderIncrementalText(increment, offset);
+        }
+
+        public static void RenderIncrementalText(bool increment, float offset)
+        {
+            Text buttonText = new GameObject
+            {
+                transform =
+                {
+                    parent = canvasObject.transform
+                }
+            }.AddComponent<Text>();
+
+            buttonText.font = currentFont;
+            buttonText.text = increment ? "+" : "-";
+            buttonText.supportRichText = true;
+            buttonText.fontSize = 1;
+            buttonText.color = textColors[1];
+
+            buttonText.alignment = TextAnchor.MiddleCenter;
+            buttonText.fontStyle = FontStyle.Italic;
+            buttonText.resizeTextForBestFit = true;
+            buttonText.resizeTextMinSize = 0;
+
+            RectTransform textTransform = buttonText.GetComponent<RectTransform>();
+            textTransform.localPosition = Vector3.zero;
+            textTransform.sizeDelta = new Vector2(.2f, .03f * (0.1f / 0.1f));
+
+            textTransform.localPosition = new Vector3(.064f, increment ? -0.12f : 0.12f, .111f - offset / 2.6f);
             textTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
         }
 
@@ -565,7 +636,7 @@ namespace JupiterX.Menu
 							bool worked = Physics.Raycast(ray, out hit, 100);
 							if (worked)
 							{
-								Classes.Button collide = hit.transform.gameObject.GetComponent<Classes.Button>();
+								ButtonCollider collide = hit.transform.gameObject.GetComponent<ButtonCollider>();
 								if (collide != null)
 								{
 									collide.OnTriggerEnter(buttonCollider);
@@ -605,160 +676,217 @@ namespace JupiterX.Menu
         public static void Toggle(string buttonText, bool fromMenu = false, bool ignoreForce = false)
         {
             int lastPage = ((Buttons.buttons[Buttons.CurrentCategoryIndex].Length + buttonsPerPage - 1) / buttonsPerPage) - 1;
-            if (Buttons.CurrentCategoryName == "Favorite")
-                lastPage = ((favorites.Count + buttonsPerPage - 1) / buttonsPerPage) - 1;
 
-            if (Buttons.CurrentCategoryName == "Enabled")
+            switch (Buttons.CurrentCategoryName)
             {
-                List<string> enabledMods = new List<string>() { "Exit Enabled" };
-                int categoryIndex = 0;
-                foreach (ButtonInfo[] buttonlist in Buttons.buttons)
-                {
-                    foreach (ButtonInfo v in buttonlist)
+                case "Favorite":
+                    lastPage = ((favorites.Count + buttonsPerPage - 1) / buttonsPerPage) - 1;
+                    break;
+
+                case "Enabled":
+                    List<string> enabledMods = new List<string>() { "Exit Enabled" };
+                    int categoryIndex = 0;
+
+                    foreach (ButtonInfo[] buttonlist in Buttons.buttons)
                     {
-                        if (v.enabled && (!Buttons.categoryNames[categoryIndex].Contains("Settings")))
-                            enabledMods.Add(v.buttonText);
-                    }
-                    categoryIndex++;
-                }
-                lastPage = ((enabledMods.Count + buttonsPerPage - 1) / buttonsPerPage) - 1;
-            }
-
-            if (buttonText == "Accept Prompt")
-            {
-                if (CurrentPrompt != null)
-                {
-                    CurrentPrompt.AcceptAction?.Invoke();
-
-                    if (prompts.Count > 0)
-                        prompts.RemoveAt(0);
-
-                    ReloadMenu();
-                }
-                return;
-            }
-
-            if (buttonText == "Decline Prompt")
-            {
-                if (CurrentPrompt != null)
-                {
-                    CurrentPrompt.DeclineAction?.Invoke();
-
-                    if (prompts.Count > 0)
-                        prompts.RemoveAt(0);
-
-                    ReloadMenu();
-                }
-                return;
-            }
-
-            if (buttonText == "Disconnect")
-            {
-                PhotonNetwork.Disconnect();
-            }
-            if (buttonText == "Home")
-            {
-                Buttons.CurrentCategoryName = "Main";
-                pageNumber = 0;
-            }
-
-            if (buttonText == "PreviousPage")
-            {
-                pageNumber--;
-                if (pageNumber < 0)
-                    pageNumber = lastPage;
-            }
-            else
-            {
-                if (buttonText == "NextPage")
-                {
-                    pageNumber++;
-                    if (pageNumber > lastPage)
-                        pageNumber = 0;
-                }
-                else
-                {
-                    ButtonInfo target = GetIndex(buttonText);
-                    if (target != null)
-                    {
-                        if (fromMenu && !ignoreForce && ((Utility.LGrip) || (Utility.RJoystickAxis.y > 0.5f && Utility.LTriggerFloat > 0.5f)))
+                        foreach (ButtonInfo v in buttonlist)
                         {
-                            if (target.buttonText != "Exit Favorite")
+                            if (v.enabled && !Buttons.categoryNames[categoryIndex].Contains("Settings"))
+                                enabledMods.Add(v.buttonText);
+                        }
+                        categoryIndex++;
+                    }
+
+                    lastPage = ((enabledMods.Count + buttonsPerPage - 1) / buttonsPerPage) - 1;
+                    break;
+            }
+
+            switch (buttonText)
+            {
+                case "Accept Prompt":
+                    if (CurrentPrompt != null)
+                    {
+                        CurrentPrompt.AcceptAction?.Invoke();
+                        if (prompts.Count > 0) prompts.RemoveAt(0);
+                        ReloadMenu();
+                    }
+                    return;
+
+                case "Decline Prompt":
+                    if (CurrentPrompt != null)
+                    {
+                        CurrentPrompt.DeclineAction?.Invoke();
+                        if (prompts.Count > 0) prompts.RemoveAt(0);
+                        ReloadMenu();
+                    }
+                    return;
+
+                case "Disconnect":
+                    PhotonNetwork.Disconnect();
+                    break;
+
+                case "Home":
+                    Buttons.CurrentCategoryName = "Main";
+                    pageNumber = 0;
+                    break;
+
+                case "PreviousPage":
+                    pageNumber = (pageNumber - 1 < 0) ? lastPage : pageNumber - 1;
+                    break;
+
+                case "NextPage":
+                    pageNumber = (pageNumber + 1 > lastPage) ? 0 : pageNumber + 1;
+                    break;
+
+                default:
+                    HandleButtonAction(buttonText, fromMenu, ignoreForce);
+                    break;
+            }
+
+            ReloadMenu();
+        }
+
+        private static void HandleButtonAction(string buttonText, bool fromMenu, bool ignoreForce)
+        {
+            ButtonInfo target = GetIndex(buttonText);
+            if (target == null)
+            {
+                MelonLoader.MelonLogger.Msg($"{buttonText} does not exist");
+                return;
+            }
+            string newIndicator = " <color=grey>[</color><color=green>New</color><color=grey>]</color>";
+            if (target.overlapText != null && target.overlapText.Contains(newIndicator))
+            {
+                target.overlapText = target.overlapText.Replace(newIndicator, "");
+            }
+            bool gripHeld = Utility.LGrip || (Utility.RJoystickAxis.y > 0.5f && Utility.LTriggerFloat > 0.5f);
+            bool triggerHeld = Utility.LTriggerFloat > 0.5f;
+
+            switch (true)
+            {
+                case true when fromMenu && !ignoreForce && gripHeld:
+                    if (target.buttonText == "Exit Favorite") return;
+
+                    if (favorites.Contains(target.buttonText))
+                    {
+                        favorites.Remove(target.buttonText);
+                        NotificationManager.SendNotification2("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Removed from favorites.");
+                    }
+                    else
+                    {
+                        favorites.Add(target.buttonText);
+                        NotificationManager.SendNotification2("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Added to favorites.");
+                    }
+                    break;
+                case true when fromMenu && !ignoreForce && triggerHeld:
+                    if (!quickActions.Contains(target.buttonText))
+                    {
+                        quickActions.Add(target.buttonText);
+                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
+                    }
+                    else
+                    {
+                        quickActions.Remove(target.buttonText);
+                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
+                    }
+                    break;
+                default:
+                    if (target.isTogglable)
+                    {
+                        target.enabled = !target.enabled;
+
+                        if (target.enabled)
+                        {
+                            if (fromMenu)
+                                NotificationManager.SendNotification2($"<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> {target.toolTip}");
+
+                            try { target.enableMethod?.Invoke(); }
+                            catch (Exception exc)
                             {
-                                if (favorites.Contains(target.buttonText))
-                                {
-                                    favorites.Remove(target.buttonText);
-
-                                    if (fromMenu)
-                                        NotificationManager.SendNotification2("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Removed from favorites.");
-                                }
-                                else
-                                {
-                                    favorites.Add(target.buttonText);
-
-                                    if (fromMenu)
-                                        NotificationManager.SendNotification2("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Added to favorites.");
-                                }
+                                MelonLoader.MelonLogger.Msg($"Error enabling {target.buttonText}: {exc.Message}");
                             }
                         }
                         else
                         {
-                            if (fromMenu && !ignoreForce && (Utility.LTriggerFloat > 0.5f))
+                            if (fromMenu)
+                                NotificationManager.SendNotification2($"<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> {target.toolTip}");
+                            try { target.disableMethod?.Invoke(); }
+                            catch (Exception exc)
                             {
-                                if (!quickActions.Contains(target.buttonText))
-                                {
-                                    quickActions.Add(target.buttonText);
-
-                                    if (fromMenu)
-                                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
-                                }
-                                else
-                                {
-                                    quickActions.Remove(target.buttonText);
-
-                                    if (fromMenu)
-                                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
-                                }
-                            }
-                            else
-                            {
-                                if (target.isTogglable)
-                                {
-                                    target.enabled = !target.enabled;
-                                    if (target.enabled)
-                                    {
-                                        if (fromMenu)
-                                            NotificationManager.SendNotification2("<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
-
-                                        if (target.enableMethod != null)
-                                            try { target.enableMethod.Invoke(); } catch (Exception exc) { MelonLoader.MelonLogger.Msg(string.Format("Error with mod enableMethod {0} at {1}: {2}", target.buttonText, exc.StackTrace, exc.Message)); }
-                                    }
-                                    else
-                                    {
-                                        if (fromMenu)
-                                            NotificationManager.SendNotification2("<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> " + target.toolTip);
-
-                                        if (target.disableMethod != null)
-                                            try { target.disableMethod.Invoke(); } catch (Exception exc) { MelonLoader.MelonLogger.Msg(string.Format("Error with mod disableMethod {0} at {1}: {2}", target.buttonText, exc.StackTrace, exc.Message)); }
-                                    }
-                                }
-                                else
-                                {
-                                    if (fromMenu)
-                                        NotificationManager.SendNotification2("<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
-
-                                    if (target.method != null)
-                                        try { target.method.Invoke(); } catch (Exception exc) { MelonLoader.MelonLogger.Msg(string.Format("Error with mod {0} at {1}: {2}", target.buttonText, exc.StackTrace, exc.Message)); }
-                                }
+                                MelonLoader.MelonLogger.Msg($"Error disabling {target.buttonText}: {exc.Message}");
                             }
                         }
                     }
                     else
-                        MelonLoader.MelonLogger.Msg($"{buttonText} does not exist");
-                }
+                    {
+                        if (fromMenu)
+                            NotificationManager.SendNotification2($"<color=grey>[</color><color=green>RUN</color><color=grey>]</color> {target.toolTip}");
+
+                        try { target.method?.Invoke(); }
+                        catch (Exception exc)
+                        {
+                            MelonLoader.MelonLogger.Msg($"Error running {target.buttonText}: {exc.Message}");
+                        }
+                    }
+                    break;
             }
-            ReloadMenu();
         }
+
+        public static void ToggleIncremental(string buttonText, bool increment, bool fromMenu = false, bool ignoreForce = false, bool reload = true)
+        {
+            ButtonInfo target = Buttons.GetIndex(buttonText);
+            if (target == null)
+            {
+                Utility.Log($"{buttonText} does not exist");
+                return;
+            }
+            string newIndicator = " <color=grey>[</color><color=green>New</color><color=grey>]</color>";
+            if (target.overlapText != null && target.overlapText.Contains(newIndicator))
+            {
+                target.overlapText = target.overlapText.Replace(newIndicator, "");
+            }
+            if (target.label)
+                return;
+            bool triggerHeld = Utility.LTriggerFloat > 0.5f;
+            switch (true)
+            {
+                case true when fromMenu && !ignoreForce && triggerHeld:
+                    if (!quickActions.Contains(target.buttonText))
+                    {
+                        quickActions.Add(target.buttonText);
+                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
+                    }
+                    else
+                    {
+                        quickActions.Remove(target.buttonText);
+                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
+                    }
+                    break;
+                default:
+                    if (increment)
+                    {
+                        NotificationManager.SendNotification2($"<color=grey>[</color><color=green>INCREMENT</color><color=grey>]</color> {target.toolTip}");
+                        try { target.enableMethod?.Invoke(); }
+                        catch (Exception exc)
+                        {
+                            Utility.Log($"Error enabling {target.buttonText}: {exc.Message}");
+                        }
+                    }
+                    else
+                    {
+                        NotificationManager.SendNotification2($"<color=grey>[</color><color=red>DECREMENT</color><color=grey>]</color> {target.toolTip}");
+                        try { target.disableMethod?.Invoke(); }
+                        catch (Exception exc)
+                        {
+                            Utility.Log($"Error disabling {target.buttonText}: {exc.Message}");
+                        }
+                    }
+                    break;
+            }
+            if (reload)
+                ReloadMenu();
+        }
+
         public static Material promptMat;
 
         public static string lastClickedName = "";
@@ -853,7 +981,7 @@ namespace JupiterX.Menu
                 button.transform.localScale = new Vector3(0.09f, CurrentPrompt.DeclineText == null ? 0.9f : 0.4375f, 0.08f);
                 button.transform.localPosition = new Vector3(0.56f, CurrentPrompt.DeclineText == null ? 0f : 0.2375f, -0.43f);
 
-                button.AddComponent<Classes.Button>().relatedText = "Accept Prompt";
+                button.AddComponent<ButtonCollider>().relatedText = "Accept Prompt";
 
                 if (lastClickedName != "Accept Prompt")
                 {
@@ -889,7 +1017,7 @@ namespace JupiterX.Menu
                 button.transform.localScale = new Vector3(0.09f, 0.4375f, 0.08f);
                 button.transform.localPosition = new Vector3(0.56f, -0.2375f, -0.43f);
 
-                button.AddComponent<Classes.Button>().relatedText = "Decline Prompt";
+                button.AddComponent<ButtonCollider>().relatedText = "Decline Prompt";
 
                 if (lastClickedName != "Decline Prompt")
                     button.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
@@ -1066,6 +1194,8 @@ namespace JupiterX.Menu
         public static int gunVariation;
         public static int GunDirection;
         public static int GunLineQuality = 50;
+
+        public static bool incrementalButtons = true;
 
         public static bool GunSpawned;
         public static bool gunLocked;

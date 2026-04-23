@@ -331,9 +331,16 @@ namespace JupiterX
         public static Vector3 PageTextPosRight = new Vector3(0.064f, -0.195f, 0f);
         public static Vector3 PageTextPosLeft = new Vector3(0.064f, 0.195f, 0f);
         public static Vector3 PageObjScale = new Vector3(0.09f, 0.2f, 0.9f);
-        public static void ChangePageType()
+        public static void ChangePageType(bool increment = true)
         {
-            PageType = (PageType + 1) % PageTypes.Length;
+            if (increment)
+            {
+                PageType = (PageType + 1) % PageTypes.Length;
+            }
+            else
+            {
+                PageType = (PageType - 1 + PageTypes.Length) % PageTypes.Length;
+            }
 
             switch (PageType)
             {
