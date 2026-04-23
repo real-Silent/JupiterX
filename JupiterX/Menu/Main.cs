@@ -259,7 +259,18 @@ namespace JupiterX.Menu
             {
                 if (MenuTitle)
                 {
-                    string CustomTitle = File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/CustomTitle.txt")) ? File.ReadAllText(Path.Combine(Application.persistentDataPath, "JupiterX/CustomTitle.txt") : File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/CustomTitle.txt"), "Your Text Here");
+                    string path = Path.Combine(Application.persistentDataPath, "JupiterX/CustomTitle.txt");
+                    string CustomTitle;
+                    if (File.Exists(path))
+                    {
+                        CustomTitle = File.ReadAllText(path);
+                    }
+                    else
+                    {
+                        CustomTitle = "Your Text Here";
+                        Directory.CreateDirectory(Path.GetDirectoryName(path));
+                        File.WriteAllText(path, CustomTitle);
+                    }
                     text.text = CustomTitle;
                 }
                 else
