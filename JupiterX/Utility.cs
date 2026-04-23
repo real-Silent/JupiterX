@@ -5,8 +5,6 @@ using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Mods;
-using Mono.Cecil;
-using OVR;
 using Photon.Pun;
 using PlayFab;
 using System;
@@ -23,16 +21,6 @@ namespace JupiterX
     public class Utility
     {
         public static void Log(string msg) => MelonLoader.MelonLogger.Msg($"[JUPITERX] Log : {msg}");
-        public static void Log(string msg, int type)
-        {
-            switch (type)
-            {
-                case 0: File.WriteAllText(LogPath, LogMain + msg); break;
-                case 1: File.WriteAllText(LogPath, LogWarningMain + msg); break;
-                case 2: File.WriteAllText(LogPath, LogSuccessMain + msg); break;
-                case 3: File.WriteAllText(LogPath, LogErrorMain + msg); break;
-            }
-        }
 
         public static void StopCurrentPrompt() =>
             prompts.RemoveAt(0);
@@ -1075,14 +1063,7 @@ namespace JupiterX
         public static bool updateneeded = false;
         public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {Utility.version}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD discord.gg/bCjKrZaT2T";
 
-        public static string LogMain = "[JUPITERX] (LOG) : ";
-        public static string LogWarningMain = "[JUPITERX] (WARNING) : ";
-        public static string LogErrorMain = "[JUPITERX] (ERROR) : ";
-        public static string LogSuccessMain = "[JUPITERX] (SUCCESS) : ";
-
         public static string MainPath = Path.Combine(Application.persistentDataPath, "JupiterX");
-        public static string LogPath = Path.Combine(MainPath, "Logs.txt");
-        public static string CustomidPath = Path.Combine(MainPath, "CustomID.txt");
         public static string PreferencesPath = Path.Combine(MainPath, "Preferences.txt");
         public static string HasUsedMenuBefore = Path.Combine(MainPath, "UsedBefore.txt");
 
@@ -1113,14 +1094,9 @@ namespace JupiterX
         {
             if (!Directory.Exists(MainPath))
                 Directory.CreateDirectory(MainPath);
-            if (!File.Exists(LogPath))
-                File.Create(LogPath);
 
             if (!File.Exists(PreferencesPath))
                 File.Create(PreferencesPath);
-
-            if (!File.Exists(CustomidPath))
-                File.CreateText(CustomidPath);
         }
 
         static int loadingPreferencesFrame;
@@ -1240,7 +1216,7 @@ namespace JupiterX
                 string text = File.ReadAllText($"{PreferencesPath}");
                 LoadPreferencesFromText(text);
             }
-            catch (Exception e) { Log("Error loading preferences: " + e.Message, 1); }
+            catch (Exception e) { Log("Error loading preferences: " + e.Message); }
         }
 
 
