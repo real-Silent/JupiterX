@@ -113,7 +113,7 @@ namespace JupiterX
         {
             try
             {
-                if (!Settings.Notifications)
+                if (Settings.Notifications)
                 {
                     if (Time.time - normtime > cooldown)
                     {
