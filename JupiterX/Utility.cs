@@ -1143,27 +1143,24 @@ namespace JupiterX
             }
 
             string enabledText = string.Join(separator, enabledButtons);
+            string favoriteText = favorites?.Count > 0 ? string.Join(separator, favorites) : "";
+            string quickActionText = quickActions?.Count > 0 ? string.Join(separator, quickActions) : "";
 
-            string favoriteText = favorites != null && favorites.Count > 0 ? string.Join(separator, favorites) : string.Empty;
-
-            string quickActionText = quickActions != null && quickActions.Count > 0 ? string.Join(separator, quickActions) : string.Empty;
-
-            string[] settings = {
+            string settingsText = string.Join(separator, new string[]
+            {
                 Utility.PageType.ToString(),
                 Utility.currentTheme.ToString(),
                 Movement.FlySpeedAmount.ToString(),
                 Movement.ArmSizeAmount.ToString()
-            };
+                    });
 
-            string settingstext = string.Join(separator, settings);
-
-            return string.Join("\n", new[]
-            {
+                    return string.Join("\n", new[]
+                    {
                 enabledText,
                 favoriteText,
                 quickActionText,
-                settingstext
-            });
+                settingsText
+                });
         }
 
 
@@ -1176,50 +1173,56 @@ namespace JupiterX
 
             Panic();
 
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrWhiteSpace(text))
                 return;
 
-            string[] textData = text.Split('\n');
+            string[] textData = text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            if (textData.Length < 3)
+            if (textData.Length < 4)
                 return;
 
-            string[] activebuttons = textData[0].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string button in activebuttons)
+            try
+            {
+                string[] data = textData[3].Split(new[] { ";;" }, StringSplitOptions.None);
+
+                if (data.Length >= 4)
+                {
+                    int.TryParse(data[0], out Utility.PageType);
+                    int.TryParse(data[1], out Utility.currentTheme);
+                    int.TryParse(data[2], out Movement.FlySpeedAmount);
+                    int.TryParse(data[3], out Movement.ArmSizeAmount);
+                }
+
+                Utility.ChangePageType();
+                Utility.ChangeMenuTheme(); 
+                Movement.ChangeFlySpeed();
+                Movement.ChangeArmLength();
+            }
+            catch { }
+
+            string[] activeButtons = textData[0].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string button in activeButtons)
             {
                 Main.Toggle(button);
             }
 
             favorites.Clear();
-            string[] favoritesarray = textData[1].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string favorite in favoritesarray)
-                favorites.Add(favorite);
-
-            try
+            string[] favoritesArray = textData[1].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string fav in favoritesArray)
             {
-                string[] data = textData[3].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
-                Utility.PageType = int.Parse(data[0]);
-                Utility.ChangeMenuTheme();
-
-                Utility.currentTheme = int.Parse(data[1]);
-                Utility.ChangePageType();
-
-                Movement.FlySpeedAmount = int.Parse(data[2]);
-                Movement.ChangeFlySpeed();
-
-                Movement.ArmSizeAmount = int.Parse(data[3]);
-                Movement.ChangeArmLength();
+                favorites.Add(fav);
             }
-            catch { }
 
             quickActions.Clear();
-            string[] quickArray = textData[2].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] quickArray = textData[2].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
+
             foreach (string quickAction in quickArray)
             {
                 ButtonInfo button = Buttons.GetIndex(quickAction);
                 if (button != null)
                     quickActions.Add(quickAction);
             }
+
             hasLoadedPreferences = true;
         }
 
