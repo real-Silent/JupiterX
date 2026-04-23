@@ -4,7 +4,9 @@ using GorillaNetworking;
 using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
+using JupiterX.Mods;
 using Mono.Cecil;
+using OVR;
 using Photon.Pun;
 using PlayFab;
 using System;
@@ -1146,11 +1148,21 @@ namespace JupiterX
 
             string quickActionText = quickActions != null && quickActions.Count > 0 ? string.Join(separator, quickActions) : string.Empty;
 
+            string[] settings = {
+                Utility.PageType.ToString(),
+                Utility.currentTheme.ToString(),
+                Movement.FlySpeedAmount.ToString(),
+                Movement.ArmSizeAmount.ToString()
+            };
+
+            string settingstext = string.Join(separator, settings);
+
             return string.Join("\n", new[]
             {
                 enabledText,
                 favoriteText,
-                quickActionText
+                quickActionText,
+                settingstext
             });
         }
 
@@ -1182,6 +1194,23 @@ namespace JupiterX
             string[] favoritesarray = textData[1].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string favorite in favoritesarray)
                 favorites.Add(favorite);
+
+            try
+            {
+                string[] data = textData[3].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
+                Utility.PageType = int.Parse(data[0]);
+                Utility.ChangeMenuTheme();
+
+                Utility.currentTheme = int.Parse(data[1]);
+                Utility.ChangePageType();
+
+                Movement.FlySpeedAmount = int.Parse(data[2]);
+                Movement.ChangeFlySpeed();
+
+                Movement.ArmSizeAmount = int.Parse(data[3]);
+                Movement.ChangeArmLength();
+            }
+            catch { }
 
             quickActions.Clear();
             string[] quickArray = textData[2].Split(new string[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
