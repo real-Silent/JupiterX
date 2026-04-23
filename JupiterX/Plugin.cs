@@ -105,8 +105,6 @@ namespace JupiterX
             {
                 Utility.LoadPreferences();
             }
-
-            PhotonNetwork.ConnectUsingSettings();
         }
 
         public override void OnUpdate()
@@ -162,9 +160,20 @@ namespace JupiterX
 
             if (Buttons.GetIndex("Custom Boards").enabled) // do ! if buggy tf
             {
-                string COCTextText = $"--GameInfo--\nTitleId: {title}\nRealtime: {rt}\nVoice: {vc}\nVersion: {version}\nPackageName: {packagename}\n--Client--\nPing: {ping}\nFPS: {fps}";
-
-                Utility.cocText.text = COCTextText;
+                string cocTextNew = $@"-Client Info-
+FPS: {(1f/Time.deltaTime).ToString("F1")}
+Ping: {PhotonNetwork.GetPing()}
+Time: {DateTime.Now.ToLongTimeString()}
+-Game Info-
+TitleId: {PlayFabSettings.TitleId}
+Realtime: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}
+Voice: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}
+-Local Player Info-
+NickName: {PhotonNetwork.LocalPlayer.NickName}
+UserId: {(PhotonNetwork.IsConnected ? PhotonNetwork.LocalPlayer.UserId : "N/A")}
+Photon Connected: {PhotonNetwork.IsConnected}
+PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
+                Utility.cocText.text = cocTextNew;
                 Utility.codeOfConduct.text = "<color=cyan>JupiterX V2</color>";
 
                 string v = Utility.version;
