@@ -474,7 +474,7 @@ namespace JupiterX.Mods
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 // NotificationManager.SendNotification("red", "Soundboard", $"Resource load error: {ex.Message}");
             }
@@ -493,7 +493,7 @@ namespace JupiterX.Mods
                         PlayAudioThroughMicrophone(clip);
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 // NotificationManager.SendNotification("red", "Soundboard", $"Error playing sound: {ex.Message}");
             }
