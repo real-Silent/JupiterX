@@ -1087,8 +1087,6 @@ namespace JupiterX
             foreach (string button in activebuttons)
             {
                 Main.Toggle(button);
-                if (!button.Contains("Disable Notifications"))
-                    Toggle("Disable Notifications");
             }
 
             favorites.Clear();
