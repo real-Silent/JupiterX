@@ -139,11 +139,16 @@ namespace JupiterX.Menu
 
                 if (PhotonNetwork.InRoom && !lastInRoom)
                 {
-                    NotificationManager.SendNotification("blue", "JOIN ROOM", "Room Code: " + lastRoom + "");
+                    if (!disableRoomNotifications)
+                        NotificationManager.SendNotification("blue", "JOIN ROOM", "Room Code: " + lastRoom + "");
                 }
                 if (!PhotonNetwork.InRoom && lastInRoom)
                 {
-                    NotificationManager.SendNotification("blue", "LEAVE ROOM", "Room Code: " + lastRoom + "");
+                    if (clearNotificationsOnDisconnect)
+                        NotificationManager.ClearAllNotifications();
+
+                    if (!disableRoomNotifications)
+                        NotificationManager.SendNotification("blue", "LEAVE ROOM", "Room Code: " + lastRoom + "");
                     lastMasterClient = false;
                 }
 
@@ -163,6 +168,8 @@ namespace JupiterX.Menu
 
                     if (PhotonNetwork.LocalPlayer.IsMasterClient && !lastMasterClient)
                     {
+                        if (disableMasterClientNotifications)
+                            return;
                         NotificationManager.SendNotification("purple", "MASTER", "You are now master client.");
                     }
                     lastMasterClient = PhotonNetwork.LocalPlayer.IsMasterClient;
@@ -1169,6 +1176,9 @@ namespace JupiterX.Menu
         public static bool lastMasterClient = false;
         public static string lastRoom = "";
 
+        public static bool disableMasterClientNotifications;
+        public static bool disableRoomNotifications;
+        public static bool clearNotificationsOnDisconnect;
 
         public static List<string> quickActions = new List<string> { };
 

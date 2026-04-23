@@ -54,7 +54,12 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Move Stump Text Gun", method =() => Utility.MoveStumpTextGun(), isTogglable = true, toolTip = "Lets you move the stump text with a gun." },
                 new ButtonInfo { buttonText = "Version Text", enableMethod =() => VersionText = true, disableMethod =() => VersionText = false, enabled = VersionText, toolTip = "Toggles the Version Text."},
-                new ButtonInfo { buttonText = "Notifications", enableMethod =() => Notifications = true, disableMethod =() => Notifications = false, enabled = Notifications, toolTip = "Toggles the Notifcations."},
+
+                new ButtonInfo { buttonText = "Disable Notifications", enableMethod =() => Notifications = false, disableMethod =() => { Notifications = true; NotificationManager.ClearAllNotifications(); }, toolTip = "Toggles the Notifcations."},
+                new ButtonInfo { buttonText = "Disable Master Client Notifications", enableMethod =() => disableMasterClientNotifications = true, disableMethod =() => disableMasterClientNotifications = false, toolTip = "Disables all notifications regarding master client."},
+                new ButtonInfo { buttonText = "Disable Room Notifications", enableMethod =() => disableRoomNotifications = true, disableMethod =() => disableRoomNotifications = false, toolTip = "Disables all notifications regarding the room."},
+                new ButtonInfo { buttonText = "Clear Notifications on Disconnect", enableMethod =() => clearNotificationsOnDisconnect = true, disableMethod =() => clearNotificationsOnDisconnect = false, toolTip = "Clears all notifications on disconnect."},
+
                 new ButtonInfo { buttonText = "Disable Disconnect Button", enableMethod =() => DisconnectButton = true, disableMethod =() => DisconnectButton = false, enabled = DisconnectButton, toolTip = "Toggles the disconnect button."},
                 new ButtonInfo { buttonText = "Disable Incremental Buttons", enableMethod =() => incrementalButtons = false, disableMethod =() => incrementalButtons = true, toolTip = "Disables the buttons with the increment and decrement buttons next to it."},
                 new ButtonInfo { buttonText = "Disable Menu Title", enableMethod =() => MenuTitle = false, disableMethod =() => MenuTitle = true, enabled = MenuTitle, toolTip = "Toggles the menu title."},

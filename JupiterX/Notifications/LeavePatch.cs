@@ -9,7 +9,7 @@ namespace JupiterX.Patches
     {
         private static void Prefix(Player otherPlayer)
         {
-            if (otherPlayer != PhotonNetwork.LocalPlayer && otherPlayer != a && Settings.Notifications)
+            if (otherPlayer != PhotonNetwork.LocalPlayer && otherPlayer != a && !Settings.Notifications)
             {
                 NotificationManager.SendNotification("red", "LEAVE", "Name: " + otherPlayer.NickName);
                 a = otherPlayer;
