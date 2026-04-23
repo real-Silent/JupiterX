@@ -3,48 +3,46 @@ using UnityEngine;
 
 namespace JupiterX.Classes
 {
-
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class ColorChanger : TimedBehaviour
+    public class ColorChanger : MonoBehaviour
     {
-        public ColorChanger(IntPtr ptr) : base(ptr) { }
-
-        public override void Start()
+        public ColorChanger(IntPtr e) : base(e) { }
+        public virtual void Start()
         {
-            base.Start();
-            renderer = base.GetComponent<Renderer>();
+            if (colors == null)
+            {
+                Destroy(this);
+                return;
+            }
+
+            targetRenderer = GetComponent<Renderer>();
+
+            if (colors.IsFlat())
+            {
+                Update();
+                Destroy(this);
+                return;
+            }
+
             Update();
         }
 
-        public override void Update()
+        public virtual void Update()
         {
-            base.Update();
-            if (colorInfo != null)
-            {
-                if (!colorInfo.copyRigColors)
-                {
-                    Color color = new Gradient { colorKeys = colorInfo.colors }.Evaluate((Time.time / 2f) % 1);
-                    if (colorInfo.isRainbow)
-                    {
-                        float h = (Time.frameCount / 180f) % 1f;
-                        color = UnityEngine.Color.HSVToRGB(h, 1f, 1f);
-                    }
-                    renderer.material.color = color;
-                }
-                else
-                {
-                    renderer.material = GorillaTagger.Instance.offlineVRRig.mainSkin.material;
-                }
-            }
+            targetRenderer.enabled = overrideTransparency ?? !colors.transparent;
+
+            if (colors.transparent)
+                return;
+
+            targetRenderer.material.color = colors.GetCurrentColor();
+
+            Color color = targetRenderer.material.color;
+            color.a = 0.5f;
+            targetRenderer.material.color = color;
         }
 
-        public Renderer renderer;
-        public Gradient colors = null;
-        public ExtGradient colorInfo;
-        public bool isRainbow = false;
-        public bool isPastelRainbow = false;
-        public bool isSlowFade = false;
-        public bool isEpileptic = false;
-        public bool isMonkeColors = false;
+        public Renderer targetRenderer;
+        public ExtGradient colors;
+        public bool? overrideTransparency;
     }
 }

@@ -226,14 +226,13 @@ namespace JupiterX.Menu
 			menuBackground.transform.parent = menu.transform;
 			menuBackground.transform.rotation = Quaternion.identity;
 			menuBackground.transform.localScale = menuSize;
-			menuBackground.GetComponent<Renderer>().material.color = backgroundColor.colors[0].color;
 			menuBackground.transform.position = new Vector3(0.05f, 0f, 0f);
 
             if (Rounding)
                 RoundMenuObject(menuBackground);
 
 			ColorChanger colorChanger = menuBackground.AddComponent<ColorChanger>();
-			colorChanger.colorInfo = backgroundColor;
+			colorChanger.colors = backgroundColor;
 			colorChanger.Start();
 
 			// Canvas
@@ -271,7 +270,7 @@ namespace JupiterX.Menu
                         Directory.CreateDirectory(Path.GetDirectoryName(path));
                         File.WriteAllText(path, CustomTitle);
                     }
-                    text.text = CustomTitle;
+                    text.text = CustomTitle + " <color=grey>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=grey>]</color>";
                 }
                 else
                     text.text = "";
@@ -359,11 +358,10 @@ namespace JupiterX.Menu
 			gameObject.transform.rotation = Quaternion.identity;
 			gameObject.transform.localScale = Utility.PageObjScale;
 			gameObject.transform.localPosition = Utility.PageObjectPosLeft;
-			gameObject.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
-			gameObject.AddComponent<ButtonCollider>().relatedText = "NextPage"; // PreviousPage
+            gameObject.AddComponent<ButtonCollider>().relatedText = "NextPage"; // PreviousPage
 
             colorChanger = gameObject.AddComponent<ColorChanger>();
-			colorChanger.colorInfo = buttonColors[0];
+			colorChanger.colors = buttonColors[0];
 			colorChanger.Start();
 
 			text = new GameObject
@@ -394,11 +392,10 @@ namespace JupiterX.Menu
             gameObject2.transform.rotation = Quaternion.identity;
             gameObject2.transform.localScale = Utility.PageObjScale;
             gameObject2.transform.localPosition = Utility.PageObjectPosRight;
-            gameObject2.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
             gameObject2.AddComponent<ButtonCollider>().relatedText = "PreviousPage"; // NextPage
 
             colorChanger = gameObject2.AddComponent<ColorChanger>();
-			colorChanger.colorInfo = buttonColors[0];
+			colorChanger.colors = buttonColors[0];
 			colorChanger.Start();
 
 			text = new GameObject
@@ -489,6 +486,9 @@ namespace JupiterX.Menu
                 ButtonCollider Button = buttonObject.AddComponent<ButtonCollider>();
                 Button.relatedText = method.buttonText;
 
+                ColorChanger colorChanger = buttonObject.AddComponent<ColorChanger>();
+                colorChanger.Start();
+
                 if (incrementalButtons)
                 {
                     if (method.incremental)
@@ -574,7 +574,8 @@ namespace JupiterX.Menu
 
                 if (lastClickedName != method.buttonText + (increment ? "+" : "-"))
                 {
-                    buttonObject.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
+                    ColorChanger colorChanger = buttonObject.AddComponent<ColorChanger>();
+                    colorChanger.colors = buttonColors[0];
                 }
             }
 
@@ -697,13 +698,12 @@ namespace JupiterX.Menu
 			{
 				reference.transform.parent = GorillaTagger.Instance.rightHandTransform;
 			}
-			reference.GetComponent<Renderer>().material.color = backgroundColor.colors[0].color;
 			reference.transform.localPosition = new Vector3(0.013f, -0.025f, 0.1f);
             reference.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
 			buttonCollider = reference.GetComponent<SphereCollider>();
 
 			ColorChanger colorChanger = reference.AddComponent<ColorChanger>();
-			colorChanger.colorInfo = backgroundColor;
+			colorChanger.colors = backgroundColor;
 			colorChanger.Start();
 		}
 
@@ -1019,7 +1019,8 @@ namespace JupiterX.Menu
 
                 if (lastClickedName != "Accept Prompt")
                 {
-                    button.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
+                    ColorChanger colorChanger = button.AddComponent<ColorChanger>();
+                    colorChanger.colors = buttonColors[0];
                 }
 
                 Text text = new GameObject { transform = { parent = canvasObject.transform } }.AddComponent<Text>();
@@ -1054,7 +1055,10 @@ namespace JupiterX.Menu
                 button.AddComponent<ButtonCollider>().relatedText = "Decline Prompt";
 
                 if (lastClickedName != "Decline Prompt")
-                    button.GetComponent<Renderer>().material.color = buttonColors[0].GetCurrentColor();
+                {
+                    ColorChanger colorChanger = button.AddComponent<ColorChanger>();
+                    colorChanger.colors = buttonColors[0];
+                }
                 Text text = new GameObject { transform = { parent = canvasObject.transform } }.AddComponent<Text>();
                 text.font = currentFont;
                 text.fontStyle = FontStyle.Normal;

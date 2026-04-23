@@ -38,6 +38,8 @@ namespace JupiterX
             Utility.FindObjects();
             Utility.CreateFilesOnStart();
 
+            Utility.OnStartFixColor();
+
             if (Application.Internal_ApplicationWantsToQuit())
             {
                 Application.CancelQuit();
