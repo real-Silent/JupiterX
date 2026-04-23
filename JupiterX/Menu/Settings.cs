@@ -34,7 +34,7 @@ namespace JupiterX
         public static bool homeButton = false;
         public static bool RightHanded = false;
         public static bool StumpText = true;
-        public static bool disableRoomNotifications = true;
+        public static bool Notifications = true;
         public static bool Rounding = false;
 
         public static KeyCode keyboardButton = KeyCode.Q;
