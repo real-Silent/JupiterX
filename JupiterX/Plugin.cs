@@ -73,6 +73,7 @@ namespace JupiterX
             }
         }
 
+        [Obsolete]
         public override void OnApplicationLateStart()
         {
             base.OnApplicationLateStart();
