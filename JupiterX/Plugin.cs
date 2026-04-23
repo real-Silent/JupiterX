@@ -124,6 +124,7 @@ namespace JupiterX
                 if (!File.Exists(Utility.HasUsedMenuBefore))
                     File.Create(Utility.HasUsedMenuBefore);
                 File.WriteAllText(Utility.HasUsedMenuBefore, "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
+                NotificationManager.SendNoti("Thank you for using JupiterX V2 one of the best overpowered gorilla tag copy menus!");
             }
 
             if (File.Exists(Utility.HasUsedMenuBefore))

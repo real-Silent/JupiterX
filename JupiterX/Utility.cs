@@ -993,7 +993,7 @@ namespace JupiterX
         public static string LogPath = Path.Combine(MainPath, "Logs.txt");
         public static string CustomidPath = Path.Combine(MainPath, "CustomID.txt");
         public static string PreferencesPath = Path.Combine(MainPath, "Preferences.txt");
-        public static string HasUsedMenuBefore = Path.Combine(MainPath, "HasUsedMenuBefore.txt");
+        public static string HasUsedMenuBefore = Path.Combine(MainPath, "UsedBefore.txt");
 
         public static Text motdText;
         public static Text motd;
