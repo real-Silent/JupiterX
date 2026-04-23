@@ -14,7 +14,7 @@ namespace JupiterX
 {
     public class Settings
     {
-        public static ExtGradient backgroundColor = new ExtGradient{isRainbow = false};
+        public static ExtGradient backgroundColor = new ExtGradient{rainbow = false};
         public static ExtGradient[] buttonColors = new ExtGradient[]
         {
             new ExtGradient{colors = GetSolidGradient(Color.black) }, // Disabled
@@ -31,6 +31,7 @@ namespace JupiterX
         public static bool VersionText = true;
         public static bool DisconnectButton = false;
         public static bool MenuTitle = true;
+        public static bool CustomMenuTitle = false;
         public static bool homeButton = false;
         public static bool RightHanded = false;
         public static bool StumpText = true;

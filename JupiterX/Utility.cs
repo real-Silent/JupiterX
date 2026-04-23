@@ -14,6 +14,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 using static JupiterX.Menu.Main;
+using static JupiterX.Settings;
 
 namespace JupiterX
 {
@@ -370,6 +371,116 @@ namespace JupiterX
                     break;
             }
             Buttons.GetIndex("Change Page Type").overlapText = "Change Page Type <color=cyan>[" + PageTypes[PageType] + "]</color>"; 
+        }
+
+
+        private static string[] MenuThemes = new string[] { "Default", "Blue", "Rainbow", "Red", "Transparent", "Pastel", "Rig Color", "Yellow", "Green", "Fading Grey", "Fading Red", "Fading Blue" };
+        private static int currentTheme = 0;
+        public static void ChangeMenuTheme(bool increment = true)
+        {
+            if (increment)
+            {
+                currentTheme = (currentTheme + 1) % MenuThemes.Length;
+            }
+            else
+            {
+                currentTheme = (currentTheme - 1 + MenuThemes.Length) % MenuThemes.Length;
+            }
+            switch (currentTheme)
+            {
+                case 0:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.red) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 1:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.blue) }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.red) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 2:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black), rainbow = true }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.red) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 3:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.red) }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 4:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black), transparent = true }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 5:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black), pastelRainbow = true }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 6:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black), pastelRainbow = true }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 7:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black), copyRigColor = true }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 8:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.yellow) }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 9:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.green) }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 10:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSimpleGradient(Color.black, Color.gray) }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.red) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 11:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSimpleGradient(Color.black, Color.red) }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+                case 12:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSimpleGradient(Color.black, Color.blue) }; // Background
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) }; // Unclicked
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) }; // Pressed
+                    textColors[0] = Color.white; // Disabled Color
+                    textColors[1] = Color.white; // Enabled Color
+                    break;
+            }
+            Buttons.GetIndex("Change Menu Theme").overlapText = "Change Menu Theme <color=cyan>[" + MenuThemes[currentTheme] + "]</color>";
         }
 
         public static void BetaEmojiName(int emoji)

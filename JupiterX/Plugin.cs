@@ -44,9 +44,6 @@ namespace JupiterX
             }
             Application.CancelQuit();
 
-            if (!File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/CustomMenuTitle.txt")))
-                File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/CustomMenuTitle.txt"), "Your Title here");
-
             Utility.ogcoctext = Utility.cocText.text;
             Utility.ogcoc = Utility.codeOfConduct.text;
             Utility.ogmotd = Utility.motd.text;
@@ -63,11 +60,7 @@ namespace JupiterX
             {
                 string allButtonsPath = Path.Combine(Application.persistentDataPath, "JupiterX/AllButtons.txt");
 
-                string[] newButtonNames = Buttons.buttons
-                        .SelectMany(list => list)
-                        .Select(button => button.buttonText)
-                        .ToArray();
-
+                string[] newButtonNames = Buttons.buttons.SelectMany(list => list).Select(button => button.buttonText).ToArray();
                 if (File.Exists(allButtonsPath))
                 {
                     string[] oldButtonNames = File.ReadAllText(allButtonsPath).Split('\n');

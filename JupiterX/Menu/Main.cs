@@ -3,6 +3,7 @@ using JupiterX.Classes;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -253,10 +254,25 @@ namespace JupiterX.Menu
 					}
 			}.AddComponent<Text>();
 			text.font = currentFont;
-            if (MenuTitle)
-                text.text = Utility.name + " <color=grey>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=grey>]</color>";
+
+            if (CustomMenuTitle)
+            {
+                if (MenuTitle)
+                {
+                    string CustomTitle = File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/CustomTitle.txt")) ? File.ReadAllText(Path.Combine(Application.persistentDataPath, "JupiterX/CustomTitle.txt") : File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/CustomTitle.txt"), "Your Text Here");
+                    text.text = CustomTitle;
+                }
+                else
+                    text.text = "";
+            }
             else
-                text.text = "";
+            {
+                if (MenuTitle)
+                    text.text = Utility.name + " <color=grey>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=grey>]</color>";
+                else
+                    text.text = "";
+            }
+
             text.fontSize = 1;
 			text.color = textColors[0];
 			text.supportRichText = true;
