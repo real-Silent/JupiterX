@@ -15,6 +15,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
+using static Mono.CSharp.Operator;
 
 namespace JupiterX
 {
@@ -364,11 +365,35 @@ namespace JupiterX
         }
 
 
+        public static int MainDropType = 0;
+        private static int dropType = 0;
+        private static string[] dropTypes = new string[] { "Destroy", "Drop", "No Gravity", "Throw" };
+        public static void ChangeDropType(bool increment = true)
+        {
+            dropType = increment ? (dropType + 1) % dropTypes.Length : (dropType - 1 + dropTypes.Length) % dropTypes.Length;
+            switch (dropType)
+            {
+                case 0:
+                    MainDropType = 0;
+                    break;
+                case 1:
+                    MainDropType = 1;
+                    break;
+                case 2:
+                    MainDropType = 2;
+                    break;
+                case 3:
+                    MainDropType = 3;
+                    break;
+            }
+            Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=cyan>[{dropTypes[dropType]}]</color>";
+        }
+
         private static string[] MenuThemes = new string[]
-{
-    "Default", "Blue", "Rainbow", "Red", "Transparent", "Pastel",
-    "Rig Color", "Yellow", "Green", "Fading Grey", "Fading Red", "Fading Blue"
-};
+        {
+            "Default", "Blue", "Rainbow", "Red", "Transparent", "Pastel",
+            "Rig Color", "Yellow", "Green", "Fading Grey", "Fading Red", "Fading Blue"
+        };
 
 
         public static void OnStartFixColor()
@@ -378,6 +403,7 @@ namespace JupiterX
             buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) };
             buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.red) };
         }
+
         private static int currentTheme = 0;
 
         public static void ChangeMenuTheme(bool increment = true)
@@ -1119,24 +1145,25 @@ namespace JupiterX
             }
 
             string enabledText = string.Join(separator, enabledButtons);
-            string favoriteText = favorites?.Count > 0 ? string.Join(separator, favorites) : "";
-            string quickActionText = quickActions?.Count > 0 ? string.Join(separator, quickActions) : "";
+            string favoriteText = favorites != null ? string.Join(separator, favorites) : "";
+            string quickActionText = quickActions != null ? string.Join(separator, quickActions) : "";
 
             string settingsText = string.Join(separator, new string[]
             {
-                Utility.PageType.ToString(),
-                Utility.currentTheme.ToString(),
+                ((int)Utility.PageType).ToString(),
+                ((int)Utility.currentTheme).ToString(),
+                ((int)Utility.dropType).ToString(),
                 Movement.FlySpeedAmount.ToString(),
                 Movement.ArmSizeAmount.ToString()
-                    });
+            });
 
-                    return string.Join("\n", new[]
-                    {
+            return string.Join("\n", new[]
+            {
                 enabledText,
                 favoriteText,
                 quickActionText,
                 settingsText
-                });
+            });
         }
 
 
@@ -1157,22 +1184,28 @@ namespace JupiterX
             if (textData.Length < 4)
                 return;
 
+            favorites ??= new List<string>();
+            quickActions ??= new List<string>();
+
             try
             {
                 string[] data = textData[3].Split(new[] { ";;" }, StringSplitOptions.None);
 
-                if (data.Length >= 4)
+                if (data.Length >= 5)
                 {
-                    int.TryParse(data[0], out Utility.PageType);
-                    int.TryParse(data[1], out Utility.currentTheme);
-                    int.TryParse(data[2], out Movement.FlySpeedAmount);
-                    int.TryParse(data[3], out Movement.ArmSizeAmount);
-                }
+                    PageType = int.Parse(data[0]) - 1;
+                    currentTheme = int.Parse(data[1]) - 1;
+                    dropType = int.Parse(data[2]) - 1;
 
-                Utility.ChangePageType();
-                Utility.ChangeMenuTheme(); 
-                Movement.ChangeFlySpeed();
-                Movement.ChangeArmLength();
+                    Movement.FlySpeedAmount = int.Parse(data[3]) - 1;
+                    Movement.ArmSizeAmount = int.Parse(data[4]) - 1;
+
+                    ChangePageType();
+                    ChangeMenuTheme();
+                    ChangeDropType();
+                    Movement.ChangeFlySpeed();
+                    Movement.ChangeArmLength();
+                }
             }
             catch { }
 
@@ -1181,22 +1214,16 @@ namespace JupiterX
             {
                 Main.Toggle(button);
             }
-
             favorites.Clear();
-            string[] favoritesArray = textData[1].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string fav in favoritesArray)
+            foreach (string fav in textData[1].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 favorites.Add(fav);
             }
-
             quickActions.Clear();
-            string[] quickArray = textData[2].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string quickAction in quickArray)
+            foreach (string quick in textData[2].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                ButtonInfo button = Buttons.GetIndex(quickAction);
-                if (button != null)
-                    quickActions.Add(quickAction);
+                if (Buttons.GetIndex(quick) != null)
+                    quickActions.Add(quick);
             }
 
             hasLoadedPreferences = true;
@@ -1226,6 +1253,14 @@ namespace JupiterX
             {
                 foreach (ButtonInfo button in btn)
                 {
+                    if (button.buttonText.Contains("Custom Boards") && button.buttonText.Contains("Stump Text") && button.buttonText.Contains("Version Text"))
+                    {
+                        Main.Toggle("Custom Boards");
+                        Main.Toggle("Stump Text");
+                        Main.Toggle("Version Text");
+                        continue;
+                    }
+
                     if (button.enabled)
                         Main.Toggle(button.buttonText);
                 }

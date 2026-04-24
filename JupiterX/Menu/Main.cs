@@ -47,7 +47,7 @@ namespace JupiterX.Menu
 					{
 						Rigidbody comp = menu.AddComponent<Rigidbody>();
 
-                        switch (droptype) 
+                        switch (Utility.MainDropType) 
                         {
                             case 0:
                                 UnityEngine.Object.Destroy(menu, Time.deltaTime);
@@ -56,7 +56,23 @@ namespace JupiterX.Menu
                                 UnityEngine.Object.Destroy(reference);
                                 reference = null;
                                 break; // Destroy
-                            case 1: // Throw
+                            case 1: // Drop
+                                comp.velocity = Vector3.zero;
+                                UnityEngine.Object.Destroy(menu, 5);
+                                menu = null;
+
+                                UnityEngine.Object.Destroy(reference);
+                                reference = null;
+                                break;
+                            case 2: // Drop
+                                comp.useGravity = false;
+                                UnityEngine.Object.Destroy(menu, 5);
+                                menu = null;
+
+                                UnityEngine.Object.Destroy(reference);
+                                reference = null;
+                                break;
+                            case 3: // Drop
                                 if (RightHanded)
                                 {
                                     comp.velocity = Utility.ThrowMenu(Utility.RightHand);
@@ -1188,8 +1204,6 @@ namespace JupiterX.Menu
         // Variables
         // Important
         // Objects
-        public static int droptype = 0; 
-
         public static GameObject menu;
 		public static GameObject menuBackground;
 		public static GameObject reference;
