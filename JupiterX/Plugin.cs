@@ -99,9 +99,9 @@ namespace JupiterX
             if (File.Exists($"{Utility.PreferencesPath}"))
             {
                 Utility.LoadPreferences();
-                Menu.Main.Toggle("Custom Boards");
+                /*Menu.Main.Toggle("Custom Boards");
                 Menu.Main.Toggle("Stump Text");
-                Menu.Main.Toggle("Version Text");
+                Menu.Main.Toggle("Version Text");*/
             }
         }
 
@@ -215,14 +215,8 @@ PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
                 StumpText.SetActive(false);
             }
 
-            if (PhotonNetwork.InRoom)
-            {
-                Utility.DoRGBLucyPlz();
-            }
-
-            JupiterX.Managers.PluginManager.ExecuteUpdate();
-
             JupiterX.Menu.Main.DestroyPointer();
+            JupiterX.Managers.PluginManager.ExecuteUpdate();
         }
 
         public override void OnFixedUpdate()

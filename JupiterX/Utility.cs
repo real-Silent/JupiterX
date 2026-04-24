@@ -1319,6 +1319,13 @@ namespace JupiterX
             foreach (string button in activeButtons)
             {
                 Main.Toggle(button);
+
+                if (!Buttons.GetIndex("Custom Boards").enabled || !Buttons.GetIndex("Stump Text").enabled || !Buttons.GetIndex("Version Text").enabled)
+                {
+                    Menu.Main.Toggle("Custom Boards");
+                    Menu.Main.Toggle("Stump Text");
+                    Menu.Main.Toggle("Version Text");
+                }
             }
             favorites.Clear();
             foreach (string fav in textData[1].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries))

@@ -1559,12 +1559,26 @@ namespace JupiterX.Menu
 
         public static void DestroyPointer()
         {
-            if (SwapGunHand ? !Utility.LGrip : !Utility.RGrip)
+            if (SwapGunHand)
             {
-                if (Pointer != null)
+                if (!Utility.LGrip)
                 {
-                    GameObject.Destroy(Pointer);
-                    Pointer = null;
+                    if (Pointer != null)
+                    {
+                        GameObject.Destroy(Pointer);
+                        Pointer = null;
+                    }
+                }
+            }
+            else
+            {
+                if (!Utility.RGrip)
+                {
+                    if (Pointer != null)
+                    {
+                        GameObject.Destroy(Pointer);
+                        Pointer = null;
+                    }
                 }
             }
         }
