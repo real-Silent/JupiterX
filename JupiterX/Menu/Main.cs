@@ -1528,25 +1528,45 @@ namespace JupiterX.Menu
             if (Pointer == null)
             {
                 Pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                Pointer.transform.localScale = Vector3.one * 0.1f;
+                Pointer.transform.localScale = smallGunPointer ? Vector3.one * 0.03f : Vector3.one * 0.1f;
                 var renderer = Pointer.GetComponent<Renderer>();
+                renderer.enabled = disableGunPointer ? false : true;
                 renderer.material.shader = Shader.Find("GUI/Text Shader");
                 GameObject.Destroy(Pointer.GetComponent<Collider>());
-                line = Pointer.AddComponent<LineRenderer>();
-                line.useWorldSpace = true;
-                line.material = new Material(Shader.Find("GUI/Text Shader"));
-                line.positionCount = 2;
-                line.startWidth = 0.02f;
-                line.endWidth = 0.02f;
+                if (!disableGunLine)
+                {
+                    line = Pointer.AddComponent<LineRenderer>();
+                    line.useWorldSpace = true;
+                    line.material = new Material(Shader.Find("GUI/Text Shader"));
+                    line.positionCount = 2;
+                    line.startWidth = 0.02f;
+                    line.endWidth = 0.02f;
+                }
             }
             Pointer.GetComponent<Renderer>().material.color = gunLocked || GetGunInput(true) ? buttonColors[1].GetCurrentColor() : buttonColors[0].GetCurrentColor();
-            Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position, GorillaTagger.Instance.rightHandTransform.forward + -GorillaTagger.Instance.rightHandTransform.up, out Ray, float.PositiveInfinity);
+            Transform gunHand = SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
+            Physics.Raycast(gunHand.position, gunHand.forward + -gunHand.up, out Ray, float.PositiveInfinity);
             Pointer.transform.position = Ray.point;
-            line.SetPosition(0, GorillaTagger.Instance.rightHandTransform.position);
-            line.SetPosition(1, gunLocked ? lockTarget.headMesh.transform.position : Pointer.transform.position);
-            line.startColor = Pointer.GetComponent<Renderer>().material.color;
-            line.endColor = Pointer.GetComponent<Renderer>().material.color;
+            if (!disableGunLine)
+            {
+                line.SetPosition(0, gunHand.position);
+                line.SetPosition(1, gunLocked ? lockTarget.headMesh.transform.position : Pointer.transform.position);
+                line.startColor = Pointer.GetComponent<Renderer>().material.color;
+                line.endColor = Pointer.GetComponent<Renderer>().material.color;
+            }
             return (Ray, Pointer);
+        }
+
+        public static void DestroyPointer()
+        {
+            if (SwapGunHand ? !Utility.LGrip : !Utility.RGrip)
+            {
+                if (Pointer != null)
+                {
+                    GameObject.Destroy(Pointer);
+                    Pointer = null;
+                }
+            }
         }
 
 

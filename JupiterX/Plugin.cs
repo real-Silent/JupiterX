@@ -218,6 +218,8 @@ PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
             }
 
             JupiterX.Managers.PluginManager.ExecuteUpdate();
+
+            JupiterX.Menu.Main.DestroyPointer();
         }
 
         public override void OnFixedUpdate()
