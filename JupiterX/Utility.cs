@@ -1186,7 +1186,7 @@ namespace JupiterX
         public static string name = "JupiterX";
         public static string author = "Nova";
 
-        public static string version = "2.3.1"; 
+        public static string version = "2.3.2"; 
         public static string serverversion; 
         public static string minversion; 
         public static string discord; 
