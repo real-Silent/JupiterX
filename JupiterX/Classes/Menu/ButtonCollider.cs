@@ -22,7 +22,8 @@ namespace JupiterX.Classes
 			{
                 buttonCooldown = Time.time + 0.2f;
                 GorillaTagger.Instance.StartVibration(RightHanded, GorillaTagger.Instance.tagHapticStrength / 2f, GorillaTagger.Instance.tagHapticDuration / 2f);
-				Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.steal.wav");
+                if (!DisableButtonSounds)
+				    Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.steal.wav");
                 if (incremental)
                     ToggleIncremental(relatedText, positive);
                 else
