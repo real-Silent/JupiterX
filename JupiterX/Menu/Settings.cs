@@ -56,13 +56,6 @@ namespace JupiterX
         public static Vector3 menuSize = new Vector3(0.1f, 1f, 1f); // Depth, Width, Height
         public static int buttonsPerPage = 8;
 
-        public static void Soundboard()
-        {
-            Buttons.CurrentCategoryName = "Soundboard";
-            pageNumber = 0;
-            SoundBoard.LoadSoundboard();
-        }
-
         public static void Players()
         {
             Buttons.CurrentCategoryName = "Players";

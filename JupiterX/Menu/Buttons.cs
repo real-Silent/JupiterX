@@ -35,7 +35,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Master", method =() => CurrentCategoryName = "Master", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
                 new ButtonInfo { buttonText = "GTH", method =() => CurrentCategoryName = "GTH", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
 
-                new ButtonInfo { buttonText = "Soundboard", method =() => Settings.Soundboard(), isTogglable = false, toolTip = "Opens the soundboard page for the menu."},
+                new ButtonInfo { buttonText = "Soundboard", method =() => SoundBoard.LoadSoundboard(), isTogglable = false, toolTip = "Opens the soundboard page for the menu."},
             },
 
             new ButtonInfo[] { // Settings | 1

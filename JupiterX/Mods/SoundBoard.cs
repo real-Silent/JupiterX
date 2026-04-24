@@ -28,12 +28,10 @@ namespace JupiterX.Mods
 
         public static void LoadSoundboard()
         {
-            pageNumber = 0;
-            // Change light to your menu name
             string basePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
 
-            if (!Directory.Exists("JupiterX")) // Change light to your menu name
-                Directory.CreateDirectory("JupiterX"); // Change light to your menu name
+            if (!Directory.Exists("JupiterX")) 
+                Directory.CreateDirectory("JupiterX"); 
 
             if (!Directory.Exists(basePath))
                 Directory.CreateDirectory(basePath);
@@ -78,7 +76,7 @@ namespace JupiterX.Mods
                 string cleanName = RemoveFileExtension(fileName).Replace("_", " ");
                 bool isEnabled = enabledSounds.Contains(cleanName);
                 string relativePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/'), fileName).Replace("\\", "/");
-                // Change light to your menu name
+                
                 if (LoopAudio)
                 {
                     soundbuttons.Add(new ButtonInfo
@@ -109,7 +107,8 @@ namespace JupiterX.Mods
             //soundbuttons.Add(new ButtonInfo { buttonText = "Loop Audio", enableMethod = LoopAudioToggleOn, disableMethod = LoopAudioToggleOff, isTogglable = true, toolTip = "Loop the audio." });
             //soundbuttons.Add(new ButtonInfo { buttonText = "Get More Sounds", method = LoadSoundLibrary, isTogglable = false, toolTip = "Opens a public audio library, where you can download your own sounds." });
 
-            Buttons.buttons[Buttons.GetCategory("Temporary Category")] = soundbuttons.ToArray(); // Make this your new buttoninfo[] {} number
+            Buttons.CurrentCategoryName = "Soundboard";
+            Buttons.buttons[Buttons.GetCategory("Soundboard")] = soundbuttons.ToArray(); // Make this your new buttoninfo[] {} number
         }
 
         public static void LoadSoundLibrary()
