@@ -27,7 +27,8 @@ namespace JupiterX.Menu
 				{
 					if (Utility.toOpen || keyboardOpen)
 					{
-                        Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuopen.wav");
+                        if (!DisableMenuSounds)
+                            Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuopen.wav");
                         CreateMenu();
 
                         RecenterMenu(RightHanded, keyboardOpen);
@@ -83,7 +84,8 @@ namespace JupiterX.Menu
                                 break;
                         }
 
-                        Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuclose.wav");
+                        if (!DisableMenuSounds)
+                            Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuclose.wav");
 					}
 				}
 			}

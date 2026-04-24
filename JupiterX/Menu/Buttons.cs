@@ -59,6 +59,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Flip Menu", enableMethod =() => flipMenu = true, disableMethod =() => flipMenu = false, toolTip = "Flips the menu to the back of your hand."},
                 new ButtonInfo { buttonText = "Menu Trail", enableMethod =() => menuTrail = true, disableMethod =() => menuTrail = false, toolTip = "Gives the menu a trail when you drop."},
 
+                new ButtonInfo { buttonText = "Disable Menu Sounds", enableMethod =() => DisableMenuSounds = true, disableMethod =() => DisableMenuSounds = false, toolTip = "Disables the menu open and close sounds."},
                 new ButtonInfo { buttonText = "Disable Button Sounds", enableMethod =() => DisableButtonSounds = true, disableMethod =() => DisableButtonSounds = false, toolTip = "Disables the button sounds."},
                 new ButtonInfo { buttonText = "Disable Disconnect Button", enableMethod =() => DisconnectButton = true, disableMethod =() => DisconnectButton = false, enabled = DisconnectButton, toolTip = "Toggles the disconnect button."},
                 new ButtonInfo { buttonText = "Disable Incremental Buttons", enableMethod =() => incrementalButtons = false, disableMethod =() => incrementalButtons = true, toolTip = "Disables the buttons with the increment and decrement buttons next to it."},
