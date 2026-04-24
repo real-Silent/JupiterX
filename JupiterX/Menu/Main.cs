@@ -20,7 +20,7 @@ namespace JupiterX.Menu
 		{
 			try
 			{
-				Utility.toOpen = (!RightHanded && Utility.LSec || (RightHanded && Utility.RSec));
+				Utility.toOpen = bothHands ? (Utility.LSec || Utility.RSec) : (!RightHanded && Utility.LSec || (RightHanded && Utility.RSec));
 				bool keyboardOpen = false;
 
 				if (menu == null)
@@ -662,18 +662,18 @@ namespace JupiterX.Menu
 		{
 			if (!isKeyboardCondition)
 			{
-				if (!isRightHanded)
+				if (isRightHanded || (bothHands && Utility.RSec))
 				{
-					menu.transform.position = GorillaTagger.Instance.leftHandTransform.position;
-					menu.transform.rotation = GorillaTagger.Instance.leftHandTransform.rotation;
+                    menu.transform.position = GorillaTagger.Instance.rightHandTransform.position;
+                    Vector3 rotation = GorillaTagger.Instance.rightHandTransform.rotation.eulerAngles;
+                    rotation += new Vector3(0f, 0f, 180f);
+                    menu.transform.rotation = Quaternion.Euler(rotation);
 				}
 				else
 				{
-					menu.transform.position = GorillaTagger.Instance.rightHandTransform.position;
-					Vector3 rotation = GorillaTagger.Instance.rightHandTransform.rotation.eulerAngles;
-					rotation += new Vector3(0f, 0f, 180f);
-					menu.transform.rotation = Quaternion.Euler(rotation);
-				}
+                    menu.transform.position = GorillaTagger.Instance.leftHandTransform.position;
+                    menu.transform.rotation = GorillaTagger.Instance.leftHandTransform.rotation;
+                }
 			}
 			else
 			{
@@ -725,7 +725,14 @@ namespace JupiterX.Menu
 		public static void CreateReference(bool isRightHanded)
 		{
 			reference = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			if (isRightHanded)
+            if (bothHands)
+            {
+                if (Utility.RSec)
+                    reference.transform.parent = GorillaTagger.Instance.leftHandTransform;
+                else
+                    reference.transform.parent = GorillaTagger.Instance.rightHandTransform;
+            }
+			else if (isRightHanded)
 			{
 				reference.transform.parent = GorillaTagger.Instance.leftHandTransform;
 			}

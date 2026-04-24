@@ -35,6 +35,7 @@ namespace JupiterX
         public static bool CustomMenuTitle = false;
         public static bool homeButton = false;
         public static bool RightHanded = false;
+        public static bool bothHands = false;
         public static bool StumpText = true;
         public static bool Notifications = true;
         public static bool Rounding = false;
