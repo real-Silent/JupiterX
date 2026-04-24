@@ -61,6 +61,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), enableMethod =() => Utility.ChangePageType(), disableMethod =() => Utility.ChangePageType(false), incremental = true, overlapText = "Change Page Type <color=cyan>[Side]</color>", isTogglable = false, toolTip = "Changes the page type." },
 
                 new ButtonInfo { buttonText = "Change Menu Theme", method =() => Utility.ChangeMenuTheme(), enableMethod =() => Utility.ChangeMenuTheme(), disableMethod =() => Utility.ChangeMenuTheme(false), incremental = true, overlapText = "Change Menu Theme <color=cyan>[Default]</color>", isTogglable = false, toolTip = "Changes the menu theme." },
+                new ButtonInfo { buttonText = "Menu Outline", enableMethod =() => menuoutline = true, disableMethod =() => menuoutline = false, isTogglable = true, toolTip = "Gives the menu a outline." },
                 new ButtonInfo { buttonText = "Change Drop Type", method =() => Utility.ChangeDropType(), enableMethod =() => Utility.ChangeDropType(), disableMethod =() => Utility.ChangeDropType(false), incremental = true, overlapText = "Change Drop Type <color=cyan>[Destroy]</color>", isTogglable = false, toolTip = "Changes the drop type for the menu." },
 
                 new ButtonInfo { buttonText = "Disable Notifications", enableMethod =() => { Notifications = false; NotificationManager.ClearAllNotifications(); }, disableMethod =() => Notifications = true, toolTip = "Toggles the Notifcations."},
