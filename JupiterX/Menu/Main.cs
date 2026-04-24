@@ -691,7 +691,13 @@ namespace JupiterX.Menu
                     menu.transform.position = GorillaTagger.Instance.leftHandTransform.position;
                     menu.transform.rotation = GorillaTagger.Instance.leftHandTransform.rotation;
                 }
-			}
+                if (flipMenu)
+                {
+                    Vector3 rotation = menu.transform.rotation.eulerAngles;
+                    rotation += new Vector3(0f, 0f, 180f);
+                    menu.transform.rotation = Quaternion.Euler(rotation);
+                }
+            }
 			else
 			{
 				try

@@ -56,6 +56,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Invis In Menu", method =() => Utility.InvisInMeun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Makes you have invis monke when menu is open."},
                 new ButtonInfo { buttonText = "Round Menu", enableMethod =() => Rounding = true, disableMethod =() => Rounding = false, isTogglable = true, toolTip = "Toggle the menu rounding [<color=red>CAN CAUSE LAG</color>]."},
 
+                new ButtonInfo { buttonText = "Flip Menu", enableMethod =() => flipMenu = true, disableMethod =() => flipMenu = false, toolTip = "Flips the menu to the back of your hand."},
+
                 new ButtonInfo { buttonText = "Disable Disconnect Button", enableMethod =() => DisconnectButton = true, disableMethod =() => DisconnectButton = false, enabled = DisconnectButton, toolTip = "Toggles the disconnect button."},
                 new ButtonInfo { buttonText = "Disable Incremental Buttons", enableMethod =() => incrementalButtons = false, disableMethod =() => incrementalButtons = true, toolTip = "Disables the buttons with the increment and decrement buttons next to it."},
                 new ButtonInfo { buttonText = "Disable Menu Title", enableMethod =() => MenuTitle = false, disableMethod =() => MenuTitle = true, toolTip = "Toggles the menu title."},
