@@ -69,6 +69,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Disable Room Notifications", enableMethod =() => disableRoomNotifications = true, disableMethod =() => disableRoomNotifications = false, toolTip = "Disables all notifications regarding the room."},
                 new ButtonInfo { buttonText = "Clear Notifications on Disconnect", enableMethod =() => clearNotificationsOnDisconnect = true, disableMethod =() => clearNotificationsOnDisconnect = false, toolTip = "Clears all notifications on disconnect."},
 
+                new ButtonInfo { buttonText = "Low Quality Text", enableMethod =() => lowqualttext = true, disableMethod =() => lowqualttext = false, toolTip = "Makes the menu text low quality."},
+
                 new ButtonInfo { buttonText = "Custom Boards", enableMethod =() => CustomBoards = true, disableMethod =() => CustomBoards = false, enabled = CustomBoards, isTogglable = true, toolTip = "Enables the custom boards in stump." },
                 new ButtonInfo { buttonText = "Move Stump Text Gun", method =() => Utility.MoveStumpTextGun(), isTogglable = true, toolTip = "Lets you move the stump text with a gun." },
                 new ButtonInfo { buttonText = "Version Text", enableMethod =() => VersionText = true, disableMethod =() => VersionText = false, enabled = VersionText, toolTip = "Toggles the Version Text."},
@@ -244,7 +246,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Rig Spam [<color=cyan>RT</color>]", method =() => Overpowered.RigSpam(), isTogglable = true, toolTip = "Lets you spam rigs."  },
 
                 new ButtonInfo { buttonText = "Material Spam All", method =() => Overpowered.MatSpamAll(), isTogglable = true, toolTip = "Lets you spaz out the infection material on others."  },
-                new ButtonInfo { buttonText = "Material Spam Gun", method =() => Overpowered.MatSpamAll(), isTogglable = true, toolTip = "Lets you spaz out the infection material on who you shoot."  },
+                new ButtonInfo { buttonText = "Material Spam Gun", method =() => Overpowered.MatSpamGun(), isTogglable = true, toolTip = "Lets you spaz out the infection material on who you shoot."  },
 
                 new ButtonInfo { buttonText = "Mat All V1", method =() => Overpowered.DoMatStuffIdk(), isTogglable = true, toolTip = "Changes everyones mat index."  },
                 new ButtonInfo { buttonText = "Mat All V2", method =() => Experimental.ChangeMatIndexAll(), isTogglable = true, toolTip = "Changes everyones mat index."  },

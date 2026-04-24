@@ -39,6 +39,7 @@ namespace JupiterX
         public static bool Notifications = true;
         public static bool Rounding = false;
         public static bool menuoutline = false;
+        public static bool lowqualttext = false;
 
         public static KeyCode keyboardButton = KeyCode.Q;
 

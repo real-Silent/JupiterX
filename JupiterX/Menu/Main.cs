@@ -263,7 +263,7 @@ namespace JupiterX.Menu
 			CanvasScaler canvasScaler = canvasObject.AddComponent<CanvasScaler>();
 			canvasObject.AddComponent<GraphicRaycaster>();
 			canvas.renderMode = RenderMode.WorldSpace;
-			canvasScaler.dynamicPixelsPerUnit = 2500f;
+			canvasScaler.dynamicPixelsPerUnit = lowqualttext ? 1000f : 2500f;
 
 			// Title and FPS
 			Text text = new GameObject
