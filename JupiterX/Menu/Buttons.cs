@@ -186,6 +186,7 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Visual | 8
                 new ButtonInfo { buttonText = "Exit Visual", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Chams", method =() => Visual.Chams(true), disableMethod =() => Visual.Chams(false), isTogglable = true, toolTip = "Lets you see players through walls."  },
+                new ButtonInfo { buttonText = "Box ESP", method =() => Visual.Chams(true), disableMethod =() => Visual.Chams(false), isTogglable = true, toolTip = "Lets you see players through walls."  },
                 new ButtonInfo { buttonText = "Full Bright", method =() => Visual.fullBright(), disableMethod =() => Visual.fulldrak(), isTogglable = true, toolTip = "Lets you see in the dark."  },
                 new ButtonInfo { buttonText = "Tracers", method =() => Visual.Tracers(), isTogglable = true, toolTip = "Points lines at other players."  },
                 new ButtonInfo { buttonText = "Box ESP", method =() => Visual.BoxESP(), isTogglable = true, toolTip = "Lets you see players through walls."  },
@@ -198,11 +199,14 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Name | 9
                 new ButtonInfo { buttonText = "Exit Name", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Menu Name Tag", method =() => Name.MenuNameTag(), isTogglable = true, toolTip = "Sets your name to the menu name."  },
+                new ButtonInfo { buttonText = "Rainbow Owner Name", method =() => Name.ChangeNameSpaz("\nOwner", new string[] { "red", "yellow", "cyan", "blue", "magenta", "lime", "green" }), isTogglable = true, toolTip = "Sets your name as Owner with rainbow text."  },
                 new ButtonInfo { buttonText = "Owner Name", method =() => Name.ChangeName("\nOwner", "white"), isTogglable = true, toolTip = "Sets your name as Owner."  },
+                new ButtonInfo { buttonText = "Moderator Name", method =() => Name.ChangeName("\nModerator", "white"), isTogglable = true, toolTip = "Sets your name as Moderator."  },
                 new ButtonInfo { buttonText = "BSU Skids Name", method =() => Name.ChangeName("BSU Menu is skidded\nBSU Skids", "blue"), isTogglable = true, toolTip = "Sets your name as BSU Skids."  },
                 new ButtonInfo { buttonText = "PBBV Name", method =() => Name.ChangeName("\nPBBV", "white"), isTogglable = true, toolTip = "Sets your name as PBBV."  },
                 new ButtonInfo { buttonText = "ECHO Name", method =() => Name.ChangeName("\nECHO", "white"), isTogglable = true, toolTip = "Sets your name as ECHO."  },
                 new ButtonInfo { buttonText = "DAISY09 Name", method =() => Name.ChangeName("\nDAISY09", "white"), isTogglable = true, toolTip = "Sets your name as DAISY09."  },
+                new ButtonInfo { buttonText = "Custom Name", method =() => Name.CustomName(), isTogglable = true, toolTip = "Makes your name be the custom name you set in a file."  },
                 new ButtonInfo { buttonText = "No Name", method =() => Name.ChangeName("\n\n", "white"), isTogglable = true, toolTip = "Makes you have no name."  },
                 new ButtonInfo { buttonText = "Emoji Name (1)", method =() => Utility.BetaEmojiName(0), isTogglable = true, toolTip = "Sets your name as a emoji."  },
                 new ButtonInfo { buttonText = "Emoji Name (2)", method =() => Utility.BetaEmojiName(1), isTogglable = true, toolTip = "Sets your name as a emoji." },
