@@ -121,7 +121,13 @@ namespace JupiterX
                 new ButtonInfo {
                     buttonText = "Crash Player",
                     overlapText = $"Crash {TargetName}",
-                    method =() => Utility.BetaCrashPlayer(plr),
+                    method =() => Utility.CrashPlayerForPlayerTab(plr),
+                    isTogglable = true,
+                },
+                new ButtonInfo {
+                    buttonText = "Insta Crash Player",
+                    overlapText = $"Insta Crash {TargetName}",
+                    method =() => Utility.InstaCrashPlayer(plr),
                     isTogglable = true,
                 },
                 new ButtonInfo {

@@ -6,6 +6,7 @@ using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Mods;
 using Photon.Pun;
+using Photon.Realtime;
 using PlayFab;
 using System;
 using System.Collections.Generic;
@@ -617,14 +618,32 @@ namespace JupiterX
 
         public static void TagPlayer(Photon.Realtime.Player who)
         {
-            foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
-            {
-                MakeMeMaster();
-                tagman.AddInfectedPlayer(who);
-                tagman.AddInfectedPlayer(who);
-                tagman.AddInfectedPlayer(who);
-            }
+            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            GorillaGameManager.instance.GetComponent<PhotonView>().RPC(
+                                "ReportTagRPC",
+                                RpcTarget.MasterClient,
+                                new Il2CppSystem.Object[] { who }
+                            );
         }
+
+        public static void InstaCrashPlayer(Photon.Realtime.Player who)
+        {
+            for (int i = 0; i < 150; i++)
+            {
+                PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { who.ActorNumber } }, SendOptions.SendUnreliable);
+                PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { who.ActorNumber } }, SendOptions.SendUnreliable);
+            }
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+
+        public static void CrashPlayerForPlayerTab(Photon.Realtime.Player plr)
+        {
+            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            PhotonNetwork.DestroyPlayerObjects(plr);
+            PhotonNetwork.SendDestroyOfPlayer(plr.ActorNumber);
+            BetaDestroyPlayers(plr);
+        }
+
         public static void BetaCrashPlayer(Photon.Realtime.Player crash)
         {
             SetMaster(PhotonNetwork.LocalPlayer);
