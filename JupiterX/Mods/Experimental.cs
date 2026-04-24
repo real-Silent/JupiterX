@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using UnhollowerBaseLib;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.UI;
 using static JupiterX.Menu.Main;
 using static JupiterX.Utility;
@@ -444,26 +445,15 @@ namespace JupiterX.Mods
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-
-                if (Main.gunLocked && Main.lockTarget != null)
-                {
-                    Main.lockTarget.muted = true;
-                }
-
                 if (Main.GetGunInput(true))
                 {
-                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
-                    if (who)
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (rig)
                     {
-                        Main.gunLocked = true;
-                        Main.lockTarget = who;
+                        rig.muted = true;
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Mute);
                     }
                 }
-            }
-            else
-            {
-                if (Main.gunLocked)
-                    Main.gunLocked = false;
             }
         }
 
@@ -484,26 +474,15 @@ namespace JupiterX.Mods
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-
-                if (Main.gunLocked && Main.lockTarget != null)
-                {
-                    Main.lockTarget.muted = false;
-                }
-
                 if (Main.GetGunInput(true))
                 {
-                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
-                    if (who)
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (rig)
                     {
-                        Main.gunLocked = true;
-                        Main.lockTarget = who;
+                        rig.muted = false;
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(false, GorillaPlayerLineButton.ButtonType.Mute);
                     }
                 }
-            }
-            else
-            {
-                if (Main.gunLocked)
-                    Main.gunLocked = false;
             }
         }
 
@@ -514,6 +493,7 @@ namespace JupiterX.Mods
                 if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
                 {
                     rig.muted = true;
+                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Mute);
                 }
             }
         }
@@ -524,6 +504,7 @@ namespace JupiterX.Mods
                 if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
                 {
                     rig.muted = false;
+                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(false, GorillaPlayerLineButton.ButtonType.Mute);
                 }
             }
         }
