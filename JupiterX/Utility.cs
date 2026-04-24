@@ -42,6 +42,21 @@ namespace JupiterX
         }
 
 
+        private static Color HexToColor(string hex)
+        {
+            hex = hex.Replace("#", "");
+
+            byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+            byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+
+            byte a = 255;
+            if (hex.Length == 8)
+                a = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+
+            return new Color32(r, g, b, a);
+        }
+
         static Hashtable jupiterxProp = new Hashtable();
         public static void ThisGuyIsUsingJupiter()
         {
@@ -80,22 +95,57 @@ namespace JupiterX
                         }
                         else if (rig.photonView.Owner.CustomProperties.ContainsKey("jupiterxusersosigma"))
                         {
-                            rig.playerText.text = "[OLD JUPITERX] " + nickname;
+                            rig.playerText.text = "[JUPITERX OLD] " + nickname;
                             rig.playerText.color = Color.yellow;
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("solaaaaaaaaaaaa"))
+                        {
+                            rig.playerText.text = "[SOLAR] " + nickname;
+                            rig.playerText.color = Color.grey;
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("solarnovapleasestopdoingdumbshityoudotsallthetimrimgettingpissed"))
+                        {
+                            rig.playerText.text = "[SOLAR - OLD] " + nickname;
+                            rig.playerText.color = Color.grey;
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("zyph"))
+                        {
+                            rig.playerText.text = "[ZYPH] " + nickname;
+                            rig.playerText.color = HexToColor("#6600CC");
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("bunny"))
+                        {
+                            rig.playerText.text = "[BUNNY.LOL] " + nickname;
+                            rig.playerText.color = HexToColor("#ED7014");
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("titled"))
+                        {
+                            rig.playerText.text = "[TITLED] " + nickname;
+                            rig.playerText.color = HexToColor("#333333");
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("terrormenussohot"))
+                        {
+                            rig.playerText.text = "[TERROR] " + nickname;
+                            rig.playerText.color = Color.red;
                         }
                         else if (rig.photonView.Owner.CustomProperties.ContainsKey("qolossal"))
                         {
                             rig.playerText.text = "[QCM] " + nickname;
                             rig.playerText.color = Color.magenta;
                         }
-                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("zyph"))
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("stupid"))
                         {
-                            rig.playerText.text = "[ZYPH] " + nickname;
+                            rig.playerText.text = "[STUPID] " + nickname;
+                            rig.playerText.color = HexToColor("#ffa200");
+                        }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("toomanyplayers"))
+                        {
+                            rig.playerText.text = "[TOOMANYPLAYERS] " + nickname;
                             rig.playerText.color = Color.red;
                         }
-                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("solarnovapleasestopdoingdumbshityoudotsallthetimrimgettingpissed"))
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("console"))
                         {
-                            rig.playerText.text = "[SOLAR] " + nickname;
+                            rig.playerText.text = "[CONSOLE] " + nickname;
                             rig.playerText.color = Color.grey;
                         }
                     }
