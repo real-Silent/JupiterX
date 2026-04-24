@@ -99,6 +99,9 @@ namespace JupiterX
             if (File.Exists($"{Utility.PreferencesPath}"))
             {
                 Utility.LoadPreferences();
+                Menu.Main.Toggle("Custom Boards");
+                Menu.Main.Toggle("Stump Text");
+                Menu.Main.Toggle("Version Text");
             }
         }
 
