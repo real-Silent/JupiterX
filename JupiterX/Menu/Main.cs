@@ -66,21 +66,15 @@ namespace JupiterX.Menu
                                 break;
                             case 2: // Drop
                                 comp.useGravity = false;
+                                comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
                                 UnityEngine.Object.Destroy(menu, 5);
                                 menu = null;
 
                                 UnityEngine.Object.Destroy(reference);
                                 reference = null;
                                 break;
-                            case 3: // Drop
-                                if (RightHanded)
-                                {
-                                    comp.velocity = Utility.ThrowMenu(Utility.RightHand);
-                                }
-                                else
-                                {
-                                    comp.velocity = Utility.ThrowMenu(Utility.LeftHand);
-                                }
+                            case 3: // Throw
+                                comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
                                 UnityEngine.Object.Destroy(menu, 5);
                                 menu = null;
 
