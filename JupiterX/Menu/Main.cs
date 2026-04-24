@@ -304,6 +304,11 @@ namespace JupiterX.Menu
                     text.text = "";
             }
 
+            if (lowercaseMode)
+                text.text.ToLower();
+            if (uppercaseMode)
+                text.text.ToUpper();
+
             text.fontSize = 1;
 			text.color = textColors[0];
 			text.supportRichText = true;
@@ -339,7 +344,9 @@ namespace JupiterX.Menu
 				RectTransform component2 = fpsObject.GetComponent<RectTransform>();
 				component2.localPosition = Vector3.zero;
 				component2.sizeDelta = new Vector2(0.28f, 0.02f);
-				component2.position = new Vector3(0.06f, 0f, 0.135f);
+                if (NoAutoSizeText)
+                    component2.sizeDelta = new Vector2(9f, 0.015f);
+                component2.position = new Vector3(0.06f, 0f, 0.135f);
 				component2.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 			}
 
@@ -549,6 +556,11 @@ namespace JupiterX.Menu
             buttonText.font = currentFont;
             buttonText.text = method.buttonText;
 
+            if (lowercaseMode)
+                buttonText.text.ToLower();
+            if (uppercaseMode)
+                buttonText.text.ToUpper();
+
             if (method.overlapText != null)
                 buttonText.text = method.overlapText;
 
@@ -567,6 +579,8 @@ namespace JupiterX.Menu
             RectTransform textTransform = buttonText.GetComponent<RectTransform>();
             textTransform.localPosition = Vector3.zero;
             textTransform.sizeDelta = new Vector2(method.incremental && incrementalButtons ? .18f : .2f, .03f * (0.1f / 0.1f));
+            if (NoAutoSizeText)
+                textTransform.sizeDelta = new Vector2(9f, 0.015f);
 
             textTransform.localPosition = new Vector3(.064f, 0, .111f - offset / 2.6f);
             textTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));

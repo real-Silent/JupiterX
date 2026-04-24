@@ -70,6 +70,9 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Clear Notifications on Disconnect", enableMethod =() => clearNotificationsOnDisconnect = true, disableMethod =() => clearNotificationsOnDisconnect = false, toolTip = "Clears all notifications on disconnect."},
 
                 new ButtonInfo { buttonText = "Low Quality Text", enableMethod =() => lowqualttext = true, disableMethod =() => lowqualttext = false, toolTip = "Makes the menu text low quality."},
+                new ButtonInfo { buttonText = "Lowercase Mode", enableMethod =() => lowercaseMode = true, disableMethod =() => lowercaseMode = false, toolTip = "Makes the entire menu's text lowercase."},
+                new ButtonInfo { buttonText = "Uppercase Mode", enableMethod =() => uppercaseMode = true, disableMethod =() => uppercaseMode = false, toolTip = "Makes the entire menu's text uppercase."},
+                new ButtonInfo { buttonText = "Overflow Mode", enableMethod =() => NoAutoSizeText = true, disableMethod =() => NoAutoSizeText = false, toolTip = "Makes the entire menu's text overflow."},
 
                 new ButtonInfo { buttonText = "Custom Boards", enableMethod =() => CustomBoards = true, disableMethod =() => CustomBoards = false, enabled = CustomBoards, isTogglable = true, toolTip = "Enables the custom boards in stump." },
                 new ButtonInfo { buttonText = "Move Stump Text Gun", method =() => Utility.MoveStumpTextGun(), isTogglable = true, toolTip = "Lets you move the stump text with a gun." },
