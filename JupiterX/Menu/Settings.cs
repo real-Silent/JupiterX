@@ -29,6 +29,7 @@ namespace JupiterX
         public static Font currentFont = (Resources.GetBuiltinResource<Font>("Arial.ttf") as Font);
 
         public static bool VersionText = true;
+        public static bool CustomBoards = true;
         public static bool DisconnectButton = false;
         public static bool MenuTitle = true;
         public static bool CustomMenuTitle = false;

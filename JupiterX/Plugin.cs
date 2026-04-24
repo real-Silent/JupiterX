@@ -154,7 +154,7 @@ namespace JupiterX
             string ping = PhotonNetwork.GetPing().ToString("F2");
             string fps = Utility.fps;
 
-            if (Buttons.GetIndex("Custom Boards").enabled) // do ! if buggy tf
+            if (Settings.CustomBoards)
             {
                 string cocTextNew = $@"-Client Info-
 FPS: {(1f/Time.deltaTime).ToString("F1")}
