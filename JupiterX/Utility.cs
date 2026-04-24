@@ -302,10 +302,43 @@ namespace JupiterX
         }
         public static void GhostInMenu()
         {
-            if (Main.menu != null)
-                myVRRig().enabled = false;
+            if (PhotonNetwork.InRoom)
+            {
+                if (Main.menu != null)
+                    myVRRig().enabled = false;
+                else
+                    myVRRig().enabled = true;
+            }
             else
-                myVRRig().enabled = true;
+            {
+                if (Main.menu != null)
+                    offlineVRRig().enabled = false;
+                else
+                    offlineVRRig().enabled = true;
+            }
+        }
+        public static void InvisInMeun()
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                if (Main.menu != null)
+                {
+                    myVRRig().enabled = false;
+                    myVRRig().transform.position = new Vector3(4543f, 34532f, 453);
+                }
+                else
+                    myVRRig().enabled = true;
+            }
+            else
+            {
+                if (Main.menu != null)
+                {
+                    offlineVRRig().enabled = false;
+                    offlineVRRig().transform.position = new Vector3(4543f, 34532f, 453);
+                }
+                else
+                    offlineVRRig().enabled = true;
+            }
         }
 
         public static bool hasTriggeredOnceL = false;

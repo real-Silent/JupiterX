@@ -52,6 +52,7 @@ namespace JupiterX.Menu
                 
                 new ButtonInfo { buttonText = "Freeze Player In Menu", method =() => Utility.FreezePlayerInMenu(), isTogglable = true, toolTip = "Lets you float while the menu is open."},
                 new ButtonInfo { buttonText = "Ghost In Menu", method =() => Utility.GhostInMenu(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Makes you have ghost monke when menu is open."},
+                new ButtonInfo { buttonText = "Invis In Menu", method =() => Utility.InvisInMeun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Makes you have invis monke when menu is open."},
                 new ButtonInfo { buttonText = "Round Menu", enableMethod =() => Rounding = true, disableMethod =() => Rounding = false, isTogglable = true, toolTip = "Toggle the menu rounding [<color=red>CAN CAUSE LAG</color>]."},
 
                 new ButtonInfo { buttonText = "Disable Disconnect Button", enableMethod =() => DisconnectButton = true, disableMethod =() => DisconnectButton = false, enabled = DisconnectButton, toolTip = "Toggles the disconnect button."},
