@@ -45,6 +45,7 @@ namespace JupiterX
         public static bool uppercaseMode = false;
         public static bool NoAutoSizeText = false;
         public static bool flipMenu = false;
+        public static bool menuTrail = false;
 
         public static KeyCode keyboardButton = KeyCode.Q;
 
