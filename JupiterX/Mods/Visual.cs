@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Photon.Pun;
+using System.Linq;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -77,68 +78,132 @@ namespace JupiterX.Mods
 
         public static void BoxESP()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                    GameObject box = new GameObject("box");
-                    box = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    box.transform.position = rig.headConstraint.transform.position;
-                    box.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    box.transform.rotation = rig.transform.rotation;
-                    box.GetComponent<Renderer>().material.shader = Utility.GUIShader();
-                    box.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
-                    GameObject.Destroy(box, Time.deltaTime);
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                        GameObject box = new GameObject("box");
+                        box = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        box.transform.position = rig.headConstraint.transform.position;
+                        box.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                        box.transform.rotation = rig.transform.rotation;
+                        box.GetComponent<Renderer>().material.shader = Utility.GUIShader();
+                        box.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
+                        GameObject.Destroy(box, Time.deltaTime);
+                    }
                 }
             }
         }
+
+        public static void CapsuleESP()
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                {
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                        GameObject box = new GameObject("box");
+                        box = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                        box.transform.position = rig.headConstraint.transform.position;
+                        box.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                        box.transform.rotation = rig.transform.rotation;
+                        box.GetComponent<Renderer>().material.shader = Utility.GUIShader();
+                        box.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
+                        GameObject.Destroy(box, Time.deltaTime);
+                    }
+                }
+            }
+        }
+
         public static void SphereESP()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                    GameObject sphere = new GameObject("sphere");
-                    sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    sphere.transform.position = rig.headConstraint.transform.position;
-                    sphere.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    sphere.transform.rotation = rig.transform.rotation;
-                    sphere.GetComponent<Renderer>().material.shader = Utility.GUIShader();
-                    sphere.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
-                    GameObject.Destroy(sphere, Time.deltaTime);
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                        GameObject sphere = new GameObject("sphere");
+                        sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        sphere.transform.position = rig.headConstraint.transform.position;
+                        sphere.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                        sphere.transform.rotation = rig.transform.rotation;
+                        sphere.GetComponent<Renderer>().material.shader = Utility.GUIShader();
+                        sphere.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
+                        GameObject.Destroy(sphere, Time.deltaTime);
+                    }
                 }
             }
         }
 
-        public static void NameTagESP() // creds to Saturn
+        public static void NameTagESP()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    GameObject textHolder = new GameObject("NameTagESP");
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        GameObject textHolder = new GameObject("NameTagESP");
 
-                    textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0, 1.2f, 0);
-                    textHolder.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                        textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0, 1.2f, 0);
+                        textHolder.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 
-                    TextMesh label = textHolder.AddComponent<TextMesh>();
-                    label.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-                    label.fontSize = 24;
-                    label.color = Color.white;
-                    label.characterSize = 0.1f;
-                    label.anchor = TextAnchor.MiddleCenter;
-                    label.alignment = TextAlignment.Center;
+                        TextMesh label = textHolder.AddComponent<TextMesh>();
+                        label.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                        label.fontSize = 24;
+                        label.color = Color.white;
+                        label.characterSize = 0.1f;
+                        label.anchor = TextAnchor.MiddleCenter;
+                        label.alignment = TextAlignment.Center;
 
-                    string platform = rig.concatStringOfCosmeticsAllowed.Contains("FIRST LOGIN") ? "QUEST" : "PCVR"; // "PCVR" : "QUEST";
+                        label.text = $"{rig.photonView.Owner.NickName}";
+                        textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0, 1f, 0);
+                        textHolder.transform.LookAt(Camera.main.transform.position);
+                        textHolder.transform.Rotate(0f, 180f, 0f);
 
-                    label.text = $"Name: {rig.photonView.Owner.NickName}\nUserId: {rig.photonView.Owner.UserId}\nMaster: {rig.photonView.Owner.IsMasterClient}\nActorNumber: {rig.photonView.Owner.ActorNumber}\nPlatform: {platform}";
-                    textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0, 1f, 0);
-                    textHolder.transform.LookAt(Camera.main.transform.position);
-                    textHolder.transform.Rotate(0f, 180f, 0f);
+                        GameObject.Destroy(textHolder, Time.deltaTime);
+                    }
+                }
+            }
+        }
 
-                    GameObject.Destroy(textHolder, Time.deltaTime);
+        public static void PlayerInfoTags()
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                {
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        GameObject textHolder = new GameObject("NameTagESP");
+
+                        textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0, 1.2f, 0);
+                        textHolder.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+                        TextMesh label = textHolder.AddComponent<TextMesh>();
+                        label.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                        label.fontSize = 24;
+                        label.color = Color.white;
+                        label.characterSize = 0.1f;
+                        label.anchor = TextAnchor.MiddleCenter;
+                        label.alignment = TextAlignment.Center;
+
+                        string platform = rig.concatStringOfCosmeticsAllowed.Contains("FIRST LOGIN") ? "QUEST" : "PCVR"; // "PCVR" : "QUEST";
+
+                        label.text = $"Name: {rig.photonView.Owner.NickName}\nUserId: {rig.photonView.Owner.UserId}\nMaster: {rig.photonView.Owner.IsMasterClient}\nActorNumber: {rig.photonView.Owner.ActorNumber}\nPlatform: {platform}";
+                        textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0, 1f, 0);
+                        textHolder.transform.LookAt(Camera.main.transform.position);
+                        textHolder.transform.Rotate(0f, 180f, 0f);
+
+                        GameObject.Destroy(textHolder, Time.deltaTime);
+                    }
                 }
             }
         }
@@ -148,13 +213,16 @@ namespace JupiterX.Mods
         static LineRenderer tracer;
         public static void Tracers()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                    Color lineColor = isTagged ? Color.red : Color.grey;
-                    (holder, tracer) = Utility.CreateLine(Utility.RightHandTransform(), rig.headMesh.transform, lineColor);
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                        Color lineColor = isTagged ? Color.red : Color.grey;
+                        (holder, tracer) = Utility.CreateLine(Utility.RightHandTransform(), rig.headMesh.transform, lineColor);
+                    }
                 }
             }
         }
@@ -171,19 +239,22 @@ namespace JupiterX.Mods
 
         public static void Chams(bool chams)
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                    if (chams)
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                     {
-                        rig.mainSkin.material.shader = Utility.GUIShader();
-                        rig.currentMatIndex = isTagged ? 1 : 0;
-                    }
-                    else
-                    {
-                        rig.ChangeMaterialLocal(rig.currentMatIndex);
+                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                        if (chams)
+                        {
+                            rig.mainSkin.material.shader = Utility.GUIShader();
+                            rig.currentMatIndex = isTagged ? 1 : 0;
+                        }
+                        else
+                        {
+                            rig.ChangeMaterialLocal(rig.currentMatIndex);
+                        }
                     }
                 }
             }

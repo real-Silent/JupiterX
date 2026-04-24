@@ -169,7 +169,6 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Tag Aura", method =() => Advantage.TagAura(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you tag someone when they come close to you."  },
                 new ButtonInfo { buttonText = "Tag Gun", method =() => Advantage.TagGun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you tag someone with a gun."  },
                 new ButtonInfo { buttonText = "Flick Tag Gun", method =() => Advantage.FlickTagGun(), isTogglable = true, toolTip = "Lets you flick tag someone with a gun."  },
-                new ButtonInfo { buttonText = "Tag Gun RPC", method =() => Advantage.TagGunRPC(), isTogglable = true, toolTip = "Lets you tag someone with a gun."  },
             },
 
             new ButtonInfo[] { // VRRig | 7
@@ -186,12 +185,13 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Visual | 8
                 new ButtonInfo { buttonText = "Exit Visual", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Chams", method =() => Visual.Chams(true), disableMethod =() => Visual.Chams(false), isTogglable = true, toolTip = "Lets you see players through walls."  },
-                new ButtonInfo { buttonText = "Box ESP", method =() => Visual.Chams(true), disableMethod =() => Visual.Chams(false), isTogglable = true, toolTip = "Lets you see players through walls."  },
                 new ButtonInfo { buttonText = "Full Bright", method =() => Visual.fullBright(), disableMethod =() => Visual.fulldrak(), isTogglable = true, toolTip = "Lets you see in the dark."  },
                 new ButtonInfo { buttonText = "Tracers", method =() => Visual.Tracers(), isTogglable = true, toolTip = "Points lines at other players."  },
                 new ButtonInfo { buttonText = "Box ESP", method =() => Visual.BoxESP(), isTogglable = true, toolTip = "Lets you see players through walls."  },
+                new ButtonInfo { buttonText = "Capsule ESP", method =() => Visual.CapsuleESP(), isTogglable = true, toolTip = "Lets you see players through walls."  },
                 new ButtonInfo { buttonText = "Sphere ESP", method =() => Visual.SphereESP(), isTogglable = true, toolTip = "Lets you see players through walls."  },
                 new ButtonInfo { buttonText = "Name Tags", method =() => Visual.NameTagESP(), isTogglable = true, toolTip = "Lets you see player info above there head with a name tag."  },
+                new ButtonInfo { buttonText = "Player Info Tags", method =() => Visual.PlayerInfoTags(), isTogglable = true, toolTip = "Lets you see player info above there head with a name tag."  },
                 new ButtonInfo { buttonText = "Velocity Label", method =() => Visual.VelocityLabel(), isTogglable = true, toolTip = "Lets you see your velocity with a label on your right hand."  },
                 new ButtonInfo { buttonText = "Player Count Label", method =() => Visual.LeftTaggedLabel(), isTogglable = true, toolTip = "Lets you see how manu tagged people are left."  }, // put in graveyard
             },

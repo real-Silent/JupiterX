@@ -1,7 +1,8 @@
-﻿using Photon.Pun;
+﻿using JupiterX.Menu;
+using Photon.Pun;
 using UnityEngine;
 using static JupiterX.Menu.Main;
-using JupiterX.Menu;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace JupiterX.Mods
 {
@@ -70,30 +71,18 @@ namespace JupiterX.Mods
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-                if (Main.gunLocked && Main.lockTarget != null)
-                {
-                    if (Utility.IsMaster() == false)
-                        Utility.SetMaster(PhotonNetwork.LocalPlayer);
-                    foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
-                    {
-                        tagman.AddInfectedPlayer(Main.lockTarget.photonView.Owner);
-                    }
-                }
-
                 if (Main.GetGunInput(true))
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     if (who)
                     {
-                        Main.gunLocked = true;
-                        Main.lockTarget = who;
+                        GorillaGameManager.instance.GetComponent<PhotonView>().RPC(
+                                "ReportTagRPC",
+                                RpcTarget.MasterClient,
+                                new Il2CppSystem.Object[] { who.photonView.Owner }
+                            );
                     }
                 }
-            }
-            else
-            {
-                if (Main.gunLocked)
-                    Main.gunLocked = false;
             }
         }
 
