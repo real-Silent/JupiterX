@@ -311,7 +311,7 @@ namespace JupiterX.Menu
                         Directory.CreateDirectory(Path.GetDirectoryName(path));
                         File.WriteAllText(path, CustomTitle);
                     }
-                    text.text = CustomTitle + " <color=grey>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=grey>]</color>";
+                    text.text = CustomTitle + (DisablePageNumber ? "" : " <color=green>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=grey>]</color>");
                 }
                 else
                     text.text = "";
@@ -319,7 +319,7 @@ namespace JupiterX.Menu
             else
             {
                 if (MenuTitle)
-                    text.text = Utility.name + " <color=grey>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=grey>]</color>";
+                    text.text = Utility.name + (DisablePageNumber ? "" : " <color=green>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=grey>]</color>");
                 else
                     text.text = "";
             }
