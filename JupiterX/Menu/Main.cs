@@ -1454,88 +1454,34 @@ namespace JupiterX.Menu
             return (GorillaTagger.Instance.rightHandTransform.position + GorillaTagger.Instance.rightHandTransform.rotation * (GorillaLocomotion.Player.Instance.rightHandOffset * (scaleWithPlayer ? GorillaLocomotion.Player.Instance.transform.localScale.magnitude : 1f)), rot, rot * Vector3.up, rot * Vector3.forward, rot * Vector3.right);
         }
 
-        public static void DestroyGun()
+
+        public static GameObject Pointer;
+        public static RaycastHit Ray;
+        public static LineRenderer line;
+        public static (RaycastHit Ray, GameObject Pointer) RenderGun()
         {
-            if (GunPointer != null)
+            if (Pointer == null)
             {
-                UnityEngine.Object.Destroy(GunPointer);
-                GunPointer = null;
+                Pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                Pointer.transform.localScale = Vector3.one * 0.2f;
+                var renderer = Pointer.GetComponent<Renderer>();
+                renderer.material.shader = Shader.Find("GUI/Text Shader");
+                GameObject.Destroy(Pointer.GetComponent<Collider>());
+                line = Pointer.AddComponent<LineRenderer>();
+                line.useWorldSpace = true;
+                line.material = new Material(Shader.Find("GUI/Text Shader"));
+                line.positionCount = 2;
+                line.startWidth = 0.02f;
+                line.endWidth = 0.02f;
             }
-            if (GunLine != null)
-            {
-                UnityEngine.Object.Destroy(GunLine.gameObject);
-                GunLine = null;
-            }
-        }
-
-
-        public static GameObject GunPointer;
-        private static LineRenderer GunLine;
-        public static (RaycastHit Ray, GameObject NewPointer) RenderGun(int? overrideLayerMask = null)
-        {
-            GunSpawned = true;
-			Transform gunTransform = SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
-
-			Vector3 startPos = gunTransform.position;
-			Vector3 direction = gunTransform.forward;
-
-			Vector3 up = gunTransform.up;
-			Vector3 right = gunTransform.right;
-
-			if (giveGunTarget != null)
-			{
-				gunTransform = SwapGunHand ? giveGunTarget.leftHandTransform : giveGunTarget.rightHandTransform;
-
-				startPos = gunTransform.position;
-				direction = gunTransform.forward;
-
-				up = gunTransform.up;
-				right = gunTransform.right;
-			}
-
-			Physics.Raycast(startPos, Quaternion.AngleAxis(45f, right) * direction, out var Ray, 512f, NoInvisLayerMask());
-
-			Vector3 endPos = gunLocked ? lockTarget.headMesh.transform.position : Ray.point;
-
-			if (GunPointer == null)
-				GunPointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
-			GunPointer.SetActive(true);
-			GunPointer.transform.localScale = smallGunPointer ? new Vector3(0.1f, 0.1f, 0.1f) : new Vector3(0.2f, 0.2f, 0.2f);
-			GunPointer.transform.position = endPos;
-
-			Renderer pointerRend = GunPointer.GetComponent<Renderer>();
-			pointerRend.material.shader = Shader.Find("GUI/Text Shader");
-			pointerRend.material.color = gunLocked || GetGunInput(true) ? buttonColors[1].GetCurrentColor() : buttonColors[0].GetCurrentColor();
-
-			if (disableGunPointer)
-				pointerRend.enabled = false;
-
-            if (GunPointer.GetComponent<Collider>() != null)
-                UnityEngine.Object.Destroy(GunPointer.GetComponent<Collider>());
-
-
-            if (disableGunLine) return (Ray, GunPointer);
-			if (GunLine == null)
-			{
-				GameObject line = new GameObject();
-				GunLine = line.AddComponent<LineRenderer>();
-			}
-
-			GunLine.gameObject.SetActive(true);
-			GunLine.material.shader = Shader.Find("GUI/Text Shader");
-			GunLine.startColor = backgroundColor.GetCurrentColor();
-			GunLine.endColor = backgroundColor.GetCurrentColor(0.5f);
-			GunLine.startWidth = 0.02f;
-			GunLine.endWidth = 0.02f;
-			GunLine.useWorldSpace = true;
-
-			GunLine.positionCount = 2;
-
-			GunLine.SetPosition(0, startPos);
-			GunLine.SetPosition(1, GunPointer.transform.position);
-
-			return (Ray, GunPointer);
+            Pointer.GetComponent<Renderer>().material.color = gunLocked || GetGunInput(true) ? buttonColors[1].GetCurrentColor() : buttonColors[0].GetCurrentColor();
+            Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position, GorillaTagger.Instance.rightHandTransform.forward + -GorillaTagger.Instance.rightHandTransform.up, out Ray, float.PositiveInfinity);
+            Pointer.transform.position = Ray.point;
+            line.SetPosition(0, GorillaTagger.Instance.rightHandTransform.position);
+            line.SetPosition(1, gunLocked ? lockTarget.headMesh.transform.position : Pointer.transform.position);
+            line.startColor = Pointer.GetComponent<Renderer>().material.color;
+            line.endColor = Pointer.GetComponent<Renderer>().material.color;
+            return (Ray, Pointer);
         }
 
 

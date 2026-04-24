@@ -31,7 +31,7 @@ namespace JupiterX
             if (Menu.Main.GetGunInput(false))
             {
                 var GunData = Menu.Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
 
                 if (Menu.Main.GetGunInput(true))
                 {
@@ -776,7 +776,7 @@ namespace JupiterX
             {
                 var GunData = Main.RenderGun();
                 RaycastHit ray = GunData.Ray;
-                GameObject pointer = GunData.NewPointer;
+                GameObject pointer = GunData.Pointer;
                 VRRig rig = ray.collider.GetComponentInParent<VRRig>();
                 if (Main.GetGunInput(true))
                 {
@@ -865,7 +865,7 @@ namespace JupiterX
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
 
@@ -890,7 +890,7 @@ namespace JupiterX
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 if (Main.GetGunInput(true))

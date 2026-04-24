@@ -61,7 +61,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
 
@@ -207,7 +207,7 @@ namespace JupiterX.Mods
             if (JupiterX.Menu.Main.GetGunInput(false))
             {
                 var GunData = JupiterX.Menu.Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
 
 
                 if (JupiterX.Menu.Main.GetGunInput(true))

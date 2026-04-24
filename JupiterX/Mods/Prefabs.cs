@@ -43,7 +43,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
 
@@ -75,7 +75,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -91,17 +90,13 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 if (Main.GetGunInput(true))
                 {
                     Utility.BetaSpawnPrefab("bulletPrefab", NewPointer.transform.position, NewPointer.transform.rotation);
                 }
-            }
-            else
-            {
-                Main.DestroyGun();
             }
         }
 
@@ -110,17 +105,13 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 if (Main.GetGunInput(true))
                 {
                     Utility.BetaSpawnPrefab("STICKABLE TARGET", NewPointer.transform.position, NewPointer.transform.rotation);
                 }
-            }
-            else
-            {
-                Main.DestroyGun();
             }
         }
 
@@ -129,17 +120,13 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 if (Main.GetGunInput(true))
                 {
                     Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", NewPointer.transform.position, NewPointer.transform.rotation);
                 }
-            }
-            else
-            {
-                Main.DestroyGun();
             }
         }
         public static void SpamScoreboard()
@@ -155,7 +142,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 if (Main.GetGunInput(true))
@@ -164,10 +151,6 @@ namespace JupiterX.Mods
                     Utility.BetaSpawnPrefab("Network Player", NewPointer.transform.position, NewPointer.transform.rotation);
                 }
             }
-            else
-            {
-                Main.DestroyGun();
-            }
         }
 
         public static void EnemyGun()
@@ -175,17 +158,13 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 if (Main.GetGunInput(true))
                 {
                     Utility.BetaSpawnPrefab("gorillaprefabs/gorillaenemy", NewPointer.transform.position, NewPointer.transform.rotation);
                 }
-            }
-            else
-            {
-                Main.DestroyGun();
             }
         }
         public static void PrefabLuancher(string prefab)

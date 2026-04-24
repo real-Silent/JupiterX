@@ -67,9 +67,8 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
-
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
@@ -95,7 +94,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -104,9 +102,8 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
-
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
@@ -132,7 +129,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -141,16 +137,11 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
-
+                GameObject NewPointer = GunData.Pointer;
                 if (GetGunInput(true))
                 {
                     GorillaLocomotion.Player.Instance.rightHandTransform.position = NewPointer.transform.position;
                 }
-            }
-            else
-            {
-                Main.DestroyGun();
             }
         }
     }

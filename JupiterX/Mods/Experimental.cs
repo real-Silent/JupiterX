@@ -441,7 +441,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
 
@@ -464,7 +464,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -482,7 +481,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
 
@@ -505,7 +504,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -553,7 +551,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -562,10 +560,6 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\ngotouser");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
         public static void ConsoleKickGun()
@@ -573,7 +567,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -582,17 +576,13 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nkickgun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
         public static void ConsoleQuitGun()
         {
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -601,10 +591,6 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nquitgun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
         public static void ConsoleChangeNameGun()
@@ -612,7 +598,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -621,10 +607,6 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nchangenamegun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
         public static void ConsoleGhostGun()
@@ -632,7 +614,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -641,17 +623,13 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nghostgun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
         public static void ConsoleUnGhostGun()
         {
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -660,10 +638,6 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nunghostgun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
         public static void ConsoleMuteGun()
@@ -671,7 +645,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -680,10 +654,6 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nmutegun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
         public static void ConsoleUnMuteGun()
@@ -691,7 +661,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -700,10 +670,6 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nunmutegun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
         public static void ConsoleDisableMovementGun()
@@ -711,7 +677,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -719,10 +685,6 @@ namespace JupiterX.Mods
                     string userId = who.photonView.Owner.UserId;
                     Console.Console.ExecuteCommand($"{userId}\n\ndisablemovementgun");
                 }
-            }
-            else
-            {
-                DestroyGun();
             }
         }
 
@@ -732,7 +694,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -741,17 +703,13 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nrestartmicgun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
         public static void ConsoleEnableMovementGun()
         {
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -760,10 +718,6 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nenablemovementgun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
         public static void ConsoleNetworkPlayerGun()
@@ -771,7 +725,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -780,10 +734,6 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\nnetworkplayerspawngun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
         public static void ConsoleTargetPlayerGun()
@@ -791,7 +741,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -800,10 +750,6 @@ namespace JupiterX.Mods
                     Console.Console.ExecuteCommand($"{userId}\n\ntargetspawngun");
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
         public static void ConsoleFlingGun()
@@ -811,7 +757,7 @@ namespace JupiterX.Mods
             if (GetGunInput(false))
             {
                 var GunData = RenderGun();
-                GameObject GunPointer = GunData.NewPointer;
+                GameObject GunPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
@@ -819,10 +765,6 @@ namespace JupiterX.Mods
                     string userId = who.photonView.Owner.UserId;
                     Console.Console.ExecuteCommand($"{userId}\n\nadminflinggun");
                 }
-            }
-            else
-            {
-                DestroyGun();
             }
         }
 

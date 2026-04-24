@@ -88,7 +88,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 if (Main.GetGunInput(true))
@@ -102,10 +102,6 @@ namespace JupiterX.Mods
                     Utility.myVRRig().enabled = true;
                     Utility.GhostView(false);
                 }
-            }
-            else
-            {
-                Main.DestroyGun();
             }
         }
 

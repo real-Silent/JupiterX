@@ -92,7 +92,6 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Swap Gun Hand", enableMethod =() => SwapGunHand = true, disableMethod =() => SwapGunHand = false, isTogglable = true, toolTip = "Swaps the hand of the gun is on." },
                 new ButtonInfo { buttonText = "Gripless Guns", enableMethod =() => GriplessGuns = true, disableMethod =() => GriplessGuns = false, isTogglable = true, toolTip = "Makes the gun work without holding grip." },
                 new ButtonInfo { buttonText = "Triggerless Guns", enableMethod =() => TriggerlessGuns = true, disableMethod =() => TriggerlessGuns = false, isTogglable = true, toolTip = "Makes the gun shoot without holding trigger." },
-                new ButtonInfo { buttonText = "Destroy Gun", method = DestroyGun, isTogglable = false, toolTip = "Fixes a bug that doesnt make the gun destroy when not in a room." },
             },
 
             new ButtonInfo[] { // Important | 2

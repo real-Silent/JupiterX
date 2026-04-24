@@ -128,7 +128,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 if (Main.gunLocked && Main.lockTarget != null)
@@ -163,7 +163,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -185,7 +184,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
 
@@ -209,7 +208,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -234,7 +232,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
 
@@ -267,7 +265,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -276,7 +273,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 if (Main.gunLocked && Main.lockTarget != null)
@@ -307,7 +304,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -317,7 +313,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
 
@@ -334,7 +330,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
         public static void SlowAll()
@@ -349,7 +344,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
 
@@ -375,7 +370,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
 
@@ -474,7 +468,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 Photon.Realtime.Player plr = Ray.collider.GetComponentInParent<PhotonView>().Owner;
 
@@ -492,10 +486,6 @@ namespace JupiterX.Mods
                     PhotonNetwork.SendAllOutgoingCommands();
                 }
             }
-            else
-            {
-                Main.DestroyGun();
-            }
         }
 
         public static void CrashGunV3()
@@ -503,7 +493,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 Photon.Realtime.Player plr = Ray.collider.GetComponentInParent<PhotonView>().Owner;
 
@@ -517,10 +507,6 @@ namespace JupiterX.Mods
                     PhotonNetwork.SendAllOutgoingCommands();
                 }
             }
-            else
-            {
-                Main.DestroyGun();
-            }
         }
 
         public static void CrashGunV4()
@@ -528,7 +514,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
                 Photon.Realtime.Player plr = Ray.collider.GetComponentInParent<PhotonView>().Owner;
 
@@ -541,10 +527,6 @@ namespace JupiterX.Mods
                     }
                     PhotonNetwork.SendAllOutgoingCommands();
                 }
-            }
-            else
-            {
-                Main.DestroyGun();
             }
         }
 
@@ -566,7 +548,7 @@ namespace JupiterX.Mods
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
-                GameObject NewPointer = GunData.NewPointer;
+                GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
                 Utility.SetMaster(PhotonNetwork.LocalPlayer);
@@ -596,7 +578,6 @@ namespace JupiterX.Mods
             {
                 if (Main.gunLocked)
                     Main.gunLocked = false;
-                Main.DestroyGun();
             }
         }
     }
