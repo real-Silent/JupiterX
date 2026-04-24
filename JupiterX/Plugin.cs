@@ -184,7 +184,7 @@ PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
                 Utility.codeOfConduct.text = Utility.ogcoc;
             }
 
-            string stumpText = $"<color=#00ffff>JupiterX V2</color>\n<size=1>Thank you for using JupiterX V2\nThe <color=lime>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(Utility.updateneeded ? "<color=red>UPDATE NEEDED</color>" : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
+            string stumpText = $"<color=#00ffff>JupiterX V2</color>\n<size=1>Thank you for using JupiterX V2\nThe <color=#3333ff>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(Utility.updateneeded ? "<color=red>UPDATE NEEDED</color>" : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
             if (StumpText == null)
             {
                 StumpText = new GameObject("StumpTextObject");
