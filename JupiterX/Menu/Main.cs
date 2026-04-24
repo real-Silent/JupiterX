@@ -1463,7 +1463,7 @@ namespace JupiterX.Menu
             if (Pointer == null)
             {
                 Pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                Pointer.transform.localScale = Vector3.one * 0.2f;
+                Pointer.transform.localScale = Vector3.one * 0.1f;
                 var renderer = Pointer.GetComponent<Renderer>();
                 renderer.material.shader = Shader.Find("GUI/Text Shader");
                 GameObject.Destroy(Pointer.GetComponent<Collider>());

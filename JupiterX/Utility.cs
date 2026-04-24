@@ -38,10 +38,6 @@ namespace JupiterX
                     Plugin.StumpText.transform.position = NewPointer.transform.position + new Vector3(0, 0.7f, 0);
                 }
             }
-            else
-            {
-                DestroyGun();
-            }
         }
 
 

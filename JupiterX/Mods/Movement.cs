@@ -95,7 +95,6 @@ namespace JupiterX.Mods
 
                 Utility.myVRRig().enabled = true;
                 Utility.GhostView(false);
-                Main.DestroyGun();
             }
         }
 
@@ -222,10 +221,6 @@ namespace JupiterX.Mods
                 {
                     hasTped = false;
                 }
-            }
-            else
-            {
-                Main.DestroyGun();
             }
         }
     }
