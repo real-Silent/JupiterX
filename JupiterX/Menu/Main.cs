@@ -311,7 +311,7 @@ namespace JupiterX.Menu
                         Directory.CreateDirectory(Path.GetDirectoryName(path));
                         File.WriteAllText(path, CustomTitle);
                     }
-                    text.text = CustomTitle + (DisablePageNumber ? "" : " <color=green>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=grey>]</color>");
+                    text.text = CustomTitle + (DisablePageNumber ? "" : " <color=green>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=green>]</color>");
                 }
                 else
                     text.text = "";
@@ -319,7 +319,7 @@ namespace JupiterX.Menu
             else
             {
                 if (MenuTitle)
-                    text.text = Utility.name + (DisablePageNumber ? "" : " <color=green>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=grey>]</color>");
+                    text.text = Utility.name + (DisablePageNumber ? "" : " <color=green>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=green>]</color>");
                 else
                     text.text = "";
             }
@@ -786,10 +786,11 @@ namespace JupiterX.Menu
 			reference.transform.localPosition = new Vector3(0.013f, -0.025f, 0.1f);
             reference.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
 			buttonCollider = reference.GetComponent<SphereCollider>();
-
-			ColorChanger colorChanger = reference.AddComponent<ColorChanger>();
-			colorChanger.colors = backgroundColor;
-			colorChanger.Start();
+            reference.GetComponent<Renderer>().material.color = backgroundColor.GetCurrentColor();
+            if (hidepointer)
+                reference.GetComponent<Renderer>().enabled = false;
+            else
+                reference.GetComponent<Renderer>().enabled = true;
 		}
 
         public static void Toggle(string buttonText, bool fromMenu = false, bool ignoreForce = false)
