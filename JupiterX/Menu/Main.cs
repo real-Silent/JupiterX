@@ -305,9 +305,9 @@ namespace JupiterX.Menu
             }
 
             if (lowercaseMode)
-                text.text.ToLower();
+                text.text = text.text.ToLower();
             if (uppercaseMode)
-                text.text.ToUpper();
+                text.text = text.text.ToUpper();
 
             text.fontSize = 1;
 			text.color = textColors[0];
@@ -319,7 +319,9 @@ namespace JupiterX.Menu
 			RectTransform component = text.GetComponent<RectTransform>();
 			component.localPosition = Vector3.zero;
 			component.sizeDelta = new Vector2(0.28f, 0.05f);
-			component.position = new Vector3(0.06f, 0f, 0.165f);
+            if (NoAutoSizeText)
+                component.sizeDelta = new Vector2(9f, 0.015f);
+            component.position = new Vector3(0.06f, 0f, 0.165f);
 			component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 
 			if (VersionText)
@@ -341,7 +343,13 @@ namespace JupiterX.Menu
 				fpsObject.horizontalOverflow = UnityEngine.HorizontalWrapMode.Overflow;
 				fpsObject.resizeTextForBestFit = true;
 				fpsObject.resizeTextMinSize = 0;
-				RectTransform component2 = fpsObject.GetComponent<RectTransform>();
+
+                if (lowercaseMode)
+                    fpsObject.text = fpsObject.text.ToLower();
+                if (uppercaseMode)
+                    fpsObject.text = fpsObject.text.ToUpper();
+
+                RectTransform component2 = fpsObject.GetComponent<RectTransform>();
 				component2.localPosition = Vector3.zero;
 				component2.sizeDelta = new Vector2(0.28f, 0.02f);
                 if (NoAutoSizeText)
@@ -409,7 +417,9 @@ namespace JupiterX.Menu
 			component = text.GetComponent<RectTransform>();
 			component.localPosition = Vector3.zero;
 			component.sizeDelta = new Vector2(0.2f, 0.03f);
-			component.localPosition = Utility.PageTextPosLeft; ;
+            if (NoAutoSizeText)
+                component.sizeDelta = new Vector2(9f, 0.015f);
+            component.localPosition = Utility.PageTextPosLeft; ;
 			component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 
 			GameObject gameObject2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -426,7 +436,12 @@ namespace JupiterX.Menu
 			colorChanger.colors = buttonColors[0];
 			colorChanger.Start();
 
-			text = new GameObject
+            if (lowercaseMode)
+                text.text = text.text.ToLower();
+            if (uppercaseMode)
+                text.text = text.text.ToUpper();
+
+            text = new GameObject
 			{
 				transform =
 						{
@@ -443,7 +458,9 @@ namespace JupiterX.Menu
 			component = text.GetComponent<RectTransform>();
 			component.localPosition = Vector3.zero;
 			component.sizeDelta = new Vector2(0.2f, 0.03f);
-			component.localPosition = Utility.PageTextPosRight;
+            if (NoAutoSizeText)
+                component.sizeDelta = new Vector2(9f, 0.015f);
+            component.localPosition = Utility.PageTextPosRight;
 			component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 
 			if (Rounding)
@@ -557,9 +574,9 @@ namespace JupiterX.Menu
             buttonText.text = method.buttonText;
 
             if (lowercaseMode)
-                buttonText.text.ToLower();
+                buttonText.text = buttonText.text.ToLower();
             if (uppercaseMode)
-                buttonText.text.ToUpper();
+                buttonText.text = buttonText.text.ToUpper();
 
             if (method.overlapText != null)
                 buttonText.text = method.overlapText;

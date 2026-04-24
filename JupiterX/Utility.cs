@@ -281,8 +281,16 @@ namespace JupiterX
 
         public static void FixGhostRig()
         {
-            if (myVRRig().enabled == false)
-                myVRRig().enabled = true;
+            if (PhotonNetwork.InRoom)
+            {
+                if (myVRRig().enabled == false)
+                    myVRRig().enabled = true;
+            }
+            else
+            {
+                if (offlineVRRig().enabled == false)
+                    offlineVRRig().enabled = true;
+            }
             Utility.GhostView(false);
         }
 
