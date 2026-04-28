@@ -70,6 +70,9 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Custom Menu Title", enableMethod =() => CustomMenuTitle = true, disableMethod =() => CustomMenuTitle = false, toolTip = "Gives the menu a custom title you choose inside a txt."},
                 new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), enableMethod =() => Utility.ChangePageType(), disableMethod =() => Utility.ChangePageType(false), incremental = true, overlapText = "Change Page Type <color=cyan>[Side]</color>", isTogglable = false, toolTip = "Changes the page type." },
 
+                new ButtonInfo { buttonText = "Disable Search Button", enableMethod =() => disableSearchButton = true, disableMethod =() => disableSearchButton = false, toolTip = "Disables the search button at the bottom of the menu."},
+                new ButtonInfo { buttonText = "Disable Return Button", enableMethod =() => disableReturnButton = true, disableMethod =() => disableReturnButton = false, toolTip = "Disables the return button at the bottom of the menu."},
+
                 new ButtonInfo { buttonText = "Change Menu Theme", method =() => Utility.ChangeMenuTheme(), enableMethod =() => Utility.ChangeMenuTheme(), disableMethod =() => Utility.ChangeMenuTheme(false), incremental = true, overlapText = "Change Menu Theme <color=cyan>[Default]</color>", isTogglable = false, toolTip = "Changes the menu theme." },
                 new ButtonInfo { buttonText = "Menu Outline", enableMethod =() => menuoutline = true, disableMethod =() => menuoutline = false, isTogglable = true, toolTip = "Gives the menu a outline." },
                 new ButtonInfo { buttonText = "Change Drop Type", method =() => Utility.ChangeDropType(), enableMethod =() => Utility.ChangeDropType(), disableMethod =() => Utility.ChangeDropType(false), incremental = true, overlapText = "Change Drop Type <color=cyan>[Destroy]</color>", isTogglable = false, toolTip = "Changes the drop type for the menu." },
@@ -432,6 +435,8 @@ namespace JupiterX.Menu
 
             new [] // public not seen to user
             {
+                new ButtonInfo { buttonText = "Search", method = Settings.Search, isTogglable = false, toolTip = "Lets you search for specific mods."},
+                new ButtonInfo { buttonText = "Global Return", method = Settings.GlobalReturn, isTogglable = false, toolTip = "Returns you to the previous category."},
                 new ButtonInfo { buttonText = "Accept Prompt", method =() => { NotificationManager.ClearAllNotifications(); CurrentPrompt.AcceptAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},
                 new ButtonInfo { buttonText = "Decline Prompt", method =() => { NotificationManager.ClearAllNotifications(); CurrentPrompt.DeclineAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},
             }

@@ -57,6 +57,27 @@ namespace JupiterX
         public static Vector3 menuSize = new Vector3(0.1f, 1f, 1f); // Depth, Width, Height
         public static int buttonsPerPage = 8;
 
+        public static void Search() // This took me like 4 hours
+        {
+            isSearching = !isSearching;
+
+            pageNumber = 0;
+            keyboardInput = "";
+
+            // if (Searching) else 
+        }
+
+        public static void GlobalReturn()
+        {
+            NotificationManager.ClearAllNotifications();
+            Toggle(Buttons.buttons[Buttons.CurrentCategoryIndex][Buttons.GetCategory("Main")].buttonText, true);
+
+            if (prompts.Count > 0)
+                StopCurrentPrompt();
+        }
+        public static void StopCurrentPrompt() =>
+            prompts.RemoveAt(0);
+
         public static void Players()
         {
             Buttons.CurrentCategoryName = "Players";

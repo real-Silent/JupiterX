@@ -1,10 +1,12 @@
 ﻿using easyInputs;
 using JupiterX.Classes;
 using Photon.Pun;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -403,10 +405,23 @@ namespace JupiterX.Menu
                 }
             }
 
+            // Search button
+            if (!disableSearchButton)
+            {
+                AddSearchButton();
+                if (!disableReturnButton && Buttons.CurrentCategoryName != "Main")
+                    AddReturnButton(true);
+            }
+            else
+            {
+                if (!disableReturnButton && Buttons.CurrentCategoryName != "Main")
+                    AddReturnButton(false);
+            }
+
             // Buttons
-            
-			// Page Buttons
-			GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            // Page Buttons
+            GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
 			UnityEngine.Object.Destroy(gameObject.GetComponent<Rigidbody>());
 			gameObject.GetComponent<BoxCollider>().isTrigger = true;
@@ -695,7 +710,118 @@ namespace JupiterX.Menu
 			}
 		}
 
-		public static void RecenterMenu(bool isRightHanded, bool isKeyboardCondition)
+        private static void AddReturnButton(bool offcenteredPosition)
+        {
+            GameObject buttonObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            buttonObject.GetComponent<BoxCollider>().isTrigger = true;
+            buttonObject.transform.parent = menu.transform;
+            buttonObject.transform.rotation = Quaternion.identity;
+
+            buttonObject.transform.localScale = new Vector3(0.09f, 0.102f, 0.08f);
+            buttonObject.transform.localPosition = new Vector3(0.56f, -0.450f, -0.58f);
+
+            if (offcenteredPosition)
+                buttonObject.transform.localPosition += new Vector3(0f, 0.16f, 0f);
+
+            buttonObject.AddComponent<ButtonCollider>().relatedText = "Global Return";
+
+            if (lastClickedName != "Global Return")
+            {
+                ColorChanger colorChanger = buttonObject.AddComponent<ColorChanger>();
+                colorChanger.colors = colorChanger.colors = buttonColors[0];
+            }
+
+            Image returnImage = new GameObject
+            {
+                transform =
+                {
+                    parent = canvasObject.transform
+                }
+            }.AddComponent<Image>();
+
+            if (returnIcon == null)
+                returnIcon = LoadTexture("return");
+
+            if (returnMat == null)
+                returnMat = new Material(returnImage.material);
+
+            returnImage.material = returnMat;
+            returnImage.material.SetTexture("_MainTex", returnIcon);
+            returnImage.color = textColors[1];
+
+            RectTransform imageTransform = returnImage.GetComponent<RectTransform>();
+            imageTransform.localPosition = Vector3.zero;
+            imageTransform.sizeDelta = new Vector2(.03f, .03f);
+
+            imageTransform.localPosition = new Vector3(.064f, -0.35f / 2.6f, -0.58f / 2.6f);
+
+            if (offcenteredPosition)
+                imageTransform.localPosition += new Vector3(0f, 0.0475f, 0f);
+
+            imageTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+        }
+
+        private static void AddSearchButton()
+        {
+            GameObject buttonObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            buttonObject.GetComponent<BoxCollider>().isTrigger = true;
+            buttonObject.transform.parent = menu.transform;
+            buttonObject.transform.rotation = Quaternion.identity;
+
+            buttonObject.transform.localScale = new Vector3(0.09f, 0.102f, 0.08f);
+            buttonObject.transform.localPosition = new Vector3(0.56f, -0.450f, -0.58f);
+
+            buttonObject.AddComponent<ButtonCollider>().relatedText = "Search";
+
+            ColorChanger colorChanger = buttonObject.AddComponent<ColorChanger>();
+            //colorChanger.colors = buttonColors[isSearching ^ !swapButtonColors ? 0 : 1];
+            colorChanger.colors = buttonColors[0];
+
+            Image searchImage = new GameObject
+            {
+                transform =
+                {
+                    parent = canvasObject.transform
+                }
+            }.AddComponent<Image>();
+            if (searchIcon == null)
+                searchIcon = LoadTexture("search");
+
+            if (searchMat == null)
+                searchMat = new Material(searchImage.material);
+
+            searchImage.material = searchMat;
+            searchImage.material.SetTexture("_MainTex", searchIcon);
+            //searchImage.color = textColors[isSearching ? 2 : 1];
+            searchImage.color = textColors[1];
+
+            RectTransform imageTransform = searchImage.GetComponent<RectTransform>();
+            imageTransform.localPosition = Vector3.zero;
+            imageTransform.sizeDelta = new Vector2(.03f, .03f);
+
+            imageTransform.localPosition = new Vector3(.064f, -0.35f / 2.6f, -0.58f / 2.6f);
+
+            imageTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+        }
+
+        public static Texture2D LoadTexture(string resourceName)
+        {
+            using (Stream stream = typeof(Plugin).Assembly.GetManifestResourceStream($"JupiterX.Resources.{resourceName}.png"))
+            {
+                if (stream == null) return null;
+
+                byte[] bytes = new byte[stream.Length];
+                stream.Read(bytes, 0, bytes.Length);
+
+                Texture2D texture = new Texture2D(2, 2);
+                ImageConversion.LoadImage(texture, bytes);
+                return texture;
+            }
+        }
+
+        public static void RecenterMenu(bool isRightHanded, bool isKeyboardCondition)
 		{
 			if (!isKeyboardCondition)
 			{
@@ -1283,8 +1409,17 @@ namespace JupiterX.Menu
 		public static Camera TPC;
 		public static Text fpsObject;
 
-		// Data
-		public static int pageNumber = 0;
+        public static string NoRichtextTags(string input, string replace = "")
+        {
+            Regex notags = new Regex("<.*?>", RegexOptions.IgnoreCase);
+            return notags.Replace(input, replace);
+        }
+
+        // Data
+        public static bool isSearching;
+        public static string keyboardInput = "";
+
+        public static int pageNumber = 0;
         public static int framePressCooldown;
 
         public static bool lastInRoom = false;
@@ -1300,6 +1435,9 @@ namespace JupiterX.Menu
         public static List<string> favorites = new List<string> { "Exit Favorite" };
 
         public static int _currentCategoryIndex;
+
+        public static bool disableSearchButton;
+        public static bool disableReturnButton;
 
         public static bool scaleWithPlayer;
 
@@ -1328,6 +1466,12 @@ namespace JupiterX.Menu
 
         public static bool lastGunSpawned;
         public static bool lastGunTrigger;
+
+        public static Texture2D searchIcon;
+        public static Texture2D returnIcon;
+
+        public static Material searchMat;
+        public static Material returnMat;
 
         public static void RoundMenuObject(GameObject toRound, float Bevel = 0.02f)
         {

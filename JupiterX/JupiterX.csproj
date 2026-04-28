@@ -46,6 +46,7 @@
     <Compile Include="Classes\Mods\RigManager.cs" />
     <Compile Include="Classes\Menu\TimedBehaviour.cs" />
     <Compile Include="Classes\Mods\VRRigExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Managers\PluginManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
     <Compile Include="Menu\Main.cs" />
@@ -487,6 +488,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\crown.png" />
     <EmbeddedResource Include="Resources\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\return.png" />
+    <EmbeddedResource Include="Resources\search.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
