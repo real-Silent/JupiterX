@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using System.Diagnostics;
+using JupiterX.Classes;
 
 namespace JupiterX.Managers
 {
@@ -29,6 +31,7 @@ namespace JupiterX.Managers
         {
             NotificationManager.SendNotification2("<color=yellow>[SYSTEM]</color> Reloading all plugins...");
             Utility.SavePreferences();
+
             try
             {
                 LoadPlugins();
@@ -38,6 +41,7 @@ namespace JupiterX.Managers
             {
                 MelonLogger.Error("Failed to reload: " + e.Message);
             }
+
             Utility.LoadPreferences();
             Buttons.CurrentCategoryName = "Main";
         }
@@ -46,14 +50,20 @@ namespace JupiterX.Managers
         {
             if (!Directory.Exists(PluginsPath))
                 Directory.CreateDirectory(PluginsPath);
+
             foreach (var p in Plugins)
             {
                 foreach (var mod in p.Instances)
                 {
-                    mod.GetType().GetMethod("OnUnload")?.Invoke(mod, null);
+                    try
+                    {
+                        mod.GetType().GetMethod("OnUnload")?.Invoke(mod, null);
+                    }
+                    catch { }
                 }
                 p.Instances.Clear();
             }
+
             Plugins.Clear();
 
             string[] files = Directory.GetFiles(PluginsPath, "*.dll");
@@ -64,7 +74,8 @@ namespace JupiterX.Managers
                     byte[] data = File.ReadAllBytes(file);
                     Assembly assembly = Assembly.Load(data);
 
-                    var modTypes = assembly.GetTypes().Where(t => typeof(MelonMod).IsAssignableFrom(t) && !t.IsAbstract);
+                    var modTypes = assembly.GetTypes()
+                        .Where(t => typeof(MelonMod).IsAssignableFrom(t) && !t.IsAbstract);
 
                     Plugin plugin = new Plugin()
                     {
@@ -86,8 +97,61 @@ namespace JupiterX.Managers
 
                     Plugins.Add(plugin);
                 }
-                catch (Exception e) { MelonLogger.Msg($"[JupiterX] Error loading {file}: {e}"); }
+                catch (Exception e)
+                {
+                    MelonLogger.Msg($"[JupiterX] Error loading {file}: {e}");
+                }
             }
+
+            Buttons.buttons[Buttons.GetCategory("Plugin Settings")] = new[]
+            {
+                new ButtonInfo
+                {
+                    buttonText = "Exit Plugin Settings",
+                    method = () => Buttons.CurrentCategoryName = "Settings",
+                    isTogglable = false,
+                    toolTip = "Return to settings"
+                }
+            };
+
+            foreach (var plugin in Plugins)
+            {
+                try
+                {
+                    Buttons.AddButton(
+                        Buttons.GetCategory("Plugin Settings"),
+                        new ButtonInfo
+                        {
+                            buttonText = plugin.FileName,
+                            overlapText = (plugin.Enabled ? "<color=grey>[</color><color=green>ON</color><color=grey>]</color> " : "<color=grey>[</color><color=red>OFF</color><color=grey>]</color> ") + plugin.Name,
+                            method = () => TogglePlugin(plugin),
+                            isTogglable = false,
+                            toolTip = plugin.Description
+                        });
+                }
+                catch (Exception e)
+                {
+                    MelonLogger.Msg($"[JupiterX] UI error for {plugin.Name}: {e}");
+                }
+            }
+
+            Buttons.AddButton(Buttons.GetCategory("Plugin Settings"),
+                new ButtonInfo
+                {
+                    buttonText = "Reload Plugins",
+                    method = ReloadPlugins,
+                    isTogglable = false,
+                    toolTip = "Reload all plugins"
+                });
+
+            Buttons.AddButton(Buttons.GetCategory("Plugin Settings"),
+                new ButtonInfo
+                {
+                    buttonText = "Open Plugins Folder",
+                    method = () => Process.Start(PluginsPath),
+                    isTogglable = false,
+                    toolTip = "Open plugin directory"
+                });
         }
 
         public static void ExecuteUpdate()
@@ -100,7 +164,6 @@ namespace JupiterX.Managers
                 }
             }
         }
-
         public static void ExecuteOnGUI()
         {
             foreach (var plugin in Plugins.Where(p => p.Enabled))
@@ -115,6 +178,22 @@ namespace JupiterX.Managers
         public static void TogglePlugin(Plugin plugin)
         {
             plugin.Enabled = !plugin.Enabled;
+            foreach (var mod in plugin.Instances)
+            {
+                try
+                {
+                    if (plugin.Enabled)
+                        mod.OnInitializeMelon();
+                    else
+                        mod.GetType().GetMethod("OnUnload")?.Invoke(mod, null);
+                }
+                catch { }
+            }
+            var btn = Buttons.GetIndex(plugin.FileName);
+            if (btn != null)
+            {
+                btn.overlapText = (plugin.Enabled ? "<color=grey>[</color><color=green>ON</color><color=grey>]</color> " : "<color=grey>[</color><color=red>OFF</color><color=grey>]</color> ") + plugin.Name;
+            }
             MelonLogger.Msg($"[JupiterX] {plugin.Name} is now {(plugin.Enabled ? "Enabled" : "Disabled")}");
         }
     }
