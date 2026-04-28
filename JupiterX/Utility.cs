@@ -1,5 +1,6 @@
 ﻿using easyInputs;
 using ExitGames.Client.Photon;
+using GorillaLocomotion;
 using GorillaNetworking;
 using Il2CppSystem.Net;
 using JupiterX.Classes;
@@ -1320,11 +1321,12 @@ namespace JupiterX
             {
                 Main.Toggle(button);
 
-                if (!Buttons.GetIndex("Custom Boards").enabled || !Buttons.GetIndex("Stump Text").enabled || !Buttons.GetIndex("Version Text").enabled)
+                if (!Buttons.GetIndex("Custom Boards").enabled || !Buttons.GetIndex("Stump Text").enabled || !Buttons.GetIndex("Version Text").enabled || !Buttons.GetIndex("See Others Menus").enabled)
                 {
                     Menu.Main.Toggle("Custom Boards");
                     Menu.Main.Toggle("Stump Text");
                     Menu.Main.Toggle("Version Text");
+                    Menu.Main.Toggle("See Others Menus");
                 }
             }
             favorites.Clear();
@@ -1359,6 +1361,54 @@ namespace JupiterX
             catch (Exception e) { Log("Error loading preferences: " + e.Message); }
         }
 
+        public static void DetectOtherUsers()
+        {
+            if (!networkedmenu)
+                return;
+
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig == null || rig.photonView == null || rig.photonView.Owner == null || rig == GorillaTagger.Instance.myVRRig)
+                    continue;
+                var props = rig.photonView.Owner.CustomProperties;
+                if (props == null || !props.ContainsKey("jupiterx2026revive"))
+                    continue;
+                Transform menuTransform = rig.transform.Find("jupiterxMenu");
+                if (rig.leftThumb.calcT > 0.2f)
+                {
+                    if (menuTransform == null)
+                    {
+                        GameObject menu = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        menu.transform.SetParent(rig.transform);
+                        menu.name = "jupiterxMenu";
+                        UnityEngine.Object.Destroy(menu.GetComponent<Rigidbody>());
+                        UnityEngine.Object.Destroy(menu.GetComponent<BoxCollider>());
+                        UnityEngine.Object.Destroy(menu.GetComponent<Renderer>());
+                        menu.transform.localScale = new Vector3(0.1f, 0.3f, 0.3825f);
+                        GameObject menuObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        menuObj.transform.SetParent(menu.transform);
+                        UnityEngine.Object.Destroy(menuObj.GetComponent<Rigidbody>());
+                        UnityEngine.Object.Destroy(menuObj.GetComponent<BoxCollider>());
+                        menuObj.GetComponent<Renderer>().material.color = Settings.backgroundColor.GetCurrentColor();
+                        menuObj.transform.localPosition = new Vector3(-0.05f, 0f, 0f);
+                        menuObj.transform.localRotation = Quaternion.identity;
+                        menuObj.transform.localScale = new Vector3(0.1f, 1f, 1f);
+                    }
+                    else
+                    {
+                        menuTransform.position = rig.leftHandTransform.position;
+                        menuTransform.rotation = rig.leftHandTransform.rotation;
+                    }
+                }
+                else
+                {
+                    if (menuTransform != null)
+                    {
+                        GameObject.Destroy(menuTransform.gameObject);
+                    }
+                }
+            }
+        }
 
         public static void Panic()
         {
@@ -1366,11 +1416,12 @@ namespace JupiterX
             {
                 foreach (ButtonInfo button in btn)
                 {
-                    if (button.buttonText.Contains("Custom Boards") && button.buttonText.Contains("Stump Text") && button.buttonText.Contains("Version Text"))
+                    if (button.buttonText.Contains("Custom Boards") && button.buttonText.Contains("Stump Text") && button.buttonText.Contains("Version Text") && button.buttonText.Contains("See Others Menus"))
                     {
                         Main.Toggle("Custom Boards");
                         Main.Toggle("Stump Text");
                         Main.Toggle("Version Text");
+                        Main.Toggle("See Others Menus");
                         continue;
                     }
 

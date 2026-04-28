@@ -50,6 +50,7 @@ namespace JupiterX
         public static bool DisableMenuSounds = false;
         public static bool DisablePageNumber = false;
         public static bool hidepointer = false;
+        public static bool networkedmenu = true;
 
         public static KeyCode keyboardButton = KeyCode.Q;
 
