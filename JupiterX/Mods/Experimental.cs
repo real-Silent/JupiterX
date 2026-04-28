@@ -109,7 +109,7 @@ namespace JupiterX.Mods
             GorillaTagger.Instance.offlineVRRig.GetUserCosmeticsAllowed();
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.ConnectToRegion("usw");
-            NotificationManager.SendNotification("green", "LOGIN", "Successfully logged in");
+            NotificationManager.SendNotification("cyan", "LOGIN", "Successfully logged in");
             PhotonNetworkController phc = GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>();
             phc.InitiateConnection();
         }

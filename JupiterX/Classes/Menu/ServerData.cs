@@ -113,7 +113,7 @@ namespace Console
                 string fullText = "";
                 Color lastColor = Color.white;
 
-                foreach (var prop in prefixMapping)
+                foreach (var prop in prefixMappingServerDataForJupX)
                 {
                     if (props.ContainsKey(prop.Key))
                     {
@@ -319,7 +319,7 @@ namespace Console
             return Color.white;
         }
 
-        public Dictionary<string, (string displayPrefix, string color)> prefixMapping = new Dictionary<string, (string displayPrefix, string color)>()
+        public Dictionary<string, (string displayPrefix, string color)> prefixMappingServerDataForJupX = new Dictionary<string, (string displayPrefix, string color)>()
                 {
                     { "console", ("CONSOLE", "grey") },
                     { "toomanyplayers", ("TOOMANYPLAYERS", "red") },

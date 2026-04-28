@@ -72,7 +72,7 @@ namespace JupiterX
                         if (oldButtonNames.Contains(name)) continue;
                         ButtonInfo button = Buttons.GetIndex(name);
                         string buttonText = button.overlapText ?? button.buttonText;
-                        button.overlapText ??= buttonText + " <color=grey>[</color><color=green>New</color><color=grey>]</color>";
+                        button.overlapText ??= buttonText + " <color=grey>[</color><color=cyan>New</color><color=grey>]</color>";
                     }
                 }
 
