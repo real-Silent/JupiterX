@@ -11,7 +11,7 @@ using JupiterX.Classes;
 
 namespace JupiterX.Managers
 {
-    public class PluginManager
+    public class PluginManager // THIS NOW HALF AI HALF ME HALF IIDK DAWG IDK WATS WRONG WITH THIS SHIT NOW
     {
         public class Plugin
         {
