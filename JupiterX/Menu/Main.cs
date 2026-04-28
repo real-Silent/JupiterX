@@ -311,7 +311,7 @@ namespace JupiterX.Menu
                         Directory.CreateDirectory(Path.GetDirectoryName(path));
                         File.WriteAllText(path, CustomTitle);
                     }
-                    text.text = CustomTitle + (DisablePageNumber ? "" : " <color=green>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=green>]</color>");
+                    text.text = CustomTitle + (DisablePageNumber ? "" : " <color=cyan>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=cyan>]</color>");
                 }
                 else
                     text.text = "";
@@ -319,7 +319,7 @@ namespace JupiterX.Menu
             else
             {
                 if (MenuTitle)
-                    text.text = Utility.name + (DisablePageNumber ? "" : " <color=green>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=green>]</color>");
+                    text.text = Utility.name + (DisablePageNumber ? "" : " <color=cyan>[</color><color=white>" + (pageNumber + 1).ToString() + "</color><color=cyan>]</color>");
                 else
                     text.text = "";
             }
@@ -874,7 +874,7 @@ namespace JupiterX.Menu
                 MelonLoader.MelonLogger.Msg($"{buttonText} does not exist");
                 return;
             }
-            string newIndicator = " <color=grey>[</color><color=green>New</color><color=grey>]</color>";
+            string newIndicator = " <color=grey>[</color><color=cyan>New</color><color=grey>]</color>";
             if (target.overlapText != null && target.overlapText.Contains(newIndicator))
             {
                 target.overlapText = target.overlapText.Replace(newIndicator, "");
@@ -918,7 +918,7 @@ namespace JupiterX.Menu
                         if (target.enabled)
                         {
                             if (fromMenu)
-                                NotificationManager.SendNotification2($"<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> {target.toolTip}");
+                                NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
 
                             try { target.enableMethod?.Invoke(); }
                             catch (Exception exc)
@@ -940,7 +940,7 @@ namespace JupiterX.Menu
                     else
                     {
                         if (fromMenu)
-                            NotificationManager.SendNotification2($"<color=grey>[</color><color=green>RUN</color><color=grey>]</color> {target.toolTip}");
+                            NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
 
                         try { target.method?.Invoke(); }
                         catch (Exception exc)
@@ -960,7 +960,7 @@ namespace JupiterX.Menu
                 Utility.Log($"{buttonText} does not exist");
                 return;
             }
-            string newIndicator = " <color=grey>[</color><color=green>New</color><color=grey>]</color>";
+            string newIndicator = " <color=grey>[</color><color=cyan>New</color><color=grey>]</color>";
             if (target.overlapText != null && target.overlapText.Contains(newIndicator))
             {
                 target.overlapText = target.overlapText.Replace(newIndicator, "");
@@ -985,7 +985,7 @@ namespace JupiterX.Menu
                 default:
                     if (increment)
                     {
-                        NotificationManager.SendNotification2($"<color=grey>[</color><color=green>INCREMENT</color><color=grey>]</color> {target.toolTip}");
+                        NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>INCREMENT</color><color=grey>]</color> {target.toolTip}");
                         try { target.enableMethod?.Invoke(); }
                         catch (Exception exc)
                         {
