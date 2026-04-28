@@ -42,11 +42,13 @@
     <Compile Include="Classes\Menu\Console.cs" />
     <Compile Include="Classes\Menu\ExtGradient.cs" />
     <Compile Include="Classes\Menu\FixedColliders.cs" />
+    <Compile Include="Classes\Menu\KeyboardCollider.cs" />
     <Compile Include="Classes\Menu\ServerData.cs" />
     <Compile Include="Classes\Mods\RigManager.cs" />
     <Compile Include="Classes\Menu\TimedBehaviour.cs" />
     <Compile Include="Classes\Mods\VRRigExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Managers\KeyboardManager.cs" />
     <Compile Include="Managers\PluginManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
     <Compile Include="Menu\Main.cs" />

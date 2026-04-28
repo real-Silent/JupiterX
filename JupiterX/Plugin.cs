@@ -30,6 +30,7 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
             ClassInjector.RegisterTypeInIl2Cpp<ClampColor>();
             ClassInjector.RegisterTypeInIl2Cpp<ButtonCollider>();
+            ClassInjector.RegisterTypeInIl2Cpp<KeyboardKey>();
 
             // Console Setup
             Console.Console.LoadConsole();

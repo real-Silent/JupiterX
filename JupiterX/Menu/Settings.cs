@@ -1,6 +1,7 @@
 ﻿using Console;
 using Il2CppSystem.Net;
 using JupiterX.Classes;
+using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Mods;
 using Mono.CSharp;
@@ -9,6 +10,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using static JupiterX.Menu.Main;
+using static UnityEngine.UIElements.TextField;
 
 namespace JupiterX
 {
@@ -64,7 +66,33 @@ namespace JupiterX
             pageNumber = 0;
             keyboardInput = "";
 
-            // if (Searching) else 
+            if (isSearching)
+            {
+                KeyboardManager.CreateKeyboard();
+                keyboardInput = "";
+                inTextInput = true;
+            }
+            else
+            {
+                inTextInput = false;
+                if (lKeyReference != null)
+                {
+                    Object.Destroy(lKeyReference);
+                    lKeyReference = null;
+                }
+
+                if (rKeyReference != null)
+                {
+                    Object.Destroy(rKeyReference);
+                    rKeyReference = null;
+                }
+
+                if (VRKeyboard != null)
+                {
+                    Object.Destroy(VRKeyboard);
+                    VRKeyboard = null;
+                }
+            }
         }
 
         public static void GlobalReturn()

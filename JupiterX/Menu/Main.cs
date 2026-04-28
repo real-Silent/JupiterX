@@ -1,5 +1,7 @@
-﻿using easyInputs;
+﻿using Console;
+using easyInputs;
 using JupiterX.Classes;
+using JupiterX.Extensions;
 using Photon.Pun;
 using Steamworks;
 using System;
@@ -13,6 +15,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
+using static UnityEngine.UIElements.TextField;
 
 namespace JupiterX.Menu
 {
@@ -25,7 +28,7 @@ namespace JupiterX.Menu
 				Utility.toOpen = bothHands ? (Utility.LSec || Utility.RSec) : (!RightHanded && Utility.LSec || (RightHanded && Utility.RSec));
 				bool keyboardOpen = false;
 
-				if (menu == null)
+                if (menu == null)
 				{
 					if (Utility.toOpen || keyboardOpen)
 					{
@@ -420,6 +423,8 @@ namespace JupiterX.Menu
 
             // Buttons
 
+            UpdateKeyboard();
+
             // Page Buttons
             GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -507,6 +512,54 @@ namespace JupiterX.Menu
             int buttonIndexOffset = 0;
             ButtonInfo[] renderButtons = new ButtonInfo[] { };
 
+            if (inTextInput)
+            {
+                GameObject searchBoxObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+                searchBoxObject.GetComponent<BoxCollider>().isTrigger = true;
+                searchBoxObject.transform.parent = menu.transform;
+                searchBoxObject.transform.rotation = Quaternion.identity;
+
+                searchBoxObject.transform.localScale = new Vector3(0.09f, 0.9f, 0.1f * 0.8f);
+
+                searchBoxObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - 0.1f * 0.1f);
+
+                colorChanger = searchBoxObject.AddComponent<ColorChanger>();
+                colorChanger.colors = buttonColors[0];
+
+                keyboardInputObject = new GameObject
+                {
+                    transform =
+                        {
+                            parent = canvas.transform
+                        }
+                }.AddComponent<Text>();
+
+                keyboardInputObject.font = currentFont;
+                keyboardInputObject.text = keyboardInput += (Time.time % 1f) > 0.5f ? "|" : "";
+
+                keyboardInputObject.supportRichText = true;
+                keyboardInputObject.fontSize = 1;
+
+                
+                keyboardInputObject.color = textColors[1];
+
+                keyboardInputObject.alignment = TextAnchor.MiddleCenter;
+                keyboardInputObject.fontStyle = FontStyle.Italic;
+                keyboardInputObject.resizeTextForBestFit = true;
+                keyboardInputObject.resizeTextMinSize = 0;
+
+                RectTransform textTransform = keyboardInputObject.GetComponent<RectTransform>();
+                textTransform.localPosition = Vector3.zero;
+                textTransform.sizeDelta = new Vector2(.2f, .03f * (0.1f / 0.1f));
+                if (NoAutoSizeText)
+                    textTransform.sizeDelta = new Vector2(9f, 0.015f);
+
+                textTransform.localPosition = new Vector3(.064f, 0, .111f - 0.1f * 0.1f / 2.6f);
+                textTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+            }
+
+
             if (CurrentPrompt != null)
                 RenderPrompt();
             else
@@ -548,6 +601,60 @@ namespace JupiterX.Menu
                 for (int i = 0; i < renderButtons.Length; i++)
                     AddButton((i + buttonIndexOffset + 0.1f) * 0.1f, i, renderButtons[i]);
             }
+        }
+
+        private static void UpdateKeyboard()
+        {
+            if (VRKeyboard != null)
+            {
+                if (Vector3.Distance(VRKeyboard.transform.position, GorillaTagger.Instance.bodyCollider.transform.position) > 1f && !EasyInputs.GetSecondaryButtonDown(EasyHand.LeftHand))
+                {
+                    VRKeyboard.transform.position = GorillaTagger.Instance.bodyCollider.transform.position;
+                    VRKeyboard.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
+                }
+            }
+        }
+
+        public static void PressKeyboardKey(string key)
+        {
+            switch (key)
+            {
+                case "Space":
+                    keyboardInput += " ";
+                    break;
+                case "Backspace":
+                    if (keyboardInput.Length > 0)
+                        keyboardInput = keyboardInput[..^1];
+                    break;
+
+                case "Clear":
+                    keyboardInput = "";
+                    break;
+                case "Copy":
+                    GUIUtility.systemCopyBuffer = keyboardInput;
+                    break;
+                case "Paste":
+                    keyboardInput += GUIUtility.systemCopyBuffer;
+                    break;
+
+                default:
+                    Dictionary<string, string> shiftMap = new Dictionary<string, string>
+                    {
+                        { "1", "!" }, { "2", "@" }, { "3", "#" }, { "4", "$" }, { "5", "%" },
+                        { "6", "^" }, { "7", "&" }, { "8", "*" }, { "9", "(" }, { "0", ")" },
+                        { "-", "_" }, { "=", "+" }, { "[", "{" }, { "]", "}" }, { "\\", "|" },
+                        { ";", ":" }, { "'", "\"" }, { ",", "<" }, { ".", ">" }, { "/", "?" },
+                        { "`", "~" }
+                    };
+
+                    string keyStr = key.ToLower();
+                    keyboardInput += keyStr.ToLower();
+                    break;
+
+            }
+
+            pageNumber = 0;
+            ReloadMenu();
         }
 
         private static void AddButton(float offset, int buttonIndex, ButtonInfo method)
@@ -823,7 +930,16 @@ namespace JupiterX.Menu
 
         public static void RecenterMenu(bool isRightHanded, bool isKeyboardCondition)
 		{
-			if (!isKeyboardCondition)
+            if (inTextInput && menuSpawnPosition != null)
+            {
+                menu.transform.position = menuSpawnPosition.transform.position;
+                menu.transform.rotation = menuSpawnPosition.transform.parent.rotation;
+                Transform head = GorillaTagger.Instance.headCollider.transform;
+                menu.transform.LookAt(head);
+                menu.transform.Rotate(0, 180f, 0);
+            }
+
+            if (!isKeyboardCondition)
 			{
 				if (isRightHanded || (bothHands && Utility.RSec))
 				{
@@ -1408,6 +1524,7 @@ namespace JupiterX.Menu
 		public static SphereCollider buttonCollider;
 		public static Camera TPC;
 		public static Text fpsObject;
+        public static Text keyboardInputObject;
 
         public static string NoRichtextTags(string input, string replace = "")
         {
@@ -1417,6 +1534,7 @@ namespace JupiterX.Menu
 
         // Data
         public static bool isSearching;
+        public static bool inTextInput;
         public static string keyboardInput = "";
 
         public static int pageNumber = 0;
@@ -1443,6 +1561,15 @@ namespace JupiterX.Menu
 
         public static Vector3 MidPosition;
         public static Vector3 MidVelocity;
+
+        public static GameObject lKeyReference;
+        public static SphereCollider lKeyCollider;
+
+        public static GameObject rKeyReference;
+        public static SphereCollider rKeyCollider;
+
+        public static GameObject VRKeyboard;
+        public static GameObject menuSpawnPosition;
 
         public static bool SmoothGunPointer;
         public static bool smallGunPointer;

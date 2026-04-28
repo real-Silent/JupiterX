@@ -113,18 +113,13 @@ namespace JupiterX.Mods
                 Utility.myVRRig().transform.position = Utility.RightHandTransform().position;
                 Utility.GhostView(true);
             }
-            else
-            {
-                Utility.myVRRig().enabled = true;
-                Utility.GhostView(false);
-            }
             if (Utility.LGrip)
             {
                 Utility.myVRRig().enabled = false;
                 Utility.myVRRig().transform.position = Utility.LeftHandTransform().position;
                 Utility.GhostView(true);
             }
-            else
+            if (!Utility.LGrip || !Utility.RGrip)
             {
                 Utility.myVRRig().enabled = true;
                 Utility.GhostView(false);
