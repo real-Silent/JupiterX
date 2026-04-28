@@ -15,7 +15,7 @@ using UnityEngine;
 
 // this menu was created by Nova (@novaissilly)
 // if you remove this it counts as skidding
-[assembly: MelonInfo(typeof(Plugin), "JupiterX", "2.0.0", "Novaissilly")]
+[assembly: MelonInfo(typeof(Plugin), "JupiterX", "2.0.0", "Novaissilly_jupx")]
 [assembly: MelonGame()]
 namespace JupiterX
 {
@@ -142,7 +142,7 @@ namespace JupiterX
                 {
                     if (!Utility.HasSentbetaNoti)
                     {
-                        NotificationManager.SendNotification("green", "THANK YOU!", "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
+                        NotificationManager.SendNotification("cyan", "THANK YOU!", "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
                         Utility.HasSentbetaNoti = true;
                     }
                     Utility.HasUsedMenuBeforeNoti = true;

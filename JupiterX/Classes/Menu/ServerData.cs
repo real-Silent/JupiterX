@@ -292,7 +292,7 @@ namespace Console
                     if (!shownPrompt)
                     {
                         JupiterX.Menu.Main.Prompt(CurrentPoll, () => SendVote("a-votes"), () => SendVote("b-votes"), OptionA, OptionB);
-                        Console.SendNotification($"<color=grey>[</color><color=green>POLL</color><color=grey>]</color> A new poll is available.", 10000);
+                        Console.SendNotification($"<color=grey>[</color><color=cyan>POLL</color><color=grey>]</color> A new poll is available.", 10000);
                     }
 
                     LastPollAnswered = CurrentPoll;
