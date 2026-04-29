@@ -30,7 +30,7 @@ namespace JupiterX.Menu
 
                 if (menu == null)
 				{
-					if (Utility.toOpen || keyboardOpen || isSearching)
+					if (Utility.toOpen || keyboardOpen)
 					{
                         if (!DisableMenuSounds)
                             Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuopen.wav");
@@ -45,7 +45,7 @@ namespace JupiterX.Menu
 				}
 				else
 				{
-					if (Utility.toOpen || keyboardOpen || isSearching)
+					if (Utility.toOpen || keyboardOpen)
 					{
 						RecenterMenu(RightHanded, keyboardOpen);
 					}
@@ -422,9 +422,6 @@ namespace JupiterX.Menu
             }
 
             // Buttons
-
-            UpdateKeyboard();
-
             // Page Buttons
             GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -512,34 +509,6 @@ namespace JupiterX.Menu
             int buttonIndexOffset = 0;
             ButtonInfo[] renderButtons = new ButtonInfo[] { };
 
-            if (isSearching)
-            {
-                List<ButtonInfo> searchedMods = new List<ButtonInfo>();
-                int categoryIndex = 0;
-                foreach (ButtonInfo[] buttonlist in Buttons.buttons)
-                {
-                    foreach (ButtonInfo v in buttonlist)
-                    {
-                        try
-                        {
-                            if ((Buttons.categoryNames[categoryIndex].Contains("Admin") || !ServerDataJupiterX.isadmin))
-                                continue;
-
-                            List<string> texts = new List<string>();
-                            texts.Add(v.overlapText ?? v.buttonText);
-
-                            if (texts.Any(buttonText => buttonText.ClearTags().Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
-                                searchedMods.Add(v);
-                        }
-                        catch { }
-                    }
-                    categoryIndex++;
-                }
-
-                buttonIndexOffset += 1;
-                renderButtons = searchedMods.ToArray();
-            }
-
             if (inTextInput)
             {
                 GameObject searchBoxObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -592,97 +561,50 @@ namespace JupiterX.Menu
                 RenderPrompt();
             else
             {
-                if (Buttons.CurrentCategoryName == "Favorite")
+                if (isSearching)
                 {
-                    foreach (string favoriteMod in favorites)
-                    {
-                        if (GetIndex(favoriteMod) == null)
-                            favorites.Remove(favoriteMod);
-                    }
 
-                    renderButtons = StringsToInfos(favorites.ToArray());
-                }
-                else if (Buttons.CurrentCategoryName == "Enabled")
-                {
-                    List<ButtonInfo> enabledMods = new List<ButtonInfo>() { };
-                    int categoryIndex = 0;
-                    foreach (ButtonInfo[] buttonlist in Buttons.buttons)
-                    {
-                        foreach (ButtonInfo v in buttonlist)
-                        {
-                            if (v.enabled && (!Buttons.categoryNames[categoryIndex].Contains("Settings")))
-                                enabledMods.Add(v);
-                        }
-                        categoryIndex++;
-                    }
-                    enabledMods = enabledMods.OrderBy(v => v.buttonText).ToList();
-                    enabledMods.Insert(0, GetIndex("Exit Enabled"));
-
-                    renderButtons = enabledMods.ToArray();
                 }
                 else
-                    renderButtons = Buttons.buttons[Buttons.CurrentCategoryIndex];
+                {
+                    if (Buttons.CurrentCategoryName == "Favorite")
+                    {
+                        foreach (string favoriteMod in favorites)
+                        {
+                            if (GetIndex(favoriteMod) == null)
+                                favorites.Remove(favoriteMod);
+                        }
 
-                renderButtons = renderButtons.Skip(pageNumber * (buttonsPerPage - buttonIndexOffset)).Take(buttonsPerPage - buttonIndexOffset).ToArray();
+                        renderButtons = StringsToInfos(favorites.ToArray());
+                    }
+                    else if (Buttons.CurrentCategoryName == "Enabled")
+                    {
+                        List<ButtonInfo> enabledMods = new List<ButtonInfo>() { };
+                        int categoryIndex = 0;
+                        foreach (ButtonInfo[] buttonlist in Buttons.buttons)
+                        {
+                            foreach (ButtonInfo v in buttonlist)
+                            {
+                                if (v.enabled && (!Buttons.categoryNames[categoryIndex].Contains("Settings")))
+                                    enabledMods.Add(v);
+                            }
+                            categoryIndex++;
+                        }
+                        enabledMods = enabledMods.OrderBy(v => v.buttonText).ToList();
+                        enabledMods.Insert(0, GetIndex("Exit Enabled"));
+
+                        renderButtons = enabledMods.ToArray();
+                    }
+                    else
+                        renderButtons = Buttons.buttons[Buttons.CurrentCategoryIndex];
+
+                    renderButtons = renderButtons.Skip(pageNumber * (buttonsPerPage - buttonIndexOffset)).Take(buttonsPerPage - buttonIndexOffset).ToArray();
+                }
 
                 // Mod Buttons
                 for (int i = 0; i < renderButtons.Length; i++)
                     AddButton((i + buttonIndexOffset + 0.1f) * 0.1f, i, renderButtons[i]);
             }
-        }
-
-        private static void UpdateKeyboard()
-        {
-            if (VRKeyboard != null)
-            {
-                if (Vector3.Distance(VRKeyboard.transform.position, GorillaTagger.Instance.bodyCollider.transform.position) > 1f && !EasyInputs.GetSecondaryButtonDown(EasyHand.LeftHand))
-                {
-                    VRKeyboard.transform.position = GorillaTagger.Instance.bodyCollider.transform.position;
-                    VRKeyboard.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
-                }
-            }
-        }
-
-        public static void PressKeyboardKey(string key)
-        {
-            switch (key)
-            {
-                case "Space":
-                    keyboardInput += " ";
-                    break;
-                case "Backspace":
-                    if (keyboardInput.Length > 0)
-                        keyboardInput = keyboardInput[..^1];
-                    break;
-
-                case "Clear":
-                    keyboardInput = "";
-                    break;
-                case "Copy":
-                    GUIUtility.systemCopyBuffer = keyboardInput;
-                    break;
-                case "Paste":
-                    keyboardInput += GUIUtility.systemCopyBuffer;
-                    break;
-
-                default:
-                    Dictionary<string, string> shiftMap = new Dictionary<string, string>
-                    {
-                        { "1", "!" }, { "2", "@" }, { "3", "#" }, { "4", "$" }, { "5", "%" },
-                        { "6", "^" }, { "7", "&" }, { "8", "*" }, { "9", "(" }, { "0", ")" },
-                        { "-", "_" }, { "=", "+" }, { "[", "{" }, { "]", "}" }, { "\\", "|" },
-                        { ";", ":" }, { "'", "\"" }, { ",", "<" }, { ".", ">" }, { "/", "?" },
-                        { "`", "~" }
-                    };
-
-                    string keyStr = key.ToLower();
-                    keyboardInput += keyStr.ToLower();
-                    break;
-
-            }
-
-            pageNumber = 0;
-            ReloadMenu();
         }
 
         private static void AddButton(float offset, int buttonIndex, ButtonInfo method)
@@ -911,7 +833,7 @@ namespace JupiterX.Menu
             buttonObject.AddComponent<ButtonCollider>().relatedText = "Search";
 
             ColorChanger colorChanger = buttonObject.AddComponent<ColorChanger>();
-            colorChanger.colors = buttonColors[isSearching  ? 0 : 1];
+            colorChanger.colors = buttonColors[isSearching  ? 1 : 0];
 
             Image searchImage = new GameObject
             {
@@ -956,15 +878,6 @@ namespace JupiterX.Menu
 
         public static void RecenterMenu(bool isRightHanded, bool isKeyboardCondition)
 		{
-            if (inTextInput && menuSpawnPosition != null)
-            {
-                menu.transform.position = menuSpawnPosition.transform.position;
-                menu.transform.rotation = menuSpawnPosition.transform.parent.rotation;
-                Transform head = GorillaTagger.Instance.headCollider.transform;
-                menu.transform.LookAt(head);
-                menu.transform.Rotate(0, 180f, 0);
-            }
-
             if (!isKeyboardCondition)
 			{
 				if (isRightHanded || (bothHands && Utility.RSec))
@@ -1561,7 +1474,7 @@ namespace JupiterX.Menu
         // Data
         public static bool isSearching;
         public static bool inTextInput;
-        public static string keyboardInput = "";
+        public static string keyboardInput;
 
         public static int pageNumber = 0;
         public static int framePressCooldown;
@@ -1587,15 +1500,6 @@ namespace JupiterX.Menu
 
         public static Vector3 MidPosition;
         public static Vector3 MidVelocity;
-
-        public static GameObject lKeyReference;
-        public static SphereCollider lKeyCollider;
-
-        public static GameObject rKeyReference;
-        public static SphereCollider rKeyCollider;
-
-        public static GameObject VRKeyboard;
-        public static GameObject menuSpawnPosition;
 
         public static bool SmoothGunPointer;
         public static bool smallGunPointer;

@@ -68,14 +68,12 @@ namespace JupiterX
 
             if (isSearching)
             {
-                KeyboardManager.Load();
                 keyboardInput = "";
                 inTextInput = true;
             }
             else
             {
                 inTextInput = false;
-                KeyboardManager.DestroyKeyboard();
             }
         }
 

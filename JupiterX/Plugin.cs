@@ -28,7 +28,6 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
             ClassInjector.RegisterTypeInIl2Cpp<ClampColor>();
             ClassInjector.RegisterTypeInIl2Cpp<ButtonCollider>();
-            ClassInjector.RegisterTypeInIl2Cpp<SphereKeyTrigger>();
 
             // Console Setup
             Console.ConsoleJupiterX.LoadConsole();
@@ -218,7 +217,6 @@ PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
             JupiterX.Managers.PluginManager.ExecuteUpdate();
 
             Utility.DetectOtherUsers();
-            KeyboardManager.Update();
         }
 
         public override void OnFixedUpdate()

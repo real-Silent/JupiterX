@@ -47,7 +47,6 @@
     <Compile Include="Classes\Menu\TimedBehaviour.cs" />
     <Compile Include="Classes\Mods\VRRigExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Managers\KeyboardManager.cs" />
     <Compile Include="Managers\PluginManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
     <Compile Include="Menu\Main.cs" />
