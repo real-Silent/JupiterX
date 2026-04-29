@@ -473,6 +473,7 @@ namespace JupiterX.Menu
             "Favorite",
             "Admin",
             "Plugin Settings",
+            "Internal"
         };
 
         public static int _currentCategoryIndex;

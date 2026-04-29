@@ -11,7 +11,7 @@ using JupiterX.Classes;
 
 namespace JupiterX.Managers
 {
-    public class PluginManager // THIS NOW HALF AI HALF ME HALF IIDK DAWG IDK WATS WRONG WITH THIS SHIT NOW
+    public class PluginManager
     {
         public class Plugin
         {
@@ -22,22 +22,16 @@ namespace JupiterX.Managers
             public Assembly Assembly;
             public List<MelonMod> Instances = new List<MelonMod>();
         }
-
         public interface IMenuExtension
         {
             ButtonInfo[] GetButtons();
         }
-
         public static readonly List<Plugin> Plugins = new List<Plugin>();
-
-        private static string PluginsPath =>
-            Path.Combine(Application.persistentDataPath, "JupiterX/Plugins");
-
+        private static string PluginsPath => Path.Combine(Application.persistentDataPath, "JupiterX/Plugins");
         public static void ReloadPlugins()
         {
             NotificationManager.SendNotification2("<color=yellow>[SYSTEM]</color> Reloading plugins...");
             Utility.SavePreferences();
-
             try
             {
                 LoadPlugins();
@@ -47,31 +41,22 @@ namespace JupiterX.Managers
             {
                 MelonLogger.Error("[JupiterX] Reload failed: " + e);
             }
-
             Utility.LoadPreferences();
             Buttons.CurrentCategoryName = "Main";
         }
-
         public static void LoadPlugins()
         {
             if (!Directory.Exists(PluginsPath))
                 Directory.CreateDirectory(PluginsPath);
-
             foreach (var p in Plugins)
             {
                 foreach (var mod in p.Instances)
                 {
-                    try
-                    {
-                        mod.GetType().GetMethod("OnUnload")?.Invoke(mod, null);
-                    }
-                    catch { }
+                    try {  mod.GetType().GetMethod("OnUnload")?.Invoke(mod, null); } catch { }
                 }
                 p.Instances.Clear();
             }
-
             Plugins.Clear();
-
             int category = Buttons.GetCategory("Plugin Settings");
             Buttons.buttons[category] = new ButtonInfo[]
             {
@@ -83,25 +68,19 @@ namespace JupiterX.Managers
                     toolTip = "Return to settings"
                 }
             };
-
             string[] files = Directory.GetFiles(PluginsPath, "*.dll");
-
             foreach (string file in files)
             {
                 try
                 {
                     Assembly assembly = Assembly.Load(File.ReadAllBytes(file));
-
-                    var modTypes = assembly.GetTypes()
-                        .Where(t => typeof(MelonMod).IsAssignableFrom(t) && !t.IsAbstract);
-
+                    var modTypes = assembly.GetTypes().Where(t => typeof(MelonMod).IsAssignableFrom(t) && !t.IsAbstract);
                     Plugin plugin = new Plugin()
                     {
                         FileName = Path.GetFileName(file),
                         Assembly = assembly,
                         Enabled = true
                     };
-
                     foreach (var type in modTypes)
                     {
                         MelonMod mod = (MelonMod)Activator.CreateInstance(type);
@@ -112,14 +91,12 @@ namespace JupiterX.Managers
                         var attr = type.Assembly.GetCustomAttribute<MelonInfoAttribute>();
                         plugin.Name = attr?.Name ?? type.Name;
                         plugin.Description = attr?.Author ?? "No description";
-
                         if (mod is IMenuExtension ext)
                         {
                             foreach (var btn in ext.GetButtons())
                                 Buttons.AddButton(category, btn);
                         }
                     }
-
                     Plugins.Add(plugin);
                 }
                 catch (Exception e)
@@ -127,7 +104,6 @@ namespace JupiterX.Managers
                     MelonLogger.Error($"[JupiterX] Failed loading {file}: {e}");
                 }
             }
-
             foreach (var plugin in Plugins)
             {
                 Buttons.AddButton(category, new ButtonInfo
@@ -139,7 +115,6 @@ namespace JupiterX.Managers
                     toolTip = plugin.Description
                 });
             }
-
             Buttons.AddButton(category, new ButtonInfo
             {
                 buttonText = "Reload Plugins",
@@ -147,7 +122,6 @@ namespace JupiterX.Managers
                 isTogglable = false,
                 toolTip = "Reload all plugins"
             });
-
             Buttons.AddButton(category, new ButtonInfo
             {
                 buttonText = "Open Plugins Folder",
@@ -155,36 +129,14 @@ namespace JupiterX.Managers
                 isTogglable = false,
                 toolTip = "Open plugin directory"
             });
-
-            // Get categories
-            int tempCategory = Buttons.GetCategory("Temporary Category");
-            int hiddenCategory = Buttons.buttons.Length - 1; // last category = hidden
-
-            // Grab hidden buttons
-            var hiddenButtons = Buttons.buttons[hiddenCategory];
-
-            // Clear temp category
-            Buttons.buttons[tempCategory] = new ButtonInfo[] { };
-
-            // Move them instead of duplicating
-            Buttons.buttons[tempCategory] = hiddenButtons;
-
-            // Clear hidden category so they don't render twice
-            Buttons.buttons[hiddenCategory] = new ButtonInfo[] { };
         }
-
         private static string GetStatus(Plugin p)
         {
-            return (p.Enabled
-                ? "<color=grey>[</color><color=green>ON</color><color=grey>]</color> "
-                : "<color=grey>[</color><color=red>OFF</color><color=grey>]</color> ")
-                + p.Name;
+            return (p.Enabled ? "<color=grey>[</color><color=cyan>ON</color><color=grey>]</color> " : "<color=grey>[</color><color=red>OFF</color><color=grey>]</color> ") + p.Name;
         }
-
         public static void TogglePlugin(Plugin plugin)
         {
             plugin.Enabled = !plugin.Enabled;
-
             foreach (var mod in plugin.Instances)
             {
                 try
@@ -199,34 +151,28 @@ namespace JupiterX.Managers
                     MelonLogger.Error("[JupiterX] Toggle error: " + e);
                 }
             }
-
             var btn = Buttons.GetIndex(plugin.FileName);
             if (btn != null)
                 btn.overlapText = GetStatus(plugin);
-
             MelonLogger.Msg($"[JupiterX] {plugin.Name} -> {(plugin.Enabled ? "Enabled" : "Disabled")}");
         }
-
         public static void ExecuteUpdate()
         {
             foreach (var plugin in Plugins.Where(p => p.Enabled))
             {
                 foreach (var mod in plugin.Instances)
                 {
-                    try { mod.OnUpdate(); }
-                    catch { }
+                    try { mod.OnUpdate(); } catch { }
                 }
             }
         }
-
         public static void ExecuteOnGUI()
         {
             foreach (var plugin in Plugins.Where(p => p.Enabled))
             {
                 foreach (var mod in plugin.Instances)
                 {
-                    try { mod.OnGUI(); }
-                    catch { }
+                    try { mod.OnGUI(); } catch { }
                 }
             }
         }
