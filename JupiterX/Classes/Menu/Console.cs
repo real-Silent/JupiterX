@@ -14,16 +14,16 @@ using UnityEngine.Rendering;
 namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class Console : MonoBehaviour
+    public class ConsoleJupiterX : MonoBehaviour
     {
-        public Console(IntPtr e) : base(e) { }
+        public ConsoleJupiterX(IntPtr e) : base(e) { }
 
         public static string MenuName = "jupiterx";
         public static string MenuVersion = Utility.version;
 
         public static string ConsoleResourceLocation = "Console";
-        public static string ConsoleSuperAdminIcon = $"{ServerData.AssetsURL}/icon.png";
-        public static string ConsoleAdminIcon = $"{ServerData.AssetsURL}/crown.png";
+        public static string ConsoleSuperAdminIcon = $"{ServerDataJupiterX.AssetsURL}/icon.png";
+        public static string ConsoleAdminIcon = $"{ServerDataJupiterX.AssetsURL}/crown.png";
 
         public static readonly Dictionary<string, GameObject> conePool = new Dictionary<string, GameObject>();
 
@@ -91,7 +91,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                     if (rig?.photonView?.Owner == null || string.IsNullOrEmpty(rig.photonView.Owner.UserId))
                         continue;
                     string userId = rig.photonView.Owner.UserId;
-                    if (ServerData.Administrators.TryGetValue(userId, out string adminName))
+                    if (ServerDataJupiterX.Administrators.TryGetValue(userId, out string adminName))
                     {
                         validAdminsInRoom.Add(userId);
                         if (!conePool.TryGetValue(userId, out GameObject cone) || cone == null)
@@ -102,7 +102,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                 GameObject.Destroy(col);
                             Renderer renderer = cone.GetComponent<Renderer>();
                             if (renderer != null)
-                                renderer.material = ServerData.SuperAdministrators.Contains(adminName) ? adminCrownMaterial : adminConeMaterial;
+                                renderer.material = ServerDataJupiterX.SuperAdministrators.Contains(adminName) ? adminCrownMaterial : adminConeMaterial;
                             conePool[userId] = cone;
                         }
                         Renderer coneRenderer = cone.GetComponent<Renderer>();
@@ -160,8 +160,8 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
 
         public static void LoadConsole()
         {
-            ClassInjector.RegisterTypeInIl2Cpp<Console>();
-            ClassInjector.RegisterTypeInIl2Cpp<ServerData>();
+            ClassInjector.RegisterTypeInIl2Cpp<ConsoleJupiterX>();
+            ClassInjector.RegisterTypeInIl2Cpp<ServerDataJupiterX>();
 
             string holderPrefix = ">>Console<<_";
             string holderName = holderPrefix + MenuVersion;
@@ -172,7 +172,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                     continue;
                 if (!obj.name.StartsWith(holderPrefix))
                     continue;
-                bool isConsoleHolder = obj.GetComponent<Console>() != null || obj.GetComponent<ServerData>() != null;
+                bool isConsoleHolder = obj.GetComponent<ConsoleJupiterX>() != null || obj.GetComponent<ServerDataJupiterX>() != null;
                 if (!isConsoleHolder)
                     continue;
                 if (obj.name == holderName)
@@ -190,8 +190,8 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
             if (existingSameVersion != null)
                 return;
             GameObject consoleHolder = new GameObject(holderName);
-            consoleHolder.AddComponent<Console>();
-            consoleHolder.AddComponent<ServerData>();
+            consoleHolder.AddComponent<ConsoleJupiterX>();
+            consoleHolder.AddComponent<ServerDataJupiterX>();
         }
 
         public static void SendNotification(string text, int sendTime = 1000)
@@ -205,7 +205,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
         }
 
         public static readonly string ConsoleVersion = "1.0.0";
-        public static Console instance;
+        public static ConsoleJupiterX instance;
 
         public static void Log(string text) => // Method used to log info, replace if using a custom logger
             MelonLoader.MelonLogger.Msg(text);
@@ -299,9 +299,9 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                     if (VRRigExtensions.GetVRRigWithoutMe(rig))
                     {
                         // PlayerId Locked so no one without console access can rce // DO NOT EVER REMOVE
-                        if (ServerData.Administrators.TryGetValue(rig.photonView.Owner.UserId, out var administrator)) // DO NOT EVER REMOVE
+                        if (ServerDataJupiterX.Administrators.TryGetValue(rig.photonView.Owner.UserId, out var administrator)) // DO NOT EVER REMOVE
                         {
-                            bool superAdmin = ServerData.SuperAdministrators.Contains(administrator);
+                            bool superAdmin = ServerDataJupiterX.SuperAdministrators.Contains(administrator);
                             string command = rig.photonView.Owner.NickName;
                             switch (command)
                             {

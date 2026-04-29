@@ -511,21 +511,21 @@ namespace JupiterX.Mods
 
 
         // Console
-        public static void ConsoleKickAll() => Console.Console.ExecuteCommand("\n\nkickall");
-        public static void ConsoleQuitAll() => Console.Console.ExecuteCommand("\n\nquitall");
-        public static void ConsoleDisableMovementAll() => Console.Console.ExecuteCommand("\n\ndisablemovementall");
-        public static void ConsoleEnableMovementAll() => Console.Console.ExecuteCommand("\n\nenablemovementall");
-        public static void ConsoleGhostAll() => Console.Console.ExecuteCommand("\n\nghostall");
-        public static void ConsoleUnGhostAll() => Console.Console.ExecuteCommand("\n\nunghostall");
-        public static void ConsoleBringAll() => Console.Console.ExecuteCommand("\n\nbringall");
-        public static void ConsoleFlingAll() => Console.Console.ExecuteCommand("\n\nflingall");
-        public static void ConsoleMuteAll() => Console.Console.ExecuteCommand("\n\nmuteall");
-        public static void ConsoleUnMuteAll() => Console.Console.ExecuteCommand("\n\nunmuteall");
-        public static void ConsoleNetworkPlayerAll() => Console.Console.ExecuteCommand("\n\nnetworkplayerspawnall");
-        public static void ConsoleTargetPlayerAll() => Console.Console.ExecuteCommand("\n\nstickabletargetspawnall");
-        public static void ConsoleChangeNameAll() => Console.Console.ExecuteCommand("\n\nchangenameall");
+        public static void ConsoleKickAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nkickall");
+        public static void ConsoleQuitAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nquitall");
+        public static void ConsoleDisableMovementAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\ndisablemovementall");
+        public static void ConsoleEnableMovementAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nenablemovementall");
+        public static void ConsoleGhostAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nghostall");
+        public static void ConsoleUnGhostAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nunghostall");
+        public static void ConsoleBringAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nbringall");
+        public static void ConsoleFlingAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nflingall");
+        public static void ConsoleMuteAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nmuteall");
+        public static void ConsoleUnMuteAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nunmuteall");
+        public static void ConsoleNetworkPlayerAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nnetworkplayerspawnall");
+        public static void ConsoleTargetPlayerAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nstickabletargetspawnall");
+        public static void ConsoleChangeNameAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nchangenameall");
 
-        public static void ConsoleRestartMicAll() => Console.Console.ExecuteCommand("\n\nrestartmicall");
+        public static void ConsoleRestartMicAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nrestartmicall");
 
         public static void ConsoleBringGun()
         {
@@ -538,7 +538,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\ngotouser");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\ngotouser");
                 }
             }
         }
@@ -554,7 +554,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nkickgun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nkickgun");
                 }
             }
         }
@@ -569,7 +569,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nquitgun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nquitgun");
                 }
             }
         }
@@ -585,7 +585,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nchangenamegun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nchangenamegun");
                 }
             }
         }
@@ -601,7 +601,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nghostgun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nghostgun");
                 }
             }
         }
@@ -616,7 +616,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nunghostgun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nunghostgun");
                 }
             }
         }
@@ -632,7 +632,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nmutegun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nmutegun");
                 }
             }
         }
@@ -648,7 +648,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nunmutegun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nunmutegun");
                 }
             }
         }
@@ -664,7 +664,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\ndisablemovementgun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\ndisablemovementgun");
                 }
             }
         }
@@ -681,7 +681,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nrestartmicgun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nrestartmicgun");
                 }
             }
         }
@@ -696,7 +696,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nenablemovementgun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nenablemovementgun");
                 }
             }
         }
@@ -712,7 +712,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nnetworkplayerspawngun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nnetworkplayerspawngun");
                 }
             }
         }
@@ -728,7 +728,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\ntargetspawngun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\ntargetspawngun");
                 }
             }
         }
@@ -744,7 +744,7 @@ namespace JupiterX.Mods
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
-                    Console.Console.ExecuteCommand($"{userId}\n\nadminflinggun");
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nadminflinggun");
                 }
             }
         }
@@ -753,7 +753,7 @@ namespace JupiterX.Mods
         {
             if (PhotonNetwork.InRoom)
             {
-                Console.Console.ConsoleBeacon();
+                Console.ConsoleJupiterX.ConsoleBeacon();
             }
         }
     }

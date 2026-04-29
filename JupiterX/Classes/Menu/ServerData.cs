@@ -16,9 +16,9 @@ using UnityEngine;
 namespace Console
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class ServerData : MonoBehaviour
+    public class ServerDataJupiterX : MonoBehaviour
     {
-        public ServerData(IntPtr ptr) : base(ptr) { }
+        public ServerDataJupiterX(IntPtr ptr) : base(ptr) { }
 
         public const string ServerEndpoint = "https://consolecopys.vercel.app"; // DO NOT EVER REMOVE OR CHANGE
         public static readonly string ServerDataEndpoint = $"{ServerEndpoint}/serverdata"; // DO NOT EVER REMOVE OR CHANGE
@@ -30,7 +30,7 @@ namespace Console
             JupiterX.Menu.Main.SetupAdminPanel(nickname);
         }
 
-        public static ServerData instance;
+        public static ServerDataJupiterX instance;
 
         private static float DataLoadTime = -1f;
 
@@ -240,7 +240,7 @@ namespace Console
             }
 
             string minConsoleVersion = (string)data["min-console-version"];
-            if (VersionToNumber(Console.ConsoleVersion) >= VersionToNumber(minConsoleVersion))
+            if (VersionToNumber(ConsoleJupiterX.ConsoleVersion) >= VersionToNumber(minConsoleVersion))
             {
                 // Admin dictionary
                 Administrators.Clear();
@@ -292,7 +292,7 @@ namespace Console
                     if (!shownPrompt)
                     {
                         JupiterX.Menu.Main.Prompt(CurrentPoll, () => SendVote("a-votes"), () => SendVote("b-votes"), OptionA, OptionB);
-                        Console.SendNotification($"<color=grey>[</color><color=cyan>POLL</color><color=grey>]</color> A new poll is available.", 10000);
+                        ConsoleJupiterX.SendNotification($"<color=grey>[</color><color=cyan>POLL</color><color=grey>]</color> A new poll is available.", 10000);
                     }
 
                     LastPollAnswered = CurrentPoll;
@@ -301,7 +301,7 @@ namespace Console
             }
             else
             {
-                Console.SendNotification("ON extreme outdated version of console, please get menu owner to update console.");
+                ConsoleJupiterX.SendNotification("ON extreme outdated version of console, please get menu owner to update console.");
                 Log("On extreme outdated version of Console, not loading administrators");
             }
         }

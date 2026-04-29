@@ -68,30 +68,14 @@ namespace JupiterX
 
             if (isSearching)
             {
-                KeyboardManager.CreateKeyboard();
+                KeyboardManager.Load();
                 keyboardInput = "";
                 inTextInput = true;
             }
             else
             {
                 inTextInput = false;
-                if (lKeyReference != null)
-                {
-                    Object.Destroy(lKeyReference);
-                    lKeyReference = null;
-                }
-
-                if (rKeyReference != null)
-                {
-                    Object.Destroy(rKeyReference);
-                    rKeyReference = null;
-                }
-
-                if (VRKeyboard != null)
-                {
-                    Object.Destroy(VRKeyboard);
-                    VRKeyboard = null;
-                }
+                KeyboardManager.DestroyKeyboard();
             }
         }
 
@@ -193,7 +177,7 @@ namespace JupiterX
                 },
             };
 
-            if (ServerData.Administrators.ContainsKey(PhotonNetwork.LocalPlayer.UserId))
+            if (ServerDataJupiterX.Administrators.ContainsKey(PhotonNetwork.LocalPlayer.UserId))
             {
                 buttons.AddRange(
                     new[]
@@ -201,42 +185,42 @@ namespace JupiterX
                         new ButtonInfo {
                             buttonText = "Admin Kick Player",
                             overlapText = $"Admin Kick {TargetName}",
-                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nkickgun"),
+                            method =() =>  Console.ConsoleJupiterX.ExecuteCommand($"{UserId}\n\nkickgun"),
                             isTogglable = false,
                             toolTip = $"Kicks {TargetName} if they're using the menu."
                         },
                         new ButtonInfo {
                             buttonText = "Admin Quit Player",
                             overlapText = $"Admin Quit {TargetName}",
-                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nquitgun"),
+                            method =() =>  Console.ConsoleJupiterX.ExecuteCommand($"{UserId}\n\nquitgun"),
                             isTogglable = false,
                             toolTip = $"Quits {TargetName} if they're using the menu."
                         },
                         new ButtonInfo {
                             buttonText = "Admin Ghost Player",
                             overlapText = $"Admin Ghost {TargetName}",
-                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nghostgun"),
+                            method =() =>  Console.ConsoleJupiterX.ExecuteCommand($"{UserId}\n\nghostgun"),
                             isTogglable = false,
                             toolTip = $"Ghosts {TargetName} if they're using the menu."
                         },
                         new ButtonInfo {
                             buttonText = "Admin Unghost Player",
                             overlapText = $"Admin Unghost {TargetName}",
-                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nunghostgun"),
+                            method =() =>  Console.ConsoleJupiterX.ExecuteCommand($"{UserId}\n\nunghostgun"),
                             isTogglable = false,
                             toolTip = $"Unghosts {TargetName} if they're using the menu."
                         },
                         new ButtonInfo {
                             buttonText = "Admin Bring Player",
                             overlapText = $"Admin Bring {TargetName}",
-                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\ngotouser"),
+                            method =() =>  Console.ConsoleJupiterX.ExecuteCommand($"{UserId}\n\ngotouser"),
                             isTogglable = false,
                             toolTip = $"Brings {TargetName} if they're using the menu."
                         },
                         new ButtonInfo {
                             buttonText = "Admin Fling Player",
                             overlapText = $"Admin Fling {TargetName}",
-                            method =() =>  Console.Console.ExecuteCommand($"{UserId}\n\nadminflinggun"),
+                            method =() =>  Console.ConsoleJupiterX.ExecuteCommand($"{UserId}\n\nadminflinggun"),
                             isTogglable = false,
                             toolTip = $"Flings {TargetName} if they're using the menu."
                         },

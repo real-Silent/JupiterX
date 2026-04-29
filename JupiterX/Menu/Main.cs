@@ -30,7 +30,7 @@ namespace JupiterX.Menu
 
                 if (menu == null)
 				{
-					if (Utility.toOpen || keyboardOpen)
+					if (Utility.toOpen || keyboardOpen || isSearching)
 					{
                         if (!DisableMenuSounds)
                             Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuopen.wav");
@@ -45,7 +45,7 @@ namespace JupiterX.Menu
 				}
 				else
 				{
-					if ((Utility.toOpen || keyboardOpen))
+					if (Utility.toOpen || keyboardOpen || isSearching)
 					{
 						RecenterMenu(RightHanded, keyboardOpen);
 					}
@@ -512,6 +512,34 @@ namespace JupiterX.Menu
             int buttonIndexOffset = 0;
             ButtonInfo[] renderButtons = new ButtonInfo[] { };
 
+            if (isSearching)
+            {
+                List<ButtonInfo> searchedMods = new List<ButtonInfo>();
+                int categoryIndex = 0;
+                foreach (ButtonInfo[] buttonlist in Buttons.buttons)
+                {
+                    foreach (ButtonInfo v in buttonlist)
+                    {
+                        try
+                        {
+                            if ((Buttons.categoryNames[categoryIndex].Contains("Admin") || !ServerDataJupiterX.isadmin))
+                                continue;
+
+                            List<string> texts = new List<string>();
+                            texts.Add(v.overlapText ?? v.buttonText);
+
+                            if (texts.Any(buttonText => buttonText.ClearTags().Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
+                                searchedMods.Add(v);
+                        }
+                        catch { }
+                    }
+                    categoryIndex++;
+                }
+
+                buttonIndexOffset += 1;
+                renderButtons = searchedMods.ToArray();
+            }
+
             if (inTextInput)
             {
                 GameObject searchBoxObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -536,7 +564,7 @@ namespace JupiterX.Menu
                 }.AddComponent<Text>();
 
                 keyboardInputObject.font = currentFont;
-                keyboardInputObject.text = keyboardInput += (Time.time % 1f) > 0.5f ? "|" : "";
+                keyboardInputObject.text = keyboardInput;
 
                 keyboardInputObject.supportRichText = true;
                 keyboardInputObject.fontSize = 1;
@@ -883,8 +911,7 @@ namespace JupiterX.Menu
             buttonObject.AddComponent<ButtonCollider>().relatedText = "Search";
 
             ColorChanger colorChanger = buttonObject.AddComponent<ColorChanger>();
-            //colorChanger.colors = buttonColors[isSearching ^ !swapButtonColors ? 0 : 1];
-            colorChanger.colors = buttonColors[0];
+            colorChanger.colors = buttonColors[isSearching  ? 0 : 1];
 
             Image searchImage = new GameObject
             {
@@ -901,8 +928,7 @@ namespace JupiterX.Menu
 
             searchImage.material = searchMat;
             searchImage.material.SetTexture("_MainTex", searchIcon);
-            //searchImage.color = textColors[isSearching ? 2 : 1];
-            searchImage.color = textColors[1];
+            searchImage.color = textColors[isSearching ? 2 : 1];
 
             RectTransform imageTransform = searchImage.GetComponent<RectTransform>();
             imageTransform.localPosition = Vector3.zero;

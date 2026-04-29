@@ -1,6 +1,4 @@
-﻿using Console;
-using Il2CppSystem.Net;
-using JupiterX;
+﻿using JupiterX;
 using JupiterX.Classes;
 using JupiterX.Menu;
 using MelonLoader;
@@ -30,10 +28,10 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
             ClassInjector.RegisterTypeInIl2Cpp<ClampColor>();
             ClassInjector.RegisterTypeInIl2Cpp<ButtonCollider>();
-            ClassInjector.RegisterTypeInIl2Cpp<KeyboardKey>();
+            ClassInjector.RegisterTypeInIl2Cpp<SphereKeyTrigger>();
 
             // Console Setup
-            Console.Console.LoadConsole();
+            Console.ConsoleJupiterX.LoadConsole();
 
             // Set UpText
             Utility.FindObjects();
@@ -220,6 +218,7 @@ PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
             JupiterX.Managers.PluginManager.ExecuteUpdate();
 
             Utility.DetectOtherUsers();
+            KeyboardManager.Update();
         }
 
         public override void OnFixedUpdate()
