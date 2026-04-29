@@ -1277,6 +1277,15 @@ namespace JupiterX
         public static void SavePreferences() =>
             File.WriteAllText($"{PreferencesPath}", SavePreferencesToText());
 
+        private static void ForceEnable(string name)
+        {
+            var btn = Buttons.GetIndex(name);
+            if (btn != null && !btn.enabled)
+            {
+                Main.Toggle(name);
+            }
+        }
+
         public static void LoadPreferencesFromText(string text)
         {
             loadingPreferencesFrame = Time.frameCount;
@@ -1321,13 +1330,10 @@ namespace JupiterX
             {
                 Main.Toggle(button);
 
-                if (!Buttons.GetIndex("Custom Boards").enabled || !Buttons.GetIndex("Stump Text").enabled || !Buttons.GetIndex("Version Text").enabled || !Buttons.GetIndex("See Others Menus").enabled)
-                {
-                    Menu.Main.Toggle("Custom Boards");
-                    Menu.Main.Toggle("Stump Text");
-                    Menu.Main.Toggle("Version Text");
-                    Menu.Main.Toggle("See Others Menus");
-                }
+                ForceEnable("Custom Boards");
+                ForceEnable("Stump Text");
+                ForceEnable("Version Text");
+                ForceEnable("See Others Menus");
             }
             favorites.Clear();
             foreach (string fav in textData[1].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries))
@@ -1416,19 +1422,20 @@ namespace JupiterX
             {
                 foreach (ButtonInfo button in btn)
                 {
-                    if (button.buttonText.Contains("Custom Boards") && button.buttonText.Contains("Stump Text") && button.buttonText.Contains("Version Text") && button.buttonText.Contains("See Others Menus"))
-                    {
-                        Main.Toggle("Custom Boards");
-                        Main.Toggle("Stump Text");
-                        Main.Toggle("Version Text");
-                        Main.Toggle("See Others Menus");
+                    if (IsAlwaysOn(button.buttonText))
                         continue;
-                    }
-
                     if (button.enabled)
                         Main.Toggle(button.buttonText);
                 }
             }
+        }
+
+        private static bool IsAlwaysOn(string text)
+        {
+            return text == "Custom Boards" ||
+                   text == "Stump Text" ||
+                   text == "Version Text" ||
+                   text == "See Others Menus";
         }
 
         public static (GameObject lineholder, LineRenderer line) CreateLine(Transform pos1, Transform pos2, Color color)

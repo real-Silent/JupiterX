@@ -122,13 +122,6 @@ namespace JupiterX.Managers
                 isTogglable = false,
                 toolTip = "Reload all plugins"
             });
-            Buttons.AddButton(category, new ButtonInfo
-            {
-                buttonText = "Open Plugins Folder",
-                method = () => Process.Start(PluginsPath),
-                isTogglable = false,
-                toolTip = "Open plugin directory"
-            });
         }
         private static string GetStatus(Plugin p)
         {
