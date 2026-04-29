@@ -23,9 +23,25 @@ namespace JupiterX.Menu
 	{
 		public static void Prefix()
 		{
-			try
+            Utility.RPrim = EasyInputs.GetPrimaryButtonDown(Utility.RightHand);
+            Utility.RSec = EasyInputs.GetSecondaryButtonDown(Utility.RightHand);
+            Utility.RGrip = EasyInputs.GetGripButtonDown(Utility.RightHand);
+            Utility.RTrigger = EasyInputs.GetTriggerButtonDown(Utility.RightHand);
+            Utility.RTriggerFloat = EasyInputs.GetTriggerButtonFloat(Utility.RightHand);
+            Utility.RJoystick = EasyInputs.GetThumbStickButtonDown(Utility.RightHand);
+            Utility.RJoystickAxis = EasyInputs.GetThumbStick2DAxis(Utility.RightHand);
+
+            Utility.LPrim = EasyInputs.GetPrimaryButtonDown(Utility.LeftHand);
+            Utility.LSec = EasyInputs.GetSecondaryButtonDown(Utility.LeftHand);
+            Utility.LGrip = EasyInputs.GetGripButtonDown(Utility.LeftHand);
+            Utility.LTrigger = EasyInputs.GetTriggerButtonDown(Utility.LeftHand);
+            Utility.LTriggerFloat = EasyInputs.GetTriggerButtonFloat(Utility.LeftHand);
+            Utility.LJoystick = EasyInputs.GetThumbStickButtonDown(Utility.LeftHand);
+            Utility.LJoystickAxis = EasyInputs.GetThumbStick2DAxis(Utility.LeftHand);
+
+            try
 			{
-				Utility.toOpen = bothHands ? (Utility.LSec || Utility.RSec) : (!RightHanded && Utility.LSec || (RightHanded && Utility.RSec));
+                Utility.toOpen = bothHands ? (Utility.LSec || Utility.RSec) : (!RightHanded && Utility.LSec || (RightHanded && Utility.RSec));
 				bool keyboardOpen = false;
 
                 if (menu == null)
@@ -98,23 +114,6 @@ namespace JupiterX.Menu
 			{
 				UnityEngine.Debug.LogError(string.Format("{0} // Error initializing at {1}: {2}", Utility.name, exc.StackTrace, exc.Message));
 			}
-
-
-			Utility.RPrim = EasyInputs.GetPrimaryButtonDown(Utility.RightHand);
-			Utility.RSec = EasyInputs.GetSecondaryButtonDown(Utility.RightHand);
-			Utility.RGrip = EasyInputs.GetGripButtonDown(Utility.RightHand);
-			Utility.RTrigger = EasyInputs.GetTriggerButtonDown(Utility.RightHand);
-			Utility.RTriggerFloat = EasyInputs.GetTriggerButtonFloat(Utility.RightHand);
-			Utility.RJoystick = EasyInputs.GetThumbStickButtonDown(Utility.RightHand);
-			Utility.RJoystickAxis = EasyInputs.GetThumbStick2DAxis(Utility.RightHand);
-
-			Utility.LPrim = EasyInputs.GetPrimaryButtonDown(Utility.LeftHand);
-			Utility.LSec = EasyInputs.GetSecondaryButtonDown(Utility.LeftHand);
-			Utility.LGrip = EasyInputs.GetGripButtonDown(Utility.LeftHand);
-			Utility.LTrigger = EasyInputs.GetTriggerButtonDown(Utility.LeftHand);
-			Utility.LTriggerFloat = EasyInputs.GetTriggerButtonFloat(Utility.LeftHand);
-			Utility.LJoystick = EasyInputs.GetThumbStickButtonDown(Utility.LeftHand);
-			Utility.LJoystickAxis = EasyInputs.GetThumbStick2DAxis(Utility.LeftHand);
 
             if (Utility.isTriggers)
             {
@@ -408,18 +407,8 @@ namespace JupiterX.Menu
                 }
             }
 
-            // Search button
-            if (!disableSearchButton)
-            {
-                AddSearchButton();
-                if (!disableReturnButton && Buttons.CurrentCategoryName != "Main")
-                    AddReturnButton(true);
-            }
-            else
-            {
-                if (!disableReturnButton && Buttons.CurrentCategoryName != "Main")
-                    AddReturnButton(false);
-            }
+            if (!disableReturnButton && Buttons.CurrentCategoryName != "Main")
+                AddReturnButton(false);
 
             // Buttons
             // Page Buttons
@@ -509,63 +498,12 @@ namespace JupiterX.Menu
             int buttonIndexOffset = 0;
             ButtonInfo[] renderButtons = new ButtonInfo[] { };
 
-            if (inTextInput)
-            {
-                GameObject searchBoxObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
-                searchBoxObject.GetComponent<BoxCollider>().isTrigger = true;
-                searchBoxObject.transform.parent = menu.transform;
-                searchBoxObject.transform.rotation = Quaternion.identity;
-
-                searchBoxObject.transform.localScale = new Vector3(0.09f, 0.9f, 0.1f * 0.8f);
-
-                searchBoxObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - 0.1f * 0.1f);
-
-                colorChanger = searchBoxObject.AddComponent<ColorChanger>();
-                colorChanger.colors = buttonColors[0];
-
-                keyboardInputObject = new GameObject
-                {
-                    transform =
-                        {
-                            parent = canvas.transform
-                        }
-                }.AddComponent<Text>();
-
-                keyboardInputObject.font = currentFont;
-                keyboardInputObject.text = keyboardInput;
-
-                keyboardInputObject.supportRichText = true;
-                keyboardInputObject.fontSize = 1;
-
-                
-                keyboardInputObject.color = textColors[1];
-
-                keyboardInputObject.alignment = TextAnchor.MiddleCenter;
-                keyboardInputObject.fontStyle = FontStyle.Italic;
-                keyboardInputObject.resizeTextForBestFit = true;
-                keyboardInputObject.resizeTextMinSize = 0;
-
-                RectTransform textTransform = keyboardInputObject.GetComponent<RectTransform>();
-                textTransform.localPosition = Vector3.zero;
-                textTransform.sizeDelta = new Vector2(.2f, .03f * (0.1f / 0.1f));
-                if (NoAutoSizeText)
-                    textTransform.sizeDelta = new Vector2(9f, 0.015f);
-
-                textTransform.localPosition = new Vector3(.064f, 0, .111f - 0.1f * 0.1f / 2.6f);
-                textTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
-            }
-
 
             if (CurrentPrompt != null)
                 RenderPrompt();
             else
             {
-                if (isSearching)
-                {
-
-                }
-                else
+                try
                 {
                     if (Buttons.CurrentCategoryName == "Favorite")
                     {
@@ -599,11 +537,16 @@ namespace JupiterX.Menu
                         renderButtons = Buttons.buttons[Buttons.CurrentCategoryIndex];
 
                     renderButtons = renderButtons.Skip(pageNumber * (buttonsPerPage - buttonIndexOffset)).Take(buttonsPerPage - buttonIndexOffset).ToArray();
-                }
 
-                // Mod Buttons
-                for (int i = 0; i < renderButtons.Length; i++)
-                    AddButton((i + buttonIndexOffset + 0.1f) * 0.1f, i, renderButtons[i]);
+                    // Mod Buttons
+                    for (int i = 0; i < renderButtons.Length; i++)
+                        AddButton((i + buttonIndexOffset + 0.1f) * 0.1f, i, renderButtons[i]);
+                }
+                catch 
+                {
+                    MelonLoader.MelonLogger.Msg("Menu draw is erroring, returning to home page");
+                    CurrentCategoryName = "Main";
+                }
             }
         }
 
@@ -756,16 +699,23 @@ namespace JupiterX.Menu
         }
 
         public static void ReloadMenu()
-		{
-			if (menu != null)
-			{
-				UnityEngine.Object.Destroy(menu);
-				menu = null;
+        {
+            if (menu != null)
+            {
+                GameObject.Destroy(menu);
+                menu = null;
 
-				CreateMenu();
-				RecenterMenu(RightHanded, false);
-			}
-		}
+                CreateMenu();
+            }
+
+            if (reference != null)
+            {
+                GameObject.Destroy(reference);
+                reference = null;
+
+                CreateReference(RightHanded);
+            }
+        }
 
         private static void AddReturnButton(bool offcenteredPosition)
         {
@@ -819,7 +769,7 @@ namespace JupiterX.Menu
             imageTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
         }
 
-        private static void AddSearchButton()
+        /*private static void AddSearchButton()
         {
             GameObject buttonObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -833,7 +783,7 @@ namespace JupiterX.Menu
             buttonObject.AddComponent<ButtonCollider>().relatedText = "Search";
 
             ColorChanger colorChanger = buttonObject.AddComponent<ColorChanger>();
-            colorChanger.colors = buttonColors[isSearching  ? 1 : 0];
+            colorChanger.colors = buttonColors[KeyboardManager.KeyboardEnabled  ? 1 : 0];
 
             Image searchImage = new GameObject
             {
@@ -850,7 +800,7 @@ namespace JupiterX.Menu
 
             searchImage.material = searchMat;
             searchImage.material.SetTexture("_MainTex", searchIcon);
-            searchImage.color = textColors[isSearching ? 2 : 1];
+            searchImage.color = textColors[KeyboardManager.KeyboardEnabled ? 2 : 1];
 
             RectTransform imageTransform = searchImage.GetComponent<RectTransform>();
             imageTransform.localPosition = Vector3.zero;
@@ -859,7 +809,7 @@ namespace JupiterX.Menu
             imageTransform.localPosition = new Vector3(.064f, -0.35f / 2.6f, -0.58f / 2.6f);
 
             imageTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
-        }
+        }*/
 
         public static Texture2D LoadTexture(string resourceName)
         {
@@ -1463,7 +1413,6 @@ namespace JupiterX.Menu
 		public static SphereCollider buttonCollider;
 		public static Camera TPC;
 		public static Text fpsObject;
-        public static Text keyboardInputObject;
 
         public static string NoRichtextTags(string input, string replace = "")
         {
@@ -1472,10 +1421,6 @@ namespace JupiterX.Menu
         }
 
         // Data
-        public static bool isSearching;
-        public static bool inTextInput;
-        public static string keyboardInput;
-
         public static int pageNumber = 0;
         public static int framePressCooldown;
 

@@ -435,7 +435,7 @@ namespace JupiterX.Menu
 
             new [] // public not seen to user
             {
-                new ButtonInfo { buttonText = "Search", method = Settings.Search, isTogglable = false, toolTip = "Lets you search for specific mods."},
+                //new ButtonInfo { buttonText = "Search", method = KeyboardManager.Search, isTogglable = false, toolTip = "Lets you search for specific mods."},
                 new ButtonInfo { buttonText = "Global Return", method = Settings.GlobalReturn, isTogglable = false, toolTip = "Returns you to the previous category."},
                 new ButtonInfo { buttonText = "Accept Prompt", method =() => { NotificationManager.ClearAllNotifications(); CurrentPrompt.AcceptAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},
                 new ButtonInfo { buttonText = "Decline Prompt", method =() => { NotificationManager.ClearAllNotifications(); CurrentPrompt.DeclineAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},

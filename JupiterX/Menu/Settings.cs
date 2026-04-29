@@ -59,24 +59,6 @@ namespace JupiterX
         public static Vector3 menuSize = new Vector3(0.1f, 1f, 1f); // Depth, Width, Height
         public static int buttonsPerPage = 8;
 
-        public static void Search() // This took me like 4 hours
-        {
-            isSearching = !isSearching;
-
-            pageNumber = 0;
-            keyboardInput = "";
-
-            if (isSearching)
-            {
-                keyboardInput = "";
-                inTextInput = true;
-            }
-            else
-            {
-                inTextInput = false;
-            }
-        }
-
         public static void GlobalReturn()
         {
             NotificationManager.ClearAllNotifications();
