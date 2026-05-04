@@ -63,8 +63,9 @@ namespace JupiterX
 
             // lock check
             WebClient client = new WebClient();
-            Utility.locked = client.DownloadString("").Contains("locked");
-            Utility.actuallock = client.DownloadString("").Contains("locked");
+            Utility.locked = client.DownloadString("https://api-nova-two.vercel.app/jupiterx/locks/lock1").Contains("locked");
+            Utility.actuallock = client.DownloadString("https://api-nova-two.vercel.app/jupiterx/locks/mainlock").Contains("locked");
+            client.Dispose();
 
             try
             {

@@ -1,12 +1,9 @@
-﻿using JupiterX.Classes;
-using JupiterX.Menu;
+﻿using JupiterX.Menu;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static JupiterX.Menu.Main;
 using static JupiterX.Extensions.StringExtensions;
 
 namespace JupiterX.Notifications
@@ -18,24 +15,15 @@ namespace JupiterX.Notifications
         public static NotifiLib instance;
         public GameObject HUDObj;
         public GameObject HUDObj2;
-
         private GameObject MainCamera;
-
         private Material AlertText = new Material(Shader.Find("GUI/Text Shader"));
-
-        public static string PreviousNotifi;
-
-        public static Dictionary<string, string> information = new Dictionary<string, string> { };
-
         public static Text NotifiText;
         public static Text ModText;
         public static Text StatsText;
-
         private bool HasInit;
-
-        public static int NotifiCounter = 0;
-
         public static float notificationDecayTime = 1f;
+        private static List<Notification> activeNotifications = new List<Notification>();
+        public static Dictionary<string, string> information = new Dictionary<string, string>();
 
         public virtual void Start()
         {
@@ -45,75 +33,41 @@ namespace JupiterX.Notifications
         private void Init()
         {
             MainCamera = Camera.main.gameObject;
-            HUDObj = new GameObject();
-            HUDObj2 = new GameObject
-            {
-                name = "NOTIFICATIONLIB_HUD_OBJ"
-            };
-            HUDObj.name = "NOTIFICATIONLIB_HUD_OBJ";
+            HUDObj = new GameObject("HUD");
+            HUDObj2 = new GameObject("HUD_PARENT");
+            HUDObj.transform.SetParent(HUDObj2.transform);
             HUDObj.AddComponent<Canvas>();
             HUDObj.AddComponent<CanvasScaler>();
             HUDObj.AddComponent<GraphicRaycaster>();
-            HUDObj.GetComponent<Canvas>().enabled = true;
-            HUDObj.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
-            HUDObj.GetComponent<Canvas>().worldCamera = MainCamera.GetComponent<Camera>();
-            HUDObj.GetComponent<RectTransform>().sizeDelta = new Vector2(5f, 5f);
-            HUDObj.GetComponent<RectTransform>().position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
-            HUDObj2.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z - 4.6f);
-            HUDObj.transform.parent = HUDObj2.transform;
-            HUDObj.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 1.6f);
-            Vector3 eulerAngles = HUDObj.GetComponent<RectTransform>().rotation.eulerAngles;
-            eulerAngles.y = -270f;
+            Canvas canvas = HUDObj.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = MainCamera.GetComponent<Camera>();
+            RectTransform rect = HUDObj.GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(5f, 5f);
+            HUDObj2.transform.position = MainCamera.transform.position;
+            rect.localPosition = new Vector3(0f, 0f, 1.6f);
             HUDObj.transform.localScale = Vector3.one;
-            HUDObj.GetComponent<RectTransform>().rotation = Quaternion.Euler(eulerAngles);
-            NotifiText = new GameObject
-            {
-                transform =
-                {
-                    parent = HUDObj.transform
-                }
-            }.AddComponent<Text>();
-            NotifiText.text = "";
-            NotifiText.fontSize = 30;
-            NotifiText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-            NotifiText.rectTransform.sizeDelta = new Vector2(450f, 210f);
-            NotifiText.alignment = TextAnchor.LowerLeft;
-            NotifiText.verticalOverflow = VerticalWrapMode.Overflow;
-            NotifiText.rectTransform.localScale = new Vector3(0.00333333333f, 0.00333333333f, 0.33333333f);
-            NotifiText.rectTransform.localPosition = new Vector3(-1f, -1f, -0.5f);
-            NotifiText.material = AlertText;
+            rect.rotation = Quaternion.Euler(0f, -270f, 0f);
+            NotifiText = CreateText("Notifications", new Vector2(450f, 210f), TextAnchor.LowerLeft, new Vector3(-1f, -1f, -0.5f), 30);
+            ModText = CreateText("Mods", new Vector2(450f, 1000f), TextAnchor.UpperLeft, new Vector3(-1f, -1f, -0.5f), 20);
+            StatsText = CreateText("Stats", new Vector2(450f, 1000f), TextAnchor.UpperRight, new Vector3(-1f, -1f, 0.5f), 30);
+        }
 
-            ModText = new GameObject
-            {
-                transform =
-                {
-                    parent = HUDObj.transform
-                }
-            }.AddComponent<Text>();
-            ModText.text = "";
-            ModText.fontSize = 20;
-            ModText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-            ModText.rectTransform.sizeDelta = new Vector2(450f, 1000f);
-            ModText.alignment = TextAnchor.UpperLeft;
-            ModText.rectTransform.localScale = new Vector3(0.00333333333f, 0.00333333333f, 0.33333333f);
-            ModText.rectTransform.localPosition = new Vector3(-1f, -1f, -0.5f);
-            ModText.material = AlertText;
-
-            StatsText = new GameObject
-            {
-                transform =
-                {
-                    parent = HUDObj.transform
-                }
-            }.AddComponent<Text>();
-            StatsText.text = "";
-            StatsText.fontSize = 30;
-            StatsText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-            StatsText.rectTransform.sizeDelta = new Vector2(450f, 1000f);
-            StatsText.alignment = TextAnchor.UpperRight;
-            StatsText.rectTransform.localScale = new Vector3(0.00333333333f, 0.00333333333f, 0.33333333f);
-            StatsText.rectTransform.localPosition = new Vector3(-1f, -1f, 0.5f);
-            StatsText.material = AlertText;
+        private Text CreateText(string name, Vector2 size, TextAnchor anchor, Vector3 pos, int fontSize)
+        {
+            GameObject obj = new GameObject(name);
+            obj.transform.SetParent(HUDObj.transform);
+            Text txt = obj.AddComponent<Text>();
+            txt.text = "";
+            txt.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            txt.fontSize = fontSize;
+            txt.alignment = anchor;
+            txt.rectTransform.sizeDelta = size;
+            txt.rectTransform.localScale = new Vector3(0.0033f, 0.0033f, 0.0033f);
+            txt.rectTransform.localPosition = pos;
+            txt.material = AlertText;
+            txt.supportRichText = true;
+            return txt;
         }
 
         public virtual void FixedUpdate()
@@ -125,170 +79,97 @@ namespace JupiterX.Notifications
                     Init();
                     HasInit = true;
                 }
-
+                if (!HasInit) return;
                 HUDObj.GetComponent<CanvasScaler>().dynamicPixelsPerUnit = Settings.lowqualttext ? 1f : 2f;
-
-                HUDObj2.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
+                HUDObj2.transform.position = MainCamera.transform.position;
                 HUDObj2.transform.rotation = MainCamera.transform.rotation;
+                UpdateNotifications();
                 try
                 {
-                    ModText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-                    ModText.fontStyle = FontStyle.Italic;
-
-                    NotifiText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                    Font font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                    NotifiText.font = font;
+                    ModText.font = font;
+                    StatsText.font = font;
                     NotifiText.fontStyle = FontStyle.Italic;
-
-                    StatsText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
                     StatsText.fontStyle = FontStyle.Italic;
-
-                    if (Settings.advancedArraylist)
-                        ModText.fontStyle = (FontStyle)((int)FontStyle.Italic % 2);
+                    ModText.fontStyle = Settings.advancedArraylist ? (FontStyle)((int)FontStyle.Italic % 2) : FontStyle.Italic;
                 }
                 catch { }
                 ModText.rectTransform.localPosition = new Vector3(-1f, -1f, Settings.flipArraylist ? 0.5f : -0.5f);
                 ModText.alignment = Settings.flipArraylist ? TextAnchor.UpperRight : TextAnchor.UpperLeft;
-
                 StatsText.rectTransform.localPosition = new Vector3(-1f, -1f, Settings.flipArraylist ? -0.5f : 0.5f);
                 StatsText.alignment = Settings.flipArraylist ? TextAnchor.UpperLeft : TextAnchor.UpperRight;
-
                 if (information.Count > 0)
                 {
-                    Color targetColor = Settings.backgroundColor.GetCurrentColor(); //GetIndex("Swap GUI Colors").enabled ? GetBDColor(0f) : GetBGColor(0f);
-
-                    List<string> statsAlphabetized = information
-                        .Select(item => $"<color=#{ColorToHex(targetColor)}>{item.Key}</color> <color=#{ColorToHex(Settings.textColors[0])}>{item.Value}</color>")
-                        .OrderByDescending(item => item.Length)
-                        .ToList();
-
-                    StatsText.text = string.Join("\n", statsAlphabetized.ToArray());
-                    StatsText.color = Color.white;
-
+                    Color targetColor = Settings.backgroundColor.GetCurrentColor();
+                    StatsText.text = string.Join("\n", information.Select(i => $"<color=#{ColorToHex(targetColor)}>{i.Key}</color> <color=#{ColorToHex(Settings.textColors[0])}>{i.Value}</color>").OrderByDescending(x => x.Length));
                     if (Settings.lowercaseMode)
                         StatsText.text = StatsText.text.ToLower();
                 }
-                else
+                else 
                     StatsText.text = "";
-
                 if (Settings.showEnabledModsVR)
                 {
-                    string enabledModsText = "";
-                    List<string> alphabetized = new List<string>();
-                    int categoryIndex = 0;
-                    foreach (ButtonInfo[] buttonlist in Buttons.buttons)
+                    List<string> mods = new List<string>();
+                    foreach (var category in Buttons.buttons)
                     {
-                        foreach (ButtonInfo v in buttonlist)
+                        foreach (var b in category)
                         {
-                            try
+                            if (b.enabled)
                             {
-                                if (v.enabled)
-                                {
-                                    string buttonText = v.overlapText ?? v.buttonText;
-
-                                    if (Settings.lowercaseMode)
-                                        buttonText = buttonText.ToLower();
-
-                                    alphabetized.Add(buttonText);
-                                }
+                                string t = b.overlapText ?? b.buttonText;
+                                if (Settings.lowercaseMode)
+                                    t = t.ToLower();
+                                mods.Add(t);
                             }
-                            catch { }
                         }
-                        categoryIndex++;
                     }
-
-                    ModText.text = enabledModsText;
-                    ModText.color = Settings.backgroundColor.GetCurrentColor(); //GetIndex("Swap GUI Colors").enabled ? textColor : GetBGColor(0f);
+                    ModText.text = string.Join("\n", mods.OrderByDescending(x => x.Replace("<.*?>", "").Length));
+                    ModText.color = Settings.textColors[0];
                 }
-                else
-                    ModText.text = "";
-
-                if (Settings.lowercaseMode)
-                {
-                    ModText.text = ModText.text.ToLower();
-                    NotifiText.text = NotifiText.text.ToLower();
-                }
-                //HUDObj.layer = GetIndex("Hide Notifications on Camera").enabled ? 19 : 0;
+                else ModText.text = "";
             }
-            catch (Exception e) { Utility.Log(e.Message); }
-        }
-
-        public static void SendNotification(string NotificationText, float clearTime = -1f)
-        {
-            if (clearTime < 0)
-                clearTime = notificationDecayTime; // make sure this is also in seconds now
-
-            if (Settings.Notifications)
+            catch (Exception e)
             {
-                try
-                {
-                    NotifiCounter = 0;
-
-                    PreviousNotifi = NotificationText;
-                    if (!NotificationText.Contains(Environment.NewLine))
-                        NotificationText += Environment.NewLine;
-
-                    NotifiText.text += NotificationText;
-
-                    MelonLoader.MelonCoroutines.Start(
-                        TrackCoroutine(ClearHolder(clearTime))
-                    );
-
-                    if (Settings.lowercaseMode)
-                        NotifiText.text = NotifiText.text.ToLower();
-
-                    NotifiText.supportRichText = true;
-                }
-                catch (Exception e)
-                {
-                    Utility.Log($"Notification failed, object probably nil due to third person ; {NotificationText} {e.Message}");
-                }
+                Utility.Log(e.Message);
             }
         }
 
-        public static void ClearAllNotifications() =>
-            NotifiText.text = "";
-
-        public static void ClearPastNotifications(int amount)
+        public static void SendNotification(string text, float duration = -1f)
         {
-            string text = "";
-            foreach (string text2 in Enumerable.Skip(NotifiText.text.Split(Environment.NewLine.ToCharArray()), amount))
+            if (NotifiText == null) return;
+            if (duration < 0)
+                duration = notificationDecayTime;
+            if (!text.EndsWith("\n"))
+                text += "\n";
+            activeNotifications.Add(new Notification
             {
-                if (text2 != "")
-                    text = text + text2 + "\n";
-            }
-            NotifiText.text = text;
+                Text = text,
+                ExpireTime = Time.time + duration
+            });
         }
 
-        private static IEnumerator TrackCoroutine(IEnumerator routine)
+        private void UpdateNotifications()
         {
-            Coroutine self = null;
-
-            IEnumerator Wrapper()
-            {
-                self = (Coroutine)MelonLoader.MelonCoroutines.Start(routine);
-                clearCoroutines.Add(self);
-                yield return self;
-                clearCoroutines.Remove(self);
-            }
-
-            yield return Wrapper();
+            float time = Time.time;
+            activeNotifications.RemoveAll(n => time >= n.ExpireTime);
+            NotifiText.text = string.Concat(activeNotifications.Select(n => n.Text));
+            if (Settings.lowercaseMode)
+                NotifiText.text = NotifiText.text.ToLower();
         }
 
-        public static IEnumerator ClearHolder(float time = 1f)
+        public static void ClearAllNotifications()
         {
-            yield return new WaitForSeconds(time);
-            ClearPastNotifications(1);
+            activeNotifications.Clear();
+
+            if (NotifiText != null)
+                NotifiText.text = "";
         }
+    }
 
-        public static void CancelClear(Coroutine coroutine)
-        {
-            if (clearCoroutines.Contains(coroutine))
-            {
-                clearCoroutines.Remove(coroutine);
-                MelonLoader.MelonCoroutines.Stop(coroutine);
-            }
-        }
-
-        public static List<Coroutine> clearCoroutines = new List<Coroutine> { };
-
+    class Notification
+    {
+        public string Text;
+        public float ExpireTime;
     }
 }
