@@ -81,6 +81,12 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Advanced Arraylist", enableMethod =() => Settings.advancedArraylist = true, disableMethod =() => Settings.advancedArraylist = false, toolTip = "Updates the FPS Counter less, making it easier to read."},
                 new ButtonInfo { buttonText = "Flip Arraylist", enableMethod =() => Settings.flipArraylist = true, disableMethod =() => Settings.flipArraylist = false, toolTip = "Flips the arraylist at the top of the screen."},
 
+                new ButtonInfo { buttonText = "FPS Overlay", method =() => NotifiLib.information["FPS"] = Utility.lastDeltaTime.ToString(), disableMethod =() => NotifiLib.information.Remove("FPS"), toolTip = "Displays your FPS on your screen."},
+                new ButtonInfo { buttonText = "Ping Overlay", method = Utility.PingOverlay, disableMethod =() => NotifiLib.information.Remove("Ping"), toolTip = "Displays the server's ping on your screen."},
+                new ButtonInfo { buttonText = "Time Overlay", method =() => NotifiLib.information["Time"] = DateTime.Now.ToString("hh:mm tt"), disableMethod =() => NotifiLib.information.Remove("Time"), toolTip = "Displays your current time on your screen."},
+                new ButtonInfo { buttonText = "Velocity Overlay", method =() => NotifiLib.information["Velocity"] = $"{GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity.magnitude:F1}m/s", disableMethod =() => NotifiLib.information.Remove("Velocity"), toolTip = "Displays your velocity on your screen."},
+                new ButtonInfo { buttonText = "Nearby Overlay", method = Utility.NearbyTaggerOverlay, disableMethod =() => NotifiLib.information.Remove("Nearby"), toolTip = "Displays the distance to the nearest tagger/target on your screen."},
+
                 new ButtonInfo { buttonText = "Disable Arraylist GUI", enableMethod =() => Settings.showEnabledModsVR = false, disableMethod =() => Settings.showEnabledModsVR = true, toolTip = "Disables the GUI that shows the enabled mods."},
                 new ButtonInfo { buttonText = "Disable Notifications", enableMethod =() => { Settings.Notifications = false; NotifiLib.ClearAllNotifications(); }, disableMethod =() => Settings.Notifications = true, toolTip = "Toggles the Notifcations."},
                 new ButtonInfo { buttonText = "Disable Master Client Notifications", enableMethod =() => disableMasterClientNotifications = true, disableMethod =() => disableMasterClientNotifications = false, toolTip = "Disables all notifications regarding master client."},

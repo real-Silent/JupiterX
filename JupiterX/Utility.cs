@@ -1,6 +1,6 @@
-﻿using easyInputs;
+﻿using Console;
+using easyInputs;
 using ExitGames.Client.Photon;
-using GorillaLocomotion;
 using GorillaNetworking;
 using Il2CppSystem.Net;
 using JupiterX.Classes;
@@ -18,7 +18,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
-using static Mono.CSharp.Operator;
 
 namespace JupiterX
 {
@@ -43,6 +42,28 @@ namespace JupiterX
             }
         }
 
+        public static void PingOverlay()
+        {
+            NotifiLib.information["Ping"] = PhotonNetwork.GetPing() + "ms";
+        }
+
+        public static void NearbyTaggerOverlay()
+        {
+            float closest = float.MaxValue;
+            foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
+            {
+                if (vrrig != null && vrrig != GorillaTagger.Instance.myVRRig && vrrig.IsTagged())
+                {
+                    float dist = Vector3.Distance(GorillaTagger.Instance.headCollider.transform.position, vrrig.headMesh.transform.position);
+                    if (dist < closest)
+                        closest = dist;
+                }
+            }
+            if (!Mathf.Approximately(closest, float.MaxValue))
+                NotifiLib.information["Nearby"] = $"{closest:F1}m";
+            else
+                NotifiLib.information.Remove("Nearby");
+        }
 
         private static Color HexToColor(string hex)
         {
@@ -1211,6 +1232,8 @@ namespace JupiterX
         public static Text cocText;
         public static Text codeOfConduct;
         public static GorillaComputer gorillaComputer;
+
+        public static string lastDeltaTime;
 
         public static bool FirstLaunch;
         private static void DestroyObject(GameObject objects)

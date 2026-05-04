@@ -147,6 +147,8 @@ namespace JupiterX.Menu
                 }
             }
 
+            Utility.lastDeltaTime = (1f / Time.deltaTime).ToString();
+
             // Join / leave room reminders
             try
             {

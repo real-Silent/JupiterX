@@ -11,6 +11,13 @@ namespace Console
         public static bool IsSteam(this VRRig rig) =>
             rig.GetPlatform() != "Standalone";
 
+        public static bool IsTagged(this VRRig rig)
+        {
+            if (rig.mainSkin.material.name.ToLower().Contains("it") || rig.mainSkin.material.name.Contains("fected"))
+                return true;
+            return false;
+        }
+
         public static string GetPlatform(this VRRig rig)
         {
             int suspiciouslySteam = 0;
