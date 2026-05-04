@@ -1,6 +1,7 @@
 ﻿using GorillaNetworking;
 using JupiterX;
 using JupiterX.Mods;
+using JupiterX.Notifications;
 using MelonLoader;
 using Photon.Pun;
 using System;
@@ -194,9 +195,9 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
             consoleHolder.AddComponent<ServerDataJupiterX>();
         }
 
-        public static void SendNotification(string text, int sendTime = 1000)
+        public static void SendNotification(string text, float sendTime = 1f)
         {
-            NotificationManager.SendNotification2(text);
+            NotifiLib.SendNotification(text, sendTime);
         }
 
         public static void TeleportPlayer(Vector3 position) // Only modify this if you need any special logic

@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using JupiterX.Notifications;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -11,7 +12,7 @@ namespace JupiterX
         {
             if (newPlayer != oldnewplayer && !Settings.Notifications)
             {
-                NotificationManager.SendNotification("green", "JOIN",  "Name: " + newPlayer.NickName);
+                NotifiLib.SendNotification("<color=grey>[</color><color=green>JOIN</color><color=grey>] </color><color=white>Name: " + newPlayer.NickName + "</color>");
                 oldnewplayer = newPlayer;
             }
         }

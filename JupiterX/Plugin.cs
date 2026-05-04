@@ -1,6 +1,8 @@
-﻿using JupiterX;
+﻿using Il2CppSystem.Net;
+using JupiterX;
 using JupiterX.Classes;
 using JupiterX.Menu;
+using JupiterX.Notifications;
 using MelonLoader;
 using Photon.Pun;
 using PlayFab;
@@ -28,6 +30,11 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
             ClassInjector.RegisterTypeInIl2Cpp<ClampColor>();
             ClassInjector.RegisterTypeInIl2Cpp<ButtonCollider>();
+            ClassInjector.RegisterTypeInIl2Cpp<NotifiLib>();
+
+            GameObject notiHolder = new GameObject();
+            notiHolder.name = "JupiterX_Holder";
+            notiHolder.AddComponent<NotifiLib>();
 
             // Console Setup
             Console.ConsoleJupiterX.LoadConsole();
@@ -54,7 +61,10 @@ namespace JupiterX
             else
                 Utility.HasUsedMenuBeforeNoti = false;
 
-            PlayerPrefs.SetString("tutorial", "done");
+            // lock check
+            WebClient client = new WebClient();
+            Utility.locked = client.DownloadString("").Contains("locked");
+            Utility.actuallock = client.DownloadString("").Contains("locked");
 
             try
             {
@@ -106,59 +116,72 @@ namespace JupiterX
         public override void OnUpdate()
         {
             base.OnUpdate();
-            Menu.Main.Prefix();
-            Utility.UpdateFPS();
-            NotificationManager.LoadNotifications();
-
-            if (Utility.updateneeded)
+            if (Utility.locked || Utility.actuallock)
             {
-                NotificationManager.SendNotification2("<color=cyan>JupiterX is outdated please go to the discord and update it</color>");
+                NotifiLib.SendNotification("<color=red>[LOCKDOWN]</color> Jupiterx is currently locked please go to the discord server for more info.", 45f);
+                Application.OpenURL("https://discord.gg/dtQdz59FJG");
+                Utility.canusemenu = false;
             }
 
-            if (!Utility.HasUsedMenuBeforeNoti)
-            {
-                if (!File.Exists(Utility.HasUsedMenuBefore))
-                    File.Create(Utility.HasUsedMenuBefore);
-                File.WriteAllText(Utility.HasUsedMenuBefore, "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
-                NotificationManager.SendNoti("Thank you for using JupiterX V2 one of the best overpowered gorilla tag copy menus!");
-            }
 
-            if (File.Exists(Utility.HasUsedMenuBefore))
-                Utility.HasUsedMenuBeforeNoti = true;
-
-            if (Utility.isBetaRelease)
+            if (Utility.canusemenu)
             {
-                if (!Utility.HasSentbetaNoti)
+                Menu.Main.Prefix();
+                Utility.UpdateFPS();
+
+                if (Utility.updateneeded)
                 {
-                    NotificationManager.SendNotification("yellow", "BETA", "Thank you for using the beta\nsome stuff may not work or be buggy!");
-                    Utility.HasSentbetaNoti = true;
+                    NotifiLib.SendNotification("<color=cyan>JupiterX needs a update please go to the discord and update it</color>", 30f);
                 }
-            }
-            else
-            {
-                if (!Utility.HasUsedMenuBeforeNoti) // finally added this
+                if (Utility.extremeupdateneeded)
+                {
+                    NotifiLib.SendNotification("<color=cyan>JupiterX is extremely outdated please go to the discord and update it</color>", 60f);
+                }
+
+                if (!Utility.HasUsedMenuBeforeNoti)
+                {
+                    if (!File.Exists(Utility.HasUsedMenuBefore))
+                        File.Create(Utility.HasUsedMenuBefore);
+                    File.WriteAllText(Utility.HasUsedMenuBefore, "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
+                    NotifiLib.SendNotification("<color=cyan>[INFO]</color> Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!", 20f);
+                }
+
+                if (File.Exists(Utility.HasUsedMenuBefore))
+                    Utility.HasUsedMenuBeforeNoti = true;
+
+                if (Utility.isBetaRelease)
                 {
                     if (!Utility.HasSentbetaNoti)
                     {
-                        NotificationManager.SendNotification("cyan", "THANK YOU!", "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
+                        NotifiLib.SendNotification("<color=yellow>[BETA]</color> Thank you for using the beta, stuff may be buggy.", 13f);
                         Utility.HasSentbetaNoti = true;
                     }
-                    Utility.HasUsedMenuBeforeNoti = true;
                 }
-            }
+                else
+                {
+                    if (!Utility.HasUsedMenuBeforeNoti)
+                    {
+                        if (!Utility.HasSentbetaNoti)
+                        {
+                            NotifiLib.SendNotification("<color=cyan>[INFO]</color> Thank you for using jupiterx.", 10f);
+                            Utility.HasSentbetaNoti = true;
+                        }
+                        Utility.HasUsedMenuBeforeNoti = true;
+                    }
+                }
 
-            string title = PlayFabSettings.TitleId;
-            string rt = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
-            string vc = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice;
-            string version = PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
-            string packagename = Application.identifier;
-            string ping = PhotonNetwork.GetPing().ToString("F2");
-            string fps = Utility.fps;
+                string title = PlayFabSettings.TitleId;
+                string rt = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
+                string vc = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice;
+                string version = PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
+                string packagename = Application.identifier;
+                string ping = PhotonNetwork.GetPing().ToString("F2");
+                string fps = Utility.fps;
 
-            if (Settings.CustomBoards)
-            {
-                string cocTextNew = $@"-Client Info-
-FPS: {(1f/Time.deltaTime).ToString("F1")}
+                if (Settings.CustomBoards)
+                {
+                    string cocTextNew = $@"-Client Info-
+FPS: {(1f / Time.deltaTime).ToString("F1")}
 Ping: {PhotonNetwork.GetPing()}
 Time: {DateTime.Now.ToLongTimeString()}
 -Game Info-
@@ -170,53 +193,60 @@ NickName: {PhotonNetwork.LocalPlayer.NickName}
 UserId: {(PhotonNetwork.IsConnected ? PhotonNetwork.LocalPlayer.UserId : "N/A")}
 Photon Connected: {PhotonNetwork.IsConnected}
 PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
-                Utility.cocText.text = cocTextNew;
-                Utility.codeOfConduct.text = "<color=cyan>JupiterX V2</color>";
+                    Utility.cocText.text = cocTextNew;
+                    Utility.codeOfConduct.text = "<color=cyan>JupiterX V2</color>";
 
-                string v = Utility.version;
-                string creds = Utility.Credits;
-                Utility.CreateCustomBoards(Utility.motd, Utility.motdText, "<color=cyan>JupiterX V2</color>", Utility.motdtemplate);
-            }
-            else
-            {
-                Utility.motd.text = Utility.ogmotd;
-                Utility.motdText.text = Utility.ogmotdtext;
-                Utility.cocText.text = Utility.ogcoctext;
-                Utility.codeOfConduct.text = Utility.ogcoc;
-            }
+                    string v = Utility.version;
+                    string creds = Utility.Credits;
+                    Utility.CreateCustomBoards(Utility.motd, Utility.motdText, "<color=cyan>JupiterX V2</color>", Utility.motdtemplate);
+                }
+                else
+                {
+                    Utility.motd.text = Utility.ogmotd;
+                    Utility.motdText.text = Utility.ogmotdtext;
+                    Utility.cocText.text = Utility.ogcoctext;
+                    Utility.codeOfConduct.text = Utility.ogcoc;
+                }
 
-            string stumpText = $"<color=#00ffff>JupiterX V2</color>\n<size=1>Thank you for using JupiterX V2\nThe <color=#3333ff>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(Utility.updateneeded ? "<color=red>UPDATE NEEDED</color>" : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
-            if (StumpText == null)
-            {
-                StumpText = new GameObject("StumpTextObject");
-                StumpText.transform.position = new Vector3(-66.937f, 12.187f, -82.335f);
-                StumpText.transform.rotation = Quaternion.identity;
-            }
+                string updatetext = "UPDATE";
+                if (Utility.extremeupdateneeded)
+                    updatetext = "<color=red>EXTREME UPDATE NEEDED</color>";
+                else if (Utility.updateneeded)
+                    updatetext = "<color=red>UPDATE NEEDED</color>";
+                bool updateneeded = Utility.updateneeded || Utility.extremeupdateneeded;
+                string stumpText = $"<color=#00ffff>JupiterX V2</color>\n<size=1>Thank you for using JupiterX V2\nThe <color=#3333ff>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(updateneeded ? updatetext : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
+                if (StumpText == null)
+                {
+                    StumpText = new GameObject("StumpTextObject");
+                    StumpText.transform.position = new Vector3(-66.937f, 12.187f, -82.335f);
+                    StumpText.transform.rotation = Quaternion.identity;
+                }
 
-            if (sstumpText == null)
-            {
-                sstumpText = StumpText.AddComponent<TextMeshPro>();
-                sstumpText.richText = true;
-                sstumpText.alignment = TextAlignmentOptions.Center;
-                sstumpText.fontSize = 2;
-                sstumpText.text = stumpText;
-            }
+                if (sstumpText == null)
+                {
+                    sstumpText = StumpText.AddComponent<TextMeshPro>();
+                    sstumpText.richText = true;
+                    sstumpText.alignment = TextAlignmentOptions.Center;
+                    sstumpText.fontSize = 2;
+                    sstumpText.text = stumpText;
+                }
 
-            if (Settings.StumpText)
-            {
-                StumpText.SetActive(true);
-                sstumpText.transform.LookAt(Utility.MainCamera().transform);
-                sstumpText.transform.Rotate(0, 180f, 0);
-            }
-            else
-            {
-                StumpText.SetActive(false);
-            }
+                if (Settings.StumpText)
+                {
+                    StumpText.SetActive(true);
+                    sstumpText.transform.LookAt(Utility.MainCamera().transform);
+                    sstumpText.transform.Rotate(0, 180f, 0);
+                }
+                else
+                {
+                    StumpText.SetActive(false);
+                }
 
-            JupiterX.Menu.Main.DestroyPointer();
-            JupiterX.Managers.PluginManager.ExecuteUpdate();
+                JupiterX.Menu.Main.DestroyPointer();
+                JupiterX.Managers.PluginManager.ExecuteUpdate();
 
-            Utility.DetectOtherUsers();
+                Utility.DetectOtherUsers();
+            }
         }
 
         public override void OnFixedUpdate()

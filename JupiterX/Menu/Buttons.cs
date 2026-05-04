@@ -1,6 +1,7 @@
 ﻿using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Mods;
+using JupiterX.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +78,11 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Menu Outline", enableMethod =() => menuoutline = true, disableMethod =() => menuoutline = false, isTogglable = true, toolTip = "Gives the menu a outline." },
                 new ButtonInfo { buttonText = "Change Drop Type", method =() => Utility.ChangeDropType(), enableMethod =() => Utility.ChangeDropType(), disableMethod =() => Utility.ChangeDropType(false), incremental = true, overlapText = "Change Drop Type <color=cyan>[Destroy]</color>", isTogglable = false, toolTip = "Changes the drop type for the menu." },
 
-                new ButtonInfo { buttonText = "Disable Notifications", enableMethod =() => { Notifications = false; NotificationManager.ClearAllNotifications(); }, disableMethod =() => Notifications = true, toolTip = "Toggles the Notifcations."},
+                new ButtonInfo { buttonText = "Advanced Arraylist", enableMethod =() => Settings.advancedArraylist = true, disableMethod =() => Settings.advancedArraylist = false, toolTip = "Updates the FPS Counter less, making it easier to read."},
+                new ButtonInfo { buttonText = "Flip Arraylist", enableMethod =() => Settings.flipArraylist = true, disableMethod =() => Settings.flipArraylist = false, toolTip = "Flips the arraylist at the top of the screen."},
+
+                new ButtonInfo { buttonText = "Disable Arraylist GUI", enableMethod =() => Settings.showEnabledModsVR = false, disableMethod =() => Settings.showEnabledModsVR = true, toolTip = "Disables the GUI that shows the enabled mods."},
+                new ButtonInfo { buttonText = "Disable Notifications", enableMethod =() => { Settings.Notifications = false; NotifiLib.ClearAllNotifications(); }, disableMethod =() => Settings.Notifications = true, toolTip = "Toggles the Notifcations."},
                 new ButtonInfo { buttonText = "Disable Master Client Notifications", enableMethod =() => disableMasterClientNotifications = true, disableMethod =() => disableMasterClientNotifications = false, toolTip = "Disables all notifications regarding master client."},
                 new ButtonInfo { buttonText = "Disable Room Notifications", enableMethod =() => disableRoomNotifications = true, disableMethod =() => disableRoomNotifications = false, toolTip = "Disables all notifications regarding the room."},
                 new ButtonInfo { buttonText = "Clear Notifications on Disconnect", enableMethod =() => clearNotificationsOnDisconnect = true, disableMethod =() => clearNotificationsOnDisconnect = false, toolTip = "Clears all notifications on disconnect."},
@@ -116,7 +121,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Important", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Quit Game", method =() => Important.QuitGame(), isTogglable = false, toolTip = "Quits your game." },
                 new ButtonInfo { buttonText = "Anti AFK", method =() => Important.AntiAFK(), isTogglable = true, toolTip = "Disables the afk kick you get." },
-                new ButtonInfo { buttonText = "Clear Notifcations", method =() => NotificationManager.ClearAllNotifications(), isTogglable = false, toolTip = "Clears all the notifications." },
+                new ButtonInfo { buttonText = "Clear Notifcations", method =() => NotifiLib.ClearAllNotifications(), isTogglable = false, toolTip = "Clears all the notifications." },
 
                 new ButtonInfo { buttonText = "Turning", method =() => Important.Turning(), isTogglable = true, toolTip = "Lets you turn." },
 
@@ -437,8 +442,8 @@ namespace JupiterX.Menu
             {
                 //new ButtonInfo { buttonText = "Search", method = KeyboardManager.Search, isTogglable = false, toolTip = "Lets you search for specific mods."},
                 new ButtonInfo { buttonText = "Global Return", method = Settings.GlobalReturn, isTogglable = false, toolTip = "Returns you to the previous category."},
-                new ButtonInfo { buttonText = "Accept Prompt", method =() => { NotificationManager.ClearAllNotifications(); CurrentPrompt.AcceptAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},
-                new ButtonInfo { buttonText = "Decline Prompt", method =() => { NotificationManager.ClearAllNotifications(); CurrentPrompt.DeclineAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},
+                new ButtonInfo { buttonText = "Accept Prompt", method =() => { NotifiLib.ClearAllNotifications(); CurrentPrompt.AcceptAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},
+                new ButtonInfo { buttonText = "Decline Prompt", method =() => { NotifiLib.ClearAllNotifications(); CurrentPrompt.DeclineAction?.Invoke(); Utility.StopCurrentPrompt(); }, isTogglable = false},
             }
         };
 

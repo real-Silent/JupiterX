@@ -1,4 +1,5 @@
-﻿using static JupiterX.Menu.Main;
+﻿using UnityEngine;
+using static JupiterX.Menu.Main;
 
 namespace JupiterX.Extensions
 {
@@ -9,5 +10,8 @@ namespace JupiterX.Extensions
 
         public static string EnforceLength(this string str, int maxLength) =>
             str.Length > maxLength ? str[..maxLength] : str;
+
+        public static string ColorToHex(Color color) =>
+            ColorUtility.ToHtmlStringRGB(color);
     }
 }

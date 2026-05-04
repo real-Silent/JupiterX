@@ -4,6 +4,7 @@ using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Mods;
+using JupiterX.Notifications;
 using Mono.CSharp;
 using Photon.Pun;
 using Photon.Realtime;
@@ -53,6 +54,9 @@ namespace JupiterX
         public static bool DisablePageNumber = false;
         public static bool hidepointer = false;
         public static bool networkedmenu = true;
+        public static bool showEnabledModsVR = true;
+        public static bool advancedArraylist;
+        public static bool flipArraylist;
 
         public static KeyCode keyboardButton = KeyCode.Q;
 
@@ -61,7 +65,7 @@ namespace JupiterX
 
         public static void GlobalReturn()
         {
-            NotificationManager.ClearAllNotifications();
+            NotifiLib.ClearAllNotifications();
             Toggle(Buttons.buttons[Buttons.CurrentCategoryIndex][Buttons.GetCategory("Main")].buttonText, true);
 
             if (prompts.Count > 0)

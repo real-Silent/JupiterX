@@ -2,6 +2,7 @@
 using easyInputs;
 using JupiterX.Classes;
 using JupiterX.Extensions;
+using JupiterX.Notifications;
 using Photon.Pun;
 using Steamworks;
 using System;
@@ -157,15 +158,15 @@ namespace JupiterX.Menu
                 if (PhotonNetwork.InRoom && !lastInRoom)
                 {
                     if (!disableRoomNotifications)
-                        NotificationManager.SendNotification("blue", "JOIN ROOM", "Room Code: " + lastRoom + "");
+                        NotifiLib.SendNotification("<color=grey>[</color><color=blue>JOIN ROOM</color><color=grey>]</color> Room Code: " + lastRoom + "");
                 }
                 if (!PhotonNetwork.InRoom && lastInRoom)
                 {
                     if (clearNotificationsOnDisconnect)
-                        NotificationManager.ClearAllNotifications();
+                        NotifiLib.ClearAllNotifications();
 
                     if (!disableRoomNotifications)
-                        NotificationManager.SendNotification("blue", "LEAVE ROOM", "Room Code: " + lastRoom + "");
+                        NotifiLib.SendNotification("<color=grey>[</color><color=blue>LEAVE ROOM</color><color=grey>]</color> Room Code: " + lastRoom + "");
                     lastMasterClient = false;
                 }
 
@@ -187,7 +188,7 @@ namespace JupiterX.Menu
                     {
                         if (disableMasterClientNotifications)
                             return;
-                        NotificationManager.SendNotification("purple", "MASTER", "You are now master client.");
+                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>MASTER</color><color=grey>]</color> You are now master client.");
                     }
                     lastMasterClient = PhotonNetwork.LocalPlayer.IsMasterClient;
                 }
@@ -1021,24 +1022,24 @@ namespace JupiterX.Menu
                     if (favorites.Contains(target.buttonText))
                     {
                         favorites.Remove(target.buttonText);
-                        NotificationManager.SendNotification2("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Removed from favorites.");
+                        NotifiLib.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Removed from favorites.");
                     }
                     else
                     {
                         favorites.Add(target.buttonText);
-                        NotificationManager.SendNotification2("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Added to favorites.");
+                        NotifiLib.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Added to favorites.");
                     }
                     break;
                 case true when fromMenu && !ignoreForce && triggerHeld:
                     if (!quickActions.Contains(target.buttonText))
                     {
                         quickActions.Add(target.buttonText);
-                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
+                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
                     }
                     else
                     {
                         quickActions.Remove(target.buttonText);
-                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
+                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
                     }
                     break;
                 default:
@@ -1049,7 +1050,7 @@ namespace JupiterX.Menu
                         if (target.enabled)
                         {
                             if (fromMenu)
-                                NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
+                                NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
 
                             try { target.enableMethod?.Invoke(); }
                             catch (Exception exc)
@@ -1060,7 +1061,7 @@ namespace JupiterX.Menu
                         else
                         {
                             if (fromMenu)
-                                NotificationManager.SendNotification2($"<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> {target.toolTip}");
+                                NotifiLib.SendNotification($"<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> {target.toolTip}");
                             try { target.disableMethod?.Invoke(); }
                             catch (Exception exc)
                             {
@@ -1071,7 +1072,7 @@ namespace JupiterX.Menu
                     else
                     {
                         if (fromMenu)
-                            NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
+                            NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
 
                         try { target.method?.Invoke(); }
                         catch (Exception exc)
@@ -1105,18 +1106,18 @@ namespace JupiterX.Menu
                     if (!quickActions.Contains(target.buttonText))
                     {
                         quickActions.Add(target.buttonText);
-                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
+                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
                     }
                     else
                     {
                         quickActions.Remove(target.buttonText);
-                        NotificationManager.SendNotification2("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
+                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
                     }
                     break;
                 default:
                     if (increment)
                     {
-                        NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>INCREMENT</color><color=grey>]</color> {target.toolTip}");
+                        NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>INCREMENT</color><color=grey>]</color> {target.toolTip}");
                         try { target.enableMethod?.Invoke(); }
                         catch (Exception exc)
                         {
@@ -1125,7 +1126,7 @@ namespace JupiterX.Menu
                     }
                     else
                     {
-                        NotificationManager.SendNotification2($"<color=grey>[</color><color=red>DECREMENT</color><color=grey>]</color> {target.toolTip}");
+                        NotifiLib.SendNotification($"<color=grey>[</color><color=red>DECREMENT</color><color=grey>]</color> {target.toolTip}");
                         try { target.disableMethod?.Invoke(); }
                         catch (Exception exc)
                         {
@@ -1399,7 +1400,7 @@ namespace JupiterX.Menu
             List<ButtonInfo> buttons = Buttons.buttons[0].ToList();
             buttons.Add(new ButtonInfo { buttonText = "Admin", method = () => Buttons.CurrentCategoryName = "Admin", isTogglable = false, toolTip = "Opens the admin mods." });
             Buttons.buttons[0] = buttons.ToArray();
-            NotificationManager.SendNotification2($"<color=grey>[</color><color=cyan>{(playername == "NOVA" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.");
+            NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>{(playername == "NOVA" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.", 10f);
         }
 
         // Variables

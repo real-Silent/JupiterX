@@ -1,4 +1,5 @@
 ﻿using JupiterX.Menu;
+using JupiterX.Notifications;
 using Photon.Pun;
 using UnityEngine;
 using static JupiterX.Menu.Main;
@@ -32,12 +33,12 @@ namespace JupiterX.Mods
                             Utility.myVRRig().transform.position = rig.headConstraint.transform.position;
                             Utility.myVRRig().rightHandTransform.transform.position = rig.headConstraint.transform.position;
                             Utility.RightHandTransform().position = rig.headConstraint.transform.position;
-                            NotificationManager.SendNotification("yellow", "TAGGED", "Tagged All");
+                            NotifiLib.SendNotification("<color=yellow>[INFO]</color> Tagged all!", 7f);
                         }
                         else
                         {
                             Utility.myVRRig().enabled = true;
-                            NotificationManager.SendNotification("red", "ERROR", "You are not tagged");
+                            NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not tagged.", 10f);
                         }
                     }
                 }

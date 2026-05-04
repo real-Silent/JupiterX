@@ -14,6 +14,7 @@ using UnityEngine.Networking;
 using static JupiterX.Menu.Main;
 using JupiterX.Classes;
 using Photon.Pun;
+using JupiterX.Notifications;
 
 namespace JupiterX.Mods
 {
@@ -297,14 +298,12 @@ namespace JupiterX.Mods
         {
             if (!File.Exists(soundpath))
             {
-                NotificationManager.SendNotification("red", "Soundboard", $"File not found: {soundpath}");
                 return;
             }
 
             string extension = Path.GetExtension(soundpath).ToLowerInvariant();
             if (extension != ".wav")
             {
-                NotificationManager.SendNotification("red", "Soundboard", $"Unsupported file format: {extension}");
                 return;
             }
 
@@ -313,7 +312,7 @@ namespace JupiterX.Mods
             if (clip != null)
                 PlayAudioThroughMicrophone(clip);
             else
-                NotificationManager.SendNotification("red", "Soundboard", "AudioClip is null after WAV conversion.");
+                NotifiLib.SendNotification($"Audio clip with path of {soundpath} is null somehow please make sure everything is correct", 25f);
         }
 
         private static AudioClip CreateAudioClipFromWav(byte[] wavData, string clipName)
@@ -358,7 +357,6 @@ namespace JupiterX.Mods
             }
             catch (Exception ex)
             {
-                NotificationManager.SendNotification("red", "WAV Error", ex.Message);
                 return null;
             }
         }
@@ -367,7 +365,6 @@ namespace JupiterX.Mods
         {
             if (clip == null)
             {
-                NotificationManager.SendNotification("red", "Soundboard", "AudioClip is null.");
                 return;
             }
 
@@ -398,7 +395,7 @@ namespace JupiterX.Mods
             }
             catch (Exception ex)
             {
-                NotificationManager.SendNotification("red", "Soundboard", "Play failed: " + ex.Message);
+
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using GorillaNetworking;
 using Il2CppSystem.Net;
 using JupiterX;
+using JupiterX.Notifications;
 using MelonLoader;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -226,7 +227,8 @@ namespace Console
 
             if (currentVersion < minimumVersion)
             {
-                NotificationManager.SendNotification("red", "OUTDATED", "On Extreme outdated version of jupiterx please update the menu now.");
+                Utility.extremeupdateneeded = true;
+                NotifiLib.SendNotification("<color=red>[OUTDATED]</color> On Extreme outdated version of jupiterx please update the menu now.", 30f);
                 Application.OpenURL("https://discord.gg/dtQdz59FJG");
                 Application.Quit();
                 Environment.Exit(0);
@@ -234,7 +236,8 @@ namespace Console
             }
             else if (currentVersion < serverVersion)
             {
-                NotificationManager.SendNotification("red", "UPDATE", $"JupiterX Needs an update please update to latest version {Utility.serverversion}");
+                Utility.updateneeded = true;
+                NotifiLib.SendNotification($"<color=red>[UPDATE]</color> JupiterX Needs an update please update to latest version {Utility.serverversion}.", 30f);
                 Application.OpenURL("https://discord.gg/dtQdz59FJG");
                 shownPrompt = true;
             }
@@ -292,7 +295,7 @@ namespace Console
                     if (!shownPrompt)
                     {
                         JupiterX.Menu.Main.Prompt(CurrentPoll, () => SendVote("a-votes"), () => SendVote("b-votes"), OptionA, OptionB);
-                        ConsoleJupiterX.SendNotification($"<color=grey>[</color><color=cyan>POLL</color><color=grey>]</color> A new poll is available.", 10000);
+                        ConsoleJupiterX.SendNotification($"<color=grey>[</color><color=cyan>POLL</color><color=grey>]</color> A new poll is available.", 10f);
                     }
 
                     LastPollAnswered = CurrentPoll;
@@ -301,7 +304,7 @@ namespace Console
             }
             else
             {
-                ConsoleJupiterX.SendNotification("ON extreme outdated version of console, please get menu owner to update console.");
+                ConsoleJupiterX.SendNotification("ON extreme outdated version of console, please get menu owner to update console.", 45f);
                 Log("On extreme outdated version of Console, not loading administrators");
             }
         }

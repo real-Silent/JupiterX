@@ -6,6 +6,7 @@ using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Mods;
+using JupiterX.Notifications;
 using Photon.Pun;
 using Photon.Realtime;
 using PlayFab;
@@ -157,7 +158,7 @@ namespace JupiterX
 
         static void OnError(PlayFabError re)
         {
-            NotificationManager.SendNotification("red", "FAILED", $"Error {re.Error} , EMessage: {re.ErrorMessage}");
+            NotifiLib.SendNotification("Fialed to auth " + re.ErrorMessage);
         }
 
         public static PhotonView GetOwnerShip(Photon.Realtime.Player newOwner)
@@ -1184,6 +1185,10 @@ namespace JupiterX
         public static bool HasSentbetaNoti = false;
         public static bool HasUsedMenuBeforeNoti = false;
 
+        public static bool canusemenu = true;
+        public static bool locked = false;
+        public static bool actuallock = false;
+
         public static string name = "JupiterX";
         public static string author = "Nova";
 
@@ -1194,6 +1199,7 @@ namespace JupiterX
 
         public static bool isBetaRelease = false;
         public static bool updateneeded = false;
+        public static bool extremeupdateneeded = false;
         public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {Utility.version}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD discord.gg/bCjKrZaT2T";
 
         public static string MainPath = Path.Combine(Application.persistentDataPath, "JupiterX");
@@ -1469,7 +1475,7 @@ namespace JupiterX
                         if (rig.concatStringOfCosmeticsAllowed.Contains(cosmeticId))
                         {
                             PhotonNetwork.Disconnect();
-                            NotificationManager.SendNotification("cyan", "LEAVE", $"Someone with {cosmeticId} joined your room.");
+                            NotifiLib.SendNotification("Someone with " + cosmeticId + " joined.", 5f);
                         }
                     }
                 }

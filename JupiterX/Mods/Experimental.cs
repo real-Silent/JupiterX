@@ -6,6 +6,7 @@ using Il2CppSystem;
 using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
+using JupiterX.Notifications;
 using Photon.Pun;
 using PlayFab;
 using System.IO;
@@ -101,17 +102,18 @@ namespace JupiterX.Mods
 
         static void OnError()
         {
-            NotificationManager.SendNotification("red", "ERROR", "Unable to connect to playfab");
+            NotifiLib.SendNotification("<color=red>[ERROR]</color> Unable to authenticate to playfab!", 15f);
         }
 
         static void OnLogin()
         {
+            NotifiLib.SendNotification("<color=cyan>[INFO]</color> Authenticating to playfab!", 10f);
             GorillaTagger.Instance.offlineVRRig.GetUserCosmeticsAllowed();
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.ConnectToRegion("usw");
-            NotificationManager.SendNotification("cyan", "LOGIN", "Successfully logged in");
             PhotonNetworkController phc = GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>();
             phc.InitiateConnection();
+            NotifiLib.SendNotification("<color=cyan>[INFO]</color> Authed!", 5f);
         }
 
         public static void GetFuckedNetPlayers()

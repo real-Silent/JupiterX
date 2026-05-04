@@ -64,7 +64,7 @@
     <Compile Include="Mods\Visual.cs" />
     <Compile Include="Mods\vRRig.cs" />
     <Compile Include="Notifications\LeavePatch.cs" />
-    <Compile Include="Notifications\NotificationManager.cs" />
+    <Compile Include="Notifications\Library.cs" />
     <Compile Include="Notifications\JoinPatch.cs" />
     <Compile Include="Patches\AntiQuit.cs" />
     <Compile Include="Patches\NoQuitBox.cs" />

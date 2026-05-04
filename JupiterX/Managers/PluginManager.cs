@@ -8,6 +8,7 @@ using System.Reflection;
 using UnityEngine;
 using System.Diagnostics;
 using JupiterX.Classes;
+using JupiterX.Notifications;
 
 namespace JupiterX.Managers
 {
@@ -30,7 +31,7 @@ namespace JupiterX.Managers
         private static string PluginsPath => Path.Combine(Application.persistentDataPath, "JupiterX/Plugins");
         public static void ReloadPlugins()
         {
-            NotificationManager.SendNotification2("<color=yellow>[SYSTEM]</color> Reloading plugins...");
+            NotifiLib.SendNotification("Reloading plugins...", 500);
             Utility.SavePreferences();
             try
             {
