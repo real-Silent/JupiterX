@@ -67,7 +67,6 @@ namespace JupiterX.Notifications
             txt.rectTransform.localPosition = pos;
             txt.material = AlertText;
             txt.supportRichText = true;
-            txt.transform.SetParent(MainCamera.transform);
             return txt;
         }
 
