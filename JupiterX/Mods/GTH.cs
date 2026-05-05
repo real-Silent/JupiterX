@@ -327,10 +327,9 @@ namespace JupiterX.Mods
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
-                    GameObject monster = Ray.collider.GetComponentInParent<GameObject>();
-                    if (monster.name.ToLower().Contains(name))
+                    if (Ray.collider.gameObject.name.ToLower().Contains(name))
                     {
-                        monster.transform.position += new Vector3(monster.transform.position.x, monster.transform.position.y + 250f, monster.transform.position.z);
+                        Ray.collider.gameObject.transform.position += new Vector3(Ray.collider.gameObject.transform.position.x, Ray.collider.gameObject.transform.position.y + 250f, Ray.collider.gameObject.transform.position.z);
                     }
                 }
             }
@@ -344,10 +343,9 @@ namespace JupiterX.Mods
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
-                    GameObject monster = Ray.collider.GetComponentInParent<GameObject>();
-                    if (monster.GetComponent(name))
+                    if (Ray.collider.gameObject.GetComponent(name))
                     {
-                        monster.transform.position += new Vector3(monster.transform.position.x, monster.transform.position.y + 250f, monster.transform.position.z);
+                        Ray.collider.gameObject.transform.position += new Vector3(Ray.collider.gameObject.transform.position.x, Ray.collider.gameObject.transform.position.y + 250f, Ray.collider.gameObject.transform.position.z);
                     }
                 }
             }
