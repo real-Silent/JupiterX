@@ -7,6 +7,7 @@ using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Mods;
 using JupiterX.Notifications;
+using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using PlayFab;
@@ -15,6 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using static JupiterX.Menu.Main;
@@ -235,28 +237,26 @@ namespace JupiterX
             }
         }
 
-        public static void BetaBanAll(string userid) // release december 1st 25 -- current date 31/08/2025 releasing today ig
+        public static void BetaBanAll(string userid)
         {
-            string photonId = userid;
-            string titleId = PlayFabSettings.staticSettings.TitleId;
-            string msg = "Modding";
-            string rsn = "Cheating";
-
-            string url = "https://api-colossal-quest.vercel.app/api/runcloudscript"; // abuse this i will take it down
-
             WebClient client = new WebClient();
-            try
+            client.Headers.Add("Content-Type", "application/json");
+            string url = "https://api-nova-two.vercel.app/banusingcloudscript";
+            string useragent = "banneratqolossallol";
+            string titleId = PlayFabSettings.TitleId;
+            client.Headers.Add("User-Agent", useragent);
+            string playerId = userid;
+            var payload = new
             {
-                client.Headers.Add("Content-Type", "application/json");
-                string payload = $"{{\"playerId\":\"{photonId}\", \"titleId\":\"{titleId}\", \"msg\":\"{msg}\", \"rsn\":\"{rsn}\"}}";
-
-                string response = client.UploadString(url, "POST", payload);
-                MelonLoader.MelonLogger.Msg("Cloud Script Response: " + response);
-            }
-            catch (Exception ex)
-            {
-                MelonLoader.MelonLogger.Error("Error sending Cloud Script: " + ex.Message);
-            }
+                titleId = titleId,
+                playerId = userid
+            };
+            string json = JsonConvert.SerializeObject(payload);
+            byte[] data = Encoding.UTF8.GetBytes(json);
+            byte[] response = client.UploadData(url, "POST", data);
+            string responseString = Encoding.UTF8.GetString(response);
+            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Success {responseString}", 30f);
+            client.Dispose();
         }
 
         public static void BetaTPToSling()

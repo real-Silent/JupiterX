@@ -310,6 +310,9 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Crash All V4 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV4(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash All V5 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV5(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
 
+                new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room." },
+                new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at." },
+
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>CASUAL</color>]", method =() => Experimental.SetGameMode("CASUAL"), isTogglable = false, toolTip = "Sets the game mode to casual."  },
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>INFECTION</color>]", method =() => Experimental.SetGameMode("INFECTION"), isTogglable = false, toolTip = "Sets the game mode to infection."  },
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>HUNT</color>]", method =() => Experimental.SetGameMode("HUNT"), isTogglable = false, toolTip = "Sets the game mode to hunt."  },
@@ -627,7 +630,4 @@ new ButtonInfo { buttonText = "Ban Gun [JX Modding Game]", method =() => Overpow
 new ButtonInfo { buttonText = "Dynamic Animations", enableMethod =() => dynamicAnimations = true, disableMethod =() => dynamicAnimations = false },
 
 new ButtonInfo { buttonText = "Teleport To Slingshot", method =() => Utility.BetaTPToSling(), isTogglable = true },
-
-new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room."  },
-new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at."  },
 */
