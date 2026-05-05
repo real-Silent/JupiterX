@@ -64,6 +64,20 @@ namespace JupiterX.Mods
             PhotonNetwork.CreateRoom(roomName, roomOptions);
         }
 
+        public static void CreatePublic(byte playercount)
+        {
+            Hashtable customProps = new Hashtable();
+            customProps.Add("gameMode", GorillaComputer.instance.currentQueue + GorillaComputer.instance.currentGameMode);
+            RoomOptions roomOptions = new RoomOptions()
+            {
+                SuppressPlayerInfo = false,
+                MaxPlayers = playercount,
+                PublishUserId = false,
+                CustomRoomProperties = customProps
+            };
+            PhotonNetwork.CreateRoom("NBJG", roomOptions);
+        }
+
         public static void MatSpamAll()
         {
             SetMaster();

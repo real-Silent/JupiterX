@@ -290,11 +290,18 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Remove All Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(0), isTogglable = false, toolTip = "Gives you 0 shiny rocks."  },
                 new ButtonInfo { buttonText = "Max Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(int.MaxValue), isTogglable = false, toolTip = "Gives you infinite shiny rocks."  },
 
+                new ButtonInfo { buttonText = "Create Symbol Name Public", method =() => Overpowered.CreatePublic("<>{][]()@.,/?!"), isTogglable = true, toolTip = "Creates a public room with a symbols as the name." },
                 new ButtonInfo { buttonText = "Create Dot Name Public", method =() => Overpowered.CreatePublic("."), isTogglable = true, toolTip = "Creates a public room with a dot name." },
                 new ButtonInfo { buttonText = "Create Short Name Public", method =() => Overpowered.CreatePublic("1"), isTogglable = true, toolTip = "Creates a public room with a short name." },
                 new ButtonInfo { buttonText = "Create Long Name Public", method =() => Overpowered.LongNamePub(), isTogglable = true, toolTip = "Creates a public room with a long name." },
                 new ButtonInfo { buttonText = "Create Modded Public", method =() => Overpowered.CreatePublic("\n\n\n\nMODDED\n\n\n\n"), isTogglable = true, toolTip = "Creates a public room that is modded." },
                 new ButtonInfo { buttonText = "Create JupiterX Public", method =() => Overpowered.CreatePublic("\n\nJupiterX on top\n\n\n"), isTogglable = true, toolTip = "Creates a public room that says jupiterx on top." },
+
+                new ButtonInfo { buttonText = "Create 255 Player Room", method =() => Overpowered.CreatePublic(255), isTogglable = true, toolTip = "Creates a public room that has max players allowed." },
+                new ButtonInfo { buttonText = "Create 1 Player Room", method =() => Overpowered.CreatePublic(1), isTogglable = true, toolTip = "Creates a public room that has 1 players allowed." },
+                new ButtonInfo { buttonText = "Create 5 Player Room", method =() => Overpowered.CreatePublic(5), isTogglable = true, toolTip = "Creates a public room that has 5 players allowed." },
+                new ButtonInfo { buttonText = "Create 50 Player Room", method =() => Overpowered.CreatePublic(50), isTogglable = true, toolTip = "Creates a public room that has 50 players allowed." },
+                new ButtonInfo { buttonText = "Create 100 Player Room", method =() => Overpowered.CreatePublic(100), isTogglable = true, toolTip = "Creates a public room that has 100 players allowed." },
 
                 new ButtonInfo { buttonText = "Float Gun", method =() => Overpowered.FloatGun(), isTogglable = true, toolTip = "Attempts to make the person you shoot at float."  },
 
