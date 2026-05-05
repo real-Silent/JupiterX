@@ -24,6 +24,15 @@ namespace JupiterX.Mods
             phc.AttemptToJoinSpecificRoom(Menu.Main.lastRoom);
         }
 
+        public static void LobbyHop()
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                PhotonNetwork.Disconnect();
+            }
+            PhotonNetwork.JoinRandomRoom();
+        }
+
         public static void Turning()
         {
             Vector2 axis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);

@@ -151,6 +151,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Computer", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Disconnect", method =() => Computer.Leave(), isTogglable = false, toolTip = "Disconnects you from the lobby." },
                 new ButtonInfo { buttonText = "Reconnect", method =() => Important.Reconnect(), isTogglable = false, toolTip = "Reconnects you to the current lobby." },
+                new ButtonInfo { buttonText = "Lobby Hop", method =() => Important.LobbyHop(), isTogglable = false, toolTip = "Lets you lobby hop." },
                 new ButtonInfo { buttonText = "Join Random", method =() => Computer.Jrr(), isTogglable = false, toolTip = "Lets you join a random room." },
                 new ButtonInfo { buttonText = "Join Code '1'", method =() => Computer.JoinCode("1"), isTogglable = false, toolTip = "Lets you join the code \"1\"." },
                 new ButtonInfo { buttonText = "Join Code 'JupiterX'", method =() => Computer.JoinCode("_@-JupiterX-@_"), isTogglable = false, toolTip = "Lets you join the code \"JupiterX\"."  },
@@ -293,7 +294,7 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest."  },
 
-                new ButtonInfo { buttonText = "Float Gun", method =() => Overpowered.CrashGun(), isTogglable = true, toolTip = "Attempts to make the person you shoot at float."  },
+                new ButtonInfo { buttonText = "Float Gun", method =() => Overpowered.FloatGun(), isTogglable = true, toolTip = "Attempts to make the person you shoot at float."  },
 
                 new ButtonInfo { buttonText = "Crash Gun", method =() => Overpowered.CrashGun(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
                 new ButtonInfo { buttonText = "Crash Gun V2", method =() => Overpowered.CrashGunV2(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },

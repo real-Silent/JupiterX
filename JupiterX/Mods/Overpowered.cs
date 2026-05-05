@@ -552,21 +552,16 @@ namespace JupiterX.Mods
         public static void FloatGun()
         {
             if (Main.GetGunInput(false))
-            {
+            {   
                 var GunData = Main.RenderGun();
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-                Utility.SetMaster(PhotonNetwork.LocalPlayer);
-
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
-                    Utility.BetaCrashPlayer(Main.lockTarget.photonView.Owner);
-                    Utility.BetaDestroyPlayers(Main.lockTarget.photonView.Owner);
-                    Utility.BetaDestroyPlayers(Main.lockTarget.photonView.Owner);
-                    Utility.BetaDestroyPlayers(Main.lockTarget.photonView.Owner);
-                    Utility.BetaDestroyPlayers(Main.lockTarget.photonView.Owner);
-                    Utility.BetaCrashPlayer(Main.lockTarget.photonView.Owner);
+                    Vector3 basePos = Main.lockTarget.headMesh.transform.position;
+                    Vector3 offset = new Vector3(Random.Range(-0.05f, 0.05f), Random.Range(-0.05f, 0.05f), Random.Range(-0.05f, 0.05f));
+                    Utility.BetaSpawnPrefab("bulletPrefab", basePos + offset, Quaternion.identity);
                 }
 
                 if (Main.GetGunInput(true))
@@ -577,7 +572,6 @@ namespace JupiterX.Mods
                         Main.gunLocked = true;
                         Main.lockTarget = who;
                     }
-                    PhotonNetwork.SendAllOutgoingCommands();
                 }
             }
             else
