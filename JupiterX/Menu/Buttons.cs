@@ -71,7 +71,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Custom Menu Title", enableMethod =() => CustomMenuTitle = true, disableMethod =() => CustomMenuTitle = false, toolTip = "Gives the menu a custom title you choose inside a txt."},
                 new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), enableMethod =() => Utility.ChangePageType(), disableMethod =() => Utility.ChangePageType(false), incremental = true, overlapText = "Change Page Type <color=cyan>[Side]</color>", isTogglable = false, toolTip = "Changes the page type." },
 
-                new ButtonInfo { buttonText = "Disable Search Button", enableMethod =() => disableSearchButton = true, disableMethod =() => disableSearchButton = false, toolTip = "Disables the search button at the bottom of the menu."},
+                //new ButtonInfo { buttonText = "Disable Search Button", enableMethod =() => disableSearchButton = true, disableMethod =() => disableSearchButton = false, toolTip = "Disables the search button at the bottom of the menu."},
                 new ButtonInfo { buttonText = "Disable Return Button", enableMethod =() => disableReturnButton = true, disableMethod =() => disableReturnButton = false, toolTip = "Disables the return button at the bottom of the menu."},
 
                 new ButtonInfo { buttonText = "Change Menu Theme", method =() => Utility.ChangeMenuTheme(), enableMethod =() => Utility.ChangeMenuTheme(), disableMethod =() => Utility.ChangeMenuTheme(false), incremental = true, overlapText = "Change Menu Theme <color=cyan>[Default]</color>", isTogglable = false, toolTip = "Changes the menu theme." },
