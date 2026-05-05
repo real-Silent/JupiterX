@@ -188,7 +188,6 @@ namespace JupiterX.Mods
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
                     Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
