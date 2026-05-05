@@ -179,12 +179,6 @@ namespace JupiterX
             }
         }
 
-
-        static void OnError(PlayFabError re)
-        {
-            NotifiLib.SendNotification("Fialed to auth " + re.ErrorMessage);
-        }
-
         public static PhotonView GetOwnerShip(Photon.Realtime.Player newOwner)
         {
             foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
@@ -235,6 +229,14 @@ namespace JupiterX
             {
                 BetaBanAll(plr.UserId);
             }
+        }
+
+        public static string CleanPlayerName(string input, int length = 12)
+        {
+            input = NoRichtextTags(input);
+            if (input.Length > length)
+                input = input[..(length - 1)];
+            return input;
         }
 
         public static void BetaBanAll(string userid)
@@ -1190,10 +1192,6 @@ namespace JupiterX
 
         public static bool HasSentbetaNoti = false;
         public static bool HasUsedMenuBeforeNoti = false;
-
-        public static bool canusemenu = true;
-        public static bool locked = false;
-        public static bool actuallock = false;
 
         public static string name = "JupiterX";
         public static string author = "Nova";

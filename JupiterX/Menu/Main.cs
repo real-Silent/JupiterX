@@ -1433,6 +1433,7 @@ namespace JupiterX.Menu
 
         public static bool disableMasterClientNotifications;
         public static bool disableRoomNotifications;
+        public static bool disablePlayerNotifications;
         public static bool clearNotificationsOnDisconnect;
 
         public static List<string> quickActions = new List<string> { };

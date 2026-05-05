@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;
 using Photon.Realtime;
@@ -10,13 +11,8 @@ namespace JupiterX.Patches
     {
         private static void Prefix(Player otherPlayer)
         {
-            if (otherPlayer != PhotonNetwork.LocalPlayer && otherPlayer != a && !Settings.Notifications)
-            {
-                NotifiLib.SendNotification("<color=grey>[</color><color=red>LEAVE</color><color=grey>]</color> <color=white>Name: " + otherPlayer.NickName + "</color>");
-                a = otherPlayer;
-            }
+            if (otherPlayer != PhotonNetwork.LocalPlayer && !Main.disablePlayerNotifications)
+                NotifiLib.SendNotification($"<color=grey>[</color><color=red>LEAVE</color><color=grey>]</color> Name: {Utility.CleanPlayerName(otherPlayer.NickName)}");
         }
-
-        private static Player a;
     }
 }
