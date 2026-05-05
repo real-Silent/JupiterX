@@ -283,8 +283,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Material Spam All", method =() => Overpowered.MatSpamAll(), isTogglable = true, toolTip = "Lets you spaz out the infection material on others."  },
                 new ButtonInfo { buttonText = "Material Spam Gun", method =() => Overpowered.MatSpamGun(), isTogglable = true, toolTip = "Lets you spaz out the infection material on who you shoot."  },
 
-                new ButtonInfo { buttonText = "Kick Gun [<color=cyan>W</color>]", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump."  },
-                new ButtonInfo { buttonText = "Kick All [<color=cyan>W</color>]", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump."  },
+                new ButtonInfo { buttonText = "Kick Gun [<color=cyan>Private</color>]", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump."  },
+                new ButtonInfo { buttonText = "Kick All [<color=cyan>Private</color>]", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump."  },
 
                 new ButtonInfo { buttonText = "Spaz Shiny Rock Count", method =() => Overpowered.SpazRocks(), isTogglable = false, toolTip = "Spazes your shiny rocks."  },
                 new ButtonInfo { buttonText = "Remove All Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(0), isTogglable = false, toolTip = "Gives you 0 shiny rocks."  },

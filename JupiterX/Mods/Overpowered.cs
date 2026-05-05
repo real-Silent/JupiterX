@@ -198,9 +198,9 @@ namespace JupiterX.Mods
                     Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
                     Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null); 
                     Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
+                    Utility.myVRRig().photonView.RPC("UpdateCosmetic", RpcTarget.Others, null); 
+                    Utility.myVRRig().photonView.RPC("UpdateCosmetic", RpcTarget.Others, null); 
+                    Utility.myVRRig().photonView.RPC("UpdateCosmetic", RpcTarget.Others, null);
                     Utility.BetaCrashPlayer(Main.lockTarget.photonView.Owner);
                 }
 
