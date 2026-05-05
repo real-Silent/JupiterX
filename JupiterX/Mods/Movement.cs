@@ -56,6 +56,34 @@ namespace JupiterX.Mods
             GorillaLocomotion.Player.Instance.jumpMultiplier = 11.2f;
         }
 
+        private static GameObject point = null;
+        public static void Checkpoint()
+        {
+            if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
+            {
+                if (point == null)
+                {
+                    point = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    point.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    point.transform.position = Utility.RightHandTransform().position;
+                    point.transform.rotation = Utility.RightHandTransform().rotation;
+                    point.GetComponent<Renderer>().material.color = Color.white;
+                }
+                point.transform.position = Utility.RightHandTransform().position;
+                point.transform.rotation = Utility.RightHandTransform().rotation;
+            }
+            if (EasyInputs.GetPrimaryButtonDown(EasyHand.RightHand))
+            {
+                if (point != null)
+                {
+                    point.GetComponent<Renderer>().material.color = Color.red;
+                    GorillaTagger.Instance.transform.position = point.transform.position;
+                    GameObject.Destroy(point);
+                    point = null;
+                }
+            }
+        }
+
         public static void FollowPlayerGun()
         {
             if (Main.GetGunInput(false))

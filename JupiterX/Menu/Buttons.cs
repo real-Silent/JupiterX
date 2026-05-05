@@ -178,6 +178,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Car Monke <color=cyan>[Triggers]</color>", method =() => Movement.CarMonke(), isTogglable = true, toolTip = "Drive around while holding your triggers."  },
                 new ButtonInfo { buttonText = "NoClip <color=cyan>[RT]</color>", method =() => Movement.NoClip(Utility.RTrigger), isTogglable = true, toolTip = "Removes object colliders when you hold right trigger."  },
                 new ButtonInfo { buttonText = "Follow Player Gun", method =() => Movement.FollowPlayerGun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you follow someone with a gun."  },
+                new ButtonInfo { buttonText = "Checkpoint <color=cyan>[G]</color>", method =() => Movement.Checkpoint(), isTogglable = true, toolTip = "Lets you a place a checkpoint to go back to later."  },
             },
 
             new ButtonInfo[] { // Advantage | 6
