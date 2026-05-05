@@ -512,17 +512,33 @@ namespace JupiterX.Mods
             Stalker.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
         }
 
+        private static Component enemyController;
+        private static Component GetEnemyController()
+        {
+            if (Timmy == null) return null;
+            if (enemyController == null)
+            {
+                enemyController = Timmy.GetComponent(Il2CppSystem.Type.GetType("EnemyController"));
+            }
+            return enemyController;
+        }
         public static void FastTimmys()
         {
-            Traverse.Create(Timmy.GetComponent("EnemyController")).Field("moveSpeed").SetValue(20f);
+            var comp = GetEnemyController();
+            if (comp == null) return;
+            Traverse.Create(comp).Field("moveSpeed").SetValue(20f);
         }
         public static void ResetTimmy()
         {
-            Traverse.Create(Timmy.GetComponent("EnemyController")).Field("moveSpeed").SetValue(1f);
+            var comp = GetEnemyController();
+            if (comp == null) return;
+            Traverse.Create(comp).Field("moveSpeed").SetValue(1f);
         }
         public static void SlowTimmys()
         {
-            Traverse.Create(Timmy.GetComponent("EnemyController")).Field("moveSpeed").SetValue(0.4f);
+            var comp = GetEnemyController();
+            if (comp == null) return;
+            Traverse.Create(comp).Field("moveSpeed").SetValue(0.4f);
         }
 
         public static void SpazTimmys()
