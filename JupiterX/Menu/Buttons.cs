@@ -291,6 +291,7 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Cosmetix", method =() => Utility.UnlockAll(), isTogglable = false, toolTip = "Gives you every cosmetic in the game."  },
 
+                new ButtonInfo { buttonText = "Unban Self", method =() => Experimental.Unban(), isTogglable = false, toolTip = "Unbans yourself if you get banned."  },
                 new ButtonInfo { buttonText = "Set Master", method =() => Overpowered.SetMaster(), isTogglable = true, toolTip = "Sets you as master client."  },
                 new ButtonInfo { buttonText = "Always Set Master", method =() => Overpowered.AlawysMaster(), isTogglable = true, toolTip = "Always sets you as master no matter who tries to take it."  },
 
@@ -345,8 +346,6 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Experimental | 13
                 new ButtonInfo { buttonText = "Exit Experimental", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
-                new ButtonInfo { buttonText = "Unban Self", method =() => Experimental.Unban(), isTogglable = false, toolTip = "Unbans yourself if you get banned."  },
-
                 new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest."  },
 
                 new ButtonInfo { buttonText = "Spam Pop & Unpop Balloon [<color=cyan>RT</color>]", method =() => Experimental.BalloonSpam(), isTogglable = true, toolTip = "Spams everyones balloon while holding right trigger."  },
