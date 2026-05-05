@@ -92,14 +92,7 @@ namespace JupiterX.Mods
             client.Headers.Add("Content-Type", "application/json");
 
             string response = client.UploadString(url, "POST", jsonData);
-            try
-            {
-                OnLogin(response);
-            }
-            catch
-            {
-                OnError(response);
-            }
+            OnLogin(response);
         }
 
         static void OnError(string reason)
