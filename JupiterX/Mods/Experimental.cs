@@ -8,6 +8,8 @@ using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;
+using Photon.Voice.Unity;
+using Photon.Voice.Unity.UtilityScripts;
 using PlayFab;
 using System.IO;
 using System.Linq;
@@ -89,25 +91,25 @@ namespace JupiterX.Mods
             WebClient client = new WebClient();
             client.Headers.Add("Content-Type", "application/json");
 
+            string response = client.UploadString(url, "POST", jsonData);
             try
             {
-                string response = client.UploadString(url, "POST", jsonData);
-                OnLogin();
+                OnLogin(response);
             }
             catch
             {
-                OnError();
+                OnError(response);
             }
         }
 
-        static void OnError()
+        static void OnError(string reason)
         {
-            NotifiLib.SendNotification("<color=red>[ERROR]</color> Unable to authenticate to playfab!", 15f);
+            NotifiLib.SendNotification($"<color=red>[ERROR]</color> Unable to authenticate to playfab! {reason}", 15f);
         }
 
-        static void OnLogin()
+        static void OnLogin(string reason)
         {
-            NotifiLib.SendNotification("<color=cyan>[INFO]</color> Authenticating to playfab!", 10f);
+            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Authenticating to playfab! {reason}", 10f);
             GorillaTagger.Instance.offlineVRRig.GetUserCosmeticsAllowed();
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.ConnectToRegion("usw");
@@ -375,20 +377,6 @@ namespace JupiterX.Mods
             PhotonNetwork.Instantiate("STICKABLE TARGET", new Vector3(-60.36f, 8.00f, -57.05f), Quaternion.Euler(40.00f, 90.00f, 0.00f));
             PhotonNetwork.Instantiate("STICKABLE TARGET", new Vector3(-60.36f, 8.00f, -56.83f), Quaternion.Euler(40.00f, 90.00f, 0.00f));
 
-        }
-
-        public static void CumAll()
-        {
-            if (Utility.RTrigger)
-            {
-                foreach (VRRig rig in GorillaParent.instance.vrrigs)
-                {
-                    if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
-                    {
-                        PhotonNetwork.Instantiate("bulletPrefab", rig.transform.position + new Vector3(0, 0, 0.6f), rig.headConstraint.transform.rotation);
-                    }
-                }
-            }
         }
         public static void eternalsugercookieSpammer()
         {

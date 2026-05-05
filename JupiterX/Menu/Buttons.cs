@@ -29,10 +29,11 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Advantage", method =() => CurrentCategoryName = "Advantage", isTogglable = false, toolTip = "Opens the advantage mods page for the menu."},
                 new ButtonInfo { buttonText = "VRRig", method =() => CurrentCategoryName = "VRRig", isTogglable = false, toolTip = "Opens the vrrig mods page for the menu."},
                 new ButtonInfo { buttonText = "Visual", method =() => CurrentCategoryName = "Visual", isTogglable = false, toolTip = "Opens the visual mods page for the menu."},
+                new ButtonInfo { buttonText = "Fun", method =() => CurrentCategoryName = "Fun", isTogglable = false, toolTip = "Opens the fun mods page for the menu."},
                 new ButtonInfo { buttonText = "Name", method =() => CurrentCategoryName = "Name", isTogglable = false, toolTip = "Opens the name mods page for the menu."},
                 new ButtonInfo { buttonText = "Prefabs", method =() => CurrentCategoryName = "Prefabs", isTogglable = false, toolTip = "Opens the prefab mods page for the menu."},
                 new ButtonInfo { buttonText = "Overpowered", method =() => CurrentCategoryName = "Overpowered", isTogglable = false, toolTip = "Opens the overpowered page for the menu."},
-                new ButtonInfo { buttonText = "Experimental", method =() => CurrentCategoryName = "Experimental", isTogglable = false, toolTip = "Opens the expermental mods page for the menu."},
+                new ButtonInfo { buttonText = "Experimental", method =() => CurrentCategoryName = "Experimental", isTogglable = false, toolTip = "Opens the experimental mods page for the menu."},
                 new ButtonInfo { buttonText = "Master", method =() => CurrentCategoryName = "Master", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
                 new ButtonInfo { buttonText = "GTH", method =() => CurrentCategoryName = "GTH", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
 
@@ -212,10 +213,22 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Name Tags", method =() => Visual.NameTagESP(), isTogglable = true, toolTip = "Lets you see player info above there head with a name tag."  },
                 new ButtonInfo { buttonText = "Player Info Tags", method =() => Visual.PlayerInfoTags(), isTogglable = true, toolTip = "Lets you see player info above there head with a name tag."  },
                 new ButtonInfo { buttonText = "Velocity Label", method =() => Visual.VelocityLabel(), isTogglable = true, toolTip = "Lets you see your velocity with a label on your right hand."  },
-                new ButtonInfo { buttonText = "Player Count Label", method =() => Visual.LeftTaggedLabel(), isTogglable = true, toolTip = "Lets you see how manu tagged people are left."  }, // put in graveyard
+                new ButtonInfo { buttonText = "Player Count Label", method =() => Visual.LeftTaggedLabel(), isTogglable = true, toolTip = "Lets you see how manu tagged people are left."  },
             },
 
-            new ButtonInfo[] { // Name | 9
+            new ButtonInfo[] { // Fun | 9
+                new ButtonInfo { buttonText = "Exit Fun", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Cube All [<color=cyan>RT</color>]", method =() => Fun.CubeAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger."  },
+
+                new ButtonInfo { buttonText = "Fix Mic", method =() => Fun.FixMic(), isTogglable = false, toolTip = "Fixes your mic."  },
+                new ButtonInfo { buttonText = "Low Quality Mic", method =() => Fun.LowQualityMic(), isTogglable = false, toolTip = "Makes your micrphone low quality."  },
+                new ButtonInfo { buttonText = "High Quality Mic", method =() => Fun.LowQualityMic(), isTogglable = false, toolTip = "Makes your micrphone high quality."  },
+
+                new ButtonInfo { buttonText = "Bass Boosted Mic", method =() => Fun.BassBoostMic(), isTogglable = false, toolTip = "Makes your micrphone bass boosted."  },
+                new ButtonInfo { buttonText = "Extreme Bass Boosted Mic", method =() => Fun.BassBoostMicExtreme(), isTogglable = false, toolTip = "Makes your micrphone hextremely bass boosted."  },
+            },
+
+            new ButtonInfo[] { // Name | 10
                 new ButtonInfo { buttonText = "Exit Name", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Menu Name Tag", method =() => Name.MenuNameTag(), isTogglable = true, toolTip = "Sets your name to the menu name."  },
                 new ButtonInfo { buttonText = "Rainbow Owner Name", method =() => Name.ChangeNameSpaz("\nOwner", new string[] { "red", "yellow", "cyan", "blue", "magenta", "lime", "green" }), isTogglable = true, toolTip = "Sets your name as Owner with rainbow text."  },
@@ -246,7 +259,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Emoji Name (16)", method =() => Utility.BetaEmojiName(15), isTogglable = true, toolTip = "Sets your name as a emoji." },
             },
 
-            new ButtonInfo[] { // Prefabs | 10
+            new ButtonInfo[] { // Prefabs | 11
                 new ButtonInfo { buttonText = "Exit Prefabs", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Get Fucked Spawn [Forest, Targets]", method =() => Experimental.GetFucked(), isTogglable = false, toolTip = "Spawns the word 'Get Fucked' using stickable targets in forest."  },
                 new ButtonInfo { buttonText = "Clear Prefabs", method =() => Prefabs.ClearPrefabs(), isTogglable = false, toolTip = "Clears every prefab with a photon view."  },
@@ -272,7 +285,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Target Dick Spawner [<color=cyan>Grips</color>]", method =() => Utility.DickSpawn(), isTogglable = true, toolTip = "Lets you spawn a dick out of targets."  },
             },
 
-            new ButtonInfo[] { // Overpowered | 11
+            new ButtonInfo[] { // Overpowered | 12
                 new ButtonInfo { buttonText = "Exit Overpowered", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "MasterLabel", label = true },
 
@@ -330,10 +343,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>ERROR</color>]", method =() => Experimental.SetGameMode("ERROR"), isTogglable = false, toolTip = "Sets the game mode to battle."  },
             },
 
-            new ButtonInfo[] { // Experimental | 12
-                new ButtonInfo { buttonText = "Exit Experimental", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
-                new ButtonInfo { buttonText = "Cube All [<color=cyan>RT</color>]", method =() => Experimental.CumAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger."  },
-
+            new ButtonInfo[] { // Experimental | 13
+                new ButtonInfo { buttonText = "Exit Fun", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Unban Self", method =() => Experimental.UnBanSelf(), isTogglable = false, toolTip = "Unbans yourself if you get banned."  },
 
                 new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest."  },
@@ -344,7 +355,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Spam Mute All V2", method =() => Utility.BetaSpamMuteAll(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
             },
 
-            new ButtonInfo[] { // Master | 13
+            new ButtonInfo[] { // Master | 14
                 new ButtonInfo { buttonText = "Exit Master", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
 
                 new ButtonInfo { buttonText = "Set Master Gun", method =() => Overpowered.SetMasterGun(), isTogglable = true, toolTip = "Lets you set someone as master client."  },
@@ -378,15 +389,15 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Force Lucy Target", method =() => Utility.LucyTargetGun(), isTogglable = true, toolTip = "Changes Lucys target."  },
             },
 
-            new ButtonInfo[] { // Soundboard | 14
+            new ButtonInfo[] { // Soundboard | 15
                 new ButtonInfo { buttonText = "Exit Soundboard", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-            new ButtonInfo[] { // Players | 15
+            new ButtonInfo[] { // Players | 16
                 new ButtonInfo { buttonText = "Exit Players", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-            new ButtonInfo[] { // GTH Mods | 20
+            new ButtonInfo[] { // GTH Mods | 17
                 new ButtonInfo { buttonText = "Exit GTH", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
                 new ButtonInfo { buttonText = "Spawn Timmy", method =() => GTH.SpawnTimmy(), toolTip = "Spawns a timmy above your head.", isTogglable = true },
                 new ButtonInfo { buttonText = "Spawn Stalker", method =() => GTH.SpawnStalker(), toolTip = "Spawns a stalker above your head.", isTogglable = true },
@@ -448,17 +459,17 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Joystick Control Monsters <color=cyan>[RJ]</color>", method =() => GTH.JoystickControlMonters(), toolTip = "Lets you control the monsters movement with your right joystick.", isTogglable = true },
             },
 
-            new ButtonInfo[] { }, // Temporary Category
+            new ButtonInfo[] { }, // Temporary Category | 18
 
-             new ButtonInfo[] { // Enabled | 14
+             new ButtonInfo[] { // Enabled | 19
                 new ButtonInfo { buttonText = "Exit Enabled", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-            new ButtonInfo[] { // Favorites | 15
+            new ButtonInfo[] { // Favorites | 20
                 new ButtonInfo { buttonText = "Exit Favorite", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-            new[] { // Admin 
+            new[] { // Admin | 21
                 new ButtonInfo { buttonText = "Exit Admin", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Opens the visual page for the menu"},
                 new ButtonInfo { buttonText = "Get Console Users", method =() => Experimental.GetMenuUsers(), isTogglable = false, toolTip = "Gets all users using console"},
                 new ButtonInfo { buttonText = "Console Users NameTag", enableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = true, disableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = false, isTogglable = true, toolTip = "Enables the console nametags"},
@@ -492,7 +503,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Admin Restart Mic Gun", method =() => Experimental.ConsoleRestartMicGun(), isTogglable = true, toolTip = "Makes who you shoot mic normal"},
             },
 
-            new[] { // Plugin Settings [33]
+            new[] { // Plugin Settings | 22
                 new ButtonInfo { buttonText = "Exit Plugin Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns you back to the settings menu."},
                 new ButtonInfo { buttonText = "Reload Plugins", method = PluginManager.ReloadPlugins, isTogglable = false, toolTip = "Reloads all of your plugins." }
             },
@@ -520,10 +531,11 @@ namespace JupiterX.Menu
             "Movement",             
             "Advantage",            
             "VRRig",               
-            "Visual",               
+            "Visual",  
+            "Fun",
             "Name",                
             "Prefabs",            
-            "Overpowered",         
+            "Overpowered",
             "Experimental",     
             "Master", 
 
