@@ -218,7 +218,7 @@ namespace JupiterX
 
             if (Utility.RTrigger)
             {
-                Buttons.GetIndex("Ban All").enabled = false;
+                Toggle("Ban All");
             }
         }
 
