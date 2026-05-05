@@ -294,7 +294,9 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Kick Gun [<color=red>W</color>]", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump."  },
                 new ButtonInfo { buttonText = "Kick All [<color=red>W</color>]", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump."  },
 
-                new ButtonInfo { buttonText = "Inf Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(int.MaxValue), isTogglable = false, toolTip = "Gives you infinite shiny rocks."  },
+                new ButtonInfo { buttonText = "Spaz Shiny Rock Count", method =() => Overpowered.SpazRocks(), isTogglable = false, toolTip = "Spazes your shiny rocks."  },
+                new ButtonInfo { buttonText = "Remove All Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(0), isTogglable = false, toolTip = "Gives you 0 shiny rocks."  },
+                new ButtonInfo { buttonText = "Max Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(int.MaxValue), isTogglable = false, toolTip = "Gives you infinite shiny rocks."  },
 
                 new ButtonInfo { buttonText = "Unban Self", method =() => Experimental.UnBanSelf(), isTogglable = false, toolTip = "Unbans yourself if you get banned."  },
 

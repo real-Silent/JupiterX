@@ -17,6 +17,12 @@ namespace JupiterX.Mods
             CosmeticsController.instance.currencyBalance += ammount;
             CosmeticsController.instance.UpdateCurrencyBoard();
         }
+
+        public static void SpazRocks()
+        {
+            BetaChangeShinyRock(UnityEngine.Random.RandomRangeInt(int.MinValue, int.MaxValue));
+        }
+
         public static void RPCLag()
         {
             if (!PhotonNetwork.IsMasterClient)
