@@ -41,22 +41,21 @@ namespace JupiterX.Mods
         private static float delaytimebeesbleh;
         public static void Bees()
         {
-            if (PhotonNetwork.InRoom)
+            if (!PhotonNetwork.InRoom) return;
+
+            VRRig myRig = GorillaTagger.Instance.myVRRig;
+            myRig.enabled = false;
+            Utility.GhostView(true);
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                Utility.myVRRig().enabled = false;
-                Utility.GhostView(true);
-                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                if (rig == null || rig == myRig) continue;
+                if (Time.time > delaytimebeesbleh)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
-                    {
-                        if (Time.time > delaytimebeesbleh)
-                        {
-                            Utility.myVRRig().rightHandTransform.position -= Utility.myVRRig().transform.position * 0.3f;
-                            Utility.myVRRig().leftHandTransform.position -= Utility.myVRRig().transform.position * 0.3f;
-                            Utility.myVRRig().transform.position = rig.headMesh.transform.position + new Vector3(0f, 0.6f, 0f);
-                            delaytimebeesbleh = Time.time + 0.3f;
-                        }
-                    }
+                    Vector3 targetPos = rig.headMesh.transform.position + new Vector3(0f, 0.6f, 0f);
+                    myRig.transform.position = targetPos;
+                    myRig.rightHandTransform.position -= myRig.transform.position * 0.3f;
+                    myRig.leftHandTransform.position -= myRig.transform.position * 0.3f;
+                    delaytimebeesbleh = Time.time + 0.3f;
                 }
             }
         }
