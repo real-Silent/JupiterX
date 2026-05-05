@@ -386,18 +386,64 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // GTH Mods | 20
                 new ButtonInfo { buttonText = "Exit GTH", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
-                new ButtonInfo { buttonText = "Timmy Spam [<color=cyan>RT</color>]", method =() => GTH.TimmySpam(), isTogglable = true },
-                new ButtonInfo { buttonText = "Stalker Spam [<color=cyan>RT</color>]", method =() => GTH.StalkerSpam(), isTogglable = true },
-                new ButtonInfo { buttonText = "Timmy All [<color=cyan>RT</color>]", method =() => GTH.TimmyAll(), isTogglable = true },
-                new ButtonInfo { buttonText = "Stalker All [<color=cyan>RT</color>]", method =() => GTH.StalkerAll(), isTogglable = true },
-                new ButtonInfo { buttonText = "Timmy Gun", method =() => GTH.TimmyGun(), isTogglable = true },
-                new ButtonInfo { buttonText = "Stalker Gun", method =() => GTH.StalkerGun(), isTogglable = true },
-                new ButtonInfo { buttonText = "Kill Gun", method =() => GTH.KillGun(), isTogglable = true },
-                new ButtonInfo { buttonText = "Kill All [<color=cyan>RT</color>]", method =() => GTH.KillAll(), isTogglable = true },
-                new ButtonInfo { buttonText = "Timmy Gun (Forest)", method =() => GTH.MoveTimmy(), isTogglable = true },
-                new ButtonInfo { buttonText = "Spaz Timmy (Forest) [<color=cyan>RT</color>]", method =() => GTH.SpazTimmy(), isTogglable = true },
-                new ButtonInfo { buttonText = "Fling Timmy (Forest) [<color=cyan>RT</color>]", method =() => GTH.FlingTimmy(), isTogglable = true },
-                new ButtonInfo { buttonText = "Move Timmy To All [<color=cyan>RT</color>]", method =() => GTH.TimmyAllRigs(), isTogglable = true },
+                new ButtonInfo { buttonText = "Spawn Timmy", method =() => GTH.SpawnTimmy(), toolTip = "Spawns a timmy above your head.", isTogglable = true },
+                new ButtonInfo { buttonText = "Spawn Stalker", method =() => GTH.SpawnStalker(), toolTip = "Spawns a stalker above your head.", isTogglable = true },
+                new ButtonInfo { buttonText = "Timmy Spam [<color=cyan>G</color>]", method =() => GTH.TimmySpam(), toolTip = "Lets you spam timmys while holding your grips.", isTogglable = true },
+                new ButtonInfo { buttonText = "Stalker Spam [<color=cyan>G</color>]", method =() => GTH.StalkerSpam(), toolTip = "Lets you spam stalkers while holding your grips.", isTogglable = true },
+                new ButtonInfo { buttonText = "Timmy Gun", method =() => GTH.TimmyGun(), toolTip = "Lets you spawn timmys with a gun.", isTogglable = true },
+                new ButtonInfo { buttonText = "Stalker Gun", method =() => GTH.StalkerGun(), toolTip = "Lets you spawn stalkers with a gun.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Timmy ESP", method =() => GTH.TimmyESP(false), disableMethod =() => GTH.TimmyESP(true), toolTip = "Lets you find timmys through walls.", isTogglable = true },
+                new ButtonInfo { buttonText = "Timmy Tracers", method =() => GTH.TimmyTracers(), toolTip = "Puts tracers on the timmys.", isTogglable = true },
+                new ButtonInfo { buttonText = "Stalker ESP", method =() => GTH.StalkerESP(false), disableMethod =() => GTH.StalkerESP(true), toolTip = "Lets you find stalkers through walls.", isTogglable = true },
+                new ButtonInfo { buttonText = "Stalker Tracers", method =() => GTH.StalkerTracers(), toolTip = "Puts tracers on the stalkers.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Kill Gun", method =() => GTH.KillGun(), toolTip = "Lets you kill the person you shoot at with a gun.", isTogglable = true },
+                new ButtonInfo { buttonText = "Kill All", method =() => GTH.KillAll(), toolTip = "Lets you kill everyone in the current room.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Timmy Rape Gun", method =() => GTH.TimmyRapeGun(), toolTip = "Lets you rape someone using the timmys.", isTogglable = true },
+                new ButtonInfo { buttonText = "Stalker Rape Gun", method =() => GTH.StalkerRapeGun(), toolTip = "Lets you rape someone using the stalkers.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Fling Timmy Gun", method =() => GTH.FlingGun("timmy"), toolTip = "Lets you fling the timmy you shoot at.", isTogglable = true },
+                new ButtonInfo { buttonText = "Fling Stalker Gun", method =() => GTH.FlingGun("stalker"), toolTip = "Lets you fling the stalker you shoot at.", isTogglable = true },
+                new ButtonInfo { buttonText = "Fling Monter Gun", method =() => GTH.FlingGunComponent("EnemyController"), toolTip = "Lets you fling all the monsters you shoot at.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Bring All Monsters", method =() => GTH.BringAllMonsters(), toolTip = "Lets you bring all the monsters to you.", isTogglable = false },
+                new ButtonInfo { buttonText = "Bring Monsters Gun", method =() => GTH.BringMonstersGun(), toolTip = "Lets you bring all the monsters to the gun.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Kill Timmy Gun", method =() => GTH.KillTimmyGun(), toolTip = "Lets you kill the timmy you shoot at.", isTogglable = true },
+                new ButtonInfo { buttonText = "Kill Stalker Gun", method =() => GTH.KillStalkerGun(), toolTip = "Lets you kill the stalker you shoot at.", isTogglable = true },
+                new ButtonInfo { buttonText = "Kill Monster Gun", method =() => GTH.KillMonsterGun(), toolTip = "Lets you kill the monster you shoot at.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Kill All Timmys", method =() => GTH.KillAllTimmys(), toolTip = "Lets you kill all the timmys.", isTogglable = true },
+                new ButtonInfo { buttonText = "Kill All Stalkers", method =() => GTH.KillAllStalkers(), toolTip = "Lets you kill all the stalkers.", isTogglable = true },
+                new ButtonInfo { buttonText = "Kill All Monsters", method =() => GTH.KillAllMonsters(), toolTip = "Lets you kill all the monsters.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Explode Timmy Gun", method =() => GTH.ExplodeTimmyGun(), toolTip = "Spawns timmys at the gun and explodes them.", isTogglable = true },
+                new ButtonInfo { buttonText = "Explode Stalker Gun", method =() => GTH.ExplodeStalkerGun(), toolTip = "Spawns stalkers at the gun and explodes them.", isTogglable = true },
+                new ButtonInfo { buttonText = "Explode Monsters", method =() => GTH.ExplodeMonsters(), toolTip = "Explodes all the monsters.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Become Timmy", method =() => GTH.BecomeTimmy(), toolTip = "Lets you become the timmy in forest.", isTogglable = true },
+                new ButtonInfo { buttonText = "Become Stalker", method =() => GTH.BecomeStalker(), toolTip = "Lets you become the stalkers.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Fast Timmys", method =() => GTH.FastTimmys(), disableMethod =() => GTH.ResetTimmy(), toolTip = "Makes the timmys faster.", isTogglable = true },
+                new ButtonInfo { buttonText = "Slow Timmys", method =() => GTH.SlowTimmys(), disableMethod =() => GTH.ResetTimmy(), toolTip = "Makes the timmys slower.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Spaz Timmys", method =() => GTH.SpazTimmys(), toolTip = "Spazes the timmys in forest", isTogglable = true },
+                new ButtonInfo { buttonText = "Spaz Stalkers", method =() => GTH.SpazStalkers(), toolTip = "Spazes all the stalkers", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Place Trap [<color=cyan>RT</color>]", method =() => GTH.PlaceTrap(), toolTip = "Places down a trap when you press right trigger.", isTogglable = true },
+                new ButtonInfo { buttonText = "Destroy Trap", method =() => GTH.DestroyTrap(), toolTip = "Destroys the trap.", isTogglable = false },
+                new ButtonInfo { buttonText = "Timmys To Trap", method =() => GTH.TimmysToTrap(), toolTip = "Makes all the timmys go to the trap.", isTogglable = true },
+                new ButtonInfo { buttonText = "Stalkers To Trap", method =() => GTH.StalkersToTrap(), toolTip = "Makes all the stalkers go to the trap.", isTogglable = true },
+                new ButtonInfo { buttonText = "Monsters To Trap", method =() => GTH.MonstersToTrap(), toolTip = "Makes all the monsters go to the trap.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Timmy Work <color=cyan>[RT]</color>", method =() => GTH.TimmyWork(), toolTip = "Makes a firework out of timmys.", isTogglable = true },
+                new ButtonInfo { buttonText = "Stalker Work <color=cyan>[RT]</color>", method =() => GTH.StalkerWork(), toolTip = "Makes a firework out of stalkers.", isTogglable = true },
+
+                new ButtonInfo { buttonText = "Joystick Control Timmys <color=cyan>[RJ]</color>", method =() => GTH.JoystickControlTimmys(), toolTip = "Lets you control the timmys movement with your right joystick.", isTogglable = true },
+                new ButtonInfo { buttonText = "Joystick Control Stalkers <color=cyan>[RJ]</color>", method =() => GTH.JoystickControlStalkers(), toolTip = "Lets you control the stalkers movement with your right joystick.", isTogglable = true },
+                new ButtonInfo { buttonText = "Joystick Control Monsters <color=cyan>[RJ]</color>", method =() => GTH.JoystickControlMonters(), toolTip = "Lets you control the monsters movement with your right joystick.", isTogglable = true },
             },
 
             new ButtonInfo[] { }, // Temporary Category

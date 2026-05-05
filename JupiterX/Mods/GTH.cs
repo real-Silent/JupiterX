@@ -1,11 +1,644 @@
-﻿using Photon.Pun;
+﻿using Console;
+using easyInputs;
+using HarmonyLib;
+using JupiterX.Notifications;
+using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using static JupiterX.Menu.Main;
 
 namespace JupiterX.Mods
 {
     public class GTH
     {
+        private static GameObject Timmy
+        {
+            get
+            {
+                return GameObject.Find("timmy");
+            }
+        }
+        private static GameObject Stalker
+        {
+            get
+            {
+                return GameObject.Find("stalker");
+            }
+        }
+        private static void SpawnHorrorPrefab(string name, Vector3 pos, Quaternion rot) => PhotonNetwork.Instantiate($"horror/{name}", pos, rot);
+        private static GameObject SpawnTimmy(Vector3 pos, Quaternion rot) => PhotonNetwork.Instantiate("horror/timmy", pos, rot);
+        private static GameObject SpawnStalker(Vector3 pos, Quaternion rot) => PhotonNetwork.Instantiate("horror/stalker", pos, rot);
+
+        private static List<GameObject> cachedTimmys = new List<GameObject>();
+        private static List<GameObject> GetTimmys()
+        {
+            cachedTimmys.Clear();
+            foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+            {
+                if (obj.name.ToLower().Contains("timmy"))
+                    cachedTimmys.Add(obj);
+            }
+            return cachedTimmys;
+        }
+        private static List<GameObject> cachedStalkers = new List<GameObject>();
+        private static List<GameObject> GetStalkers()
+        {
+            cachedStalkers.Clear();
+            foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+            {
+                if (obj.name.ToLower().Contains("stalker"))
+                    cachedStalkers.Add(obj);
+            }
+            return cachedStalkers;
+        }
+
+        private static List<GameObject> cachedMonsters = new List<GameObject>();
+        private static List<GameObject> GetAllMonsters()
+        {
+            cachedMonsters.Clear();
+            foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+            {
+                if (obj.GetComponentByName("EnemyController") != null)
+                    cachedMonsters.Add(obj);
+            }
+            return cachedMonsters;
+        }
+
+        public static void SpawnTimmy()
+        {
+            SpawnHorrorPrefab("timmy", GorillaTagger.Instance.headCollider.transform.position * 0.3f, Quaternion.identity);
+        }
+        public static void SpawnStalker()
+        {
+            SpawnHorrorPrefab("stalker", GorillaTagger.Instance.headCollider.transform.position * 0.3f, Quaternion.identity);
+        }
+
+        public static void TimmyESP(bool disable)
+        {
+            List<GameObject> timmys = GetTimmys();
+            foreach (var item in timmys)
+            {
+                item.GetComponent<Renderer>().material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
+                item.GetComponent<Renderer>().material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
+            }
+        }
+
+        public static void StalkerESP(bool disable)
+        {
+            List<GameObject> stalkers = GetStalkers();
+            foreach (var item in stalkers)
+            {
+                item.GetComponent<Renderer>().material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
+                item.GetComponent<Renderer>().material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
+            }
+        }
+
+        public static void TimmyTracers()
+        {
+            List<GameObject> timmys = GetTimmys();
+            foreach (var item in timmys)
+            {
+                GameObject tracerholder = new GameObject();
+                LineRenderer tracer = tracerholder.AddComponent<LineRenderer>();
+                tracer.useWorldSpace = true;
+                tracer.material.shader = Utility.GUIShader();
+                tracer.positionCount = 2;
+                tracer.startColor = Color.grey;
+                tracer.startColor = Color.grey;
+                tracer.startWidth = 0.02f;
+                tracer.endWidth = 0.02f;
+                tracer.SetPosition(0, GorillaTagger.Instance.rightHandTransform.position);
+                tracer.SetPosition(1, item.transform.position);
+                GameObject.Destroy(tracerholder, Time.deltaTime);
+            }
+        }
+        public static void StalkerTracers()
+        {
+            List<GameObject> stalkers = GetStalkers();
+            foreach (var item in stalkers)
+            {
+                GameObject tracerholder = new GameObject();
+                LineRenderer tracer = tracerholder.AddComponent<LineRenderer>();
+                tracer.useWorldSpace = true;
+                tracer.material.shader = Utility.GUIShader();
+                tracer.positionCount = 2;
+                tracer.startColor = Color.grey;
+                tracer.startColor = Color.grey;
+                tracer.startWidth = 0.02f;
+                tracer.endWidth = 0.02f;
+                tracer.SetPosition(0, GorillaTagger.Instance.rightHandTransform.position);
+                tracer.SetPosition(1, item.transform.position);
+                GameObject.Destroy(tracerholder, Time.deltaTime);
+            }
+        }
+
+        public static void TimmySpam()
+        {
+            if (Utility.RGrip)
+            {
+                Transform hand = GorillaTagger.Instance.rightHandTransform;
+                SpawnHorrorPrefab("timmy", hand.position + hand.forward * 5f, hand.rotation);
+            }
+            if (Utility.LGrip)
+            {
+                Transform hand = GorillaTagger.Instance.leftHandTransform;
+                SpawnHorrorPrefab("timmy", hand.position + hand.forward * 5f, hand.rotation);
+            }
+        }
+
+        public static void StalkerSpam()
+        {
+            if (Utility.RGrip)
+            {
+                Transform hand = GorillaTagger.Instance.rightHandTransform;
+                SpawnHorrorPrefab("stalker", hand.position + hand.forward * 5f, hand.rotation);
+            }
+            if (Utility.LGrip)
+            {
+                Transform hand = GorillaTagger.Instance.leftHandTransform;
+                SpawnHorrorPrefab("stalker", hand.position + hand.forward * 5f, hand.rotation);
+            }
+        }
+
+        public static void TimmyGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                if (GetGunInput(true))
+                {
+                    SpawnHorrorPrefab("timmy", Pointer.transform.position, Pointer.transform.rotation);
+                }
+            }
+        }
+
+        public static void StalkerGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                if (GetGunInput(true))
+                {
+                    SpawnHorrorPrefab("stalker", Pointer.transform.position, Pointer.transform.rotation);
+                }
+            }
+        }
+
+        public static void KillGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+
+                if (gunLocked && lockTarget)
+                {
+                    GameObject stalker = SpawnStalker(lockTarget.headMesh.transform.position, lockTarget.headMesh.transform.rotation);
+                    GameObject.Destroy(stalker);
+                }
+
+                if (GetGunInput(true))
+                {
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        lockTarget = rig;
+                        gunLocked = true;
+                    }
+                }
+            }
+            else
+            {
+                lockTarget = null;
+                if (gunLocked)
+                    gunLocked = false;
+            }
+        }
+
+        public static void TimmyRapeGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+
+                if (gunLocked && lockTarget)
+                {
+                    Timmy.transform.position = Vector3.Lerp(Timmy.transform.position, lockTarget.headMesh.transform.position, 0.8f);
+                }
+
+                if (GetGunInput(true))
+                {
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        lockTarget = rig;
+                        gunLocked = true;
+                    }
+                }
+            }
+            else
+            {
+                lockTarget = null;
+                if (gunLocked)
+                    gunLocked = false;
+            }
+        }
+
+        public static void StalkerRapeGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+
+                if (gunLocked && lockTarget)
+                {
+                    Stalker.transform.position = Vector3.Lerp(Stalker.transform.position, lockTarget.headMesh.transform.position, 0.8f);
+                }
+
+                if (GetGunInput(true))
+                {
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        lockTarget = rig;
+                        gunLocked = true;
+                    }
+                }
+            }
+            else
+            {
+                lockTarget = null;
+                if (gunLocked)
+                    gunLocked = false;
+            }
+        }
+
+        public static void KillAll()
+        {
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (VRRigExtensions.GetVRRigWithoutMe(rig))
+                {
+                    GameObject stalker = SpawnStalker(rig.headMesh.transform.position, Quaternion.identity);
+                    GameObject.Destroy(stalker);
+                }
+            }
+        }
+
+        public static void FlingGun(string name)
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    GameObject monster = Ray.collider.GetComponentInParent<GameObject>();
+                    if (monster.name.ToLower().Contains(name))
+                    {
+                        monster.transform.position += new Vector3(monster.transform.position.x, monster.transform.position.y + 250f, monster.transform.position.z);
+                    }
+                }
+            }
+        }
+        public static void FlingGunComponent(string name)
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    GameObject monster = Ray.collider.GetComponentInParent<GameObject>();
+                    if (monster.GetComponentByName(name))
+                    {
+                        monster.transform.position += new Vector3(monster.transform.position.x, monster.transform.position.y + 250f, monster.transform.position.z);
+                    }
+                }
+            }
+        }
+
+        public static void BringAllMonsters()
+        {
+            List<GameObject> monters = GetAllMonsters();
+            foreach (var item in monters)
+            {
+                item.transform.position = GorillaTagger.Instance.headCollider.transform.position;
+            }
+        }
+        public static void BringMonstersGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                if (GetGunInput(true))
+                {
+                    List<GameObject> monsters = GetAllMonsters();
+                    foreach (var item in monsters)
+                    {
+                        item.transform.position = Pointer.transform.position;
+                    }
+                }
+            }
+        }
+
+        public static void KillTimmyGun()
+        {
+            if (GetGunInput(false))
+            {
+                Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    GameObject timmy = Ray.collider.GetComponentInParent<GameObject>();
+                    if (timmy.name.ToLower().Contains("timmy"))
+                    {
+                        timmy.transform.position = new Vector3(0f, -6969f, 0f);
+                    }
+                }
+            }
+        }
+
+        public static void KillStalkerGun()
+        {
+            if (GetGunInput(false))
+            {
+                Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    GameObject stalker = Ray.collider.GetComponentInParent<GameObject>();
+                    if (stalker.name.ToLower().Contains("stalker"))
+                    {
+                        stalker.transform.position = new Vector3(0f, -6969f, 0f);
+                    }
+                }
+            }
+        }
+        public static void KillMonsterGun()
+        {
+            if (GetGunInput(false))
+            {
+                Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    GameObject monster = Ray.collider.GetComponentInParent<GameObject>();
+                    if (monster.GetComponentByName("EnemyController"))
+                    {
+                        monster.transform.position = new Vector3(0f, -6969f, 0f);
+                    }
+                }
+            }
+        }
+
+        public static void KillAllTimmys()
+        {
+            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            List<GameObject> timmys = GetTimmys();
+            foreach (var item in timmys)
+            {
+                item.transform.position = new Vector3(0f, -6969f, 0f);
+            }
+        }
+
+        public static void KillAllStalkers()
+        {
+            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            List<GameObject> stalkers = GetStalkers();
+            foreach (var item in stalkers)
+            {
+                item.transform.position = new Vector3(0f, -6969f, 0f);
+            }
+        }
+        public static void KillAllMonsters()
+        {
+            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            List<GameObject> monsters = GetAllMonsters();
+            foreach (var item in monsters)
+            {
+                item.transform.position = new Vector3(0f, -6969f, 0f);
+            }
+        }
+
+        public static void ExplodeTimmyGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                if (GetGunInput(true))
+                {
+                    GameObject timmy = SpawnTimmy(Pointer.transform.position, Pointer.transform.rotation);
+                    Rigidbody timmybody = timmy.GetComponent<Rigidbody>();
+                    timmybody.AddExplosionForce(500f, timmy.transform.position, 10f);
+                }
+            }
+        }
+        public static void ExplodeStalkerGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                if (GetGunInput(true))
+                {
+                    GameObject stalker = SpawnStalker(Pointer.transform.position, Pointer.transform.rotation);
+                    Rigidbody stalkerbody = stalker.GetComponent<Rigidbody>();
+                    stalkerbody.AddExplosionForce(500f, stalker.transform.position, 10f);
+                }
+            }
+        }
+        public static void ExplodeMonsters()
+        {
+            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            List<GameObject> monsters = GetAllMonsters();
+            foreach (var item in monsters)
+            {
+                Rigidbody itemrbody = item.GetComponent<Rigidbody>();
+                itemrbody.AddExplosionForce(500f, item.transform.position, 10f);
+            }
+        }
+
+        public static void BecomeTimmy()
+        {
+            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Timmy.GetComponent<Collider>().enabled = false;
+            Timmy.transform.position = GorillaTagger.Instance.headCollider.transform.position;
+            Timmy.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
+        }
+        public static void BecomeStalker()
+        {
+            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Stalker.GetComponent<Collider>().enabled = false;
+            Stalker.transform.position = GorillaTagger.Instance.headCollider.transform.position;
+            Stalker.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
+        }
+
+        public static void FastTimmys()
+        {
+            Traverse.Create(Timmy.GetComponentByName("EnemyController")).Field("moveSpeed").SetValue(20f);
+        }
+        public static void ResetTimmy()
+        {
+            Traverse.Create(Timmy.GetComponentByName("EnemyController")).Field("moveSpeed").SetValue(1f);
+        }
+        public static void SlowTimmys()
+        {
+            Traverse.Create(Timmy.GetComponentByName("EnemyController")).Field("moveSpeed").SetValue(0.4f);
+        }
+
+        public static void SpazTimmys()
+        {
+            List<GameObject> timmys = GetTimmys();
+            foreach (var item in timmys)
+            {
+                item.transform.rotation = Quaternion.Euler(UnityEngine.Random.Range(0f, 360f), UnityEngine.Random.Range(0f, 360f), UnityEngine.Random.Range(0f, 360f));
+            }
+        }
+        public static void SpazStalkers()
+        {
+            List<GameObject> stalkers = GetStalkers();
+            foreach (var item in stalkers)
+            {
+                item.transform.rotation = Quaternion.Euler(UnityEngine.Random.Range(0f, 360f), UnityEngine.Random.Range(0f, 360f), UnityEngine.Random.Range(0f, 360f));
+            }
+        }
+
+        private static GameObject trap = null;
+        public static void PlaceTrap()
+        {
+            if (EasyInputs.GetTriggerButtonDown(EasyHand.RightHand))
+            {
+                if (trap == null)
+                {
+                    trap = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    trap.transform.localScale = new Vector3(0.1f, 0.2f, 0.2f);
+                    trap.transform.position = GorillaTagger.Instance.rightHandTransform.position;
+                    trap.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;
+                    trap.GetComponent<Renderer>().material.color = Color.green;
+                }
+            }
+        }
+        public static void DestroyTrap()
+        {
+            if (trap != null)
+            {
+                GameObject.Destroy(trap);
+                trap = null;
+            }
+        }
+        public static void TimmysToTrap()
+        {
+            if (trap == null)
+            {
+                NotifiLib.SendNotification("<color=red>[ERROR]</color> Trap has not been placed!");
+                return;
+            }
+            List<GameObject> timmys = GetTimmys();
+            foreach (var item in timmys)
+            {
+                item.transform.position = Vector3.MoveTowards(item.transform.position, trap.transform.position, 5f * Time.deltaTime);
+            }
+        }
+        public static void StalkersToTrap()
+        {
+            if (trap == null)
+            {
+                NotifiLib.SendNotification("<color=red>[ERROR]</color> Trap has not been placed!");
+                return;
+            }
+            List<GameObject> stalkers = GetStalkers();
+            foreach (var item in stalkers)
+            {
+                item.transform.position = Vector3.MoveTowards(item.transform.position, trap.transform.position, 5f * Time.deltaTime);
+            }
+        }
+        public static void MonstersToTrap()
+        {
+            if (trap == null)
+            {
+                NotifiLib.SendNotification("<color=red>[ERROR]</color> Trap has not been placed!");
+                return;
+            }
+            List<GameObject> monsters = GetAllMonsters();
+            foreach (var item in monsters)
+            {
+                item.transform.position = Vector3.MoveTowards(item.transform.position, trap.transform.position, 5f * Time.deltaTime);
+            }
+        }
+
+        public static void TimmyWork()
+        {
+            if (EasyInputs.GetTriggerButtonDown(EasyHand.RightHand))
+            {
+                Vector3 pos = new Vector3(-67f, 100f, 18);
+                SpawnTimmy(pos, Quaternion.identity);
+            }
+        }
+        public static void StalkerWork()
+        {
+            if (EasyInputs.GetTriggerButtonDown(EasyHand.RightHand))
+            {
+                Vector3 pos = new Vector3(-67f, 100f, 18);
+                SpawnStalker(pos, Quaternion.identity);
+            }
+        }
+
+        public static void JoystickControlTimmys()
+        {
+            List<GameObject> timmys = GetTimmys();
+            Vector2 axis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);
+            foreach (var item in timmys)
+            {
+                Vector3 pos = item.transform.position;
+                pos.x += axis.x;
+                pos.z += axis.y;
+                item.transform.position = pos;
+            }
+        }
+        public static void JoystickControlStalkers()
+        {
+            List<GameObject> stalkers = GetStalkers();
+            Vector2 axis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);
+            foreach (var item in stalkers)
+            {
+                Vector3 pos = item.transform.position;
+                pos.x += axis.x;
+                pos.z += axis.y;
+                item.transform.position = pos;
+            }
+        }
+        public static void JoystickControlMonters()
+        {
+            List<GameObject> monsters = GetAllMonsters();
+            Vector2 axis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);
+            foreach (var item in monsters)
+            {
+                Vector3 pos = item.transform.position;
+                pos.x += axis.x;
+                pos.z += axis.y;
+                item.transform.position = pos;
+            }
+        }
+
         public static void FullBright(bool enabled)
         {
             if (enabled)
@@ -17,253 +650,6 @@ namespace JupiterX.Mods
             {
                 RenderSettings.fog = true;
                 RenderSettings.ambientLight = Color.black;
-            }
-        }
-        public static void TimmySpam()
-        {
-            if (Utility.RTrigger)
-                Utility.BetaSpawnPrefab("horror/timmy", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LTrigger)
-                Utility.BetaSpawnPrefab("horror/timmy", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
-        }
-        public static void StalkerSpam()
-        {
-            if (Utility.RTrigger)
-                Utility.BetaSpawnPrefab("horror/stalker", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LTrigger)
-                Utility.BetaSpawnPrefab("horror/stalker", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
-        }
-
-        public static void TimmyAll()
-        {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
-            {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
-                {
-                    if (Utility.RTrigger)
-                        Utility.BetaSpawnPrefab("horror/timmy", rig.headConstraint.transform.position, rig.headConstraint.transform.rotation);
-                }
-            }
-        }
-        public static void StalkerAll()
-        {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
-            {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
-                {
-                    if (Utility.RTrigger)
-                        Utility.BetaSpawnPrefab("horror/stalker", rig.headConstraint.transform.position, rig.headConstraint.transform.rotation);
-                }
-            }
-        }
-
-        public static void TimmyGun()
-        {
-            if (Utility.RGrip)
-            {
-                RaycastHit raycastHit;
-                Physics.Raycast(Utility.RightHandTransform().position -
-                Utility.RightHandTransform().up, -
-                Utility.RightHandTransform().up +
-                Utility.RightHandTransform().forward, out raycastHit);
-                {
-                    GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    gameObject.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
-                    gameObject.GetComponent<Renderer>().material.color = Color.white;
-                    gameObject.transform.position = raycastHit.point;
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<BoxCollider>());
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<Rigidbody>());
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<Collider>());
-                    UnityEngine.Object.Destroy(gameObject, Time.deltaTime);
-                    gameObject.GetComponent<Collider>().enabled = false;
-
-                    if (Utility.RTrigger)
-                    {
-                        gameObject.GetComponent<Renderer>().material.color = Color.red;
-                        Utility.BetaSpawnPrefab("horror/timmy", gameObject.transform.position, gameObject.transform.rotation);
-                    }
-                }
-            }
-        }
-
-        public static void MoveTimmy()
-        {
-            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
-            if (Utility.RGrip)
-            {
-                RaycastHit raycastHit;
-                Physics.Raycast(Utility.RightHandTransform().position -
-                Utility.RightHandTransform().up, -
-                Utility.RightHandTransform().up +
-                Utility.RightHandTransform().forward, out raycastHit);
-                {
-                    GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    gameObject.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
-                    gameObject.GetComponent<Renderer>().material.color = Color.white;
-                    gameObject.transform.position = raycastHit.point;
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<BoxCollider>());
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<Rigidbody>());
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<Collider>());
-                    UnityEngine.Object.Destroy(gameObject, Time.deltaTime);
-                    gameObject.GetComponent<Collider>().enabled = false;
-
-                    if (Utility.RTrigger)
-                    {
-                        gameObject.GetComponent<Renderer>().material.color = Color.red;
-                        Utility.SetMaster(PhotonNetwork.LocalPlayer);
-                        // thx saturn for this part
-                        foreach (GameObject timmy in GameObject.FindObjectsOfType<GameObject>())
-                        {
-                            if (timmy.name.ToLower().Contains("timmy"))
-                            {
-                                timmy.transform.position = gameObject.transform.position;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void TimmyAllRigs()
-        {
-            if (Utility.RTrigger)
-            {
-                Utility.SetMaster(PhotonNetwork.LocalPlayer);
-                foreach (VRRig rig in GorillaParent.instance.vrrigs)
-                {
-                    if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
-                    {
-                        if (Utility.RTrigger)
-                        {
-                            foreach (GameObject timmy in GameObject.FindObjectsOfType<GameObject>())
-                            {
-                                if (timmy.name.ToLower().Contains("timmy"))
-                                {
-                                    if (Utility.RTrigger)
-                                    {
-                                        timmy.transform.position = rig.headConstraint.transform.position;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void SpazTimmy()
-        {
-            if (Utility.RTrigger)
-            {
-                Utility.SetMaster(PhotonNetwork.LocalPlayer);
-                foreach (GameObject timmy in GameObject.FindObjectsOfType<GameObject>())
-                {
-                    if (timmy.name.ToLower().Contains("timmy"))
-                    {
-                        if (Utility.RTrigger)
-                        {
-                            timmy.transform.localRotation = Quaternion.Euler(UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100));
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void FlingTimmy()
-        {
-            if (Utility.RTrigger)
-            {
-                Utility.SetMaster(PhotonNetwork.LocalPlayer);
-                foreach (GameObject timmy in GameObject.FindObjectsOfType<GameObject>())
-                {
-                    if (timmy.name.ToLower().Contains("timmy"))
-                    {
-                        if (Utility.RTrigger)
-                        {
-                            timmy.transform.position = new Vector3(0, 150f, 0);
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void KillGun()
-        {
-            if (Utility.RGrip)
-            {
-                RaycastHit raycastHit;
-                Physics.Raycast(Utility.RightHandTransform().position -
-                Utility.RightHandTransform().up, -
-                Utility.RightHandTransform().up +
-                Utility.RightHandTransform().forward, out raycastHit);
-                {
-                    GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    gameObject.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
-                    gameObject.GetComponent<Renderer>().material.color = Color.white;
-                    gameObject.transform.position = raycastHit.point;
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<BoxCollider>());
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<Rigidbody>());
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<Collider>());
-                    UnityEngine.Object.Destroy(gameObject, Time.deltaTime);
-                    gameObject.GetComponent<Collider>().enabled = false;
-
-                    if (Utility.RTrigger)
-                    {
-                        gameObject.GetComponent<Renderer>().material.color = Color.red;
-                        VRRig rig = raycastHit.collider.GetComponentInParent<VRRig>();
-                        if (rig != null)
-                        {
-                            GameObject stalker = PhotonNetwork.Instantiate("horror/stalker", rig.headConstraint.transform.position, rig.headConstraint.transform.rotation);
-                            if (stalker.GetComponent<Renderer>().enabled)
-                                stalker.GetComponent<Renderer>().enabled = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void KillAll()
-        {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
-            {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
-                {
-                    if (Utility.RTrigger)
-                    {
-                        Utility.BetaSpawnPrefab("horror/stalker", rig.headConstraint.transform.position, rig.headConstraint.transform.rotation);
-                        Utility.BetaSpawnPrefab("horror/stalker", rig.transform.position, rig.headConstraint.transform.rotation);
-                        Utility.BetaSpawnPrefab("horror/stalker", rig.rightHandTransform.transform.position, rig.headConstraint.transform.rotation);
-                    }
-                }
-            }
-        }
-
-        public static void StalkerGun()
-        {
-            if (Utility.RGrip)
-            {
-                RaycastHit raycastHit;
-                Physics.Raycast(Utility.RightHandTransform().position -
-                Utility.RightHandTransform().up, -
-                Utility.RightHandTransform().up +
-                Utility.RightHandTransform().forward, out raycastHit);
-                {
-                    GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    gameObject.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
-                    gameObject.GetComponent<Renderer>().material.color = Color.white;
-                    gameObject.transform.position = raycastHit.point;
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<BoxCollider>());
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<Rigidbody>());
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<Collider>());
-                    UnityEngine.Object.Destroy(gameObject, Time.deltaTime);
-                    gameObject.GetComponent<Collider>().enabled = false;
-
-                    if (Utility.RTrigger)
-                    {
-                        gameObject.GetComponent<Renderer>().material.color = Color.red;
-                        Utility.BetaSpawnPrefab("horror/stalker", gameObject.transform.position, gameObject.transform.rotation);
-                    }
-                }
             }
         }
     }
