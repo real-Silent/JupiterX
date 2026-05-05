@@ -293,6 +293,8 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest."  },
 
+                new ButtonInfo { buttonText = "Float Gun", method =() => Overpowered.CrashGun(), isTogglable = true, toolTip = "Attempts to make the person you shoot at float."  },
+
                 new ButtonInfo { buttonText = "Crash Gun", method =() => Overpowered.CrashGun(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
                 new ButtonInfo { buttonText = "Crash Gun V2", method =() => Overpowered.CrashGunV2(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },
                 new ButtonInfo { buttonText = "Crash Gun V3", method =() => Overpowered.CrashGunV3(), isTogglable = true, toolTip = "Lets you crash someone you shoot at."  },

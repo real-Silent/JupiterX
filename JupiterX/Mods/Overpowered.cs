@@ -161,6 +161,7 @@ namespace JupiterX.Mods
             }
             else
             {
+                Main.lockTarget = null;
                 if (Main.gunLocked)
                     Main.gunLocked = false;
             }
@@ -206,6 +207,7 @@ namespace JupiterX.Mods
             }
             else
             {
+                Main.lockTarget = null;
                 if (Main.gunLocked)
                     Main.gunLocked = false;
             }
@@ -263,6 +265,7 @@ namespace JupiterX.Mods
             }
             else
             {
+                Main.lockTarget = null;
                 if (Main.gunLocked)
                     Main.gunLocked = false;
             }
@@ -302,6 +305,7 @@ namespace JupiterX.Mods
             }
             else
             {
+                Main.lockTarget = null;
                 if (Main.gunLocked)
                     Main.gunLocked = false;
             }
@@ -328,6 +332,7 @@ namespace JupiterX.Mods
             }
             else
             {
+                Main.lockTarget = null;
                 if (Main.gunLocked)
                     Main.gunLocked = false;
             }
@@ -368,6 +373,7 @@ namespace JupiterX.Mods
             }
             else
             {
+                Main.lockTarget = null;
                 if (Main.gunLocked)
                     Main.gunLocked = false;
             }
@@ -543,6 +549,45 @@ namespace JupiterX.Mods
             }
         }
 
+        public static void FloatGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+
+                Utility.SetMaster(PhotonNetwork.LocalPlayer);
+
+                if (Main.gunLocked && Main.lockTarget != null)
+                {
+                    Utility.BetaCrashPlayer(Main.lockTarget.photonView.Owner);
+                    Utility.BetaDestroyPlayers(Main.lockTarget.photonView.Owner);
+                    Utility.BetaDestroyPlayers(Main.lockTarget.photonView.Owner);
+                    Utility.BetaDestroyPlayers(Main.lockTarget.photonView.Owner);
+                    Utility.BetaDestroyPlayers(Main.lockTarget.photonView.Owner);
+                    Utility.BetaCrashPlayer(Main.lockTarget.photonView.Owner);
+                }
+
+                if (Main.GetGunInput(true))
+                {
+                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
+                    if (who)
+                    {
+                        Main.gunLocked = true;
+                        Main.lockTarget = who;
+                    }
+                    PhotonNetwork.SendAllOutgoingCommands();
+                }
+            }
+            else
+            {
+                Main.lockTarget = null;
+                if (Main.gunLocked)
+                    Main.gunLocked = false;
+            }
+        }
+
         public static void CrashGun()
         {
             if (Main.GetGunInput(false))
@@ -576,6 +621,7 @@ namespace JupiterX.Mods
             }
             else
             {
+                Main.lockTarget = null;
                 if (Main.gunLocked)
                     Main.gunLocked = false;
             }

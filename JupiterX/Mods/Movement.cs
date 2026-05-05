@@ -90,6 +90,7 @@ namespace JupiterX.Mods
             }
             else
             {
+                Main.lockTarget = null;
                 if (Main.gunLocked)
                     Main.gunLocked = false;
 
