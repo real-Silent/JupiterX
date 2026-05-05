@@ -97,7 +97,7 @@ namespace JupiterX.Mods
             client.Headers.Add("Content-Type", "application/json");
             string response = client.UploadString(url, "POST", jsonData);
             JObject json = JObject.Parse(response);
-            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Response {json}");
+            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Response status: 200 {json["data"]?["PlayFabId"]?.ToString()}");
             return new PlayFabLoginResult
             {
                 PlayFabId = json["data"]?["PlayFabId"]?.ToString(),
