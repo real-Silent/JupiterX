@@ -1702,7 +1702,7 @@ namespace JupiterX.Menu
             Pointer.GetComponent<Renderer>().material.color = gunLocked || GetGunInput(true) ? buttonColors[1].GetCurrentColor() : buttonColors[0].GetCurrentColor();
             Transform gunHand = SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
             Physics.Raycast(gunHand.position, gunHand.forward + -gunHand.up, out Ray, float.PositiveInfinity);
-            Pointer.transform.position = Ray.point;
+            Pointer.transform.position = gunLocked ? lockTarget.headMesh.transform.position : Ray.point;
             if (!disableGunLine)
             {
                 line.SetPosition(0, gunHand.position);
