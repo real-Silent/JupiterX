@@ -17,6 +17,23 @@ public static class CosmeticsWrapper
         }
         instance = controllerType.GetField("instance").GetValue(null);
     }
+
+    public static void AddCurrency(int amount)
+    {
+        if (controllerType == null || instance == null) return;
+        var gotDailyField = controllerType.GetField("gotMyDaily");
+        var currencyField = controllerType.GetField("currencyBalance");
+        var updateBoard = controllerType.GetMethod("UpdateCurrencyBoard");
+        if (gotDailyField != null)
+            gotDailyField.SetValue(instance, true);
+        if (currencyField != null)
+        {
+            int current = (int)currencyField.GetValue(instance);
+            currencyField.SetValue(instance, current + amount);
+        }
+        updateBoard?.Invoke(instance, null);
+    }
+
     public static void PurchaseAll()
     {
         if (controllerType == null || instance == null) return;

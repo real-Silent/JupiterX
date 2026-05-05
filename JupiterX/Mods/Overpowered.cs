@@ -4,7 +4,6 @@ using JupiterX.Classes;
 using JupiterX.Menu;
 using Photon.Pun;
 using Photon.Realtime;
-using System.Linq;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -13,9 +12,7 @@ namespace JupiterX.Mods
     {
         public static void BetaChangeShinyRock(int ammount)
         {
-            CosmeticsController.instance.gotMyDaily = true;
-            CosmeticsController.instance.currencyBalance += ammount;
-            CosmeticsController.instance.UpdateCurrencyBoard();
+            CosmeticsWrapper.AddCurrency(ammount);
         }
 
         public static void SpazRocks()
