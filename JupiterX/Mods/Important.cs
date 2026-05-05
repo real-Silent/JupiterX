@@ -1,6 +1,8 @@
 ﻿using easyInputs;
 using GorillaNetworking;
 using Photon.Pun;
+using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -38,12 +40,27 @@ namespace JupiterX.Mods
             Vector2 axis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);
             if (axis.x > 0.6f)
             {
-                GorillaLocomotion.Player.Instance.Turn(6f);
+                Turn(6f);
             }
             if (axis.x < -0.6f)
             {
-                GorillaLocomotion.Player.Instance.Turn(-6f);
+                Turn(-6f);
             }
+        }
+
+        private static void Turn(float degrees)
+        {
+            var playerType = Type.GetType("GorillaLocomotion.Player, Assembly-CSharp") ?? Type.GetType("GLocomotion.Player, Assembly-CSharp");
+            if (playerType == null)
+                return;
+            var playerField = playerType.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static);
+            object playerInstance = playerField?.GetValue(null);
+            if (playerInstance == null)
+                return;
+            var turnMethod = playerType.GetMethod("Turn", BindingFlags.Public | BindingFlags.Instance);
+            if (turnMethod == null)
+                return;
+            turnMethod.Invoke(playerInstance, new object[] { degrees });
         }
     }
 }

@@ -30,37 +30,54 @@ namespace JupiterX.Mods
         private static GameObject SpawnTimmy(Vector3 pos, Quaternion rot) => PhotonNetwork.Instantiate("horror/timmy", pos, rot);
         private static GameObject SpawnStalker(Vector3 pos, Quaternion rot) => PhotonNetwork.Instantiate("horror/stalker", pos, rot);
 
+        private static float lastTimmyUpdate;
         private static List<GameObject> cachedTimmys = new List<GameObject>();
+
         private static List<GameObject> GetTimmys()
         {
+            if (Time.time - lastTimmyUpdate < 1f)
+                return cachedTimmys;
+            lastTimmyUpdate = Time.time;
             cachedTimmys.Clear();
-            foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+            foreach (var obj in GameObject.FindObjectsOfType<Transform>())
             {
-                if (obj.name.ToLower().Contains("timmy"))
-                    cachedTimmys.Add(obj);
+                var name = obj.name;
+                if (name.Contains("timmy"))
+                    cachedTimmys.Add(obj.gameObject);
             }
             return cachedTimmys;
         }
+
+        private static float lastStalkerUpdate;
         private static List<GameObject> cachedStalkers = new List<GameObject>();
         private static List<GameObject> GetStalkers()
         {
+            if (Time.time - lastStalkerUpdate < 1f)
+                return cachedStalkers;
+            lastStalkerUpdate = Time.time;
             cachedStalkers.Clear();
-            foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+            foreach (var obj in GameObject.FindObjectsOfType<Transform>())
             {
-                if (obj.name.ToLower().Contains("stalker"))
-                    cachedStalkers.Add(obj);
+                var name = obj.name;
+                if (name.Contains("stalker"))
+                    cachedStalkers.Add(obj.gameObject);
             }
             return cachedStalkers;
         }
 
+        private static float lastMonsterUpdate;
         private static List<GameObject> cachedMonsters = new List<GameObject>();
         private static List<GameObject> GetAllMonsters()
         {
+            if (Time.time - lastMonsterUpdate < 1f)
+                return cachedMonsters;
+            lastMonsterUpdate = Time.time;
             cachedMonsters.Clear();
-            foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+            foreach (var obj in GameObject.FindObjectsOfType<Transform>())
             {
-                if (obj.GetComponentByName("EnemyController") != null)
-                    cachedMonsters.Add(obj);
+                var go = obj.gameObject;
+                if (go.GetComponent("EnemyController") != null)
+                    cachedMonsters.Add(go);
             }
             return cachedMonsters;
         }
@@ -79,8 +96,8 @@ namespace JupiterX.Mods
             List<GameObject> timmys = GetTimmys();
             foreach (var item in timmys)
             {
-                item.GetComponent<Renderer>().material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
-                item.GetComponent<Renderer>().material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
+                item.gameObject.GetComponent<Renderer>().material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
+                item.gameObject.GetComponent<Renderer>().material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
             }
         }
 
@@ -89,8 +106,8 @@ namespace JupiterX.Mods
             List<GameObject> stalkers = GetStalkers();
             foreach (var item in stalkers)
             {
-                item.GetComponent<Renderer>().material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
-                item.GetComponent<Renderer>().material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
+                item.gameObject.GetComponent<Renderer>().material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
+                item.gameObject.GetComponent<Renderer>().material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
             }
         }
 
@@ -320,7 +337,7 @@ namespace JupiterX.Mods
                 if (GetGunInput(true))
                 {
                     GameObject monster = Ray.collider.GetComponentInParent<GameObject>();
-                    if (monster.GetComponentByName(name))
+                    if (monster.GetComponent(name))
                     {
                         monster.transform.position += new Vector3(monster.transform.position.x, monster.transform.position.y + 250f, monster.transform.position.z);
                     }
@@ -401,7 +418,7 @@ namespace JupiterX.Mods
                 if (GetGunInput(true))
                 {
                     GameObject monster = Ray.collider.GetComponentInParent<GameObject>();
-                    if (monster.GetComponentByName("EnemyController"))
+                    if (monster.GetComponent("EnemyController"))
                     {
                         monster.transform.position = new Vector3(0f, -6969f, 0f);
                     }
@@ -494,15 +511,15 @@ namespace JupiterX.Mods
 
         public static void FastTimmys()
         {
-            Traverse.Create(Timmy.GetComponentByName("EnemyController")).Field("moveSpeed").SetValue(20f);
+            Traverse.Create(Timmy.GetComponent("EnemyController")).Field("moveSpeed").SetValue(20f);
         }
         public static void ResetTimmy()
         {
-            Traverse.Create(Timmy.GetComponentByName("EnemyController")).Field("moveSpeed").SetValue(1f);
+            Traverse.Create(Timmy.GetComponent("EnemyController")).Field("moveSpeed").SetValue(1f);
         }
         public static void SlowTimmys()
         {
-            Traverse.Create(Timmy.GetComponentByName("EnemyController")).Field("moveSpeed").SetValue(0.4f);
+            Traverse.Create(Timmy.GetComponent("EnemyController")).Field("moveSpeed").SetValue(0.4f);
         }
 
         public static void SpazTimmys()
