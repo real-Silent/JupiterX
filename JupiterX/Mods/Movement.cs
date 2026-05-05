@@ -3,6 +3,7 @@ using JupiterX.Menu;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
+using static ONSPPropagationMaterial;
 
 namespace JupiterX.Mods
 {
@@ -80,6 +81,38 @@ namespace JupiterX.Mods
                     GorillaTagger.Instance.transform.position = point.transform.position;
                     GameObject.Destroy(point);
                     point = null;
+                }
+            }
+        }
+
+        private static GameObject c4 = null;
+        public static void C4()
+        {
+            if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
+            {
+                if (c4 == null)
+                {
+                    c4 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    c4.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    c4.transform.position = Utility.RightHandTransform().position;
+                    c4.transform.rotation = Utility.RightHandTransform().rotation;
+                    c4.GetComponent<Renderer>().material.color = Color.white;
+                }
+                c4.transform.position = Utility.RightHandTransform().position;
+                c4.transform.rotation = Utility.RightHandTransform().rotation;
+            }
+            if (EasyInputs.GetPrimaryButtonDown(EasyHand.RightHand))
+            {
+                if (c4 != null)
+                {
+                    c4.GetComponent<Renderer>().material.color = Color.red;
+                    float distance = Vector3.Distance(Utility.MainTransform().position, c4.transform.position);
+                    if (distance > 0.3f)
+                    {
+                        GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddExplosionForce(300f, c4.transform.position, 10f);
+                    }
+                    GameObject.Destroy(c4);
+                    c4 = null;
                 }
             }
         }
