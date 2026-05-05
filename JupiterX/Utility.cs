@@ -338,21 +338,6 @@ namespace JupiterX
             }
             return new string(buffer);
         }
-        public static GorillaTagManager BetaDoSmthWithTag(int wat, Photon.Realtime.Player whoToTag = null)
-        {
-            GorillaTagManager tagman = GorillaGameManager.instance.GetComponent<GorillaTagManager>();
-
-            switch (wat)
-            {
-                case 0: tagman.InfectionEnd(); break;
-                case 1: tagman.UpdateInfectionState(); break;
-                case 2: tagman.UpdateTagState(); break;
-                case 3: tagman.SetisCurrentlyTag(true); break;
-                case 4: tagman.ChangeCurrentIt(whoToTag); break;
-            }
-            return tagman;
-        }
-
 
         public static void FixGhostRig()
         {

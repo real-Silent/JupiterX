@@ -23,53 +23,6 @@ namespace JupiterX.Mods
             BetaChangeShinyRock(UnityEngine.Random.RandomRangeInt(int.MinValue, int.MaxValue));
         }
 
-        public static void RPCLag()
-        {
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                Utility.SetMaster(PhotonNetwork.LocalPlayer);
-            }
-            if (Utility.RTrigger)
-            {
-                Utility.myVRRig().photonView.RPC("SetTaggedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetTaggedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetTaggedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetTaggedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetTaggedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetTaggedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetTaggedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdatePlayerCosmetic", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdatePlayerCosmetic", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdatePlayerCosmetic", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdatePlayerCosmetic", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdatePlayerCosmetic", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdatePlayerCosmetic", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdatePlayerCosmetic", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetSlowedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetSlowedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetSlowedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetSlowedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("SetSlowedTime", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("ReportTagRPC", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("ReportTagRPC", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("ReportTagRPC", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("ReportTagRPC", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("ReportTagRPC", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("ReportTagRPC", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("ReportTagRPC", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-                Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null);
-            }
-        }
-
         public static void RigSpam()
         {
             SetMaster();
@@ -90,6 +43,11 @@ namespace JupiterX.Mods
             PhotonNetwork.CurrentRoom.SetMasterClient(PhotonNetwork.LocalPlayer);
             GorillaNot.instance.currentMasterClient = PhotonNetwork.LocalPlayer;
             GorillaNot.instance.OnMasterClientSwitched(PhotonNetwork.LocalPlayer);
+        }
+
+        public static void LongNamePub()
+        {
+            CreatePublic(" JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX ");
         }
 
         public static void CreatePublic(string roomName)
@@ -173,19 +131,6 @@ namespace JupiterX.Mods
             }
         }
 
-        public static void DoMatStuffIdk()
-        {
-            Photon.Realtime.Player[] players = PhotonNetwork.PlayerListOthers.ToArray();
-            Utility.BetaDoSmthWithTag(0);
-            Utility.BetaDoSmthWithTag(1);
-            Utility.BetaDoSmthWithTag(2);
-            Utility.BetaDoSmthWithTag(3);
-            for (int i = 0; i < players.Length; i++)
-            {
-                Utility.BetaDoSmthWithTag(4, players[i]);
-            }
-        }
-
         public static void SetMasterGun()
         {
             if (Main.GetGunInput(false))
@@ -227,7 +172,7 @@ namespace JupiterX.Mods
                 GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>().friendIDList.Add(plr.UserId);
                 if (Main.lockTarget != null && GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Contains(plr.UserId))
                 {
-                    for (int i = 0; i < 1; i++)
+                    for (int i = 0; i < 25; i++)
                     {
                         Utility.myVRRig().photonView.RPC("JoinPubWithFreinds", plr, null);
                     }
@@ -292,7 +237,7 @@ namespace JupiterX.Mods
                     PhotonView photonView = RigManager.GetPhotonViewFromVRRig(Main.lockTarget);
                     if (Main.lockTarget != null && GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Contains(Main.lockTarget.photonView.Owner.UserId))
                     {
-                        for (int i = 0; i < 1; i++)
+                        for (int i = 0; i < 25; i++)
                         {
                             photonView.RPC("JoinPubWithFreinds", Main.lockTarget.photonView.Owner, null);
                         }

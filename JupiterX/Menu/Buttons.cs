@@ -278,29 +278,23 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Set Master", method =() => Overpowered.SetMaster(), isTogglable = true, toolTip = "Sets you as master client."  },
                 new ButtonInfo { buttonText = "Always Set Master", method =() => Overpowered.AlawysMaster(), isTogglable = true, toolTip = "Always sets you as master no matter who tries to take it."  },
 
-                new ButtonInfo { buttonText = "Create Modded Public", method =() => Overpowered.CreatePublic("\n\n\n\nMODDED\n\n\n\n"), isTogglable = true, toolTip = "Creates a public room that is modded." },
-                new ButtonInfo { buttonText = "Create JupiterX Public", method =() => Overpowered.CreatePublic("\n\nJupiterX on top\n\n\n"), isTogglable = true, toolTip = "Creates a public room that says jupiterx on top." },
-
                 new ButtonInfo { buttonText = "Rig Spam [<color=cyan>RT</color>]", method =() => Overpowered.RigSpam(), isTogglable = true, toolTip = "Lets you spam rigs."  },
 
                 new ButtonInfo { buttonText = "Material Spam All", method =() => Overpowered.MatSpamAll(), isTogglable = true, toolTip = "Lets you spaz out the infection material on others."  },
                 new ButtonInfo { buttonText = "Material Spam Gun", method =() => Overpowered.MatSpamGun(), isTogglable = true, toolTip = "Lets you spaz out the infection material on who you shoot."  },
 
-                new ButtonInfo { buttonText = "Mat All V1", method =() => Overpowered.DoMatStuffIdk(), isTogglable = true, toolTip = "Changes everyones mat index."  },
-                new ButtonInfo { buttonText = "Mat All V2", method =() => Experimental.ChangeMatIndexAll(), isTogglable = true, toolTip = "Changes everyones mat index."  },
-
-                new ButtonInfo { buttonText = "RPC Lag All [<color=cyan>RT</color>]", method =() => Overpowered.RPCLag(), isTogglable = true, toolTip = "Lags people using rpcs while holding right trigger."  },
-
-                new ButtonInfo { buttonText = "Kick Gun [<color=red>W</color>]", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump."  },
-                new ButtonInfo { buttonText = "Kick All [<color=red>W</color>]", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump."  },
+                new ButtonInfo { buttonText = "Kick Gun [<color=cyan>W</color>]", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump."  },
+                new ButtonInfo { buttonText = "Kick All [<color=cyan>W</color>]", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump."  },
 
                 new ButtonInfo { buttonText = "Spaz Shiny Rock Count", method =() => Overpowered.SpazRocks(), isTogglable = false, toolTip = "Spazes your shiny rocks."  },
                 new ButtonInfo { buttonText = "Remove All Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(0), isTogglable = false, toolTip = "Gives you 0 shiny rocks."  },
                 new ButtonInfo { buttonText = "Max Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(int.MaxValue), isTogglable = false, toolTip = "Gives you infinite shiny rocks."  },
 
-                new ButtonInfo { buttonText = "Unban Self", method =() => Experimental.UnBanSelf(), isTogglable = false, toolTip = "Unbans yourself if you get banned."  },
-
-                new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest."  },
+                new ButtonInfo { buttonText = "Create Dot Name Public", method =() => Overpowered.CreatePublic("."), isTogglable = true, toolTip = "Creates a public room with a dot name." },
+                new ButtonInfo { buttonText = "Create Short Name Public", method =() => Overpowered.CreatePublic("1"), isTogglable = true, toolTip = "Creates a public room with a short name." },
+                new ButtonInfo { buttonText = "Create Long Name Public", method =() => Overpowered.LongNamePub(), isTogglable = true, toolTip = "Creates a public room with a long name." },
+                new ButtonInfo { buttonText = "Create Modded Public", method =() => Overpowered.CreatePublic("\n\n\n\nMODDED\n\n\n\n"), isTogglable = true, toolTip = "Creates a public room that is modded." },
+                new ButtonInfo { buttonText = "Create JupiterX Public", method =() => Overpowered.CreatePublic("\n\nJupiterX on top\n\n\n"), isTogglable = true, toolTip = "Creates a public room that says jupiterx on top." },
 
                 new ButtonInfo { buttonText = "Float Gun", method =() => Overpowered.FloatGun(), isTogglable = true, toolTip = "Attempts to make the person you shoot at float."  },
 
@@ -316,8 +310,6 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Crash All V4 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV4(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
                 new ButtonInfo { buttonText = "Crash All V5 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV5(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger."  },
 
-                new ButtonInfo { buttonText = "Spam Pop & Unpop Balloon [<color=cyan>RT</color>]", method =() => Experimental.BalloonSpam(), isTogglable = true, toolTip = "Spams everyones balloon while holding right trigger."  },
-
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>CASUAL</color>]", method =() => Experimental.SetGameMode("CASUAL"), isTogglable = false, toolTip = "Sets the game mode to casual."  },
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>INFECTION</color>]", method =() => Experimental.SetGameMode("INFECTION"), isTogglable = false, toolTip = "Sets the game mode to infection."  },
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>HUNT</color>]", method =() => Experimental.SetGameMode("HUNT"), isTogglable = false, toolTip = "Sets the game mode to hunt."  },
@@ -328,7 +320,13 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Experimental | 12
                 new ButtonInfo { buttonText = "Exit Experimental", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Cube All [<color=cyan>RT</color>]", method =() => Experimental.CumAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger."  },
-                
+
+                new ButtonInfo { buttonText = "Unban Self", method =() => Experimental.UnBanSelf(), isTogglable = false, toolTip = "Unbans yourself if you get banned."  },
+
+                new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest."  },
+
+                new ButtonInfo { buttonText = "Spam Pop & Unpop Balloon [<color=cyan>RT</color>]", method =() => Experimental.BalloonSpam(), isTogglable = true, toolTip = "Spams everyones balloon while holding right trigger."  },
+
                 new ButtonInfo { buttonText = "Spam Mute All", method =() => Utility.PacketStresser(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
                 new ButtonInfo { buttonText = "Spam Mute All V2", method =() => Utility.BetaSpamMuteAll(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
             },

@@ -227,14 +227,6 @@ namespace JupiterX.Mods
 
         }
 
-        public static void ChangeMatIndexAll()
-        {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
-            {
-                Utility.BetaSetIndex(1, rig);
-            }
-        }
-
         public static void GetFucked() 
         {
             PhotonNetwork.Instantiate("STICKABLE TARGET", new Vector3(-60.36f, 8.03f, -66.21f), Quaternion.Euler(40.00f, 90.00f, 0.00f));
