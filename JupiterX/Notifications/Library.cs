@@ -48,9 +48,9 @@ namespace JupiterX.Notifications
             rect.localPosition = new Vector3(0f, 0f, 1.6f);
             HUDObj.transform.localScale = Vector3.one;
             rect.rotation = Quaternion.Euler(0f, -270f, 0f);
-            NotifiText = CreateText("Notifications", new Vector2(450f, 210f), TextAnchor.LowerLeft, new Vector3(-1f, -1f, -0.5f), 30);
+            NotifiText = CreateText("Notifications", new Vector2(450f, 210f), TextAnchor.LowerLeft, new Vector3(-1f, -1f, -0.5f), 25); // 30
             ModText = CreateText("Mods", new Vector2(450f, 1000f), TextAnchor.UpperLeft, new Vector3(-1f, -1f, -0.5f), 20);
-            StatsText = CreateText("Stats", new Vector2(450f, 1000f), TextAnchor.UpperRight, new Vector3(-1f, -1f, 0.5f), 30);
+            StatsText = CreateText("Stats", new Vector2(450f, 1000f), TextAnchor.UpperRight, new Vector3(-1f, -1f, 0.5f), 20); // 30
         }
 
         private Text CreateText(string name, Vector2 size, TextAnchor anchor, Vector3 pos, int fontSize)
@@ -67,6 +67,7 @@ namespace JupiterX.Notifications
             txt.rectTransform.localPosition = pos;
             txt.material = AlertText;
             txt.supportRichText = true;
+            txt.transform.SetParent(MainCamera.transform);
             return txt;
         }
 
@@ -101,10 +102,10 @@ namespace JupiterX.Notifications
                 StatsText.alignment = Settings.flipArraylist ? TextAnchor.UpperLeft : TextAnchor.UpperRight;
                 if (information.Count > 0)
                 {
-                    Color targetColor = Settings.backgroundColor.GetCurrentColor();
-                    StatsText.text = string.Join("\n", information.Select(i => $"<color=#{ColorToHex(targetColor)}>{i.Key}</color> <color=#{ColorToHex(Settings.textColors[0])}>{i.Value}</color>").OrderByDescending(x => x.Length));
-                    if (Settings.lowercaseMode)
-                        StatsText.text = StatsText.text.ToLower();
+                    TextGenerationSettings settings = ModText.GetGenerationSettings(ModText.rectTransform.rect.size);
+                    List<string> stats = information.Select(item => $"<color=cyan>{item.Key}</color> {item.Value}").OrderByDescending(item => StatsText.cachedTextGenerator.GetPreferredWidth(item, settings)).ToList();
+                    StatsText.text = string.Join("\n", stats);
+                    StatsText.color = Color.white;
                 }
                 else 
                     StatsText.text = "";
