@@ -96,8 +96,12 @@ namespace JupiterX.Mods
             List<GameObject> timmys = GetTimmys();
             foreach (var item in timmys)
             {
-                item.gameObject.GetComponent<Renderer>().material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
-                item.gameObject.GetComponent<Renderer>().material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
+                Renderer[] rends = item.GetComponentsInChildren<Renderer>(true);
+                foreach (var r in rends)
+                {
+                    r.material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
+                    r.material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
+                }
             }
         }
 
@@ -106,8 +110,12 @@ namespace JupiterX.Mods
             List<GameObject> stalkers = GetStalkers();
             foreach (var item in stalkers)
             {
-                item.gameObject.GetComponent<Renderer>().material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
-                item.gameObject.GetComponent<Renderer>().material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
+                Renderer[] rends = item.GetComponentsInChildren<Renderer>(true);
+                foreach (var r in rends)
+                {
+                    r.material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
+                    r.material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
+                }
             }
         }
 
@@ -380,10 +388,9 @@ namespace JupiterX.Mods
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
-                    GameObject timmy = Ray.collider.GetComponentInParent<GameObject>();
-                    if (timmy.name.ToLower().Contains("timmy"))
+                    if (Ray.collider.gameObject.name.ToLower().Contains("timmy"))
                     {
-                        timmy.transform.position = new Vector3(0f, -6969f, 0f);
+                        Ray.collider.gameObject.transform.position = new Vector3(0f, -6969f, 0f);
                     }
                 }
             }
@@ -399,10 +406,9 @@ namespace JupiterX.Mods
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
-                    GameObject stalker = Ray.collider.GetComponentInParent<GameObject>();
-                    if (stalker.name.ToLower().Contains("stalker"))
+                    if (Ray.collider.gameObject.name.ToLower().Contains("stalker"))
                     {
-                        stalker.transform.position = new Vector3(0f, -6969f, 0f);
+                        Ray.collider.gameObject.transform.position = new Vector3(0f, -6969f, 0f);
                     }
                 }
             }
@@ -417,10 +423,9 @@ namespace JupiterX.Mods
                 RaycastHit Ray = GunData.Ray;
                 if (GetGunInput(true))
                 {
-                    GameObject monster = Ray.collider.GetComponentInParent<GameObject>();
-                    if (monster.GetComponent("EnemyController"))
+                    if (Ray.collider.gameObject.GetComponent("EnemyController"))
                     {
-                        monster.transform.position = new Vector3(0f, -6969f, 0f);
+                        Ray.collider.gameObject.transform.position = new Vector3(0f, -6969f, 0f);
                     }
                 }
             }
@@ -552,6 +557,8 @@ namespace JupiterX.Mods
                     trap.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;
                     trap.GetComponent<Renderer>().material.color = Color.green;
                 }
+                trap.transform.position = GorillaTagger.Instance.rightHandTransform.position;
+                trap.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;
             }
         }
         public static void DestroyTrap()
@@ -572,7 +579,7 @@ namespace JupiterX.Mods
             List<GameObject> timmys = GetTimmys();
             foreach (var item in timmys)
             {
-                item.transform.position = Vector3.MoveTowards(item.transform.position, trap.transform.position, 5f * Time.deltaTime);
+                item.transform.position = Vector3.MoveTowards(item.transform.position, trap.transform.position, 11f * Time.deltaTime);
             }
         }
         public static void StalkersToTrap()
@@ -585,7 +592,7 @@ namespace JupiterX.Mods
             List<GameObject> stalkers = GetStalkers();
             foreach (var item in stalkers)
             {
-                item.transform.position = Vector3.MoveTowards(item.transform.position, trap.transform.position, 5f * Time.deltaTime);
+                item.transform.position = Vector3.MoveTowards(item.transform.position, trap.transform.position, 11f * Time.deltaTime);
             }
         }
         public static void MonstersToTrap()

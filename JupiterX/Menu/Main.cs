@@ -1660,7 +1660,7 @@ namespace JupiterX.Menu
                 1 << LayerMask.NameToLayer("GorillaCosmetics") |
                 1 << LayerMask.NameToLayer("GorillaParticle"));
 
-            return noInvisLayerMask ?? GorillaLocomotion.Player.Instance.locomotionEnabledLayers;
+            return noInvisLayerMask ?? 131585; //GorillaLocomotion.Player.Instance.locomotionEnabledLayers;
         }
 
         public static (Vector3 position, Quaternion rotation, Vector3 up, Vector3 forward, Vector3 right) TrueLeftHand()
@@ -1701,7 +1701,7 @@ namespace JupiterX.Menu
             }
             Pointer.GetComponent<Renderer>().material.color = gunLocked || GetGunInput(true) ? buttonColors[1].GetCurrentColor() : buttonColors[0].GetCurrentColor();
             Transform gunHand = SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
-            Physics.Raycast(gunHand.position, gunHand.forward + -gunHand.up, out Ray, float.PositiveInfinity);
+            Physics.Raycast(gunHand.position, gunHand.forward + -gunHand.up, out Ray, float.PositiveInfinity, NoInvisLayerMask());
             Pointer.transform.position = gunLocked ? lockTarget.headMesh.transform.position : Ray.point;
             if (!disableGunLine)
             {
