@@ -273,6 +273,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Overpowered", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "MasterLabel", label = true },
 
+                new ButtonInfo { buttonText = "Cosmetix", method =() => Utility.UnlockAll(), isTogglable = false, toolTip = "Gives you every cosmetic in the game."  },
+
                 new ButtonInfo { buttonText = "Set Master", method =() => Overpowered.SetMaster(), isTogglable = true, toolTip = "Sets you as master client."  },
                 new ButtonInfo { buttonText = "Always Set Master", method =() => Overpowered.AlawysMaster(), isTogglable = true, toolTip = "Always sets you as master no matter who tries to take it."  },
 
@@ -318,30 +320,15 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>INFECTION</color>]", method =() => Experimental.SetGameMode("INFECTION"), isTogglable = false, toolTip = "Sets the game mode to infection."  },
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>HUNT</color>]", method =() => Experimental.SetGameMode("HUNT"), isTogglable = false, toolTip = "Sets the game mode to hunt."  },
                 new ButtonInfo { buttonText = "Set GameMode [<color=yellow>PAINTBRAWL</color>]", method =() => Experimental.SetGameMode("PAINTBRAWL"), isTogglable = false, toolTip = "Sets the game mode to battle."  },
+                new ButtonInfo { buttonText = "Set GameMode [<color=yellow>ERROR</color>]", method =() => Experimental.SetGameMode("ERROR"), isTogglable = false, toolTip = "Sets the game mode to battle."  },
             },
 
             new ButtonInfo[] { // Experimental | 12
                 new ButtonInfo { buttonText = "Exit Experimental", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Cube All [<color=cyan>RT</color>]", method =() => Experimental.CumAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger."  },
                 
-                new ButtonInfo { buttonText = "Spam Mute All", method =() => Utility.PacketStresser(), isTogglable = true, toolTip = "Spams all the report and mute buttons."  },
-                new ButtonInfo { buttonText = "Spam Mute All V2", method =() => Utility.BetaSpamMuteAll(), isTogglable = true, toolTip = "Spams all the report and mute buttons."  },
-
-                new ButtonInfo { buttonText = "Stick In Cart", method =() => Utility.BetaAddItemToCart("LBAAK."), isTogglable = false, toolTip = "Lets you buy the moderator stick."  },
-                new ButtonInfo { buttonText = "Admin In Cart", method =() => Utility.BetaAddItemToCart("LBAAD."), isTogglable = false, toolTip = "Lets you buy the admin badge."  },
-                new ButtonInfo { buttonText = "UNR Sweater In Cart", method =() => Utility.BetaAddItemToCart("LBACP."), isTogglable = false, toolTip = "Lets you buy the unreleased sweater."  },
-                new ButtonInfo { buttonText = "Finger Painter In Cart", method =() => Utility.BetaAddItemToCart("LBADE."), isTogglable = false, toolTip = "Lets you buy the finger painter."  },
-
-                new ButtonInfo { buttonText = "Gold Wrench In Cart", method =() => Utility.BetaAddItemToCart("LBABC."), isTogglable = false, toolTip = "Lets you buy the golden wrench."  },
-                new ButtonInfo { buttonText = "Cat Ears In Cart", method =() => Utility.BetaAddItemToCart("LHAAB."), isTogglable = false, toolTip = "Lets you buy the cat ears."  },
-                new ButtonInfo { buttonText = "Diamond Balloon In Cart", method =() => Utility.BetaAddItemToCart("LMAAR."), isTogglable = false, toolTip = "Lets you buy the diamond balloon."  },
-
-                new ButtonInfo { buttonText = "Canyon Pin In Cart", method =() => Utility.BetaAddItemToCart("LBAAG."), isTogglable = false, toolTip = "Lets you buy the canyons pin."  },
-                new ButtonInfo { buttonText = "City Pin In Cart", method =() => Utility.BetaAddItemToCart("LBAAH."), isTogglable = false, toolTip = "Lets you buy the city pin."  },
-                new ButtonInfo { buttonText = "Crystals Pin In Cart", method =() => Utility.BetaAddItemToCart("LBAAF."), isTogglable = false, toolTip = "Lets you buy the caves pin."  },
-                new ButtonInfo { buttonText = "Gorilla Pin In Cart", method =() => Utility.BetaAddItemToCart("LBAAI."), isTogglable = false, toolTip = "Lets you buy the gorilla pin."  },
-                new ButtonInfo { buttonText = "Mountain Pin In Cart", method =() => Utility.BetaAddItemToCart("LBABH."), isTogglable = false, toolTip = "Lets you buy the mountains pin."  },
-                new ButtonInfo { buttonText = "Tree Pin In Cart", method =() => Utility.BetaAddItemToCart("LBAAA."), isTogglable = false, toolTip = "Lets you buy the tree pin."  },
+                new ButtonInfo { buttonText = "Spam Mute All", method =() => Utility.PacketStresser(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
+                new ButtonInfo { buttonText = "Spam Mute All V2", method =() => Utility.BetaSpamMuteAll(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
             },
 
             new ButtonInfo[] { // Master | 13

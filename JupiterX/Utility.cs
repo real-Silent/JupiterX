@@ -13,6 +13,7 @@ using PlayFab;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
@@ -844,14 +845,11 @@ namespace JupiterX
             return GorillaTagger.Instance.GetComponent<Rigidbody>();
         }
 
-        public static void BetaAddItemToCart(string cosmeticId)
+        public static void UnlockAll()
         {
-            CosmeticsController.instance.currentCart.Insert(0, CosmeticsController.instance.GetItemFromDict(cosmeticId));
-            CosmeticsController.instance.UpdateShoppingCart();
-            CosmeticsController.instance.PurchaseItem();
-            CosmeticsController.instance.UpdateWardrobeModelsAndButtons();
-            CosmeticsController.instance.CheckIfMyCosmeticsUpdated(cosmeticId);
+            CosmeticsWrapper.PurchaseAll();
         }
+
         public static void DickSpawn()
         {
             if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
