@@ -38,5 +38,6 @@ public static class CosmeticsWrapper
             updateWardrobe.Invoke(instance, null);
             checkUpdate.Invoke(instance, new object[] { itemName });
         }
+        Notifications.NotifiLib.SendNotification("<color=cyan>[INFO]</color> Unlocked all cosmetics.", 15f);
     }
 }
