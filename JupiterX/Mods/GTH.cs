@@ -554,6 +554,7 @@ namespace JupiterX.Mods
                     trap.transform.position = GorillaTagger.Instance.rightHandTransform.position;
                     trap.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;
                     trap.GetComponent<Renderer>().material.color = Color.green;
+                    GameObject.Destroy(trap.GetComponent<Collider>());
                 }
                 trap.transform.position = GorillaTagger.Instance.rightHandTransform.position;
                 trap.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;

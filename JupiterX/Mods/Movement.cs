@@ -69,6 +69,7 @@ namespace JupiterX.Mods
                     point.transform.position = Utility.RightHandTransform().position;
                     point.transform.rotation = Utility.RightHandTransform().rotation;
                     point.GetComponent<Renderer>().material.color = Color.white;
+                    GameObject.Destroy(point.GetComponent<Collider>());
                 }
                 point.transform.position = Utility.RightHandTransform().position;
                 point.transform.rotation = Utility.RightHandTransform().rotation;
@@ -97,6 +98,7 @@ namespace JupiterX.Mods
                     c4.transform.position = Utility.RightHandTransform().position;
                     c4.transform.rotation = Utility.RightHandTransform().rotation;
                     c4.GetComponent<Renderer>().material.color = Color.white;
+                    GameObject.Destroy(c4.GetComponent<Collider>());
                 }
                 c4.transform.position = Utility.RightHandTransform().position;
                 c4.transform.rotation = Utility.RightHandTransform().rotation;
@@ -106,11 +108,9 @@ namespace JupiterX.Mods
                 if (c4 != null)
                 {
                     c4.GetComponent<Renderer>().material.color = Color.red;
-                    float distance = Vector3.Distance(Utility.MainTransform().position, c4.transform.position);
-                    if (distance > 0.3f)
-                    {
-                        GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddExplosionForce(300f, c4.transform.position, 10f);
-                    }
+                    Vector3 dir = GorillaTagger.Instance.bodyCollider.transform.position - c4.transform.position;
+                    dir.Normalize();
+                    GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += 25f * dir;
                     GameObject.Destroy(c4);
                     c4 = null;
                 }
