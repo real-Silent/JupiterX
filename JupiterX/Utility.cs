@@ -255,7 +255,7 @@ namespace JupiterX
             byte[] data = Encoding.UTF8.GetBytes(json);
             byte[] response = client.UploadData(url, "POST", data);
             string responseString = Encoding.UTF8.GetString(response);
-            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Success {responseString}", 30f);
+            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Success {responseString}", 6f);
             client.Dispose();
         }
 

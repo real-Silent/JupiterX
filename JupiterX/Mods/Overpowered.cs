@@ -284,11 +284,10 @@ namespace JupiterX.Mods
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-
                 if (Main.GetGunInput(true))
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
-                    if (who)
+                    if (who && who != GorillaTagger.Instance.myVRRig)
                     {
                         Utility.BetaBanAll(who.photonView.Owner.UserId);
                     }
