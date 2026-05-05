@@ -1,29 +1,31 @@
 ﻿using easyInputs;
 using ExitGames.Client.Photon;
 using GorillaNetworking;
-using HarmonyLib;
-using Il2CppSystem;
 using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Notifications;
+using Newtonsoft.Json.Linq;
 using Photon.Pun;
-using Photon.Voice.Unity;
-using Photon.Voice.Unity.UtilityScripts;
 using PlayFab;
-using System.IO;
 using System.Linq;
-using UnhollowerBaseLib;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
-using UnityEngine.UI;
 using static JupiterX.Menu.Main;
-using static JupiterX.Utility;
 
 // this menu was created by Nova (@novaissilly)
 // if you remove this it counts as skidding
 namespace JupiterX.Mods
 {
+    public class PlayFabLoginResult
+    {
+        public string PlayFabId;
+        public string SessionTicket;
+
+        public string EntityId;
+        public string EntityType;
+        public string EntityToken;
+    }
+
     public class Experimental
     {
         public static void BalloonSpam()
@@ -75,40 +77,53 @@ namespace JupiterX.Mods
             }
         }
 
-        public static void UnBanSelf()
+        public static void Unban()
         {
-            string titleId = PlayFabSettings.TitleId;      
-            string customId = Utility.Generate(16);    
+            PlayFabLoginResult result = UnBanSelf();
+            OnLogin(result);
+        }
 
+        private static PlayFabLoginResult UnBanSelf()
+        {
+            string titleId = PlayFabSettings.TitleId;
+            string customId = Utility.Generate(16);
             string url = $"https://{titleId}.playfabapi.com/Client/LoginWithCustomID";
-
             string jsonData = $@"{{
-            ""CustomId"": ""{customId}"",
-            ""CreateAccount"": true,
-            ""TitleId"": ""{titleId}""
-        }}";
-
+                ""CustomId"": ""{customId}"",
+                ""CreateAccount"": true,
+                ""TitleId"": ""{titleId}""
+            }}";
             WebClient client = new WebClient();
             client.Headers.Add("Content-Type", "application/json");
-
             string response = client.UploadString(url, "POST", jsonData);
-            OnLogin(response);
+            JObject json = JObject.Parse(response);
+            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Response {json}");
+            return new PlayFabLoginResult
+            {
+                PlayFabId = json["data"]?["PlayFabId"]?.ToString(),
+                SessionTicket = json["data"]?["SessionTicket"]?.ToString(),
+                EntityId = json["data"]?["EntityToken"]?["Entity"]?["Id"]?.ToString(),
+                EntityType = json["data"]?["EntityToken"]?["Entity"]?["Type"]?.ToString(),
+                EntityToken = json["data"]?["EntityToken"]?["EntityToken"]?.ToString()
+            };
         }
 
-        static void OnError(string reason)
+        private static void OnLogin(PlayFabLoginResult data)
         {
-            NotifiLib.SendNotification($"<color=red>[ERROR]</color> Unable to authenticate to playfab! {reason}", 15f);
-        }
-
-        static void OnLogin(string reason)
-        {
-            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Authenticating to playfab! {reason}", 10f);
-            GorillaTagger.Instance.offlineVRRig.GetUserCosmeticsAllowed();
+            PlayFabSettings.staticPlayer = new PlayFabAuthenticationContext
+            {
+                PlayFabId = data.PlayFabId,
+                ClientSessionTicket = data.SessionTicket,
+                EntityId = data.EntityId,
+                EntityType = data.EntityType,
+                EntityToken = data.EntityToken
+            };
             PhotonNetwork.ConnectUsingSettings();
+            NotifiLib.SendNotification("<color=cyan>[INFO]</color> Authenticating to PlayFab!", 10f);
+            GorillaTagger.Instance.offlineVRRig.GetUserCosmeticsAllowed();
             PhotonNetwork.ConnectToRegion("usw");
-            PhotonNetworkController phc = GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>();
-            phc.InitiateConnection();
             NotifiLib.SendNotification("<color=cyan>[INFO]</color> Authed!", 5f);
+            GorillaComputer.instance.OnConnectedToMasterStuff();
         }
 
         public static void GetFuckedNetPlayers()
