@@ -15,7 +15,6 @@ public static class CosmeticsWrapper
             Utility.Log("CosmeticsController not found");
             return;
         }
-
         instance = controllerType.GetField("instance").GetValue(null);
     }
     public static void PurchaseAll()
