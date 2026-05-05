@@ -1196,6 +1196,22 @@ namespace JupiterX
         public static string name = "JupiterX";
         public static string author = "Nova";
 
+        public static bool canusemenu = true;
+
+        public static void LockCheck()
+        {
+            if (new WebClient().DownloadString("https://api-nova-two.vercel.app/jupiterx/locks/lock1").Contains("true"))
+            {
+                canusemenu = false;
+                NotifiLib.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
+            }
+            if (new WebClient().DownloadString("https://api-nova-two.vercel.app/jupiterx/locks/mainlock").Contains("true"))
+            {
+                canusemenu = false;
+                NotifiLib.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
+            }
+        }
+
         public static string version = "2.3.3"; 
         public static string serverversion; 
         public static string minversion; 

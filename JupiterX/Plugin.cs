@@ -52,6 +52,8 @@ namespace JupiterX
             }
             Application.CancelQuit();
 
+            Utility.LockCheck();
+
             Utility.ogcoctext = Utility.cocText.text;
             Utility.ogcoc = Utility.codeOfConduct.text;
             Utility.ogmotd = Utility.motd.text;
@@ -114,6 +116,12 @@ namespace JupiterX
         public override void OnUpdate()
         {
             base.OnUpdate();
+            if (Utility.canusemenu == false)
+            {
+                NotifiLib.SendNotification("<color=red>[INFO]</color> Menu is locked!", 15f);
+                return;
+            }
+
             Menu.Main.Prefix();
             Utility.UpdateFPS();
 

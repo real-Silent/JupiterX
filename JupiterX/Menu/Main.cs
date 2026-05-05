@@ -24,6 +24,12 @@ namespace JupiterX.Menu
 	{
 		public static void Prefix()
 		{
+            if (Utility.canusemenu == false)
+            {
+                NotifiLib.SendNotification("<color=red>[INFO]</color> Menu is locked!", 15f);
+                return;
+            }
+
             Utility.RPrim = EasyInputs.GetPrimaryButtonDown(Utility.RightHand);
             Utility.RSec = EasyInputs.GetSecondaryButtonDown(Utility.RightHand);
             Utility.RGrip = EasyInputs.GetGripButtonDown(Utility.RightHand);
