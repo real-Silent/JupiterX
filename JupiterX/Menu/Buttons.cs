@@ -377,31 +377,6 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Slow Gun", method =() => Overpowered.SlowGun(), isTogglable = true, toolTip = "Lets you slow someone with a gun."  },
                 new ButtonInfo { buttonText = "Slow All", method =() => Overpowered.SlowAll(), isTogglable = true, toolTip = "Lets you slow everyone in the lobby."  },
-
-                new ButtonInfo { buttonText = "Spawn Lucy", method =() => Utility.BetaSpawnLucy(HalloweenGhostChaser.ChaseState.Gong, true, Color.cyan), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest."  },
-                new ButtonInfo { buttonText = "Spawn Blue Lucy", method =() => Utility.BetaSpawnLucy(HalloweenGhostChaser.ChaseState.Gong, true, Color.blue), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest." },
-                new ButtonInfo { buttonText = "Spawn Red Lucy", method =() => Utility.BetaSpawnLucy(HalloweenGhostChaser.ChaseState.Gong, true, Color.red), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest." },
-                new ButtonInfo { buttonText = "Spawn Black Lucy", method =() => Utility.BetaSpawnLucy(HalloweenGhostChaser.ChaseState.Gong, true, Color.black), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest." },
-                new ButtonInfo { buttonText = "Spawn Yellow Lucy", method =() => Utility.BetaSpawnLucy(HalloweenGhostChaser.ChaseState.Gong, true, Color.yellow), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest." },
-                new ButtonInfo { buttonText = "Spawn RGB Lucy", method =() => Utility.BetaSpawnLucy(HalloweenGhostChaser.ChaseState.Gong, true, Utility.DoRGBColor(), true), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest." },
-                new ButtonInfo { buttonText = "Despawn Lucy", method =() => Utility.BetaSpawnLucy(HalloweenGhostChaser.ChaseState.Dormant, true, Color.cyan), isTogglable = false, toolTip = "Despawns the ghost Lucy in forest." },
-
-                new ButtonInfo { buttonText = "Orbit Lucy Self", method =() => Utility.LucyOrbitSelf(), isTogglable = true, toolTip = "Makes Lucy orbit around your head."  },
-                new ButtonInfo { buttonText = "Fling Lucy", method =() => Utility.LucyFlingGun(), isTogglable = false, toolTip = "Flings Lucy info the sky."  },
-
-                new ButtonInfo { buttonText = "Move Lucy Gun", method =() => Utility.MoveLucyGun(), isTogglable = true, toolTip = "Lets you move Lucy with a gun."  },
-                new ButtonInfo { buttonText = "Lucy Chase Gun", method =() => Utility.LucyAttackGun(), isTogglable = true, toolTip = "Lets you change Lucys target."  },
-                new ButtonInfo { buttonText = "Lucy Spaz Attack", method =() => Utility.LucySpazAttack(), isTogglable = true, toolTip = "Makes Lucy spazz out when attacking someone."  },
-
-                new ButtonInfo { buttonText = "Spaz Lucy", method =() => Utility.SpazLucy(), isTogglable = true, toolTip = "Spazzes Lucy when she tries to spawn."  },
-
-                new ButtonInfo { buttonText = "Very Slow Lucy", method =() => Utility.BetaSetLucySpeed(0.1f), isTogglable = true, toolTip = "Changes Lucys speed."  },
-                new ButtonInfo { buttonText = "Slow Lucy", method =() => Utility.BetaSetLucySpeed(0.5f), isTogglable = true, toolTip = "Changes Lucys speed."  },
-                new ButtonInfo { buttonText = "Medium Lucy", method =() => Utility.BetaSetLucySpeed(0.7f), isTogglable = true, toolTip = "Changes Lucys speed."  },
-                new ButtonInfo { buttonText = "Fast Lucy", method =() => Utility.BetaSetLucySpeed(5f), isTogglable = true, toolTip = "Changes Lucys speed."  },
-                new ButtonInfo { buttonText = "Very Fast Lucy", method =() => Utility.BetaSetLucySpeed(15f), isTogglable = true, toolTip = "Changes Lucys speed."  },
-                new ButtonInfo { buttonText = "Instant Kill Lucy", method =() => Utility.BetaSetLucySpeed(float.MaxValue), isTogglable = true, toolTip = "Changes Lucys speed."  },
-                new ButtonInfo { buttonText = "Force Lucy Target", method =() => Utility.LucyTargetGun(), isTogglable = true, toolTip = "Changes Lucys target."  },
             },
 
             new ButtonInfo[] { // Soundboard | 15
