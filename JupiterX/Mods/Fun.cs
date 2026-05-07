@@ -203,7 +203,7 @@ namespace JupiterX.Mods
 
         public static void FixHandTaps()
         {
-            GorillaTagger.Instance.handTapVolume = 1f;
+            GorillaTagger.Instance.handTapVolume = 0.1f;
         }
         public static void LoadHandTaps()
         {
@@ -219,7 +219,7 @@ namespace JupiterX.Mods
         }
         public static void ResetTapcooldown()
         {
-            GorillaTagger.Instance.tapCoolDown = 1f;
+            GorillaTagger.Instance.tapCoolDown = 0.33f;
         }
 
         private static bool autoclickstate;
