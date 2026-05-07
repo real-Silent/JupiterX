@@ -137,8 +137,8 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Safety | 3
                 new ButtonInfo { buttonText = "Exit Safety", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Panic", method =() => Utility.Panic(), isTogglable = false, toolTip = "Disables every mod you have enabled." },
-                new ButtonInfo { buttonText = "Anti Report [<color=yellow>Disconnect</color>]", method =() => Utility.BetaAntiReport(false, true), isTogglable = true, toolTip = "Disconnects you when someone is close to the report button." },
-                new ButtonInfo { buttonText = "Anti Report [<color=yellow>Crash</color>]", method =() => Utility.BetaAntiReport(true, false), isTogglable = true, toolTip = "Crashes the person who tries to report you when someone is close to the report button." },
+                new ButtonInfo { buttonText = "Anti Report [<color=grey>[</color><color=cyan>DISCONNECT</color><color=grey>]</color>", method =() => Utility.BetaAntiReport(false, true), isTogglable = true, toolTip = "Disconnects you when someone is close to the report button." },
+                new ButtonInfo { buttonText = "Anti Report [<color=grey>[</color><color=cyan>CRASH</color><color=grey>]</color>", method =() => Utility.BetaAntiReport(true, false), isTogglable = true, toolTip = "Crashes the person who tries to report you when someone is close to the report button." },
                 new ButtonInfo { buttonText = "Anti Moderator", method =() => Utility.BetaAntiCosmetic("LBAAK."), isTogglable = true, toolTip = "Disconnects you when someone has the moderator stick." },
                 new ButtonInfo { buttonText = "Anti Admin", method =() => Utility.BetaAntiCosmetic("LBAAD."), isTogglable = true, toolTip = "Disconnects you when someone has the admin badge." },
                 new ButtonInfo { buttonText = "Anti Finger Painter", method =() => Utility.BetaAntiCosmetic("LBADE."), isTogglable = true, toolTip = "Disconnects you when someone has the finger painter." },
@@ -160,10 +160,10 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Movement | 5
                 new ButtonInfo { buttonText = "Exit Movement", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
-                new ButtonInfo { buttonText = "Fly <color=cyan>[A]</color>", method =() => Movement.Fly(), isTogglable = true, toolTip = "Lets you fly while holding your right primary." },
-                new ButtonInfo { buttonText = "TFly <color=cyan>[<color=cyan>RT</color>]</color>", method =() => Movement.TFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger." },
+                new ButtonInfo { buttonText = "Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.Fly(), isTogglable = true, toolTip = "Lets you fly while holding your right primary." },
+                new ButtonInfo { buttonText = "TFly <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.TFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger." },
                 new ButtonInfo { buttonText = "Excel Fly", method =() => Movement.ExcelFly(), isTogglable = true, toolTip = "Lets you fly like iron man."  },
-                new ButtonInfo { buttonText = "Slingshot Fly <color=cyan>[A]</color>", method =() => Movement.SlingShotFly(), isTogglable = true, toolTip = "Lets you fly like a slingshot while hold your right primary." },
+                new ButtonInfo { buttonText = "Slingshot Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.SlingShotFly(), isTogglable = true, toolTip = "Lets you fly like a slingshot while hold your right primary." },
                 new ButtonInfo { buttonText = "Long Arms", method =() => Movement.LongArms(false), disableMethod =() => Movement.LongArms(true), isTogglable = true, toolTip = "Gives you long arms." },
                 new ButtonInfo { buttonText = "Platforms", method =() => Movement.Platforms(), isTogglable = true, toolTip = "Lets you walk on air while holding grip." },
                 new ButtonInfo { buttonText = "SpeedBoost", method =() => Movement.SpeedBoost(), isTogglable = true, toolTip = "Gives you a speed boost." },
@@ -171,11 +171,11 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "No Tag Freeze", method =() => Movement.NoTagFreeze(0), isTogglable = true, toolTip = "Removes the tag freeze you get when you get tagged." },
                 new ButtonInfo { buttonText = "Tag Freeze", method =() => Movement.NoTagFreeze(1), disableMethod =() => Movement.NoTagFreeze(0),  isTogglable = true, toolTip = "Lets you act like you have tag freeze." },
                 new ButtonInfo { buttonText = "TP Gun", method =() => Movement.TPGun(), isTogglable = true, toolTip = "Lets you teleport with a gun."  },
-                new ButtonInfo { buttonText = "Car Monke <color=cyan>[Triggers]</color>", method =() => Movement.CarMonke(), isTogglable = true, toolTip = "Drive around while holding your triggers." },
-                new ButtonInfo { buttonText = "NoClip <color=cyan>[RT]</color>", method =() => Movement.NoClip(Utility.RTrigger), isTogglable = true, toolTip = "Removes object colliders when you hold right trigger." },
+                new ButtonInfo { buttonText = "Car Monke <color=grey>[</color><color=cyan>T</color><color=grey>]</color>", method =() => Movement.CarMonke(), isTogglable = true, toolTip = "Drive around while holding your triggers." },
+                new ButtonInfo { buttonText = "NoClip <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.NoClip(Utility.RTrigger), isTogglable = true, toolTip = "Removes object colliders when you hold right trigger." },
                 new ButtonInfo { buttonText = "Follow Player Gun", method =() => Movement.FollowPlayerGun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you follow someone with a gun." },
-                new ButtonInfo { buttonText = "Checkpoint <color=cyan>[G]</color>", method =() => Movement.Checkpoint(), isTogglable = true, toolTip = "Lets you a place a checkpoint to go back to later." },
-                new ButtonInfo { buttonText = "C4 <color=cyan>[G]</color>", method =() => Movement.C4(), isTogglable = true, toolTip = "Lets you a place a checkpoint to go back to later." },
+                new ButtonInfo { buttonText = "Checkpoint <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Movement.Checkpoint(), isTogglable = true, toolTip = "Lets you a place a checkpoint to go back to later." },
+                new ButtonInfo { buttonText = "C4 <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Movement.C4(), isTogglable = true, toolTip = "Lets you a place a checkpoint to go back to later." },
             },
 
             new ButtonInfo[] { // Advantage | 6
@@ -188,9 +188,9 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // VRRig | 7
                 new ButtonInfo { buttonText = "Exit VRRig", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
-                new ButtonInfo { buttonText = "Ghost Monke <color=cyan>[A]</color>", method =() => vRRig.GhostMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become a ghost." },
-                new ButtonInfo { buttonText = "Invis Monke <color=cyan>[B]</color>", method =() => vRRig.InvisMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become invisable." },
-                new ButtonInfo { buttonText = "Grab Rig <color=cyan>[Grips]</color>", method =() => vRRig.GrabRig(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you grab your rig while holding right grip." },
+                new ButtonInfo { buttonText = "Ghost Monke <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => vRRig.GhostMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become a ghost." },
+                new ButtonInfo { buttonText = "Invis Monke <color=grey>[</color><color=cyan>B</color><color=grey>]</color>", method =() => vRRig.InvisMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become invisable." },
+                new ButtonInfo { buttonText = "Grab Rig <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => vRRig.GrabRig(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you grab your rig while holding right grip." },
                 new ButtonInfo { buttonText = "Spaz Rig", method =() => vRRig.SpazRig(), disableMethod = vRRig.FixSpazRig, isTogglable = true, toolTip = "Makes your rig spazz out." },
                 new ButtonInfo { buttonText = "Strobe", method =() => vRRig.Strobe(), isTogglable = true, toolTip = "Makes your color go crazy." },
                 new ButtonInfo { buttonText = "Move Rig Gun", method =() => vRRig.MoveRigGun(), isTogglable = true, toolTip = "Moves your rig to the gun point." },
@@ -217,7 +217,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Loud Hand Taps", method =() => Fun.LoadHandTaps(), disableMethod =() => Fun.FixHandTaps(), isTogglable = true, toolTip = "Makes the hand tap sound very loud." },
                 new ButtonInfo { buttonText = "Silent Hand Taps", method =() => Fun.SilentHandTaps(), disableMethod =() => Fun.FixHandTaps(), isTogglable = true, toolTip = "Remoevs the hand tap sound." },
 
-                new ButtonInfo { buttonText = "Auto Clicker <color=cyan>[T]</color>", method =() => Fun.AutoClicker(), isTogglable = true, toolTip = "Automatically presses trigger for you when holding <color=cyan>trigger</color>." },
+                new ButtonInfo { buttonText = "Auto Clicker <color=grey>[</color><color=cyan>T</color><color=grey>]</color>", method =() => Fun.AutoClicker(), isTogglable = true, toolTip = "Automatically presses trigger for you when holding <color=cyan>trigger</color>." },
 
                 new ButtonInfo { buttonText = "Mute Gun", method =() => Fun.MuteGun(), isTogglable = true, toolTip = "Lets you mute the player you shoot the gun at." },
                 new ButtonInfo { buttonText = "Mute All", method =() => Fun.MuteAll(), isTogglable = false, toolTip = "Lets you mute everyone in the current room." },
@@ -275,20 +275,20 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Prefabs | 11
                 new ButtonInfo { buttonText = "Exit Prefabs", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu."},
-                new ButtonInfo { buttonText = "Get Fucked Spawn [Forest, Targets]", method =() => Experimental.GetFucked(), isTogglable = false, toolTip = "Spawns the word 'Get Fucked' using stickable targets in forest." },
+                new ButtonInfo { buttonText = "Get Fucked Spawn [<color=grey>[</color><color=cyan>FOREST</color><color=grey>]</color>", method =() => Experimental.GetFucked(), isTogglable = false, toolTip = "Spawns the word 'Get Fucked' using stickable targets in forest." },
                 new ButtonInfo { buttonText = "Clear Prefabs", method =() => Prefabs.ClearPrefabs(), isTogglable = false, toolTip = "Clears every prefab with a photon view." },
 
-                new ButtonInfo { buttonText = "Cube All [<color=cyan>RT</color>]", method =() => Fun.CubeAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger." },
+                new ButtonInfo { buttonText = "Cube All <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Fun.CubeAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger." },
 
-                new ButtonInfo { buttonText = "Cube Spam [<color=cyan>Grips</color>]", method =() => Prefabs.CubeSpam(), isTogglable = true, toolTip = "Lets you spam cubes while holding grip." },
+                new ButtonInfo { buttonText = "Cube Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Prefabs.CubeSpam(), isTogglable = true, toolTip = "Lets you spam cubes while holding grip." },
                 new ButtonInfo { buttonText = "Give Cube Spam Gun", method =() => Prefabs.GiveSpamGun(0), isTogglable = true, toolTip = "Lets you give someone cube spam when they hold grip." },
-                new ButtonInfo { buttonText = "Target Spam [<color=cyan>Grips</color>]", method =() => Prefabs.TargetSpam(), isTogglable = true, toolTip = "Lets you spam stickable targets while holding grip."  },
+                new ButtonInfo { buttonText = "Target Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Prefabs.TargetSpam(), isTogglable = true, toolTip = "Lets you spam stickable targets while holding grip."  },
                 new ButtonInfo { buttonText = "Give Target Spam Gun", method =() => Prefabs.GiveSpamGun(1), isTogglable = true, toolTip = "Lets you give someone stickable target spam when they hold grip."  },
-                new ButtonInfo { buttonText = "Network Player Spam [<color=cyan>Grips</color>]", method =() => Prefabs.NetworkPlayerSpam(), isTogglable = true, toolTip = "Lets you spam network players when holding grip." },
+                new ButtonInfo { buttonText = "Network Player Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Prefabs.NetworkPlayerSpam(), isTogglable = true, toolTip = "Lets you spam network players when holding grip." },
                 new ButtonInfo { buttonText = "Give Network Player Spam Gun", method =() => Prefabs.GiveSpamGun(2), isTogglable = true, toolTip = "Lets you give someone network player spam when they are holding grip." },
-                new ButtonInfo { buttonText = "Enemy Spam [<color=cyan>Grips</color>]", method =() => Prefabs.EnemySpam(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip." },
+                new ButtonInfo { buttonText = "Enemy Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Prefabs.EnemySpam(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip." },
                 new ButtonInfo { buttonText = "Give Enemy Spam Gun", method =() => Prefabs.GiveSpamGun(3), isTogglable = true, toolTip = "Lets you give someone enemy spam when they are holding grip." },
-                new ButtonInfo { buttonText = "Scoreboard Spam [<color=cyan>Grips</color>]", method =() => Prefabs.SpamScoreboard(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip." },
+                new ButtonInfo { buttonText = "Scoreboard Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Prefabs.SpamScoreboard(), isTogglable = true, toolTip = "Lets you spam enemys when holding grip." },
 
                 new ButtonInfo { buttonText = "Cube Gun", method =() => Prefabs.CubeGun(), isTogglable = true, toolTip = "Lets you shoot cubes with a gun." },
                 new ButtonInfo { buttonText = "Target Gun", method =() => Prefabs.TargetGun(), isTogglable = true, toolTip = "Lets you shoot targets with a gun." },
@@ -296,9 +296,9 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Enemy Gun", method =() => Prefabs.EnemyGun(), isTogglable = true, toolTip = "Lets you shoot enemys with a gun." },
                 new ButtonInfo { buttonText = "Scoreboard Gun", method =() => Prefabs.ScoreboardGun(), isTogglable = true, toolTip = "Lets you shoot scoreboard with a gun." },
 
-                new ButtonInfo { buttonText = "Cube Launcher [<color=cyan>Grips</color>]", method =() => Prefabs.PrefabLuancher("bulletPrefab"), isTogglable = true, toolTip = "Lets you launch cubes while holding grips." },
-                new ButtonInfo { buttonText = "Target Launcher [<color=cyan>Grips</color>]", method =() => Prefabs.PrefabLuancher("STICKABLE TARGET"), isTogglable = true, toolTip = "Lets you launch targets while holding grips." },
-                new ButtonInfo { buttonText = "Target Dick Spawner [<color=cyan>Grips</color>]", method =() => Utility.DickSpawn(), isTogglable = true, toolTip = "Lets you spawn a dick out of targets." },
+                new ButtonInfo { buttonText = "Cube Launcher <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Prefabs.PrefabLuancher("bulletPrefab"), isTogglable = true, toolTip = "Lets you launch cubes while holding grips." },
+                new ButtonInfo { buttonText = "Target Launcher <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Prefabs.PrefabLuancher("STICKABLE TARGET"), isTogglable = true, toolTip = "Lets you launch targets while holding grips." },
+                new ButtonInfo { buttonText = "Target Dick Spawner <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Utility.DickSpawn(), isTogglable = true, toolTip = "Lets you spawn a dick out of targets." },
             },
 
             new ButtonInfo[] { // Overpowered | 12
@@ -311,13 +311,13 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Set Master", method =() => Utility.MakeMeMaster(), isTogglable = true, toolTip = "Sets you as master client." },
                 new ButtonInfo { buttonText = "Always Set Master", method =() => Overpowered.AlawysMaster(), isTogglable = true, toolTip = "Always sets you as master no matter who tries to take it." },
 
-                new ButtonInfo { buttonText = "Rig Spam [<color=cyan>RT</color>]", method =() => Overpowered.RigSpam(), isTogglable = true, toolTip = "Lets you spam rigs." },
+                new ButtonInfo { buttonText = "Rig Spam <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.RigSpam(), isTogglable = true, toolTip = "Lets you spam rigs." },
 
                 new ButtonInfo { buttonText = "Material Spam All", method =() => Overpowered.MatSpamAll(), isTogglable = true, toolTip = "Lets you spaz out the infection material on others." },
                 new ButtonInfo { buttonText = "Material Spam Gun", method =() => Overpowered.MatSpamGun(), isTogglable = true, toolTip = "Lets you spaz out the infection material on who you shoot." },
 
-                new ButtonInfo { buttonText = "Kick Gun [<color=cyan>Private</color>]", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump." },
-                new ButtonInfo { buttonText = "Kick All [<color=cyan>Private</color>]", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump." },
+                new ButtonInfo { buttonText = "Kick Gun <color=grey>[</color><color=cyan>Private</color><color=grey>]</color>", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump." },
+                new ButtonInfo { buttonText = "Kick All <color=grey>[</color><color=cyan>Private</color><color=grey>]</color>", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump." },
 
                 new ButtonInfo { buttonText = "Spaz Shiny Rock Count", method =() => Overpowered.SpazRocks(), isTogglable = true, toolTip = "Spazes your shiny rocks." },
                 new ButtonInfo { buttonText = "Remove All Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(0), isTogglable = false, toolTip = "Gives you 0 shiny rocks." },
@@ -344,27 +344,27 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Crash Gun V4", method =() => Overpowered.CrashGunV4(), isTogglable = true, toolTip = "Lets you crash someone you shoot at." },
                 new ButtonInfo { buttonText = "Crash Gun V5", method =() => Overpowered.CrashGunV5(), isTogglable = true, toolTip = "Lets you crash someone you shoot at." },
 
-                new ButtonInfo { buttonText = "Crash All [<color=cyan>RT</color>]", method =() => Overpowered.CrashAll(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
-                new ButtonInfo { buttonText = "Crash All V2 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV2(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
-                new ButtonInfo { buttonText = "Crash All V3 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV3(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
-                new ButtonInfo { buttonText = "Crash All V4 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV4(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
-                new ButtonInfo { buttonText = "Crash All V5 [<color=cyan>RT</color>]", method =() => Overpowered.CrashAllV5(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
+                new ButtonInfo { buttonText = "Crash All <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAll(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
+                new ButtonInfo { buttonText = "Crash All V2 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV2(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
+                new ButtonInfo { buttonText = "Crash All V3 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV3(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
+                new ButtonInfo { buttonText = "Crash All V4 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV4(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
+                new ButtonInfo { buttonText = "Crash All V5 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV5(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
 
                 new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room." },
                 new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at." },
 
-                new ButtonInfo { buttonText = "Set GameMode [<color=yellow>CASUAL</color>]", method =() => Experimental.SetGameMode("CASUAL"), isTogglable = false, toolTip = "Sets the game mode to casual."  },
-                new ButtonInfo { buttonText = "Set GameMode [<color=yellow>INFECTION</color>]", method =() => Experimental.SetGameMode("INFECTION"), isTogglable = false, toolTip = "Sets the game mode to infection." },
-                new ButtonInfo { buttonText = "Set GameMode [<color=yellow>HUNT</color>]", method =() => Experimental.SetGameMode("HUNT"), isTogglable = false, toolTip = "Sets the game mode to hunt." },
-                new ButtonInfo { buttonText = "Set GameMode [<color=yellow>PAINTBRAWL</color>]", method =() => Experimental.SetGameMode("PAINTBRAWL"), isTogglable = false, toolTip = "Sets the game mode to battle." },
-                new ButtonInfo { buttonText = "Set GameMode [<color=yellow>ERROR</color>]", method =() => Experimental.SetGameMode("ERROR"), isTogglable = false, toolTip = "Sets the game mode to battle." },
+                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>CASUAL</color><color=grey>]</color>", method =() => Experimental.SetGameMode("CASUAL"), isTogglable = false, toolTip = "Sets the game mode to casual."  },
+                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>INFECTION</color><color=grey>]</color>", method =() => Experimental.SetGameMode("INFECTION"), isTogglable = false, toolTip = "Sets the game mode to infection." },
+                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>HUNT</color><color=grey>]</color>", method =() => Experimental.SetGameMode("HUNT"), isTogglable = false, toolTip = "Sets the game mode to hunt." },
+                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>PAINTBRAWL</color><color=grey>]</color>", method =() => Experimental.SetGameMode("PAINTBRAWL"), isTogglable = false, toolTip = "Sets the game mode to battle." },
+                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>ERROR</color><color=grey>]</color>", method =() => Experimental.SetGameMode("ERROR"), isTogglable = false, toolTip = "Sets the game mode to battle." },
             },
 
             new ButtonInfo[] { // Experimental | 13
                 new ButtonInfo { buttonText = "Exit Experimental", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest." },
 
-                new ButtonInfo { buttonText = "Spam Pop & Unpop Balloon [<color=cyan>RT</color>]", method =() => Experimental.BalloonSpam(), isTogglable = true, toolTip = "Spams everyones balloon while holding right trigger." },
+                new ButtonInfo { buttonText = "Spam Pop & Unpop Balloon <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Experimental.BalloonSpam(), isTogglable = true, toolTip = "Spams everyones balloon while holding right trigger." },
 
                 new ButtonInfo { buttonText = "Spam Mute All", method =() => Utility.PacketStresser(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
                 new ButtonInfo { buttonText = "Spam Mute All V2", method =() => Utility.BetaSpamMuteAll(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
@@ -388,7 +388,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Despawn Lucy", method =() => Overpowered.DepawnLucy(), isTogglable = true, toolTip = "Despawns the ghost Lucy in forest." },
 
                 new ButtonInfo { buttonText = "Move Lucy Gun", method =() => Overpowered.MoveLucyGun(), isTogglable = true, toolTip = "Moves the ghost Lucy in forest to the gun." },
-                new ButtonInfo { buttonText = "Grab Lucy [<color=cyan>G</color>]", method =() => Overpowered.GrabLucy(), isTogglable = true, toolTip = "Lets you grab the ghost Lucy in forest while holding grips." },
+                new ButtonInfo { buttonText = "Grab Lucy <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Overpowered.GrabLucy(), isTogglable = true, toolTip = "Lets you grab the ghost Lucy in forest while holding grips." },
 
                 new ButtonInfo { buttonText = "Lucy Chase Self", method =() => Overpowered.LucyChaseSelf(), isTogglable = true, toolTip = "Makes the ghost Lucy chase you." },
                 new ButtonInfo { buttonText = "Lucy Chase Gun", method =() => Overpowered.LucyChaseGun(), isTogglable = true, toolTip = "Makes the ghost Lucy chase the person you shoot." },
@@ -428,8 +428,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit GTH", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
                 new ButtonInfo { buttonText = "Spawn Timmy", method =() => GTH.SpawnTimmy(), toolTip = "Spawns a timmy above your head.", isTogglable = true },
                 new ButtonInfo { buttonText = "Spawn Stalker", method =() => GTH.SpawnStalker(), toolTip = "Spawns a stalker above your head.", isTogglable = true },
-                new ButtonInfo { buttonText = "Timmy Spam [<color=cyan>G</color>]", method =() => GTH.TimmySpam(), toolTip = "Lets you spam timmys while holding your grips.", isTogglable = true },
-                new ButtonInfo { buttonText = "Stalker Spam [<color=cyan>G</color>]", method =() => GTH.StalkerSpam(), toolTip = "Lets you spam stalkers while holding your grips.", isTogglable = true },
+                new ButtonInfo { buttonText = "Timmy Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => GTH.TimmySpam(), toolTip = "Lets you spam timmys while holding your grips.", isTogglable = true },
+                new ButtonInfo { buttonText = "Stalker Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => GTH.StalkerSpam(), toolTip = "Lets you spam stalkers while holding your grips.", isTogglable = true },
                 new ButtonInfo { buttonText = "Timmy Gun", method =() => GTH.TimmyGun(), toolTip = "Lets you spawn timmys with a gun.", isTogglable = true },
                 new ButtonInfo { buttonText = "Stalker Gun", method =() => GTH.StalkerGun(), toolTip = "Lets you spawn stalkers with a gun.", isTogglable = true },
 
@@ -472,18 +472,18 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Spaz Timmys", method =() => GTH.SpazTimmys(), toolTip = "Spazes the timmys in forest", isTogglable = true },
                 new ButtonInfo { buttonText = "Spaz Stalkers", method =() => GTH.SpazStalkers(), toolTip = "Spazes all the stalkers", isTogglable = true },
 
-                new ButtonInfo { buttonText = "Place Trap [<color=cyan>RT</color>]", method =() => GTH.PlaceTrap(), toolTip = "Places down a trap when you press right trigger.", isTogglable = true },
+                new ButtonInfo { buttonText = "Place Trap <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => GTH.PlaceTrap(), toolTip = "Places down a trap when you press right trigger.", isTogglable = true },
                 new ButtonInfo { buttonText = "Destroy Trap", method =() => GTH.DestroyTrap(), toolTip = "Destroys the trap.", isTogglable = false },
                 new ButtonInfo { buttonText = "Timmys To Trap", method =() => GTH.TimmysToTrap(), toolTip = "Makes all the timmys go to the trap.", isTogglable = true },
                 new ButtonInfo { buttonText = "Stalkers To Trap", method =() => GTH.StalkersToTrap(), toolTip = "Makes all the stalkers go to the trap.", isTogglable = true },
                 new ButtonInfo { buttonText = "Monsters To Trap", method =() => GTH.MonstersToTrap(), toolTip = "Makes all the monsters go to the trap.", isTogglable = true },
 
-                new ButtonInfo { buttonText = "Timmy Work <color=cyan>[RT]</color>", method =() => GTH.TimmyWork(), toolTip = "Makes a firework out of timmys.", isTogglable = true },
-                new ButtonInfo { buttonText = "Stalker Work <color=cyan>[RT]</color>", method =() => GTH.StalkerWork(), toolTip = "Makes a firework out of stalkers.", isTogglable = true },
+                new ButtonInfo { buttonText = "Timmy Work <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => GTH.TimmyWork(), toolTip = "Makes a firework out of timmys.", isTogglable = true },
+                new ButtonInfo { buttonText = "Stalker Work <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => GTH.StalkerWork(), toolTip = "Makes a firework out of stalkers.", isTogglable = true },
 
-                new ButtonInfo { buttonText = "Joystick Control Timmys <color=cyan>[RJ]</color>", method =() => GTH.JoystickControlTimmys(), toolTip = "Lets you control the timmys movement with your right joystick.", isTogglable = true },
-                new ButtonInfo { buttonText = "Joystick Control Stalkers <color=cyan>[RJ]</color>", method =() => GTH.JoystickControlStalkers(), toolTip = "Lets you control the stalkers movement with your right joystick.", isTogglable = true },
-                new ButtonInfo { buttonText = "Joystick Control Monsters <color=cyan>[RJ]</color>", method =() => GTH.JoystickControlMonters(), toolTip = "Lets you control the monsters movement with your right joystick.", isTogglable = true },
+                new ButtonInfo { buttonText = "Joystick Control Timmys <color=grey>[</color><color=cyan>RJ</color><color=grey>]</color>", method =() => GTH.JoystickControlTimmys(), toolTip = "Lets you control the timmys movement with your right joystick.", isTogglable = true },
+                new ButtonInfo { buttonText = "Joystick Control Stalkers <color=grey>[</color><color=cyan>RJ</color><color=grey>]</color>", method =() => GTH.JoystickControlStalkers(), toolTip = "Lets you control the stalkers movement with your right joystick.", isTogglable = true },
+                new ButtonInfo { buttonText = "Joystick Control Monsters <color=grey>[</color><color=cyan>RJ</color><color=grey>]</color>", method =() => GTH.JoystickControlMonters(), toolTip = "Lets you control the monsters movement with your right joystick.", isTogglable = true },
             },
 
             new ButtonInfo[] { }, // Temporary Category | 18
