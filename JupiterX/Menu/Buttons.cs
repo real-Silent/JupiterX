@@ -17,7 +17,7 @@ namespace JupiterX.Menu
         {
             new ButtonInfo[] { // Main Mods | 0
                 new ButtonInfo { buttonText = "Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Opens the main settings page for the menu."},
-                new ButtonInfo { buttonText = "Players", method =() => Settings.Players(), isTogglable = false, toolTip = "Opens the player mods page for the menu."},
+                new ButtonInfo { buttonText = "Players", method =() => Players(), isTogglable = false, toolTip = "Opens the player mods page for the menu."},
 
                 new ButtonInfo { buttonText = "Favorite", method =() => CurrentCategoryName = "Favorite", isTogglable = false, toolTip = "Opens the favorite mods page for the menu."},
                 new ButtonInfo { buttonText = "Enabled", method =() => CurrentCategoryName = "Enabled", isTogglable = false, toolTip = "Opens the enabled mods page for the menu."},
