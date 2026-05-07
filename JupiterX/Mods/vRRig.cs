@@ -1,8 +1,6 @@
-﻿using ExitGames.Client.Photon;
-using GorillaNetworking;
+﻿using GorillaNetworking;
 using JupiterX.Menu;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 namespace JupiterX.Mods

@@ -1,5 +1,4 @@
-﻿using JupiterX.Classes;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace JupiterX.Classes

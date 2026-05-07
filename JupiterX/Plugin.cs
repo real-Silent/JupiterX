@@ -1,5 +1,4 @@
-﻿using Il2CppSystem.Net;
-using JupiterX;
+﻿using JupiterX;
 using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Notifications;
@@ -12,7 +11,6 @@ using System.Linq;
 using TMPro;
 using UnhollowerRuntimeLib;
 using UnityEngine;
-using UnityEngine.UI;
 
 // this menu was created by Nova (@novaissilly)
 // if you remove this it counts as skidding

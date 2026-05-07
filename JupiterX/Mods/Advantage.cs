@@ -3,7 +3,6 @@ using JupiterX.Notifications;
 using Photon.Pun;
 using UnityEngine;
 using static JupiterX.Menu.Main;
-using static UnityEngine.UI.GridLayoutGroup;
 
 namespace JupiterX.Mods
 {
