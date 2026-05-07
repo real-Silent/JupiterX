@@ -663,7 +663,6 @@ namespace JupiterX.Mods
             {
                 if (Utility.IsMaster())
                 {
-                    lucy.targetPlayer = null;
                     lucy.grabTime = 0f;
                     lucy.transform.position = Utility.RightHandTransform().transform.position;
                     lucy.transform.rotation = Utility.RightHandTransform().transform.rotation;
@@ -674,7 +673,6 @@ namespace JupiterX.Mods
             {
                 if (Utility.IsMaster())
                 {
-                    lucy.targetPlayer = null;
                     lucy.grabTime = 0f;
                     lucy.transform.position = Utility.LeftHandTransform().transform.position;
                     lucy.transform.rotation = Utility.LeftHandTransform().transform.rotation;
