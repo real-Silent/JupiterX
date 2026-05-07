@@ -219,10 +219,14 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Auto Clicker <color=cyan>[T]</color>", method =() => Fun.AutoClicker(), isTogglable = true, toolTip = "Automatically presses trigger for you when holding <color=cyan>trigger</color>."  },
 
-                new ButtonInfo { buttonText = "Mute Gun", method =() => Experimental.MuteGun(), isTogglable = true, toolTip = "Lets you mute the player you shoot the gun at." },
-                new ButtonInfo { buttonText = "UnMute Gun", method =() => Experimental.UnMuteGun(), isTogglable = true, toolTip = "Lets you unmute the player you shoot the gun at." },
-                new ButtonInfo { buttonText = "Mute All", method =() => Experimental.MuteAll(), isTogglable = false, toolTip = "Lets you mute everyone in the current room." },
-                new ButtonInfo { buttonText = "UnMute All", method =() => Experimental.UnMuteAll(), isTogglable = false, toolTip = "Lets you unmute everyone in the current room." },
+                new ButtonInfo { buttonText = "Mute Gun", method =() => Fun.MuteGun(), isTogglable = true, toolTip = "Lets you mute the player you shoot the gun at." },
+                new ButtonInfo { buttonText = "Mute All", method =() => Fun.MuteAll(), isTogglable = false, toolTip = "Lets you mute everyone in the current room." },
+
+                new ButtonInfo { buttonText = "UnMute Gun", method =() => Fun.UnMuteGun(), isTogglable = true, toolTip = "Lets you unmute the player you shoot the gun at." },
+                new ButtonInfo { buttonText = "UnMute All", method =() => Fun.UnMuteAll(), isTogglable = false, toolTip = "Lets you unmute everyone in the current room." },
+
+                new ButtonInfo { buttonText = "Report Gun", method =() => Fun.ReportGun(), isTogglable = false, toolTip = "Reports the person who you shoot at for cheating." },
+                new ButtonInfo { buttonText = "Report All", method =() => Fun.ReportAll(), isTogglable = false, toolTip = "Reports everyone in the lobby for cheating." },
 
                 new ButtonInfo { buttonText = "Fix Mic", method =() => Fun.FixMic(), isTogglable = false, toolTip = "Fixes your mic."  },
                 new ButtonInfo { buttonText = "Low Quality Mic", method =() => Fun.LowQualityMic(), isTogglable = false, toolTip = "Makes your micrphone low quality."  },

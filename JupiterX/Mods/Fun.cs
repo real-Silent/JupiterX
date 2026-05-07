@@ -1,6 +1,8 @@
-﻿using Photon.Pun;
+﻿using JupiterX.Menu;
+using Photon.Pun;
 using Photon.Voice.Unity;
 using Photon.Voice.Unity.UtilityScripts;
+using System.Linq;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -166,6 +168,104 @@ namespace JupiterX.Mods
                 {
                     GorillaTagger.Instance.offlineVRRig.rightHand.calcT = autoclickstate ? 1f : 0f;
                     GorillaTagger.Instance.offlineVRRig.rightHand.MapMyFinger(1f);
+                }
+            }
+        }
+
+        public static void MuteGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+
+                if (Main.GetGunInput(true))
+                {
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (rig)
+                    {
+                        rig.muted = true;
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Mute);
+                    }
+                }
+            }
+        }
+
+        public static void UnMuteGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+
+                if (Main.GetGunInput(true))
+                {
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (rig)
+                    {
+                        rig.muted = false;
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(false, GorillaPlayerLineButton.ButtonType.Mute);
+                    }
+                }
+            }
+        }
+
+        public static void MuteAll()
+        {
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                {
+                    rig.muted = true;
+                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Mute);
+                }
+            }
+        }
+
+        public static void UnMuteAll()
+        {
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                {
+                    rig.muted = false;
+                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(false, GorillaPlayerLineButton.ButtonType.Mute);
+                }
+            }
+        }
+
+        public static void ReportGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+
+                if (Main.GetGunInput(true))
+                {
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (rig)
+                    {
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Report);
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Cheating);
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).ReportPlayer(rig.photonView.Owner.UserId, GorillaPlayerLineButton.ButtonType.Cheating, rig.photonView.Owner.NickName);
+                    }
+                }
+            }
+        }
+
+        public static void ReportAll()
+        {
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                {
+                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Report);
+                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Cheating);
+                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).ReportPlayer(rig.photonView.Owner.UserId, GorillaPlayerLineButton.ButtonType.Cheating, rig.photonView.Owner.NickName);
                 }
             }
         }
