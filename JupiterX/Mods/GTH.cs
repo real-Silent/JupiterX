@@ -526,7 +526,7 @@ namespace JupiterX.Mods
         {
             var comp = GetEnemyController();
             if (comp == null) return;
-            Traverse.Create(comp).Field("moveSpeed").SetValue(20f);
+            Traverse.Create(comp).Field("moveSpeed").SetValue(70f);
         }
         public static void ResetTimmy()
         {
@@ -538,7 +538,7 @@ namespace JupiterX.Mods
         {
             var comp = GetEnemyController();
             if (comp == null) return;
-            Traverse.Create(comp).Field("moveSpeed").SetValue(0.4f);
+            Traverse.Create(comp).Field("moveSpeed").SetValue(0.01f);
         }
 
         public static void SpazTimmys()
