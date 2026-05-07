@@ -370,7 +370,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Spam Mute All V2", method =() => Utility.BetaSpamMuteAll(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
             },
 
-            new ButtonInfo[] { // Master | 14 // TOOD: Lucy Orbit Self, Lucy Orbit Player, Lucy Spaz Choose Player, Lucy Float Gun, Lucy Float Self
+            new ButtonInfo[] { // Master | 14
                 new ButtonInfo { buttonText = "Exit Master", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu."},
 
                 new ButtonInfo { buttonText = "Set Master Gun", method =() => Overpowered.SetMasterGun(), isTogglable = true, toolTip = "Lets you set someone as master client." },
@@ -385,7 +385,10 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Spaz Lucy", method =() => Overpowered.SpazLucy(), isTogglable = true, toolTip = "Spazes the ghost Lucy in forest." },
 
-                new ButtonInfo { buttonText = "Despawn Lucy", method =() => Overpowered.DepawnLucy(), isTogglable = false, toolTip = "Despawns the ghost Lucy in forest." },
+                new ButtonInfo { buttonText = "Despawn Lucy", method =() => Overpowered.DepawnLucy(), isTogglable = true, toolTip = "Despawns the ghost Lucy in forest." },
+
+                new ButtonInfo { buttonText = "Move Lucy Gun", method =() => Overpowered.MoveLucyGun(), isTogglable = true, toolTip = "Moves the ghost Lucy in forest to the gun." },
+                new ButtonInfo { buttonText = "Grab Lucy [<color=cyan>G</color>]", method =() => Overpowered.GrabLucy(), isTogglable = true, toolTip = "Lets you grab the ghost Lucy in forest while holding grips." },
 
                 new ButtonInfo { buttonText = "Lucy Chase Self", method =() => Overpowered.LucyChaseSelf(), isTogglable = true, toolTip = "Makes the ghost Lucy chase you." },
                 new ButtonInfo { buttonText = "Lucy Chase Gun", method =() => Overpowered.LucyChaseGun(), isTogglable = true, toolTip = "Makes the ghost Lucy chase the person you shoot." },
@@ -397,6 +400,12 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Fast Lucy", method =() => Overpowered.FastLucy(), isTogglable = true, toolTip = "Makes the ghost Lucy fast." },
 
                 new ButtonInfo { buttonText = "Lucy Orbit Self", method =() => Overpowered.LucyOrbitSelf(), isTogglable = true, toolTip = "Makes the ghost Lucy orbit around you." },
+                new ButtonInfo { buttonText = "Lucy Orbit Gun", method =() => Overpowered.LucyOrbitGun(), isTogglable = true, toolTip = "Makes the ghost Lucy orbit around who you shoot." },
+
+                new ButtonInfo { buttonText = "Lucy Float Self", method =() => Overpowered.LucyFloatSelf(), isTogglable = true, toolTip = "Makes the ghost Lucy float you." },
+                new ButtonInfo { buttonText = "Lucy Float Gun", method =() => Overpowered.LucyFloatGun(), isTogglable = true, toolTip = "Makes the ghost Lucy float who you shoot." },
+
+                new ButtonInfo { buttonText = "Lucy Chase Spaz", method =() => Overpowered.LucyChaseSpaz(), isTogglable = true, toolTip = "Makes the ghost Lucy spaz who they chase." },
 
                 new ButtonInfo { buttonText = "Spawn Yellow Lucy", method =() => Overpowered.SpawnColouredLucy(Color.yellow), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
                 new ButtonInfo { buttonText = "Spawn Dark Blue Lucy", method =() => Overpowered.SpawnColouredLucy(Color.blue), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
