@@ -137,8 +137,8 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Safety | 3
                 new ButtonInfo { buttonText = "Exit Safety", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Panic", method =() => Utility.Panic(), isTogglable = false, toolTip = "Disables every mod you have enabled." },
-                new ButtonInfo { buttonText = "Anti Report [<color=grey>[</color><color=cyan>DISCONNECT</color><color=grey>]</color>", method =() => Utility.BetaAntiReport(false, true), isTogglable = true, toolTip = "Disconnects you when someone is close to the report button." },
-                new ButtonInfo { buttonText = "Anti Report [<color=grey>[</color><color=cyan>CRASH</color><color=grey>]</color>", method =() => Utility.BetaAntiReport(true, false), isTogglable = true, toolTip = "Crashes the person who tries to report you when someone is close to the report button." },
+                new ButtonInfo { buttonText = "Anti Report <color=grey>[</color><color=cyan>DISCONNECT</color><color=grey>]</color>", method =() => Utility.BetaAntiReport(false, true), isTogglable = true, toolTip = "Disconnects you when someone is close to the report button." },
+                new ButtonInfo { buttonText = "Anti Report <color=grey>[</color><color=cyan>CRASH</color><color=grey>]</color>", method =() => Utility.BetaAntiReport(true, false), isTogglable = true, toolTip = "Crashes the person who tries to report you when someone is close to the report button." },
                 new ButtonInfo { buttonText = "Anti Moderator", method =() => Utility.BetaAntiCosmetic("LBAAK."), isTogglable = true, toolTip = "Disconnects you when someone has the moderator stick." },
                 new ButtonInfo { buttonText = "Anti Admin", method =() => Utility.BetaAntiCosmetic("LBAAD."), isTogglable = true, toolTip = "Disconnects you when someone has the admin badge." },
                 new ButtonInfo { buttonText = "Anti Finger Painter", method =() => Utility.BetaAntiCosmetic("LBADE."), isTogglable = true, toolTip = "Disconnects you when someone has the finger painter." },
@@ -237,9 +237,9 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Get ID Self", method =() => Fun.GetIdSelf(), isTogglable = false, toolTip = "Gets your own userid and writes it to a file." },
                 new ButtonInfo { buttonText = "Get ID Gun", method =() => Fun.GetIdGun(), isTogglable = true, toolTip = "Gets the person you shoot userid and writes it to a file." },
-                new ButtonInfo { buttonText = "Get ID All", method =() => Fun.GetIdAll(), isTogglable = true, toolTip = "Gets everyone in the room userid and writes it to a file." },
+                new ButtonInfo { buttonText = "Get ID All", method =() => Fun.GetIdAll(), isTogglable = false, toolTip = "Gets everyone in the room userid and writes it to a file." },
 
-                new ButtonInfo { buttonText = "Grab Player Info", method =() => Fun.GrabRoomInfo(), isTogglable = true, toolTip = "Gets the room info and writes it to a file." },
+                new ButtonInfo { buttonText = "Grab Player Info", method =() => Fun.GrabRoomInfo(), isTogglable = false, toolTip = "Gets the room info and writes it to a file." },
             },
 
             new ButtonInfo[] { // Name | 10
@@ -275,7 +275,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Prefabs | 11
                 new ButtonInfo { buttonText = "Exit Prefabs", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu."},
-                new ButtonInfo { buttonText = "Get Fucked Spawn [<color=grey>[</color><color=cyan>FOREST</color><color=grey>]</color>", method =() => Experimental.GetFucked(), isTogglable = false, toolTip = "Spawns the word 'Get Fucked' using stickable targets in forest." },
+                new ButtonInfo { buttonText = "Get Fucked Spawn <color=grey>[</color><color=cyan>FOREST</color><color=grey>]</color>", method =() => Experimental.GetFucked(), isTogglable = false, toolTip = "Spawns the word 'Get Fucked' using stickable targets in forest." },
                 new ButtonInfo { buttonText = "Clear Prefabs", method =() => Prefabs.ClearPrefabs(), isTogglable = false, toolTip = "Clears every prefab with a photon view." },
 
                 new ButtonInfo { buttonText = "Cube All <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Fun.CubeAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger." },
@@ -353,11 +353,11 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room." },
                 new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at." },
 
-                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>CASUAL</color><color=grey>]</color>", method =() => Experimental.SetGameMode("CASUAL"), isTogglable = false, toolTip = "Sets the game mode to casual."  },
-                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>INFECTION</color><color=grey>]</color>", method =() => Experimental.SetGameMode("INFECTION"), isTogglable = false, toolTip = "Sets the game mode to infection." },
-                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>HUNT</color><color=grey>]</color>", method =() => Experimental.SetGameMode("HUNT"), isTogglable = false, toolTip = "Sets the game mode to hunt." },
-                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>PAINTBRAWL</color><color=grey>]</color>", method =() => Experimental.SetGameMode("PAINTBRAWL"), isTogglable = false, toolTip = "Sets the game mode to battle." },
-                new ButtonInfo { buttonText = "Set GameMode [<color=grey>[</color><color=cyan>ERROR</color><color=grey>]</color>", method =() => Experimental.SetGameMode("ERROR"), isTogglable = false, toolTip = "Sets the game mode to battle." },
+                new ButtonInfo { buttonText = "Set GameMode <color=grey>[</color><color=cyan>CASUAL</color><color=grey>]</color>", method =() => Experimental.SetGameMode("CASUAL"), isTogglable = false, toolTip = "Sets the game mode to casual."  },
+                new ButtonInfo { buttonText = "Set GameMode <color=grey>[</color><color=cyan>INFECTION</color><color=grey>]</color>", method =() => Experimental.SetGameMode("INFECTION"), isTogglable = false, toolTip = "Sets the game mode to infection." },
+                new ButtonInfo { buttonText = "Set GameMode <color=grey>[</color><color=cyan>HUNT</color><color=grey>]</color>", method =() => Experimental.SetGameMode("HUNT"), isTogglable = false, toolTip = "Sets the game mode to hunt." },
+                new ButtonInfo { buttonText = "Set GameMode <color=grey>[</color><color=cyan>PAINTBRAWL</color><color=grey>]</color>", method =() => Experimental.SetGameMode("PAINTBRAWL"), isTogglable = false, toolTip = "Sets the game mode to battle." },
+                new ButtonInfo { buttonText = "Set GameMode <color=grey>[</color><color=cyan>ERROR</color><color=grey>]</color>", method =() => Experimental.SetGameMode("ERROR"), isTogglable = false, toolTip = "Sets the game mode to battle." },
             },
 
             new ButtonInfo[] { // Experimental | 13
