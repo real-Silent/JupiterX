@@ -377,6 +377,10 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Slow Gun", method =() => Overpowered.SlowGun(), isTogglable = true, toolTip = "Lets you slow someone with a gun."  },
                 new ButtonInfo { buttonText = "Slow All", method =() => Overpowered.SlowAll(), isTogglable = true, toolTip = "Lets you slow everyone in the lobby."  },
+
+                new ButtonInfo { buttonText = "Spawn Blue Lucy", method =() => Overpowered.SpawnBlueLucy(), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest."  },
+                new ButtonInfo { buttonText = "Spawn Red Lucy", method =() => Overpowered.SpawnRedLucy(), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest."  },
+                new ButtonInfo { buttonText = "Despawn Lucy", method =() => Overpowered.DepawnLucy(), isTogglable = false, toolTip = "Despawns the ghost Lucy in forest."  },
             },
 
             new ButtonInfo[] { // Soundboard | 15

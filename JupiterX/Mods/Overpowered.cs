@@ -2,6 +2,7 @@
 using GorillaNetworking;
 using JupiterX.Classes;
 using JupiterX.Menu;
+using JupiterX.Notifications;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -572,6 +573,47 @@ namespace JupiterX.Mods
                 if (Main.gunLocked)
                     Main.gunLocked = false;
             }
+        }
+
+
+        public static HalloweenGhostChaser lucy
+        {
+            get
+            {
+                return GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            }
+            set
+            {
+                value = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+            }
+        }
+
+        public static void SpawnBlueLucy()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.isSummoned = false;
+                lucy.currentState = HalloweenGhostChaser.ChaseState.Gong;
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+        public static void SpawnRedLucy()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.isSummoned = false;
+                lucy.currentState = HalloweenGhostChaser.ChaseState.Gong;
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+        public static void DepawnLucy()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.isSummoned = false;
+                lucy.currentState = HalloweenGhostChaser.ChaseState.Dormant;
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
         }
     }
 }
