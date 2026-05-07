@@ -214,6 +214,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "FPS Boost", enableMethod =() => QualitySettings.masterTextureLimit = int.MaxValue, disableMethod =() => QualitySettings.masterTextureLimit = 1, toolTip = "Makes everything low quality in an attempt to boost your FPS."},
                 new ButtonInfo { buttonText = "Full Bright", method =() => Visual.fullBright(), disableMethod =() => Visual.fulldrak(), isTogglable = true, toolTip = "Lets you see in the dark." },
 
+                new ButtonInfo { buttonText = "Disable Rig Lerping", method = Visual.NoSmoothRigs, disableMethod = Visual.ReSmoothRigs, toolTip = "Disable the smoothing on the other player's rigs."},
+
                 new ButtonInfo { buttonText = "X-Ray <color=grey>[</color><color=cyan>T</color><color=grey>]</color>", method = Visual.Xray, toolTip = "Lets you see through objects when holding <color=cyan>trigger</color>."},
             },
 

@@ -77,6 +77,24 @@ namespace JupiterX.Mods
             }
         }
 
+        public static void NoSmoothRigs()
+        {
+            foreach (var vrrig in GorillaParent.instance.vrrigs.ToArray().Where(vrrig => vrrig != GorillaTagger.Instance.myVRRig))
+            {
+                vrrig.lerpValueBody = 2f;
+                vrrig.lerpValueFingers = 1f;
+            }
+        }
+
+        public static void ReSmoothRigs()
+        {
+            foreach (var vrrig in GorillaParent.instance.vrrigs.ToArray().Where(vrrig => vrrig != GorillaTagger.Instance.myVRRig))
+            {
+                vrrig.lerpValueBody = GorillaTagger.Instance.myVRRig.lerpValueBody;
+                vrrig.lerpValueFingers = GorillaTagger.Instance.myVRRig.lerpValueFingers;
+            }
+        }
+
         public static void VelocityLabel() // creds to iiDk
         {
             GameObject textHolder = new GameObject("VelocityLabel");
