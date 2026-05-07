@@ -234,6 +234,12 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Bass Boosted Mic", method =() => Fun.BassBoostMic(), isTogglable = false, toolTip = "Makes your micrphone bass boosted."  },
                 new ButtonInfo { buttonText = "Extreme Bass Boosted Mic", method =() => Fun.BassBoostMicExtreme(), isTogglable = false, toolTip = "Makes your micrphone hextremely bass boosted."  },
+
+                new ButtonInfo { buttonText = "Get ID Self", method =() => Fun.GetIdSelf(), isTogglable = false, toolTip = "Gets your own userid and writes it to a file."  },
+                new ButtonInfo { buttonText = "Get ID Gun", method =() => Fun.GetIdGun(), isTogglable = true, toolTip = "Gets the person you shoot userid and writes it to a file."  },
+                new ButtonInfo { buttonText = "Get ID All", method =() => Fun.GetIdAll(), isTogglable = true, toolTip = "Gets everyone in the room userid and writes it to a file."  },
+
+                new ButtonInfo { buttonText = "Grab Player Info", method =() => Fun.GrabRoomInfo(), isTogglable = true, toolTip = "Gets the room info and writes it to a file."  },
             },
 
             new ButtonInfo[] { // Name | 10

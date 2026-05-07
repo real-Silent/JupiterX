@@ -1,8 +1,12 @@
-﻿using JupiterX.Menu;
+﻿using JupiterX.Classes;
+using JupiterX.Menu;
+using JupiterX.Notifications;
 using Photon.Pun;
 using Photon.Voice.Unity;
 using Photon.Voice.Unity.UtilityScripts;
+using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -117,6 +121,84 @@ namespace JupiterX.Mods
             recorder.VoiceDetection = false;
             MicAmplifier.AmplificationFactor = 3f;
             MicAmplifier.BoostValue = 25f;
+        }
+
+        public static void GetIdSelf()
+        {
+            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Your userid is {Utility.MyPlayer().UserId}");
+            if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids")))
+                Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/Ids"));
+            else if (!File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids/SelfId.txt")))
+                File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/Ids/SelfId.txt"), Utility.MyPlayer().UserId);
+            else
+                File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/Ids/SelfId.txt"), Utility.MyPlayer().UserId);
+        }
+        public static void GetIdGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+
+                if (Main.GetGunInput(true))
+                {
+                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
+                    if (who)
+                    {
+                        NotifiLib.SendNotification($"<color=cyan>[INFO]</color> There userid is {who.photonView.Owner.UserId}");
+                        if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids")))
+                            Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/Ids"));
+                        else if (!File.Exists(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{who.photonView.Owner.NickName}_UserId.txt")))
+                            File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{who.photonView.Owner.NickName}_UserId.txt"), who.photonView.Owner.UserId);
+                        else
+                            File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{who.photonView.Owner.NickName}_UserId.txt"), who.photonView.Owner.UserId);
+                    }
+                }
+            }
+        }
+
+        public static void GetIdAll()
+        {
+            if (!PhotonNetwork.InRoom)
+            {
+                NotifiLib.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
+                return;
+            }
+            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+            {
+                NotifiLib.SendNotification($"<color=cyan>[INFO]</color> There userid is {plr.UserId}");
+                if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids")))
+                    Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/Ids"));
+                else if (!File.Exists(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{plr.NickName}_UserId.txt")))
+                    File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{plr.NickName}_UserId.txt"), plr.UserId);
+                else
+                    File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{plr.NickName}_UserId.txt"), plr.UserId);
+            }
+        }
+
+        public static void GrabRoomInfo()
+        {
+            if (!PhotonNetwork.InRoom)
+            {
+                NotifiLib.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
+                return;
+            }
+            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append($"---------------{PhotonNetwork.CurrentRoom.Name}---------------");
+                stringBuilder.AppendLine($"NickName: {plr.NickName}, UserId: {plr.UserId}, Cosmetics: {RigManager.GetVRRigFromPlayer(plr).concatStringOfCosmeticsAllowed}");
+                stringBuilder.Append("\nRoom Info Pulled By JupiterX");
+                string payload = stringBuilder.ToString();
+                NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Grabbed player info for room {PhotonNetwork.CurrentRoom.Name}");
+                if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/RoomInfo")))
+                    Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/RoomInfo"));
+                else if (!File.Exists(Path.Combine(Application.persistentDataPath, $"JupiterX/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt")))
+                    File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt"), payload);
+                else
+                    File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt"), payload);
+            }
         }
 
         public static void FixHandTaps()
