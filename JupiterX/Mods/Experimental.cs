@@ -6,6 +6,7 @@ using JupiterX.Notifications;
 using Newtonsoft.Json.Linq;
 using Photon.Pun;
 using PlayFab;
+using System.IO;
 using UnityEngine;
 using static JupiterX.Menu.Main;
 
@@ -62,6 +63,17 @@ namespace JupiterX.Mods
             roomHash.Add("gameMode", gameModeHash);
             Utility.SetMaster(Utility.MyPlayer());
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomHash);
+        }
+
+        public static void GrabRPCData()
+        {
+            foreach (string rpc in PhotonNetwork.PhotonServerSettings.RpcList)
+                File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/RpcData.txt"), rpc);
+        }
+
+        public static void GrabGameInfo()
+        {
+            File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/RpcData.txt"), $"Title: {PlayFabSettings.TitleId}\nRealtime: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}\nVoice: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}");
         }
 
         public static void SpazForestTargets()

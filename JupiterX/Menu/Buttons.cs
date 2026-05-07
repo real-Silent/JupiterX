@@ -213,9 +213,9 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Fun | 9
                 new ButtonInfo { buttonText = "Exit Fun", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
-                new ButtonInfo { buttonText = "No Tap Cooldown", method =() => Fun.NoTapCooldown(), disableMethod =() => Fun.ResetTapcooldown(), isTogglable = true, toolTip = "Remoevs the hand tap cooldown." },
+                new ButtonInfo { buttonText = "No Tap Cooldown", method =() => Fun.NoTapCooldown(), disableMethod =() => Fun.ResetTapcooldown(), isTogglable = true, toolTip = "Removes the hand tap cooldown." },
                 new ButtonInfo { buttonText = "Loud Hand Taps", method =() => Fun.LoadHandTaps(), disableMethod =() => Fun.FixHandTaps(), isTogglable = true, toolTip = "Makes the hand tap sound very loud." },
-                new ButtonInfo { buttonText = "Silent Hand Taps", method =() => Fun.SilentHandTaps(), disableMethod =() => Fun.FixHandTaps(), isTogglable = true, toolTip = "Remoevs the hand tap sound." },
+                new ButtonInfo { buttonText = "Silent Hand Taps", method =() => Fun.SilentHandTaps(), disableMethod =() => Fun.FixHandTaps(), isTogglable = true, toolTip = "Removes the hand tap sound." },
 
                 new ButtonInfo { buttonText = "Auto Clicker <color=grey>[</color><color=cyan>T</color><color=grey>]</color>", method =() => Fun.AutoClicker(), isTogglable = true, toolTip = "Automatically presses trigger for you when holding <color=cyan>trigger</color>." },
 
@@ -362,6 +362,8 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Experimental | 13
                 new ButtonInfo { buttonText = "Exit Experimental", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+                new ButtonInfo { buttonText = "Grab RPC Data", method =() => Experimental.GrabRPCData(), isTogglable = false, toolTip = "Grabs all the games rpcs and writes them to a file." },
+
                 new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest." },
 
                 new ButtonInfo { buttonText = "Spam Pop & Unpop Balloon <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Experimental.BalloonSpam(), isTogglable = true, toolTip = "Spams everyones balloon while holding right trigger." },
