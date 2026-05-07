@@ -184,7 +184,7 @@ namespace JupiterX.Mods
                 NotifiLib.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
                 return;
             }
-            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerList)
             {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.Append($"---------------{PhotonNetwork.CurrentRoom.Name}---------------");
