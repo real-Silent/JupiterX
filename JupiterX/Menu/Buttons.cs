@@ -370,7 +370,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Spam Mute All V2", method =() => Utility.BetaSpamMuteAll(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
             },
 
-            new ButtonInfo[] { // Master | 14
+            new ButtonInfo[] { // Master | 14 // TOOD: Lucy Orbit Self, Lucy Orbit Player, Lucy Spaz Choose Player, Lucy Float Gun, Lucy Float Self
                 new ButtonInfo { buttonText = "Exit Master", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu."},
 
                 new ButtonInfo { buttonText = "Set Master Gun", method =() => Overpowered.SetMasterGun(), isTogglable = true, toolTip = "Lets you set someone as master client." },
@@ -380,7 +380,31 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Spawn Blue Lucy", method =() => Overpowered.SpawnBlueLucy(), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest." },
                 new ButtonInfo { buttonText = "Spawn Red Lucy", method =() => Overpowered.SpawnRedLucy(), isTogglable = false, toolTip = "Spawns the ghost Lucy in forest." },
+                new ButtonInfo { buttonText = "Instant Spawn Blue Lucy", method =() => Overpowered.InstantSpawnBlueLucy(), isTogglable = false, toolTip = "Instantly spawns the ghost Lucy in forest." },
+                new ButtonInfo { buttonText = "Instant Spawn Red Lucy", method =() => Overpowered.InstantSpawnRedLucy(), isTogglable = false, toolTip = "Instantly spawns the ghost Lucy in forest." },
+
+                new ButtonInfo { buttonText = "Spaz Lucy", method =() => Overpowered.SpazLucy(), isTogglable = true, toolTip = "Spazes the ghost Lucy in forest." },
+
                 new ButtonInfo { buttonText = "Despawn Lucy", method =() => Overpowered.DepawnLucy(), isTogglable = false, toolTip = "Despawns the ghost Lucy in forest." },
+
+                new ButtonInfo { buttonText = "Lucy Chase Self", method =() => Overpowered.LucyChaseSelf(), isTogglable = true, toolTip = "Makes the ghost Lucy chase you." },
+                new ButtonInfo { buttonText = "Lucy Chase Gun", method =() => Overpowered.LucyChaseGun(), isTogglable = true, toolTip = "Makes the ghost Lucy chase the person you shoot." },
+
+                new ButtonInfo { buttonText = "Lucy Attack Self", method =() => Overpowered.LucyAttackSelf(), isTogglable = true, toolTip = "Makes the ghost Lucy attack you." },
+                new ButtonInfo { buttonText = "Lucy Attack Gun", method =() => Overpowered.LucyAttackGun(), isTogglable = true, toolTip = "Makes the ghost Lucy attack the person you shoot." },
+
+                new ButtonInfo { buttonText = "Slow Lucy", method =() => Overpowered.SlowLucy(), isTogglable = true, toolTip = "Makes the ghost Lucy slow." },
+                new ButtonInfo { buttonText = "Fast Lucy", method =() => Overpowered.FastLucy(), isTogglable = true, toolTip = "Makes the ghost Lucy fast." },
+
+                new ButtonInfo { buttonText = "Lucy Orbit Self", method =() => Overpowered.LucyOrbitSelf(), isTogglable = true, toolTip = "Makes the ghost Lucy orbit around you." },
+
+                new ButtonInfo { buttonText = "Spawn Yellow Lucy", method =() => Overpowered.SpawnColouredLucy(Color.yellow), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
+                new ButtonInfo { buttonText = "Spawn Dark Blue Lucy", method =() => Overpowered.SpawnColouredLucy(Color.blue), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
+                new ButtonInfo { buttonText = "Spawn Magenta Lucy", method =() => Overpowered.SpawnColouredLucy(Color.magenta), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
+                new ButtonInfo { buttonText = "Spawn Light Red Lucy", method =() => Overpowered.SpawnColouredLucy(Color.red), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
+                new ButtonInfo { buttonText = "Spawn Black Lucy", method =() => Overpowered.SpawnColouredLucy(Color.black), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
+                new ButtonInfo { buttonText = "Spawn White Lucy", method =() => Overpowered.SpawnColouredLucy(Color.white), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
+                new ButtonInfo { buttonText = "Spawn Green Lucy", method =() => Overpowered.SpawnColouredLucy(Color.green), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
             },
 
             new ButtonInfo[] { // Soundboard | 15

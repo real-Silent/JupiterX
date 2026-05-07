@@ -6,6 +6,7 @@ using JupiterX.Notifications;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace JupiterX.Mods
 {
@@ -592,26 +593,171 @@ namespace JupiterX.Mods
         {
             if (Utility.IsMaster())
             {
-                lucy.isSummoned = false;
+                lucy.timeGongStarted = Time.time;
                 lucy.currentState = HalloweenGhostChaser.ChaseState.Gong;
+                lucy.isSummoned = false;
             }
             else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
         }
+        public static void InstantSpawnBlueLucy()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.timeGongStarted = 0f;
+                lucy.currentState = HalloweenGhostChaser.ChaseState.Gong;
+                lucy.isSummoned = false;
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+
         public static void SpawnRedLucy()
         {
             if (Utility.IsMaster())
             {
-                lucy.isSummoned = false;
+                lucy.timeGongStarted = Time.time;
                 lucy.currentState = HalloweenGhostChaser.ChaseState.Gong;
+                lucy.isSummoned = false;
             }
             else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
         }
+        public static void InstantSpawnRedLucy()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.timeGongStarted = 0f;
+                lucy.currentState = HalloweenGhostChaser.ChaseState.Gong;
+                lucy.isSummoned = true;
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+
         public static void DepawnLucy()
         {
             if (Utility.IsMaster())
             {
-                lucy.isSummoned = false;
                 lucy.currentState = HalloweenGhostChaser.ChaseState.Dormant;
+                lucy.isSummoned = false;
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+
+        public static void LucyChaseSelf()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.currentState = HalloweenGhostChaser.ChaseState.Chasing;
+                lucy.targetPlayer = Utility.MyPlayer();
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+
+        public static void LucyChaseGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (Main.GetGunInput(true))
+                {
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (Utility.IsMaster())
+                    {
+                        if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                        {
+                            lucy.currentState = HalloweenGhostChaser.ChaseState.Chasing;
+                            lucy.targetPlayer = RigManager.GetPlayerFromVRRig(rig);
+                        }
+                    }
+                    else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+                }
+            }
+        }
+
+        public static void LucyAttackSelf()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.currentState = HalloweenGhostChaser.ChaseState.Grabbing;
+                lucy.grabTime = Time.time;
+                lucy.targetPlayer = Utility.MyPlayer();
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+
+        public static void LucyAttackGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject Pointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (Main.GetGunInput(true))
+                {
+                    VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
+                    if (Utility.IsMaster())
+                    {
+                        if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                        {
+                            lucy.currentState = HalloweenGhostChaser.ChaseState.Grabbing;
+                            lucy.grabTime = Time.time;
+                            lucy.targetPlayer = RigManager.GetPlayerFromVRRig(rig);
+                        }
+                    }
+                    else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+                }
+            }
+        }
+
+        public static void SlowLucy()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.currentSpeed = 0.4f;
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+        public static void FastLucy()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.currentSpeed = 5f;
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+        public static void LucyOrbitSelf()
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.transform.Rotate(Utility.MainTransform().position);
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+
+        public static void SpawnColouredLucy(Color color)
+        {
+            if (Utility.IsMaster())
+            {
+                lucy.defaultColor = color;
+                lucy.summonedColor = color;
+                lucy.timeGongStarted = Time.time;
+                lucy.currentState = HalloweenGhostChaser.ChaseState.Gong;
+                lucy.isSummoned = false;
+            }
+            else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
+        }
+
+        private static float lucyspaztimedelaything = 0f;
+        public static void SpazLucy()
+        {
+            if (Utility.IsMaster())
+            {
+                if (Time.time > lucyspaztimedelaything)
+                {
+                    lucy.timeGongStarted = 0f;
+                    lucy.currentState = lucy.currentState == HalloweenGhostChaser.ChaseState.Dormant ? HalloweenGhostChaser.ChaseState.Gong : HalloweenGhostChaser.ChaseState.Dormant;
+                    lucyspaztimedelaything = Time.time + 0.15f;
+                }
             }
             else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
         }
