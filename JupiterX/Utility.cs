@@ -25,11 +25,10 @@ namespace JupiterX
 {
     public class Utility
     {
-        public static void Log(string msg) => MelonLoader.MelonLogger.Msg($"[JUPITERX] Log : {msg}");
-
+        public static void Log(string msg) => 
+            MelonLoader.MelonLogger.Msg($"[JUPITERX] Log : {msg}");
         public static void StopCurrentPrompt() =>
             prompts.RemoveAt(0);
-
         public static void MoveStumpTextGun()
         {
             if (Menu.Main.GetGunInput(false))
@@ -43,12 +42,10 @@ namespace JupiterX
                 }
             }
         }
-
         public static void PingOverlay()
         {
             NotifiLib.information["Ping"] = PhotonNetwork.GetPing() + "ms";
         }
-
         public static void NearbyTaggerOverlay()
         {
             float closest = float.MaxValue;
@@ -66,22 +63,17 @@ namespace JupiterX
             else
                 NotifiLib.information.Remove("Nearby");
         }
-
         private static Color HexToColor(string hex)
         {
             hex = hex.Replace("#", "");
-
             byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
             byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
             byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
-
             byte a = 255;
             if (hex.Length == 8)
                 a = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
-
             return new Color32(r, g, b, a);
         }
-
         static Hashtable jupiterxProp = new Hashtable();
         public static void ThisGuyIsUsingJupiter()
         {
@@ -89,14 +81,12 @@ namespace JupiterX
             {
                 jupiterxProp.Add("jupiterx2026revive", "jupiterx2026revive");
             }
-
             if (PhotonNetwork.InRoom)
             {
                 if (!GorillaTagger.Instance.myVRRig.photonView.Controller.CustomProperties.ContainsKey("jupiterx2026revive"))
                 {
                     GorillaTagger.Instance.myVRRig.photonView.Controller.SetCustomProperties(jupiterxProp);
                 }
-
                 if (GorillaTagger.Instance.myVRRig.photonView.Controller.CustomProperties.ContainsKey("jupiterx2026revive"))
                 {
                     string name = "[JUPITERX] " + GorillaTagger.Instance.myVRRig.photonView.Controller.NickName;
@@ -105,14 +95,12 @@ namespace JupiterX
                     GorillaTagger.Instance.offlineVRRig.playerText.text = name;
                     GorillaTagger.Instance.offlineVRRig.playerText.color = Color.cyan;
                 }
-
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
                     if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
                     {
                         string nickname = rig.photonView.Owner.NickName;
                         string userId = rig.photonView.Owner.UserId;
-
                         if (rig.photonView.Owner.CustomProperties.ContainsKey("jupiterx2026revive"))
                         {
                             rig.playerText.text = "[JUPITERX] " + nickname;
@@ -177,7 +165,6 @@ namespace JupiterX
                 }
             }
         }
-
         public static PhotonView GetOwnerShip(Photon.Realtime.Player newOwner)
         {
             foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
@@ -192,7 +179,6 @@ namespace JupiterX
             }
             return null;
         }
-
         public static void DestroyAllPhotonViews()
         {
             foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
@@ -205,22 +191,16 @@ namespace JupiterX
                 }
             }
         }
-
         public static Photon.Realtime.Player MyPlayer()
         {
             return PhotonNetwork.LocalPlayer;
         }
-
         public static void BanAll()
         {
             Plugin.DoCoroun(BetaBanAllWithDelay());
-
-            if (Utility.RTrigger)
-            {
+            if (RTrigger)
                 Toggle("Ban All");
-            }
         }
-
         static System.Collections.IEnumerator BetaBanAllWithDelay()
         {
             yield return new WaitForSeconds(2);
@@ -229,7 +209,6 @@ namespace JupiterX
                 BetaBanAll(plr.UserId);
             }
         }
-
         public static string CleanPlayerName(string input, int length = 12)
         {
             input = NoRichtextTags(input);
@@ -237,7 +216,6 @@ namespace JupiterX
                 input = input[..(length - 1)];
             return input;
         }
-
         public static void BetaBanAll(string userid)
         {
             WebClient client = new WebClient();
@@ -259,7 +237,6 @@ namespace JupiterX
             NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Success {responseString}", 6f);
             client.Dispose();
         }
-
         public static void BetaTPToSling()
         {
             Slingshot slingshot = GorillaTagger.Instance.offlineVRRig.slingshot;
@@ -272,7 +249,6 @@ namespace JupiterX
                 }
             }
         }
-
         public static string FindVRRigFromPlayerId(VRRig who)
         {
             if (PhotonNetwork.InRoom)
@@ -287,7 +263,6 @@ namespace JupiterX
             }
             return null;
         }
-
         public static void BetaSpamMuteAll()
         {
             for (int I = 0; I < 9; I++)
@@ -300,10 +275,9 @@ namespace JupiterX
                 }
             }
         }
-
         public static void BetaCrashAllV2(VRRig target) 
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            SetMaster(PhotonNetwork.LocalPlayer);
             if (target != null)
             {
                 PhotonNetwork.Destroy(target.photonView);
@@ -313,7 +287,6 @@ namespace JupiterX
                 PhotonNetwork.SendDestroyOfPlayer(target.photonView.Controller.ActorNumber);
             }
         }
-
         static bool lastfreezegarbadge;
         public static void PacketStresser()
 {
@@ -327,7 +300,6 @@ namespace JupiterX
                 }
             }
         }
-
         private static readonly System.Random _random = new System.Random();
         private const string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         public static string Generate(int length)
@@ -339,7 +311,6 @@ namespace JupiterX
             }
             return new string(buffer);
         }
-
         public static void FixGhostRig()
         {
             if (PhotonNetwork.InRoom)
@@ -352,9 +323,8 @@ namespace JupiterX
                 if (offlineVRRig().enabled == false)
                     offlineVRRig().enabled = true;
             }
-            Utility.GhostView(false);
+            GhostView(false);
         }
-
         static Vector3 closePosition;
         public static void FreezePlayerInMenu()
         {
@@ -409,10 +379,8 @@ namespace JupiterX
                     offlineVRRig().enabled = true;
             }
         }
-
         public static bool hasTriggeredOnceL = false;
         public static bool hasTriggeredOnceR = false;
-
         public static string[] PageTypes = { "Side", "Bottom", "Triggers" };
         public static int PageType = 0;
         public static bool isTriggers = false;
@@ -431,7 +399,6 @@ namespace JupiterX
             {
                 PageType = (PageType - 1 + PageTypes.Length) % PageTypes.Length;
             }
-
             switch (PageType)
             {
                 case 0:
@@ -461,8 +428,6 @@ namespace JupiterX
             }
             Buttons.GetIndex("Change Page Type").overlapText = "Change Page Type <color=cyan>[" + PageTypes[PageType] + "]</color>"; 
         }
-
-
         public static int MainDropType = 0;
         private static int dropType = 0;
         private static string[] dropTypes = new string[] { "Destroy", "Drop", "No Gravity", "Throw" };
@@ -486,14 +451,11 @@ namespace JupiterX
             }
             Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=cyan>[{dropTypes[dropType]}]</color>";
         }
-
         private static string[] MenuThemes = new string[]
         {
             "Default", "Blue", "Rainbow", "Red", "Transparent", "Pastel",
             "Rig Color", "Yellow", "Green", "Fading Grey", "Fading Red", "Fading Blue"
         };
-
-
         public static void OnStartFixColor()
         {
             currentTheme = 0;
@@ -501,9 +463,7 @@ namespace JupiterX
             buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) };
             buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.red) };
         }
-
         private static int currentTheme = 0;
-
         public static void ChangeMenuTheme(bool increment = true)
         {
             currentTheme = increment ? (currentTheme + 1) % MenuThemes.Length : (currentTheme - 1 + MenuThemes.Length) % MenuThemes.Length;
@@ -574,31 +534,24 @@ namespace JupiterX
             textColors[1] = Color.white;
             Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=cyan>[{MenuThemes[currentTheme]}]</color>";
         }
-
         public static void BetaEmojiName(int emoji)
         {
             PhotonNetwork.LocalPlayer.NickName = "\n\n<size=4532><sprite=" + emoji + "></size>";
         }
-
         public static void BetaSpawnPrefab(string prefabName, Vector3 Position, Quaternion Roation)
         {
-            //PhotonNetwork.MAX_VIEW_IDS = 222222222; // .int.MaxValue // breaks photon 
             PhotonNetwork.Instantiate(prefabName, Position, Roation, 0, null);
         }
         public static void SetMaster(Photon.Realtime.Player newMaster)
         {
             PhotonNetwork.SetMasterClient(newMaster);
         }
-
         public static void MakeMeMaster()
         {
             SetMaster(PhotonNetwork.LocalPlayer);
         }
-
-
         static GameObject sphereeR = null;
         static GameObject sphereeL = null;
-
         public static void GhostView(bool enabled)
         {
             if (enabled)
@@ -607,18 +560,17 @@ namespace JupiterX
                 {
                     sphereeL = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     sphereeL.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-                    sphereeL.transform.SetParent(Utility.LeftHandTransform(), false);
+                    sphereeL.transform.SetParent(LeftHandTransform(), false);
                     sphereeL.transform.localRotation = Quaternion.identity;
                     sphereeL.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                     sphereeL.GetComponent<Renderer>().material.color = Color.grey;
                     GameObject.Destroy(sphereeL.GetComponent<Collider>());
                 }
-
                 if (sphereeR == null)
                 {
                     sphereeR = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     sphereeR.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-                    sphereeR.transform.SetParent(Utility.RightHandTransform(), false);
+                    sphereeR.transform.SetParent(RightHandTransform(), false);
                     sphereeR.transform.localRotation = Quaternion.identity;
                     sphereeR.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                     sphereeR.GetComponent<Renderer>().material.color = Color.grey;
@@ -639,22 +591,15 @@ namespace JupiterX
                 }
             }
         }
-
-
-        public static bool IsMaster()
-        {
-            return PhotonNetwork.IsMasterClient;
-        }
-
+        public static bool IsMaster() =>
+            PhotonNetwork.LocalPlayer.IsMasterClient;
         public static void BetaDestroyPlayers(Photon.Realtime.Player who)
         {
             SetMaster(PhotonNetwork.LocalPlayer);
-
             PhotonNetwork.DestroyPlayerObjects(who);
             PhotonNetwork.DestroyPlayerObjects(who);
             PhotonNetwork.SendDestroyOfPlayer(who.ActorNumber);
         }
-
         static List<GameObject> Prefabs = new List<GameObject>();
         public static void BetaDoPrefab(string prefabName)
         {
@@ -666,26 +611,18 @@ namespace JupiterX
                     GameObject.Destroy(gameObject);
             }
         }
-
         static string[] RPCNames = { "SetTaggedTime", "UpdatePlayerCosmetics", "RequestCosmetics", "ReportTagRPC" };
         static string[] prefabNames = { "gorillaprefabs/gorillaenemy", "Network Player", "STICKABLE TARGET", "bulletPrefab" };
-
         public static void SlowPlayer(Photon.Realtime.Player who)
         {
             SetMaster(PhotonNetwork.LocalPlayer);
-            Utility.myVRRig().photonView.RPC("SetTaggedTime", who, null);
+            myVRRig().photonView.RPC("SetTaggedTime", who, null);
         }
-
         public static void TagPlayer(Photon.Realtime.Player who)
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
-            GorillaGameManager.instance.GetComponent<PhotonView>().RPC(
-                                "ReportTagRPC",
-                                RpcTarget.MasterClient,
-                                new Il2CppSystem.Object[] { who }
-                            );
+            SetMaster(PhotonNetwork.LocalPlayer);
+            GorillaGameManager.instance.GetComponent<PhotonView>().RPC("ReportTagRPC", RpcTarget.MasterClient, new Il2CppSystem.Object[] { who });
         }
-
         public static void InstaCrashPlayer(Photon.Realtime.Player who)
         {
             for (int i = 0; i < 150; i++)
@@ -695,15 +632,13 @@ namespace JupiterX
             }
             PhotonNetwork.SendAllOutgoingCommands();
         }
-
         public static void CrashPlayerForPlayerTab(Photon.Realtime.Player plr)
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            SetMaster(PhotonNetwork.LocalPlayer);
             PhotonNetwork.DestroyPlayerObjects(plr);
             PhotonNetwork.SendDestroyOfPlayer(plr.ActorNumber);
             BetaDestroyPlayers(plr);
         }
-
         public static void BetaCrashPlayer(Photon.Realtime.Player crash)
         {
             SetMaster(PhotonNetwork.LocalPlayer);
@@ -727,7 +662,6 @@ namespace JupiterX
             BetaDoPrefab(prefabNames[2]);
             BetaDoPrefab(prefabNames[3]);
         }
-
         public static void ChangeName(string name)
         {
             PhotonNetwork.LocalPlayer.NickName = name;
@@ -735,7 +669,6 @@ namespace JupiterX
             PlayerPrefs.SetString("playerName", name);
             PlayerPrefs.Save();
         }
-
         public static void BetaSetIndex(int matIndex, VRRig who)
         {
             if (PhotonNetwork.InRoom)
@@ -760,8 +693,6 @@ namespace JupiterX
                 }
             }
         }
-
-
         public static void FlushRPCS()
         {
             GorillaNot.instance.rpcCallLimit = int.MaxValue;
@@ -769,7 +700,6 @@ namespace JupiterX
             PhotonNetwork.OpCleanRpcBuffer(GorillaTagger.Instance.myVRRig.photonView);
             PhotonNetwork.SendAllOutgoingCommands();
         }
-
         public static Shader StandardShader()
         {
             return Shader.Find("Standard"); // GorillaTag/UberShader
@@ -786,8 +716,6 @@ namespace JupiterX
         {
             return EasyInputs.GetDeviceVelocity(hand);
         }
-
-
         public static void GetTagFreeze(bool enabled)
         {
             if (GorillaLocomotion.Player.Instance != null)
@@ -805,37 +733,30 @@ namespace JupiterX
         {
             return GorillaTagger.Instance.transform;
         }
-
         public static Transform RightHandTransform()
         {
             return GorillaTagger.Instance.rightHandTransform;
         }
-
         public static Transform LeftHandTransform()
         {
             return GorillaTagger.Instance.leftHandTransform;
         }
-
         public static Transform Head()
         {
             return GorillaTagger.Instance.headCollider.transform;
         }
-
         public static Transform BodyTransform()
         {
             return GorillaTagger.Instance.bodyCollider.transform;
         }
-
         public static Rigidbody RigidbodyTransform()
         {
             return GorillaTagger.Instance.GetComponent<Rigidbody>();
         }
-
         public static void UnlockAll()
         {
             CosmeticsWrapper.PurchaseAll();
         }
-
         public static void DickSpawn()
         {
             if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
@@ -857,7 +778,6 @@ namespace JupiterX
                 BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.right * 0.3f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
             }
         }
-
         public static HalloweenGhostChaser lucy
         {
             get
@@ -869,12 +789,10 @@ namespace JupiterX
                 value = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
             }
         }
-
         public static void BetaSetLucySpeed(float speed)
         {
             lucy.currentSpeed = speed;
         }
-
         public static void SetLucyTarget(VRRig rig)
         {
             lucy.currentState = HalloweenGhostChaser.ChaseState.Chasing;
@@ -882,7 +800,6 @@ namespace JupiterX
             lucy.targetPlayer = rig.photonView.Owner;
             lucy.followTarget = rig.transform;
         }
-
         public static void LucyTargetGun()
         {
             if (Main.GetGunInput(false))
@@ -897,12 +814,11 @@ namespace JupiterX
                 }
             }
         }
-
         private static float lastthing = 0f;
         public static void SpazLucy()
         {
-            if (Utility.IsMaster() == false)
-                Utility.SetMaster(Utility.MyPlayer());
+            if (IsMaster() == false)
+                SetMaster(MyPlayer());
             if (Time.time > lastthing)
             {
                 lucy.timeGongStarted = 0f;
@@ -910,21 +826,19 @@ namespace JupiterX
                 lastthing = Time.time + 0.1f;
             }
         }
-
         public static void LucyOrbitSelf()
         {
-            Utility.MakeMeMaster();
+            MakeMeMaster();
             if (lucy.currentState == HalloweenGhostChaser.ChaseState.Chasing)
             {
-                lucy.transform.position = Utility.MainCamera().transform.position + new Vector3(0, 0.9f, 0);
-                lucy.transform.RotateAround(Utility.MainCamera().position, (float)Math.Cos(4));
+                lucy.transform.position = MainCamera().transform.position + new Vector3(0, 0.9f, 0);
+                lucy.transform.RotateAround(MainCamera().position, (float)Math.Cos(4));
             }
         }
-
         public static void LucySpazAttack()
         {
-            if (Utility.IsMaster() == false)
-                Utility.SetMaster(Utility.MyPlayer());
+            if (IsMaster() == false)
+                SetMaster(MyPlayer());
             if (Time.time > lastthing)
             {
                 if (lucy.currentState != HalloweenGhostChaser.ChaseState.Chasing)
@@ -936,43 +850,24 @@ namespace JupiterX
                 }
             }
         }
-
-        public static void GetOwnerShipOfPlayer(Photon.Realtime.Player plr)
-        {
-            VRRig thatGuy = RigManager.GetVRRigFromPlayer(plr);
-            PhotonView plrView = RigManager.GetPhotonViewFromVRRig(thatGuy);
-            plrView.OwnershipTransfer = OwnershipOption.Takeover;
-            plrView.RequestOwnership();
-            plrView.TransferOwnership(MyPlayer());
-        }
-
-        public static void MovePlayerToMe(Photon.Realtime.Player plr)
-        {
-            RigManager.GetVRRigFromPlayer(plr).transform.position = MainTransform().transform.position;
-            RigManager.GetVRRigFromPlayer(plr).transform.rotation = MainTransform().transform.rotation;
-        }
-
         public static void TpSelfToPlayer(Photon.Realtime.Player plr)
         {
-            MainTransform().transform.position = RigManager.GetVRRigFromPlayer(plr).headConstraint.transform.position;
+            MainTransform().transform.position = RigManager.GetVRRigFromPlayer(plr).headMesh.transform.position;
         }
 
         public static void MakeLucyGoToPlayer(Photon.Realtime.Player plr)
         {
-            if (Utility.IsMaster() == false)
-                Utility.SetMaster(Utility.MyPlayer());
+            if (IsMaster() == false)
+                SetMaster(MyPlayer());
             lucy.targetPlayer = plr;
             lucy.transform.position = RigManager.GetVRRigFromPlayer(plr).headConstraint.transform.position;
         }
-
         public static void LucyFlingGun()
         {
-            if (Utility.IsMaster() == false)
-                Utility.SetMaster(Utility.MyPlayer());
+            if (IsMaster() == false)
+                SetMaster(MyPlayer());
             lucy.transform.position = new Vector3(lucy.transform.position.x, 100, lucy.transform.position.z);
         }
-
-
         public static void LucyAttackGun()
         {
             if (Main.GetGunInput(false))
@@ -985,8 +880,8 @@ namespace JupiterX
                 VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                 if (Main.GetGunInput(true))
                 {
-                    if (Utility.IsMaster() == false)
-                        Utility.SetMaster(Utility.MyPlayer());
+                    if (IsMaster() == false)
+                        SetMaster(MyPlayer());
                     lucy.currentState = HalloweenGhostChaser.ChaseState.Chasing;
                     lucy.targetPlayer = RigManager.GetPlayerFromVRRig(who);
                 }
@@ -998,7 +893,6 @@ namespace JupiterX
                     Main.gunLocked = false;
             }
         }
-
         public static void MoveLucyGun()
         {
             if (Main.GetGunInput(false))
@@ -1038,10 +932,8 @@ namespace JupiterX
                 RGBDelayTime = Time.time + 0.015f;
                 currentColorIndex = (currentColorIndex + 1) % colors.Length;
             }
-
             return colors[currentColorIndex];
         }
-
         public static void DoRGBLucyPlz()
         {
             if (rgbLucy)
@@ -1049,19 +941,16 @@ namespace JupiterX
                 lucy.defaultColor = DoRGBColor();
                 lucy.summonedColor = DoRGBColor();
             }
-            else { return; }
         }
-
         public static bool rgbLucy = false;
         public static void BetaSpawnLucy(HalloweenGhostChaser.ChaseState state, bool summon, Color color, bool isRgb = false)
         {
-            Utility.SetMaster(Utility.MyPlayer());
+            SetMaster(MyPlayer());
             GameObject.Find("Global/Halloween Ghost").SetActive(summon);
             lucy.currentState = state;
             lucy.isSummoned = summon;
             lucy.gongDuration = 0.1f;
             lucy.summoningDuration = 0.1f; // remove if no work
-
             if (isRgb) 
             { 
                 rgbLucy = true; 
@@ -1073,7 +962,6 @@ namespace JupiterX
                 lucy.summonedColor = color;
             }
         }
-
         public static VRRig GetAllVRRigsWithoutMe(VRRig who)
         {
             if (PhotonNetwork.InRoom)
@@ -1081,15 +969,11 @@ namespace JupiterX
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
                     if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
-                    {
                         return rig;
-                    }
                 }
             }
             return null;
         }
-
-
         public static VRRig myVRRig()
         {
             return GorillaTagger.Instance.myVRRig;
@@ -1098,22 +982,6 @@ namespace JupiterX
         {
             return GorillaTagger.Instance.offlineVRRig;
         }
-
-        private static int NoInvisLayerMask()
-        {
-            return 5124;
-        }
-
-        public static int ConvertIntToFloat(float thing)
-        {
-            return (int)thing;
-        }
-
-        public static float ConvertFloatToInt(int thing)
-        {
-            return (float)thing;
-        }
-
         public static EasyHand RightHand = EasyHand.RightHand;
         public static EasyHand LeftHand = EasyHand.LeftHand;
 
@@ -1137,7 +1005,6 @@ namespace JupiterX
         {
             fps = (1f / Time.deltaTime).ToString("F1");
         }
-
         public static GameObject platR = null;
         public static GameObject platL = null;
         public static void CreatePlatform(Transform handR, Transform handL, Quaternion rot, Quaternion rott, Vector3 scale, Color color)
@@ -1150,7 +1017,6 @@ namespace JupiterX
                     platR.transform.position = handR.position;
                     platR.transform.rotation = rot;
                     platR.transform.localScale = scale;
-
                     var rendererR = platR.GetComponent<Renderer>();
                     if (rendererR != null)
                         rendererR.material.color = color;
@@ -1164,7 +1030,6 @@ namespace JupiterX
                     platR = null;
                 }
             }
-
             if (LGrip)
             {
                 if (platL == null)
@@ -1173,7 +1038,6 @@ namespace JupiterX
                     platL.transform.position = handL.position;
                     platL.transform.rotation = rott;
                     platL.transform.localScale = scale;
-
                     var rendererL = platL.GetComponent<Renderer>();
                     if (rendererL != null)
                         rendererL.material.color = color;
@@ -1188,7 +1052,6 @@ namespace JupiterX
                 }
             }
         }
-
         public static bool HasSentbetaNoti = false;
         public static bool HasUsedMenuBeforeNoti = false;
 
@@ -1196,7 +1059,6 @@ namespace JupiterX
         public static string author = "Nova";
 
         public static bool canusemenu = true;
-
         public static void LockCheck()
         {
             if (new WebClient().DownloadString("https://api-nova-two.vercel.app/jupiterx/locks/lock1").Contains("true"))
@@ -1219,7 +1081,7 @@ namespace JupiterX
         public static bool isBetaRelease = false;
         public static bool updateneeded = false;
         public static bool extremeupdateneeded = false;
-        public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {Utility.version}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD discord.gg/bCjKrZaT2T";
+        public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {version}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD discord.gg/bCjKrZaT2T";
 
         public static string MainPath = Path.Combine(Application.persistentDataPath, "JupiterX");
         public static string PreferencesPath = Path.Combine(MainPath, "Preferences.txt");
@@ -1232,117 +1094,78 @@ namespace JupiterX
         public static GorillaComputer gorillaComputer;
 
         public static string lastDeltaTime;
-
         public static bool FirstLaunch;
-        private static void DestroyObject(GameObject objects)
-        {
-            GameObject.Destroy(objects);
-        }
-
         public static VRRig GetPhotonViewFromVRRig(PhotonView who)
         {
             VRRig[] rig = GorillaParent.instance.vrrigs.ToArray();
             for (int i = 0; i < rig.Length; i++)
-            {
                 return rig[i];
-            }
             return null;
         }
-
         public static bool toOpen;
         public static void CreateFilesOnStart()
         {
             if (!Directory.Exists(MainPath))
                 Directory.CreateDirectory(MainPath);
-
             if (!File.Exists(PreferencesPath))
                 File.Create(PreferencesPath);
         }
-
         static int loadingPreferencesFrame;
         static bool hasLoadedPreferences;
         public static string SavePreferencesToText()
         {
             const string separator = ";;";
-
             List<string> enabledButtons = new List<string>();
-
             foreach (ButtonInfo[] buttonList in Buttons.buttons)
             {
                 foreach (ButtonInfo button in buttonList)
                 {
                     if (button != null && button.enabled && button.buttonText != "Save Preferences")
-                    {
                         enabledButtons.Add(button.buttonText);
-                    }
                 }
             }
-
             string enabledText = string.Join(separator, enabledButtons);
             string favoriteText = favorites != null ? string.Join(separator, favorites) : "";
             string quickActionText = quickActions != null ? string.Join(separator, quickActions) : "";
-
             string settingsText = string.Join(separator, new string[]
             {
-                ((int)Utility.PageType).ToString(),
-                ((int)Utility.currentTheme).ToString(),
-                ((int)Utility.dropType).ToString(),
+                ((int)PageType).ToString(),
+                ((int)currentTheme).ToString(),
+                ((int)dropType).ToString(),
                 Movement.FlySpeedAmount.ToString(),
                 Movement.ArmSizeAmount.ToString()
             });
-
-            return string.Join("\n", new[]
-            {
-                enabledText,
-                favoriteText,
-                quickActionText,
-                settingsText
-            });
+            return string.Join("\n", new[] { enabledText, favoriteText, quickActionText, settingsText });
         }
-
-
         public static void SavePreferences() =>
             File.WriteAllText($"{PreferencesPath}", SavePreferencesToText());
-
         private static void ForceEnable(string name)
         {
             var btn = Buttons.GetIndex(name);
             if (btn != null && !btn.enabled)
-            {
                 Main.Toggle(name);
-            }
         }
-
         public static void LoadPreferencesFromText(string text)
         {
             loadingPreferencesFrame = Time.frameCount;
-
             Panic();
-
             if (string.IsNullOrWhiteSpace(text))
                 return;
-
             string[] textData = text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-
             if (textData.Length < 4)
                 return;
-
             favorites ??= new List<string>();
             quickActions ??= new List<string>();
-
             try
             {
                 string[] data = textData[3].Split(new[] { ";;" }, StringSplitOptions.None);
-
                 if (data.Length >= 5)
                 {
                     PageType = int.Parse(data[0]) - 1;
                     currentTheme = int.Parse(data[1]) - 1;
                     dropType = int.Parse(data[2]) - 1;
-
                     Movement.FlySpeedAmount = int.Parse(data[3]) - 1;
                     Movement.ArmSizeAmount = int.Parse(data[4]) - 1;
-
                     ChangePageType();
                     ChangeMenuTheme();
                     ChangeDropType();
@@ -1351,12 +1174,10 @@ namespace JupiterX
                 }
             }
             catch { }
-
             string[] activeButtons = textData[0].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string button in activeButtons)
             {
                 Main.Toggle(button);
-
                 ForceEnable("Custom Boards");
                 ForceEnable("Stump Text");
                 ForceEnable("Version Text");
@@ -1373,11 +1194,8 @@ namespace JupiterX
                 if (Buttons.GetIndex(quick) != null)
                     quickActions.Add(quick);
             }
-
             hasLoadedPreferences = true;
         }
-
-
         public static void LoadPreferences()
         {
             try
@@ -1387,18 +1205,15 @@ namespace JupiterX
                     hasLoadedPreferences = true;
                     return;
                 }
-
                 string text = File.ReadAllText($"{PreferencesPath}");
                 LoadPreferencesFromText(text);
             }
             catch (Exception e) { Log("Error loading preferences: " + e.Message); }
         }
-
         public static void DetectOtherUsers()
         {
             if (!networkedmenu)
                 return;
-
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
                 if (rig == null || rig.photonView == null || rig.photonView.Owner == null || rig == GorillaTagger.Instance.myVRRig)
@@ -1436,13 +1251,10 @@ namespace JupiterX
                 else
                 {
                     if (menuTransform != null)
-                    {
                         GameObject.Destroy(menuTransform.gameObject);
-                    }
                 }
             }
         }
-
         public static void Panic()
         {
             foreach (ButtonInfo[] btn in Buttons.buttons)
@@ -1456,33 +1268,22 @@ namespace JupiterX
                 }
             }
         }
-
-        private static bool IsAlwaysOn(string text)
-        {
-            return text == "Custom Boards" ||
-                   text == "Stump Text" ||
-                   text == "Version Text" ||
-                   text == "See Others Menus";
-        }
-
+        private static bool IsAlwaysOn(string text) =>
+            text == "Custom Boards" || text == "Stump Text" || text == "Version Text" || text == "See Others Menus";
         public static (GameObject lineholder, LineRenderer line) CreateLine(Transform pos1, Transform pos2, Color color)
         {
             GameObject lineholder = new GameObject();
             LineRenderer line = lineholder.AddComponent<LineRenderer>();
-
             line.positionCount = 2;
-            line.material.shader = Utility.GUIShader();
+            line.material.shader = GUIShader();
             line.useWorldSpace = true;
             line.startWidth = 0.01f;
             line.endWidth = 0.01f;
             line.startColor = color;
             line.endColor = color;
-
             line.SetPosition(0, pos1.position);
             line.SetPosition(1, pos2.position);
-
             GameObject.Destroy(lineholder, Time.deltaTime);
-
             return (lineholder, line);
         }
         public static void BetaAntiCosmetic(string cosmeticId)
@@ -1502,7 +1303,6 @@ namespace JupiterX
                 }
             }
         }
-
         public static void BetaAntiReport(bool Crash, bool Disconnect)
         {
             if (PhotonNetwork.InRoom)
@@ -1538,79 +1338,58 @@ namespace JupiterX
                 }
             }
         }
-        public static void FindObjects() // Put in if (!doonce)
+        public static void FindObjects()
         {
             gorillaComputer = GorillaComputer.instance;
-
             motd = GameObject.Find("motd")?.GetComponent<Text>();
             motdText = GameObject.Find("motdtext")?.GetComponent<Text>();
-
-            motdText.text = Utility.motdtemplate;
-
+            motdText.text = motdtemplate;
             codeOfConduct = GameObject.Find("CodeOfConduct")?.GetComponent<Text>();
             cocText = GameObject.Find("COC Text")?.GetComponent<Text>();
         }
-
         public static void CreateCustomBoards(Text top, Text bottom, string title, string text)
         {
             if (top != null)
-            {
                 top.text = title;
-            }
             if (bottom != null)
-            {
                 bottom.text = text;
-            }
             if (top == null && bottom == null)
-            {
                 FindObjects();
-            }
         }
-
         public static string ogmotd;
         public static string ogmotdtext;
         public static string ogcoc;
         public static string ogcoctext;
-
         public static string DownloadStringFromUrl(string url)
         {
             Il2CppSystem.Net.WebClient webClient = new Il2CppSystem.Net.WebClient();
             return webClient.DownloadString(url);
         }
-
         public static byte[] LoadEmbeddedSounds(string resourceName)
         {
-            var asm = Assembly.GetExecutingAssembly();
-            using (var stream = asm.GetManifestResourceStream(resourceName))
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
             {
                 if (stream == null)
-                {
-                    //NotificationManager.SendNotification("red", "Audio", $"Embedded sound not found: {resourceName}");
                     return null;
-                }
                 byte[] bytes = new byte[stream.Length];
                 stream.Read(bytes, 0, bytes.Length);
                 return bytes;
             }
         }
-
         private static AudioClip WavToAudioClip(byte[] fileBytes)
         {
             const int headerSize = 44;
             if (fileBytes.Length < headerSize) return null;
-
             int sampleRate = BitConverter.ToInt32(fileBytes, 24);
             int channels = BitConverter.ToInt16(fileBytes, 22);
             int dataSize = fileBytes.Length - headerSize;
             int sampleCount = dataSize / 2;
-
             float[] samples = new float[sampleCount];
             for (int i = 0; i < sampleCount; i++)
             {
                 short sample = BitConverter.ToInt16(fileBytes, headerSize + i * 2);
                 samples[i] = sample / 32768f;
             }
-
             AudioClip clip = AudioClip.Create("sound", sampleCount / channels, channels, sampleRate, false);
             clip.SetData(samples, 0);
             return clip;
@@ -1619,19 +1398,14 @@ namespace JupiterX
         {
             byte[] soundBytes = LoadEmbeddedSounds(resourceName);
             if (soundBytes == null) return;
-
             AudioClip clip = WavToAudioClip(soundBytes);
             if (clip == null)
-            {
-                //NotificationManager.SendNotification("red", "Audio", $"Failed to convert embedded WAV to AudioClip MAKE A TICKET IN THE DISCORD: {resourceName}");
                 return;
-            }
-
             var audioSource = GorillaTagger.Instance.offlineVRRig.gameObject.AddComponent<AudioSource>();
             if (audioSource != null)
             {
                 audioSource.clip = clip;
-                audioSource.volume = 0.5f; // 0.7f; -- loud breaks audio a lil weird
+                audioSource.volume = 0.5f;
                 audioSource.loop = false;
                 audioSource.Play();
             }
