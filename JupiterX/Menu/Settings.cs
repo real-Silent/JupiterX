@@ -1,17 +1,11 @@
 ﻿using Console;
-using Il2CppSystem.Net;
 using JupiterX.Classes;
-using JupiterX.Managers;
 using JupiterX.Menu;
-using JupiterX.Mods;
 using JupiterX.Notifications;
-using Mono.CSharp;
 using Photon.Pun;
-using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using static JupiterX.Menu.Main;
-using static UnityEngine.UIElements.TextField;
 
 namespace JupiterX
 {

@@ -1,9 +1,7 @@
 ﻿using easyInputs;
 using JupiterX.Menu;
-using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
-using static ONSPPropagationMaterial;
 
 namespace JupiterX.Mods
 {

@@ -5,7 +5,6 @@ using JupiterX.Notifications;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using static JupiterX.Menu.Main;
 
 namespace JupiterX.Mods

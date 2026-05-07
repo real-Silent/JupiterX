@@ -1,22 +1,18 @@
 ﻿using Console;
 using easyInputs;
 using JupiterX.Classes;
-using JupiterX.Extensions;
 using JupiterX.Notifications;
 using Photon.Pun;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
-using static UnityEngine.UIElements.TextField;
 
 namespace JupiterX.Menu
 {

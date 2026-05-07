@@ -1,7 +1,5 @@
 ﻿using GorillaNetworking;
 using Photon.Pun;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Console
