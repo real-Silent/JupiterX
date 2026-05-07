@@ -129,7 +129,7 @@ namespace JupiterX.Mods
                 GameObject NewPointer = GunData.Pointer;
                 if (GetGunInput(true))
                 {
-                    GorillaLocomotion.Player.Instance.rightHandTransform.position = NewPointer.transform.position;
+                    Utility.RightHandTransform().position = NewPointer.transform.position;
                 }
             }
         }

@@ -776,21 +776,21 @@ namespace JupiterX
         {
             if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
             {
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.up * 0.3f, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.up * 0.6f, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.up * 0.9f, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.left * 0.3f, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.rightHandTransform.position + Vector3.right * 0.3f, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position, RightHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position + Vector3.up * 0.3f, RightHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position + Vector3.up * 0.6f, RightHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position + Vector3.up * 0.9f, RightHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position + Vector3.left * 0.3f, RightHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position + Vector3.right * 0.3f, RightHandTransform().rotation);
             }
             if (EasyInputs.GetGripButtonDown(EasyHand.LeftHand))
             {
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.up * 0.3f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.up * 0.6f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.up * 0.9f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.left * 0.3f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
-                BetaSpawnPrefab("STICKABLE TARGET", GorillaLocomotion.Player.Instance.leftHandTransform.position + Vector3.right * 0.3f, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", LeftHandTransform().position, LeftHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", LeftHandTransform().position + Vector3.up * 0.3f, LeftHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", LeftHandTransform().position + Vector3.up * 0.6f, LeftHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", LeftHandTransform().position + Vector3.up * 0.9f, LeftHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", LeftHandTransform().position + Vector3.left * 0.3f, LeftHandTransform().rotation);
+                BetaSpawnPrefab("STICKABLE TARGET", LeftHandTransform().position + Vector3.right * 0.3f, LeftHandTransform().rotation);
             }
         }
         public static void TpSelfToPlayer(Photon.Realtime.Player plr)

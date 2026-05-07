@@ -172,7 +172,7 @@ namespace JupiterX.Mods
                 for (int i = 0; i < 10; i++)
                 {
                     Vector3 s = GorillaTagger.Instance.rightHandTransform.position + GorillaTagger.Instance.rightHandTransform.forward * (i * 3f);
-                    Utility.BetaSpawnPrefab(prefab, s, GorillaLocomotion.Player.Instance.rightHandTransform.rotation);
+                    Utility.BetaSpawnPrefab(prefab, s, Utility.RightHandTransform().rotation);
                 }
             }
             if (Utility.LGrip)
@@ -180,7 +180,7 @@ namespace JupiterX.Mods
                 for (int i = 0; i < 10; i++)
                 {
                     Vector3 j = GorillaTagger.Instance.leftHandTransform.position + GorillaTagger.Instance.leftHandTransform.forward * (i * 3f);
-                    Utility.BetaSpawnPrefab(prefab, j, GorillaLocomotion.Player.Instance.leftHandTransform.rotation);
+                    Utility.BetaSpawnPrefab(prefab, j, Utility.LeftHandTransform().rotation);
                 }
             }
         }

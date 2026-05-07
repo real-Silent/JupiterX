@@ -1,5 +1,4 @@
-﻿using Console;
-using easyInputs;
+﻿using easyInputs;
 using JupiterX.Classes;
 using JupiterX.Notifications;
 using Photon.Pun;
@@ -1659,18 +1658,6 @@ namespace JupiterX.Menu
             return noInvisLayerMask ?? 131585; //GorillaLocomotion.Player.Instance.locomotionEnabledLayers;
         }
 
-        public static (Vector3 position, Quaternion rotation, Vector3 up, Vector3 forward, Vector3 right) TrueLeftHand()
-        {
-            Quaternion rot = GorillaTagger.Instance.leftHandTransform.rotation * GorillaLocomotion.Player.Instance.leftHandTransform.rotation;
-            return (GorillaTagger.Instance.leftHandTransform.position + GorillaTagger.Instance.leftHandTransform.rotation * (GorillaLocomotion.Player.Instance.leftHandOffset * (scaleWithPlayer ? GorillaLocomotion.Player.Instance.transform.localScale.magnitude : 1f)), rot, rot * Vector3.up, rot * Vector3.forward, rot * Vector3.right);
-        }
-
-        public static (Vector3 position, Quaternion rotation, Vector3 up, Vector3 forward, Vector3 right) TrueRightHand()
-        {
-            Quaternion rot = GorillaTagger.Instance.rightHandTransform.rotation * GorillaLocomotion.Player.Instance.rightHandTransform.rotation;
-            return (GorillaTagger.Instance.rightHandTransform.position + GorillaTagger.Instance.rightHandTransform.rotation * (GorillaLocomotion.Player.Instance.rightHandOffset * (scaleWithPlayer ? GorillaLocomotion.Player.Instance.transform.localScale.magnitude : 1f)), rot, rot * Vector3.up, rot * Vector3.forward, rot * Vector3.right);
-        }
-
 
         public static GameObject Pointer;
         public static RaycastHit Ray;
@@ -1734,8 +1721,6 @@ namespace JupiterX.Menu
                 }
             }
         }
-
-
         public static bool GetGunInput(bool isShooting)
         {
             if (giveGunTarget != null)
@@ -1752,6 +1737,6 @@ namespace JupiterX.Menu
         }
 
         public static Vector3 GetGunDirection(Transform transform) =>
-            new[] { transform.forward, -transform.up, transform == GorillaTagger.Instance.rightHandTransform ? TrueRightHand().forward : TrueLeftHand().forward, GorillaTagger.Instance.headCollider.transform.forward }[GunDirection];
+            new[] { transform.forward, -transform.up, transform == GorillaTagger.Instance.rightHandTransform ? GorillaTagger.Instance.rightHandTransform.forward : GorillaTagger.Instance.leftHandTransform.forward, GorillaTagger.Instance.headCollider.transform.forward }[GunDirection];
     }
 }
