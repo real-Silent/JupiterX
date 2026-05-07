@@ -379,7 +379,7 @@ namespace JupiterX.Mods
         {
             if (GetGunInput(false))
             {
-                Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                Utility.MakeMeMaster();
                 var GunData = RenderGun();
                 GameObject Pointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
@@ -397,7 +397,7 @@ namespace JupiterX.Mods
         {
             if (GetGunInput(false))
             {
-                Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                Utility.MakeMeMaster();
                 var GunData = RenderGun();
                 GameObject Pointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
@@ -414,7 +414,7 @@ namespace JupiterX.Mods
         {
             if (GetGunInput(false))
             {
-                Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                Utility.MakeMeMaster();
                 var GunData = RenderGun();
                 GameObject Pointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
@@ -430,7 +430,7 @@ namespace JupiterX.Mods
 
         public static void KillAllTimmys()
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Utility.MakeMeMaster();
             List<GameObject> timmys = GetTimmys();
             foreach (var item in timmys)
             {
@@ -440,7 +440,7 @@ namespace JupiterX.Mods
 
         public static void KillAllStalkers()
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Utility.MakeMeMaster();
             List<GameObject> stalkers = GetStalkers();
             foreach (var item in stalkers)
             {
@@ -449,7 +449,7 @@ namespace JupiterX.Mods
         }
         public static void KillAllMonsters()
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Utility.MakeMeMaster();
             List<GameObject> monsters = GetAllMonsters();
             foreach (var item in monsters)
             {
@@ -487,7 +487,7 @@ namespace JupiterX.Mods
         }
         public static void ExplodeMonsters()
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Utility.MakeMeMaster();
             List<GameObject> monsters = GetAllMonsters();
             foreach (var item in monsters)
             {
@@ -498,14 +498,14 @@ namespace JupiterX.Mods
 
         public static void BecomeTimmy()
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Utility.MakeMeMaster();
             Timmy.GetComponent<Collider>().enabled = false;
             Timmy.transform.position = GorillaTagger.Instance.headCollider.transform.position;
             Timmy.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
         }
         public static void BecomeStalker()
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Utility.MakeMeMaster();
             Stalker.GetComponent<Collider>().enabled = false;
             Stalker.transform.position = GorillaTagger.Instance.headCollider.transform.position;
             Stalker.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;

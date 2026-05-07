@@ -183,18 +183,18 @@ namespace JupiterX.Menu
             {
                 if (PhotonNetwork.InRoom)
                 {
-                    if (!PhotonNetwork.LocalPlayer.IsMasterClient)
+                    if (!Utility.IsMaster())
                         GetIndex("MasterLabel").overlapText = "You are not master client.";
                     else
                         GetIndex("MasterLabel").overlapText = "You are master client.";
 
-                    if (PhotonNetwork.LocalPlayer.IsMasterClient && !lastMasterClient)
+                    if (Utility.IsMaster() && !lastMasterClient)
                     {
                         if (disableMasterClientNotifications)
                             return;
                         NotifiLib.SendNotification("<color=grey>[</color><color=purple>MASTER</color><color=grey>]</color> You are now master client.");
                     }
-                    lastMasterClient = PhotonNetwork.LocalPlayer.IsMasterClient;
+                    lastMasterClient = Utility.IsMaster();
                 }
             }
             catch { }

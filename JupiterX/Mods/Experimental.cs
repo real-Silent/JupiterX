@@ -33,10 +33,10 @@ namespace JupiterX.Mods
                 {
                     foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerListOthers)
                     {
-                        PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+                        Utility.MakeMeMaster();
                         foreach (BalloonHoldable balloonHoldable in GameObject.FindObjectsOfType<BalloonHoldable>())
                         {
-                            balloonHoldable.OnOwnerChangeCb(PhotonNetwork.LocalPlayer, player);
+                            balloonHoldable.OnOwnerChangeCb(Utility.MyPlayer(), player);
                             balloonHoldable.OwnerPopBalloon();
                             balloonHoldable.PopBalloon();
                             balloonHoldable.OnActivate();

@@ -10,7 +10,7 @@ namespace JupiterX.Mods
     {
         public static void TagAll()
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (Utility.IsMaster())
             {
                 foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
                 {
@@ -96,8 +96,7 @@ namespace JupiterX.Mods
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
-                    if (Utility.IsMaster() == false)
-                        Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                    Utility.MakeMeMaster();
                     foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
                     {
                         tagman.AddInfectedPlayer(Main.lockTarget.photonView.Owner);

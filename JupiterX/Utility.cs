@@ -191,10 +191,8 @@ namespace JupiterX
                 }
             }
         }
-        public static Photon.Realtime.Player MyPlayer()
-        {
-            return PhotonNetwork.LocalPlayer;
-        }
+        public static Photon.Realtime.Player MyPlayer() =>
+            PhotonNetwork.LocalPlayer;
         public static void BanAll()
         {
             Plugin.DoCoroun(BetaBanAllWithDelay());
@@ -277,7 +275,7 @@ namespace JupiterX
         }
         public static void BetaCrashAllV2(VRRig target) 
         {
-            SetMaster(PhotonNetwork.LocalPlayer);
+            MakeMeMaster();
             if (target != null)
             {
                 PhotonNetwork.Destroy(target.photonView);
@@ -454,7 +452,8 @@ namespace JupiterX
         private static string[] MenuThemes = new string[]
         {
             "Default", "Blue", "Rainbow", "Red", "Transparent", "Pastel",
-            "Rig Color", "Yellow", "Green", "Fading Grey", "Fading Red", "Fading Blue"
+            "Rig Color", "Yellow", "Green", "Fading Grey", "Fading Red", "Fading Blue",
+            "Fading Yellow", "Fading Magenta", "White", "Black"
         };
         public static void OnStartFixColor()
         {
@@ -529,27 +528,43 @@ namespace JupiterX
                     buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) };
                     buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) };
                     break;
+                case 12:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSimpleGradient(Color.black, Color.yellow) };
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) };
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) };
+                    break;
+                case 13:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSimpleGradient(Color.black, Color.magenta) };
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) };
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.grey) };
+                    break;
+                case 14:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.white) };
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.white) };
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.white) };
+                    textColors[0] = Color.black;
+                    textColors[1] = Color.red;
+                    break;
+                case 15:
+                    backgroundColor = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) };
+                    buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) };
+                    buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) };
+                    textColors[0] = Color.white;
+                    textColors[1] = Color.red;
+                    break;
             }
             textColors[0] = Color.white;
             textColors[1] = Color.white;
             Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=cyan>[{MenuThemes[currentTheme]}]</color>";
         }
-        public static void BetaEmojiName(int emoji)
-        {
-            PhotonNetwork.LocalPlayer.NickName = "\n\n<size=4532><sprite=" + emoji + "></size>";
-        }
-        public static void BetaSpawnPrefab(string prefabName, Vector3 Position, Quaternion Roation)
-        {
+        public static void BetaEmojiName(int emoji) =>
+            MyPlayer().NickName = "\n\n<size=4532><sprite=" + emoji + "></size>";
+        public static void BetaSpawnPrefab(string prefabName, Vector3 Position, Quaternion Roation) =>
             PhotonNetwork.Instantiate(prefabName, Position, Roation, 0, null);
-        }
-        public static void SetMaster(Photon.Realtime.Player newMaster)
-        {
+        public static void SetMaster(Photon.Realtime.Player newMaster) => 
             PhotonNetwork.SetMasterClient(newMaster);
-        }
-        public static void MakeMeMaster()
-        {
-            SetMaster(PhotonNetwork.LocalPlayer);
-        }
+        public static void MakeMeMaster() =>
+            SetMaster(MyPlayer());
         static GameObject sphereeR = null;
         static GameObject sphereeL = null;
         public static void GhostView(bool enabled)
@@ -592,10 +607,10 @@ namespace JupiterX
             }
         }
         public static bool IsMaster() =>
-            PhotonNetwork.LocalPlayer.IsMasterClient;
+            MyPlayer().IsMasterClient;
         public static void BetaDestroyPlayers(Photon.Realtime.Player who)
         {
-            SetMaster(PhotonNetwork.LocalPlayer);
+            MakeMeMaster();
             PhotonNetwork.DestroyPlayerObjects(who);
             PhotonNetwork.DestroyPlayerObjects(who);
             PhotonNetwork.SendDestroyOfPlayer(who.ActorNumber);
@@ -615,12 +630,12 @@ namespace JupiterX
         static string[] prefabNames = { "gorillaprefabs/gorillaenemy", "Network Player", "STICKABLE TARGET", "bulletPrefab" };
         public static void SlowPlayer(Photon.Realtime.Player who)
         {
-            SetMaster(PhotonNetwork.LocalPlayer);
+            MakeMeMaster();
             myVRRig().photonView.RPC("SetTaggedTime", who, null);
         }
         public static void TagPlayer(Photon.Realtime.Player who)
         {
-            SetMaster(PhotonNetwork.LocalPlayer);
+            MakeMeMaster();
             GorillaGameManager.instance.GetComponent<PhotonView>().RPC("ReportTagRPC", RpcTarget.MasterClient, new Il2CppSystem.Object[] { who });
         }
         public static void InstaCrashPlayer(Photon.Realtime.Player who)
@@ -634,14 +649,14 @@ namespace JupiterX
         }
         public static void CrashPlayerForPlayerTab(Photon.Realtime.Player plr)
         {
-            SetMaster(PhotonNetwork.LocalPlayer);
+            MakeMeMaster();
             PhotonNetwork.DestroyPlayerObjects(plr);
             PhotonNetwork.SendDestroyOfPlayer(plr.ActorNumber);
             BetaDestroyPlayers(plr);
         }
         public static void BetaCrashPlayer(Photon.Realtime.Player crash)
         {
-            SetMaster(PhotonNetwork.LocalPlayer);
+            MakeMeMaster();
             BetaDestroyPlayers(crash);
             BetaDestroyPlayers(crash);
             BetaDestroyPlayers(crash);
@@ -664,7 +679,7 @@ namespace JupiterX
         }
         public static void ChangeName(string name)
         {
-            PhotonNetwork.LocalPlayer.NickName = name;
+            MyPlayer().NickName = name;
             GorillaComputer.instance.currentName = name;
             PlayerPrefs.SetString("playerName", name);
             PlayerPrefs.Save();
@@ -673,7 +688,7 @@ namespace JupiterX
         {
             if (PhotonNetwork.InRoom)
             {
-                PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+                MakeMeMaster();
                 VRRig[] rigs = GorillaParent.instance.vrrigs.ToArray();
                 GorillaTagManager[] tagman = GameObject.FindObjectsOfType<GorillaTagManager>();
                 for (int i = 0; i < rigs.Length; i++)
@@ -696,7 +711,7 @@ namespace JupiterX
         public static void FlushRPCS()
         {
             GorillaNot.instance.rpcCallLimit = int.MaxValue;
-            GorillaNot.instance.OnPlayerLeftRoom(PhotonNetwork.LocalPlayer);
+            GorillaNot.instance.OnPlayerLeftRoom(MyPlayer());
             PhotonNetwork.OpCleanRpcBuffer(GorillaTagger.Instance.myVRRig.photonView);
             PhotonNetwork.SendAllOutgoingCommands();
         }
@@ -1309,7 +1324,7 @@ namespace JupiterX
             {
                 foreach (GorillaPlayerScoreboardLine lines in GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>())
                 {
-                    if (lines.linePlayer.UserId == PhotonNetwork.LocalPlayer.UserId)
+                    if (lines.linePlayer.UserId == MyPlayer().UserId)
                     {
                         Transform reportBtn = lines.reportButton.gameObject.transform;
                         foreach (VRRig rig in GorillaParent.instance.vrrigs)
@@ -1323,7 +1338,7 @@ namespace JupiterX
                                 {
                                     if (Crash)
                                     {
-                                        PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+                                        MakeMeMaster();
                                         PhotonNetwork.DestroyPlayerObjects(rig.photonView.Owner);
                                     }
                                     if (Disconnect)

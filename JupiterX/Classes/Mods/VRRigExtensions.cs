@@ -1,4 +1,5 @@
 ﻿using GorillaNetworking;
+using JupiterX;
 using Photon.Pun;
 using UnityEngine;
 
@@ -81,7 +82,7 @@ namespace Console
 
         public static VRRig GetVRRigWithoutMe(this VRRig rig)
         {
-            if (rig != null && rig.photonView.Owner.ActorNumber != PhotonNetwork.LocalPlayer.ActorNumber && rig != GorillaTagger.Instance.myVRRig)
+            if (rig != null && rig.photonView.Owner.ActorNumber != Utility.MyPlayer().ActorNumber && rig != GorillaTagger.Instance.myVRRig)
             {
                 return rig;
             }

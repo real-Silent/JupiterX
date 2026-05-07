@@ -22,31 +22,24 @@ namespace JupiterX.Mods
 
         public static void RigSpam()
         {
-            SetMaster();
+            Utility.MakeMeMaster();
             if (Utility.RTrigger)
             {
                 PhotonNetwork.Destroy(Utility.myVRRig().gameObject);
             }
         }
 
-        public static void SetMaster()
-        {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
-        }
-
         public static void AlawysMaster()
         {
-            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
-            PhotonNetwork.CurrentRoom.SetMasterClient(PhotonNetwork.LocalPlayer);
-            GorillaNot.instance.currentMasterClient = PhotonNetwork.LocalPlayer;
-            GorillaNot.instance.OnMasterClientSwitched(PhotonNetwork.LocalPlayer);
+            Utility.MakeMeMaster();
+            PhotonNetwork.CurrentRoom.SetMasterClient(Utility.MyPlayer());
+            GorillaNot.instance.currentMasterClient = Utility.MyPlayer();
+            GorillaNot.instance.OnMasterClientSwitched(Utility.MyPlayer());
         }
 
-        public static void LongNamePub()
-        {
+        public static void LongNamePub() =>
             CreatePublic(" JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX  JUPITERX ");
-        }
-
+        
         public static void CreatePublic(string roomName)
         {
             Hashtable customProps = new Hashtable();
@@ -77,7 +70,7 @@ namespace JupiterX.Mods
 
         public static void MatSpamAll()
         {
-            SetMaster();
+            Utility.MakeMeMaster();
             foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
             {
                 foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
@@ -99,7 +92,7 @@ namespace JupiterX.Mods
 
         public static void MatSpamGun()
         {
-            SetMaster();
+            Utility.MakeMeMaster();
             if (Main.GetGunInput(false))
             {
                 var GunData = Main.RenderGun();
@@ -299,7 +292,7 @@ namespace JupiterX.Mods
         }
         public static void SlowAll()
         {
-            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Utility.SetMaster(Utility.MyPlayer());
             Utility.myVRRig().photonView.RPC("SetSlowedTime", Main.lockTarget.photonView.Owner, null);
             Utility.myVRRig().photonView.RPC("SetJoinTaggedTime", Main.lockTarget.photonView.Owner, null);
         }
@@ -315,7 +308,7 @@ namespace JupiterX.Mods
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
-                    Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                    Utility.SetMaster(Utility.MyPlayer());
                     Utility.myVRRig().photonView.RPC("SetSlowedTime", Main.lockTarget.photonView.Owner, null);
                     Utility.myVRRig().photonView.RPC("SetJoinTaggedTime", Main.lockTarget.photonView.Owner, null);
                 }
@@ -498,7 +491,7 @@ namespace JupiterX.Mods
 
         public static void CrashAll()
         {
-            SetMaster();
+            Utility.MakeMeMaster();
             foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerListOthers)
             {
                 if (Utility.RTrigger)
@@ -550,7 +543,7 @@ namespace JupiterX.Mods
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-                Utility.SetMaster(PhotonNetwork.LocalPlayer);
+                Utility.SetMaster(Utility.MyPlayer());
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {

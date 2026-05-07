@@ -302,7 +302,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Cosmetix", method =() => Utility.UnlockAll(), isTogglable = false, toolTip = "Gives you every cosmetic in the game."  },
 
                 new ButtonInfo { buttonText = "Unban Self", method =() => Experimental.Unban(), isTogglable = false, toolTip = "Unbans yourself if you get banned."  },
-                new ButtonInfo { buttonText = "Set Master", method =() => Overpowered.SetMaster(), isTogglable = true, toolTip = "Sets you as master client."  },
+                new ButtonInfo { buttonText = "Set Master", method =() => Utility.MakeMeMaster(), isTogglable = true, toolTip = "Sets you as master client."  },
                 new ButtonInfo { buttonText = "Always Set Master", method =() => Overpowered.AlawysMaster(), isTogglable = true, toolTip = "Always sets you as master no matter who tries to take it."  },
 
                 new ButtonInfo { buttonText = "Rig Spam [<color=cyan>RT</color>]", method =() => Overpowered.RigSpam(), isTogglable = true, toolTip = "Lets you spam rigs."  },
