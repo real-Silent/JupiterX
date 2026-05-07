@@ -132,11 +132,6 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Clear Notifcations", method =() => NotifiLib.ClearAllNotifications(), isTogglable = false, toolTip = "Clears all the notifications." },
 
                 new ButtonInfo { buttonText = "Turning", method =() => Important.Turning(), isTogglable = true, toolTip = "Lets you turn." },
-
-                new ButtonInfo { buttonText = "Mute Gun", method =() => Experimental.MuteGun(), isTogglable = true, toolTip = "Lets you mute the player you shoot the gun at." },
-                new ButtonInfo { buttonText = "UnMute Gun", method =() => Experimental.UnMuteGun(), isTogglable = true, toolTip = "Lets you unmute the player you shoot the gun at." },
-                new ButtonInfo { buttonText = "Mute All", method =() => Experimental.MuteAll(), isTogglable = false, toolTip = "Lets you mute everyone in the current room." },
-                new ButtonInfo { buttonText = "UnMute All", method =() => Experimental.UnMuteAll(), isTogglable = false, toolTip = "Lets you unmute everyone in the current room." },
             },
 
             new ButtonInfo[] { // Safety | 3
@@ -195,7 +190,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit VRRig", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Ghost Monke <color=cyan>[A]</color>", method =() => vRRig.GhostMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become a ghost."  },
                 new ButtonInfo { buttonText = "Invis Monke <color=cyan>[B]</color>", method =() => vRRig.InvisMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become invisable."  },
-                new ButtonInfo { buttonText = "Grab Rig <color=cyan>[<color=cyan>Grips</color>]</color>", method =() => vRRig.GrabRig(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you grab your rig while holding right grip."  },
+                new ButtonInfo { buttonText = "Grab Rig <color=cyan>[Grips]</color>", method =() => vRRig.GrabRig(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you grab your rig while holding right grip."  },
                 new ButtonInfo { buttonText = "Spaz Rig", method =() => vRRig.SpazRig(), disableMethod = vRRig.FixSpazRig, isTogglable = true, toolTip = "Makes your rig spazz out."  },
                 new ButtonInfo { buttonText = "Strobe", method =() => vRRig.Strobe(), isTogglable = true, toolTip = "Makes your color go crazy."  },
                 new ButtonInfo { buttonText = "Move Rig Gun", method =() => vRRig.MoveRigGun(), isTogglable = true, toolTip = "Moves your rig to the gun point."  },
@@ -218,7 +213,16 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Fun | 9
                 new ButtonInfo { buttonText = "Exit Fun", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
-                new ButtonInfo { buttonText = "Cube All [<color=cyan>RT</color>]", method =() => Fun.CubeAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger."  },
+                new ButtonInfo { buttonText = "No Tap Cooldown", method =() => Fun.NoTapCooldown(), disableMethod =() => Fun.ResetTapcooldown(), isTogglable = true, toolTip = "Remoevs the hand tap cooldown."  },
+                new ButtonInfo { buttonText = "Loud Hand Taps", method =() => Fun.LoadHandTaps(), disableMethod =() => Fun.FixHandTaps(), isTogglable = true, toolTip = "Makes the hand tap sound very loud."  },
+                new ButtonInfo { buttonText = "Silent Hand Taps", method =() => Fun.SilentHandTaps(), disableMethod =() => Fun.FixHandTaps(), isTogglable = true, toolTip = "Remoevs the hand tap sound."  },
+
+                new ButtonInfo { buttonText = "Auto Clicker <color=cyan>[T]</color>", method =() => Fun.AutoClicker(), isTogglable = true, toolTip = "Automatically presses trigger for you when holding <color=cyan>trigger</color>."  },
+
+                new ButtonInfo { buttonText = "Mute Gun", method =() => Experimental.MuteGun(), isTogglable = true, toolTip = "Lets you mute the player you shoot the gun at." },
+                new ButtonInfo { buttonText = "UnMute Gun", method =() => Experimental.UnMuteGun(), isTogglable = true, toolTip = "Lets you unmute the player you shoot the gun at." },
+                new ButtonInfo { buttonText = "Mute All", method =() => Experimental.MuteAll(), isTogglable = false, toolTip = "Lets you mute everyone in the current room." },
+                new ButtonInfo { buttonText = "UnMute All", method =() => Experimental.UnMuteAll(), isTogglable = false, toolTip = "Lets you unmute everyone in the current room." },
 
                 new ButtonInfo { buttonText = "Fix Mic", method =() => Fun.FixMic(), isTogglable = false, toolTip = "Fixes your mic."  },
                 new ButtonInfo { buttonText = "Low Quality Mic", method =() => Fun.LowQualityMic(), isTogglable = false, toolTip = "Makes your micrphone low quality."  },
@@ -263,6 +267,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Prefabs", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Get Fucked Spawn [Forest, Targets]", method =() => Experimental.GetFucked(), isTogglable = false, toolTip = "Spawns the word 'Get Fucked' using stickable targets in forest."  },
                 new ButtonInfo { buttonText = "Clear Prefabs", method =() => Prefabs.ClearPrefabs(), isTogglable = false, toolTip = "Clears every prefab with a photon view."  },
+
+                new ButtonInfo { buttonText = "Cube All [<color=cyan>RT</color>]", method =() => Fun.CubeAll(), isTogglable = true, toolTip = "Lets you spawn cubes at others while holding right trigger."  },
 
                 new ButtonInfo { buttonText = "Cube Spam [<color=cyan>Grips</color>]", method =() => Prefabs.CubeSpam(), isTogglable = true, toolTip = "Lets you spam cubes while holding grip."  },
                 new ButtonInfo { buttonText = "Give Cube Spam Gun", method =() => Prefabs.GiveSpamGun(0), isTogglable = true, toolTip = "Lets you give someone cube spam when they hold grip."  },

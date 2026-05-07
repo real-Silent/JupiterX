@@ -116,5 +116,58 @@ namespace JupiterX.Mods
             MicAmplifier.AmplificationFactor = 3f;
             MicAmplifier.BoostValue = 25f;
         }
+
+        public static void FixHandTaps()
+        {
+            GorillaTagger.Instance.handTapVolume = 1f;
+        }
+        public static void LoadHandTaps()
+        {
+            GorillaTagger.Instance.handTapVolume = float.MaxValue;
+        }
+        public static void SilentHandTaps()
+        {
+            GorillaTagger.Instance.handTapVolume = 0f;
+        }
+        public static void NoTapCooldown()
+        {
+            GorillaTagger.Instance.tapCoolDown = 0f;
+        }
+        public static void ResetTapcooldown()
+        {
+            GorillaTagger.Instance.tapCoolDown = 1f;
+        }
+
+        private static bool autoclickstate;
+        public static void AutoClicker()
+        {
+            autoclickstate = !autoclickstate;
+            if (Utility.LTriggerFloat > 0.5f)
+            {
+                if (PhotonNetwork.InRoom)
+                {
+                    GorillaTagger.Instance.myVRRig.leftHand.calcT = autoclickstate ? 1f : 0f;
+                    GorillaTagger.Instance.myVRRig.leftHand.MapMyFinger(1f);
+                }
+                else
+                {
+                    GorillaTagger.Instance.offlineVRRig.leftHand.calcT = autoclickstate ? 1f : 0f;
+                    GorillaTagger.Instance.offlineVRRig.leftHand.MapMyFinger(1f);
+                }
+            }
+            if (Utility.RTriggerFloat > 0.5f)
+            {
+                if (PhotonNetwork.InRoom)
+                {
+                    GorillaTagger.Instance.myVRRig.rightHand.calcT = autoclickstate ? 1f : 0f;
+                    GorillaTagger.Instance.myVRRig.rightHand.MapMyFinger(1f);
+                }
+                else
+                {
+                    GorillaTagger.Instance.offlineVRRig.rightHand.calcT = autoclickstate ? 1f : 0f;
+                    GorillaTagger.Instance.offlineVRRig.rightHand.MapMyFinger(1f);
+                }
+            }
+        }
     }
 }
