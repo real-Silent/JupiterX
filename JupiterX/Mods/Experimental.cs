@@ -2,10 +2,13 @@
 using ExitGames.Client.Photon;
 using GorillaNetworking;
 using Il2CppSystem.Net;
+using JupiterX.Classes;
 using JupiterX.Notifications;
 using Newtonsoft.Json.Linq;
 using Photon.Pun;
 using PlayFab;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static JupiterX.Menu.Main;
@@ -69,6 +72,33 @@ namespace JupiterX.Mods
         {
             foreach (string rpc in PhotonNetwork.PhotonServerSettings.RpcList)
                 File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/RpcData.txt"), rpc);
+        }
+
+        private static readonly Dictionary<Renderer, Material> oldMats = new Dictionary<Renderer, Material>();
+        public static void BetterFPSBoost()
+        {
+            foreach (Renderer v in Resources.FindObjectsOfTypeAll<Renderer>())
+            {
+                try
+                {
+                    if (v.material.shader.name == "Standard")
+                    {
+                        oldMats.Add(v, v.material);
+                        Material replacement = new Material(Shader.Find("Standard"))
+                        {
+                            color = v.material.color
+                        };
+                        v.material = replacement;
+                    }
+                }
+                catch (Exception exception) { Utility.Log(string.Format("mat error {1} - {0}", exception.Message, exception.StackTrace)); }
+            }
+        }
+
+        public static void DisableBetterFPSBoost()
+        {
+            foreach (KeyValuePair<Renderer, Material> v in oldMats)
+                v.Key.material = v.Value;
         }
 
         public static void GrabGameInfo()

@@ -363,6 +363,9 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Experimental | 13
                 new ButtonInfo { buttonText = "Exit Experimental", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Grab RPC Data", method =() => Experimental.GrabRPCData(), isTogglable = false, toolTip = "Grabs all the games rpcs and writes them to a file." },
+                new ButtonInfo { buttonText = "Grab Game Info", method =() => Experimental.GrabGameInfo(), isTogglable = false, toolTip = "Grabs the games info and writes them to a file." },
+
+                new ButtonInfo { buttonText = "Better FPS Boost", enableMethod = Experimental.BetterFPSBoost, disableMethod = Experimental.DisableBetterFPSBoost, toolTip = "Makes everything one color, boosting your FPS."},
 
                 new ButtonInfo { buttonText = "Spaz Forest Targets", method =() => Experimental.SpazForestTargets(), isTogglable = true, toolTip = "Spazzes out the targets that are in forest." },
 
