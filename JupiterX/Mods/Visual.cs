@@ -1,4 +1,6 @@
 ﻿using Photon.Pun;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -48,6 +50,31 @@ namespace JupiterX.Mods
             textHolder.transform.Rotate(0f, 180f, 0f);
 
             GameObject.Destroy(textHolder, Time.deltaTime);
+        }
+
+        public static readonly List<Renderer> disabledRenderers = new List<Renderer>();
+        public static void Xray()
+        {
+            if (Utility.RTrigger)
+            {
+                if (disabledRenderers.Count <= 0)
+                {
+                    foreach (Renderer renderer in GameObject.FindObjectsOfType<Renderer>().Where(rend => rend != null && rend.gameObject != null && !(rend is SkinnedMeshRenderer) && rend.enabled && rend.gameObject.activeSelf))
+                    {
+                        renderer.enabled = false;
+                        disabledRenderers.Add(renderer);
+                    }
+                }
+            }
+            else
+            {
+                if (disabledRenderers.Count > 0)
+                {
+                    foreach (Renderer renderer in disabledRenderers.Where(rend => rend != null && rend.gameObject != null))
+                        renderer.enabled = true;
+                    disabledRenderers.Clear();
+                }
+            }
         }
 
         public static void VelocityLabel() // creds to iiDk
