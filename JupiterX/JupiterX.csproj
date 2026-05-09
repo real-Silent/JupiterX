@@ -68,6 +68,7 @@
     <Compile Include="Notifications\LeavePatch.cs" />
     <Compile Include="Notifications\Library.cs" />
     <Compile Include="Notifications\JoinPatch.cs" />
+    <Compile Include="Notifications\ShibaNotificationLib.cs" />
     <Compile Include="Patches\AntiQuit.cs" />
     <Compile Include="Patches\NoQuitBox.cs" />
     <Compile Include="Utility.cs" />
