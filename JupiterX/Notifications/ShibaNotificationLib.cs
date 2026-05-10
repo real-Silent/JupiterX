@@ -7,51 +7,174 @@ namespace JupiterX.Notifications
     [MelonLoader.RegisterTypeInIl2Cpp]
     public class ShibaNotificationLib : MonoBehaviour
     {
-        public ShibaNotificationLib(IntPtr e) : base(e) { }
+        public ShibaNotificationLib(IntPtr ptr) : base(ptr) { }
 
-        public static ShibaNotificationLib instance = null;
-        public GameObject NotiBackground;
+        public static ShibaNotificationLib instance;
 
-        public virtual void Start()
+        private void Start()
         {
             instance = this;
-            CreateNotificationBackground(Camera.main.transform.position * 2f, Camera.main.transform.rotation);
         }
 
-        public virtual void FixedUpdate()
+        public static void SendNoti(string noti, float duration = -1f)
         {
+            if (instance == null)
+                return;
 
+            NotifiLib.SendNotification(noti, duration);
+
+            if (NotifiLib.NotifiText == null)
+                return;
+
+            MelonLoader.MelonCoroutines.Start(
+                instance.AnimatedNotification(
+                    NotifiLib.NotifiText.gameObject,
+                    duration < 0 ? 3f : duration
+                )
+            );
         }
 
-        public void CreateNotificationBackground(Vector3 pos, Quaternion rot)
+        public IEnumerator AnimatedNotification(GameObject textObj, float lifetime)
         {
-            NotiBackground = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            NotiBackground.transform.localScale = new Vector3(0.3120967f, 0.1220963f, 0.01752696f);
-            NotiBackground.transform.position = pos;
-            NotiBackground.transform.rotation = rot;
-            NotiBackground.GetComponent<Renderer>().material.color = Settings.backgroundColor.GetCurrentColor();
-        }
-
-        public IEnumerator DestroyObjectFading(GameObject go, float delayTime)
-        {
-            if (go == null)
+            if (textObj == null)
                 yield break;
-            Renderer renderer = go.GetComponent<Renderer>();
-            if (renderer == null)
-                yield break;
-            Material mat = renderer.material;
-            Color color = mat.color;
-            float startAlpha = color.a;
-            float elapsed = 0f;
-            while (elapsed < delayTime)
+
+            GameObject bg = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            Destroy(bg.GetComponent<Collider>());
+
+            bg.transform.localScale = Vector3.zero;
+
+            Renderer renderer = bg.GetComponent<Renderer>();
+
+            renderer.material = new Material(Shader.Find("Standard"));
+
+            Color baseColor = Settings.backgroundColor.GetCurrentColor();
+            baseColor.a = 0f;
+
+            renderer.material.color = baseColor;
+
+            SetupTransparentMaterial(renderer.material);
+
+            Transform textTransform = textObj.transform;
+
+            float intro = 0.15f;
+            float outro = 0.25f;
+
+            Vector3 targetScale = new Vector3(
+                0.3120967f,
+                0.1220963f,
+                0.01752696f
+            );
+
+            /*
+             * INTRO ANIMATION
+             */
+
+            float t = 0f;
+
+            while (t < intro)
             {
-                elapsed += Time.deltaTime;
-                float alpha = Mathf.Lerp(startAlpha, 0f, elapsed / delayTime);
-                color.a = alpha;
-                mat.color = color;
+                t += Time.deltaTime;
+
+                float lerp = t / intro;
+
+                UpdateFollow(bg, textTransform);
+
+                bg.transform.localScale =
+                    Vector3.Lerp(Vector3.zero, targetScale, lerp);
+
+                Color c = baseColor;
+                c.a = Mathf.Lerp(0f, 0.85f, lerp);
+
+                renderer.material.color = c;
+
                 yield return null;
             }
-            Destroy(go);
+
+            bg.transform.localScale = targetScale;
+
+            Color holdColor = baseColor;
+            holdColor.a = 0.85f;
+
+            renderer.material.color = holdColor;
+
+            /*
+             * HOLD
+             */
+
+            float holdTime = Mathf.Max(0, lifetime - outro);
+
+            t = 0f;
+
+            while (t < holdTime)
+            {
+                t += Time.deltaTime;
+
+                UpdateFollow(bg, textTransform);
+
+                yield return null;
+            }
+
+            /*
+             * OUTRO
+             */
+
+            t = 0f;
+
+            while (t < outro)
+            {
+                t += Time.deltaTime;
+
+                float lerp = t / outro;
+
+                UpdateFollow(bg, textTransform);
+
+                Color c = holdColor;
+                c.a = Mathf.Lerp(0.85f, 0f, lerp);
+
+                renderer.material.color = c;
+
+                bg.transform.localScale =
+                    Vector3.Lerp(targetScale,
+                                 targetScale * 0.85f,
+                                 lerp);
+
+                yield return null;
+            }
+
+            Destroy(bg);
+        }
+
+        private void UpdateFollow(GameObject bg, Transform target)
+        {
+            if (bg == null || target == null)
+                return;
+
+            bg.transform.position =
+                target.position + target.forward * 0.01f;
+
+            bg.transform.rotation =
+                Camera.main.transform.rotation;
+        }
+
+        private void SetupTransparentMaterial(Material mat)
+        {
+            mat.SetFloat("_Mode", 3);
+
+            mat.SetInt("_SrcBlend",
+                (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+
+            mat.SetInt("_DstBlend",
+                (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+
+            mat.SetInt("_ZWrite", 0);
+
+            mat.DisableKeyword("_ALPHATEST_ON");
+            mat.EnableKeyword("_ALPHABLEND_ON");
+            mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+
+            mat.renderQueue = 3000;
         }
     }
 }

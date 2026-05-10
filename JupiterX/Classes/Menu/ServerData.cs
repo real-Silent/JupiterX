@@ -339,6 +339,7 @@ namespace Console
                     { "titled", ("TITLED", "#333333") },
                     { "untitled", ("UNTITLED", "blue") },
                     { "pneumonoultramicroscopicsilicovolcanoconiosisz0real", ("KILLER", "#8B0000") },
+                    { "genesis", ("GENESIS", "grey") },
                     { "272issogoodilove272menu", ("272", "red") },
                     { "terrormenussohot", ("Terror", "red") }
                 };
