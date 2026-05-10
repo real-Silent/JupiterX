@@ -136,6 +136,11 @@ namespace JupiterX
                             rig.playerText.text = "[TITLED] " + nickname;
                             rig.playerText.color = HexToColor("#333333");
                         }
+                        else if (rig.photonView.Owner.CustomProperties.ContainsKey("genesis"))
+                        {
+                            rig.playerText.text = "[GENESIS] " + nickname;
+                            rig.playerText.color = Color.grey;
+                        }
                         else if (rig.photonView.Owner.CustomProperties.ContainsKey("terrormenussohot"))
                         {
                             rig.playerText.text = "[TERROR] " + nickname;
