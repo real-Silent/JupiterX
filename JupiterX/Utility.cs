@@ -610,7 +610,8 @@ namespace JupiterX
                 {
                     if (!GorillaTagger.Instance.offlineVRRig.mainSkin.enabled)
                         GorillaTagger.Instance.offlineVRRig.mainSkin.enabled = true;
-                    GorillaTagger.Instance.offlineVRRig.mainSkin.material.color = backgroundColor.GetCurrentColor();
+                    Color color = backgroundColor.GetCurrentColor();
+                    GorillaTagger.Instance.offlineVRRig.mainSkin.material.color = new Color(color.r, color.g, color.b, 0.4f);
                 }
             }
             else
