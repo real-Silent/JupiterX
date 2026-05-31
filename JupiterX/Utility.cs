@@ -571,9 +571,9 @@ namespace JupiterX
                 "Red",
                 "Orange",
                 "Yellow",
-                "Green",
-                "Blue",
                 "Cyan",
+                "Blue",
+                "Green",
                 "Purple",
                 "Pink",
                 "White",
@@ -585,9 +585,9 @@ namespace JupiterX
                 "red",
                 "#ff8000",
                 "yellow",
-                "green",
+                "#00ffff",
                 "blue",
-                "#00FFFF",
+                "green",
                 "purple",
                 "#FF00FF",
                 "white",
@@ -606,7 +606,7 @@ namespace JupiterX
                 inputTextColorInt = realinputcolor.Length - 1;
 
             inputTextColor = realinputcolor[inputTextColorInt];
-            Buttons.GetIndex("Change Input Text Color").overlapText = $"Change Input Text Color <color=grey>[</color><color=cyan>{textColors[inputTextColorInt]}</color><color=grey>]</color>";
+            Buttons.GetIndex("Change Input Text Color").overlapText = $"Change Input Text Color <color=cyan>[{textColors[inputTextColorInt]}]</color>";
         }
         public static void BetaEmojiName(int emoji) =>
             MyPlayer().NickName = "\n\n<size=4532><sprite=" + emoji + "></size>";
