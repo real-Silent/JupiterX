@@ -635,9 +635,6 @@ namespace JupiterX.Menu
             if (uppercaseMode)
                 buttonText.text = buttonText.text.ToUpper();
 
-            if (inputTextColor != "cyan")
-                buttonText.text = buttonText.text.Replace(" <color=cyan>[", $" <color={inputTextColor}>[");
-
             if (method.overlapText != null)
                 buttonText.text = method.overlapText;
 

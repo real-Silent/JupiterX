@@ -54,7 +54,6 @@ namespace JupiterX
         public static bool flipArraylist;
         public static bool disableGhostview;
         public static bool legacyGhostview;
-        public static string inputTextColor = "cyan";
 
         public static KeyCode keyboardButton = KeyCode.Q;
 

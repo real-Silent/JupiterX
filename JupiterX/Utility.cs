@@ -430,7 +430,7 @@ namespace JupiterX
                     PageTextPosRight = new Vector3(222222f, -22222222f, -222222222f);
                     break;
             }
-            Buttons.GetIndex("Change Page Type").overlapText = "Change Page Type <color=cyan>[" + PageTypes[PageType] + "]</color>"; 
+            Buttons.GetIndex("Change Page Type").overlapText = "Change Page Type <color=grey>[<color=cyan>" + PageTypes[PageType] + "</color>]</color>"; 
         }
         public static int MainDropType = 0;
         private static int dropType = 0;
@@ -453,7 +453,7 @@ namespace JupiterX
                     MainDropType = 3;
                     break;
             }
-            Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=cyan>[{dropTypes[dropType]}]</color>";
+            Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=grey>[<color=cyan>[{dropTypes[dropType]}</color>]</color>";
         }
         private static string[] MenuThemes = new string[]
         {
@@ -561,53 +561,9 @@ namespace JupiterX
             }
             textColors[0] = Color.white;
             textColors[1] = Color.white;
-            Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=cyan>[{MenuThemes[currentTheme]}]</color>";
+            Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=grey>[<color=cyan>[{MenuThemes[currentTheme]}</color>]</color>";
         }
 
-        public static int inputTextColorInt = 3;
-        public static void ChangeInputTextColor(bool positive = true)
-        {
-            string[] textColors = {
-                "Red",
-                "Orange",
-                "Yellow",
-                "Cyan",
-                "Blue",
-                "Green",
-                "Purple",
-                "Pink",
-                "White",
-                "Grey",
-                "Black",
-                "Rose"
-            };
-            string[] realinputcolor = {
-                "red",
-                "#ff8000",
-                "yellow",
-                "#00ffff",
-                "blue",
-                "green",
-                "purple",
-                "#FF00FF",
-                "white",
-                "grey",
-                "black",
-                "#ff005d"
-            };
-
-            if (positive)
-                inputTextColorInt++;
-            else
-                inputTextColorInt--;
-
-            inputTextColorInt %= realinputcolor.Length;
-            if (inputTextColorInt < 0)
-                inputTextColorInt = realinputcolor.Length - 1;
-
-            inputTextColor = realinputcolor[inputTextColorInt];
-            Buttons.GetIndex("Change Input Text Color").overlapText = $"Change Input Text Color <color=cyan>[{textColors[inputTextColorInt]}]</color>";
-        }
         public static void BetaEmojiName(int emoji) =>
             MyPlayer().NickName = "\n\n<size=4532><sprite=" + emoji + "></size>";
         public static void BetaSpawnPrefab(string prefabName, Vector3 Position, Quaternion Roation) =>
