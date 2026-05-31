@@ -122,6 +122,12 @@ namespace JupiterX
                 return;
             }
 
+            if (GameObject.Find($">>Console<<_{Utility.version}") == null)
+            {
+                NotifiLib.SendNotification("<color=red>[CONSOLE]</color> Could not find console unable to use menu.", 60f);
+                Utility.canusemenu = false;
+            }
+
             Menu.Main.Prefix();
             Utility.UpdateFPS();
 

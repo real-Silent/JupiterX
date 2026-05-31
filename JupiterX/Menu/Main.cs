@@ -228,6 +228,24 @@ namespace JupiterX.Menu
 				UnityEngine.Debug.LogError(string.Format("{0} // Error with executing mods at {1}: {2}", Utility.name, exc.StackTrace, exc.Message));
 			}
 
+            if (pointerTrail)
+            {
+                try
+                {
+                    TrailRenderer trail = reference.AddComponent<TrailRenderer>();
+
+                    trail.startColor = backgroundColor.GetColor(0);
+                    trail.endColor = backgroundColor.GetColor(1);
+                    trail.startWidth = 0.015f;
+                    trail.endWidth = 0f;
+                    trail.minVertexDistance = 0.05f;
+
+                    trail.material.shader = Shader.Find("Sprites/Default");
+                    trail.time = 2f;
+                }
+                catch { }
+            }
+
             if (menuTrail)
             {
                 try
@@ -616,6 +634,9 @@ namespace JupiterX.Menu
                 buttonText.text = buttonText.text.ToLower();
             if (uppercaseMode)
                 buttonText.text = buttonText.text.ToUpper();
+
+            if (inputTextColor != "cyan")
+                buttonText.text = buttonText.text.Replace(" <color=grey>[</color><color=cyan>", $" <color=grey>[</color><color={inputTextColor}>");
 
             if (method.overlapText != null)
                 buttonText.text = method.overlapText;

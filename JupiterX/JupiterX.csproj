@@ -47,7 +47,6 @@
     <Compile Include="Classes\Menu\TimedBehaviour.cs" />
     <Compile Include="Classes\Mods\VRRigExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Managers\CosmeticsWrapper.cs" />
     <Compile Include="Managers\PluginManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
     <Compile Include="Menu\Main.cs" />
@@ -62,6 +61,7 @@
     <Compile Include="Mods\Name.cs" />
     <Compile Include="Mods\Overpowered.cs" />
     <Compile Include="Mods\Prefabs.cs" />
+    <Compile Include="Mods\Presets.cs" />
     <Compile Include="Mods\SoundBoard.cs" />
     <Compile Include="Mods\Visual.cs" />
     <Compile Include="Mods\vRRig.cs" />

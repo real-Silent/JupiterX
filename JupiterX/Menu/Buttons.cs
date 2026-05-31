@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEngine;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
+using static ONSPPropagationMaterial;
 
 namespace JupiterX.Menu
 {
@@ -60,6 +61,7 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Flip Menu", enableMethod =() => flipMenu = true, disableMethod =() => flipMenu = false, toolTip = "Flips the menu to the back of your hand."},
                 new ButtonInfo { buttonText = "Menu Trail", enableMethod =() => menuTrail = true, disableMethod =() => menuTrail = false, toolTip = "Gives the menu a trail when you drop."},
+                new ButtonInfo { buttonText = "Pointer Trail", enableMethod =() => pointerTrail = true, disableMethod =() => pointerTrail = false, toolTip = "Gives the pointer a trail when you drop."},
                 new ButtonInfo { buttonText = "Hide Pointer", enableMethod =() => hidepointer = true, disableMethod =() => hidepointer = false, toolTip = "Hides the menu pointer."},
                 new ButtonInfo { buttonText = "See Others Menus", enableMethod =() => networkedmenu = true, disableMethod =() => networkedmenu = false, toolTip = "Lets you see other menu users menus."},
 
@@ -71,6 +73,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Disable Page Number", enableMethod =() => DisablePageNumber = true, disableMethod =() => DisablePageNumber = false, toolTip = "Disables the page number on the title."},
                 new ButtonInfo { buttonText = "Custom Menu Title", enableMethod =() => CustomMenuTitle = true, disableMethod =() => CustomMenuTitle = false, toolTip = "Gives the menu a custom title you choose inside a txt."},
                 new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), enableMethod =() => Utility.ChangePageType(), disableMethod =() => Utility.ChangePageType(false), incremental = true, overlapText = "Change Page Type <color=cyan>[Side]</color>", isTogglable = false, toolTip = "Changes the page type." },
+                new ButtonInfo { buttonText = "Change Input Text Color", overlapText = "Change Input Text Color <color=grey>[</color><color=cyan>Cyan</color><color=grey>]</color>", method =() => Utility.ChangeInputTextColor(), enableMethod =() => Utility.ChangeInputTextColor(), disableMethod =() => Utility.ChangeInputTextColor(false), incremental = true, isTogglable = false, toolTip = "Changes the color of the input indicator next to the buttons." },
 
                 //new ButtonInfo { buttonText = "Disable Search Button", enableMethod =() => disableSearchButton = true, disableMethod =() => disableSearchButton = false, toolTip = "Disables the search button at the bottom of the menu."},
                 new ButtonInfo { buttonText = "Disable Return Button", enableMethod =() => disableReturnButton = true, disableMethod =() => disableReturnButton = false, toolTip = "Disables the return button at the bottom of the menu."},
@@ -105,6 +108,10 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Version Text", enableMethod =() => VersionText = true, disableMethod =() => VersionText = false, enabled = VersionText, toolTip = "Toggles the Version Text."},
                 new ButtonInfo { buttonText = "Stump Text", enableMethod =() => StumpText = true, disableMethod =() => StumpText = false, enabled = StumpText, toolTip = "Toggles the stump text."},
 
+                new ButtonInfo { buttonText = "Disable Ghostview", enableMethod =() => disableGhostview = true, disableMethod =() => disableGhostview = false, toolTip = "Disables the transparent rig when you're in ghost."},
+                new ButtonInfo { buttonText = "Legacy Ghostview", enableMethod =() => legacyGhostview = true, disableMethod =() => legacyGhostview = false, toolTip = "Reverts the transparent rig to the two balls when you're in ghost."},
+
+                new ButtonInfo { buttonText = "Menu Presets", method =() => CurrentCategoryName = "Menu Presets", isTogglable = false, toolTip = "Opens the page of presets."},
                 new ButtonInfo { buttonText = "Save Preferences", method =() => Utility.SavePreferences(), isTogglable = false, toolTip = "Saves your enabled mods to file." },
                 new ButtonInfo { buttonText = "Load Preferences", method =() => Utility.LoadPreferences(), isTogglable = false, toolTip = "Loads your saved mods from a file." },
             },
@@ -324,12 +331,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Material Spam All", method =() => Overpowered.MatSpamAll(), isTogglable = true, toolTip = "Lets you spaz out the infection material on others." },
                 new ButtonInfo { buttonText = "Material Spam Gun", method =() => Overpowered.MatSpamGun(), isTogglable = true, toolTip = "Lets you spaz out the infection material on who you shoot." },
 
-                new ButtonInfo { buttonText = "Kick Gun <color=grey>[</color><color=cyan>Private</color><color=grey>]</color>", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump." },
-                new ButtonInfo { buttonText = "Kick All <color=grey>[</color><color=cyan>Private</color><color=grey>]</color>", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump." },
-
-                new ButtonInfo { buttonText = "Spaz Shiny Rock Count", method =() => Overpowered.SpazRocks(), isTogglable = true, toolTip = "Spazes your shiny rocks." },
-                new ButtonInfo { buttonText = "Remove All Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(0), isTogglable = false, toolTip = "Gives you 0 shiny rocks." },
-                new ButtonInfo { buttonText = "Max Shiny Rocks", method =() => Overpowered.BetaChangeShinyRock(int.MaxValue), isTogglable = false, toolTip = "Gives you infinite shiny rocks." },
+                new ButtonInfo { buttonText = "Kick Gun <color=grey>[</color><color=cyan>Stump</color><color=grey>]</color>", method =() => Overpowered.KickGun(), isTogglable = true, toolTip = "Lets you kick someone with a gun in stump." },
+                new ButtonInfo { buttonText = "Kick All <color=grey>[</color><color=cyan>Stump</color><color=grey>]</color>", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump." },
 
                 new ButtonInfo { buttonText = "Create Symbol Name Public", method =() => Overpowered.CreatePublic("<>{][]()@.,/?!"), isTogglable = true, toolTip = "Creates a public room with a symbols as the name." },
                 new ButtonInfo { buttonText = "Create Dot Name Public", method =() => Overpowered.CreatePublic("."), isTogglable = true, toolTip = "Creates a public room with a dot name." },
@@ -351,12 +354,14 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Crash Gun V3", overlapText = "Insta Crash Gun", method =() => Overpowered.CrashGunV3(), isTogglable = true, toolTip = "Lets you crash someone you shoot at." },
                 new ButtonInfo { buttonText = "Crash Gun V4", method =() => Overpowered.CrashGunV4(), isTogglable = true, toolTip = "Lets you crash someone you shoot at." },
                 new ButtonInfo { buttonText = "Crash Gun V5", method =() => Overpowered.CrashGunV5(), isTogglable = true, toolTip = "Lets you crash someone you shoot at." },
+                new ButtonInfo { buttonText = "Crash Gun V6", method =() => Overpowered.ActualInstaCrashGun(), isTogglable = true, toolTip = "Lets you crash someone you shoot at." },
 
                 new ButtonInfo { buttonText = "Crash All <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAll(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
                 new ButtonInfo { buttonText = "Crash All V2 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV2(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
                 new ButtonInfo { buttonText = "Crash All V3 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV3(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
                 new ButtonInfo { buttonText = "Crash All V4 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV4(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
                 new ButtonInfo { buttonText = "Crash All V5 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV5(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
+                new ButtonInfo { buttonText = "Crash All V6 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV5(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
 
                 new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room." },
                 new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at." },
@@ -509,7 +514,41 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Favorite", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-            new[] { // Admin | 21
+            new[] { // Menu Presets | 21
+                new ButtonInfo { buttonText = "Exit Menu Presets", method =() => CurrentCategoryName = "Menu Settings", isTogglable = false, toolTip = "Returns to the settings for the menu."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 1", method =() => Presets.SaveCustomPreset(1), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 1", method =() => Presets.LoadCustomPreset(1), isTogglable = false, toolTip = "Loads a custom preset."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 2", method =() => Presets.SaveCustomPreset(2), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 2", method =() => Presets.LoadCustomPreset(2), isTogglable = false, toolTip = "Loads a custom preset."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 3", method =() => Presets.SaveCustomPreset(3), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 3", method =() => Presets.LoadCustomPreset(3), isTogglable = false, toolTip = "Loads a custom preset."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 4", method =() => Presets.SaveCustomPreset(4), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 4", method =() => Presets.LoadCustomPreset(4), isTogglable = false, toolTip = "Loads a custom preset."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 5", method =() => Presets.SaveCustomPreset(5), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 5", method =() => Presets.LoadCustomPreset(5), isTogglable = false, toolTip = "Loads a custom preset."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 6", method =() => Presets.SaveCustomPreset(6), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 6", method =() => Presets.LoadCustomPreset(6), isTogglable = false, toolTip = "Loads a custom preset."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 7", method =() => Presets.SaveCustomPreset(7), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 7", method =() => Presets.LoadCustomPreset(7), isTogglable = false, toolTip = "Loads a custom preset."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 8", method =() => Presets.SaveCustomPreset(8), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 8", method =() => Presets.LoadCustomPreset(8), isTogglable = false, toolTip = "Loads a custom preset."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 9", method =() => Presets.SaveCustomPreset(9), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 9", method =() => Presets.LoadCustomPreset(9), isTogglable = false, toolTip = "Loads a custom preset."},
+
+                new ButtonInfo { buttonText = "Save Custom Preset 10", method =() => Presets.SaveCustomPreset(10), isTogglable = false, toolTip = "Saves a custom preset."},
+                new ButtonInfo { buttonText = "Load Custom Preset 10", method =() => Presets.LoadCustomPreset(10), isTogglable = false, toolTip = "Loads a custom preset."},
+            },
+
+            new[] { // Admin | 22
                 new ButtonInfo { buttonText = "Exit Admin", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Opens the visual page for the menu" },
                 new ButtonInfo { buttonText = "Get Console Users", method =() => Experimental.GetMenuUsers(), isTogglable = false, toolTip = "Gets all users using console" },
                 new ButtonInfo { buttonText = "Console Users NameTag", enableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = true, disableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = false, isTogglable = true, toolTip = "Enables the console nametags" },
@@ -543,7 +582,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Admin Restart Mic Gun", method =() => Experimental.ConsoleRestartMicGun(), isTogglable = true, toolTip = "Makes who you shoot mic normal" },
             },
 
-            new[] { // Plugin Settings | 22
+            new[] { // Plugin Settings | 23
                 new ButtonInfo { buttonText = "Exit Plugin Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns you back to the settings menu." },
                 new ButtonInfo { buttonText = "Reload Plugins", method = PluginManager.ReloadPlugins, isTogglable = false, toolTip = "Reloads all of your plugins." }
             },
@@ -587,6 +626,7 @@ namespace JupiterX.Menu
             
             "Enabled",
             "Favorite",
+            "Menu Presets",
             "Admin",
             "Plugin Settings",
             "Internal"

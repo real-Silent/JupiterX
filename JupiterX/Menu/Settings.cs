@@ -43,6 +43,7 @@ namespace JupiterX
         public static bool NoAutoSizeText = false;
         public static bool flipMenu = false;
         public static bool menuTrail = false;
+        public static bool pointerTrail = false;
         public static bool DisableButtonSounds = false;
         public static bool DisableMenuSounds = false;
         public static bool DisablePageNumber = false;
@@ -51,6 +52,9 @@ namespace JupiterX
         public static bool showEnabledModsVR = true;
         public static bool advancedArraylist;
         public static bool flipArraylist;
+        public static bool disableGhostview;
+        public static bool legacyGhostview;
+        public static string inputTextColor = "cyan";
 
         public static KeyCode keyboardButton = KeyCode.Q;
 

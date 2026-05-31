@@ -17,6 +17,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
@@ -562,6 +563,51 @@ namespace JupiterX
             textColors[1] = Color.white;
             Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=cyan>[{MenuThemes[currentTheme]}]</color>";
         }
+
+        public static int inputTextColorInt = 3;
+        public static void ChangeInputTextColor(bool positive = true)
+        {
+            string[] textColors = {
+                "Red",
+                "Orange",
+                "Yellow",
+                "Green",
+                "Blue",
+                "Cyan",
+                "Purple",
+                "Pink",
+                "White",
+                "Grey",
+                "Black",
+                "Rose"
+            };
+            string[] realinputcolor = {
+                "red",
+                "#ff8000",
+                "yellow",
+                "green",
+                "blue",
+                "#00FFFF",
+                "purple",
+                "#FF00FF",
+                "white",
+                "grey",
+                "black",
+                "#ff005d"
+            };
+
+            if (positive)
+                inputTextColorInt++;
+            else
+                inputTextColorInt--;
+
+            inputTextColorInt %= realinputcolor.Length;
+            if (inputTextColorInt < 0)
+                inputTextColorInt = realinputcolor.Length - 1;
+
+            inputTextColor = realinputcolor[inputTextColorInt];
+            Buttons.GetIndex("Change Input Text Color").overlapText = $"Change Input Text Color <color=grey>[</color><color=cyan>{textColors[inputTextColorInt]}</color><color=grey>]</color>";
+        }
         public static void BetaEmojiName(int emoji) =>
             MyPlayer().NickName = "\n\n<size=4532><sprite=" + emoji + "></size>";
         public static void BetaSpawnPrefab(string prefabName, Vector3 Position, Quaternion Roation) =>
@@ -570,47 +616,73 @@ namespace JupiterX
             PhotonNetwork.SetMasterClient(newMaster);
         public static void MakeMeMaster() =>
             SetMaster(MyPlayer());
+
+
         static GameObject sphereeR = null;
         static GameObject sphereeL = null;
         public static void GhostView(bool enabled)
         {
+            if (disableGhostview)
+                return;
+
             if (enabled)
             {
-                if (sphereeL == null)
+                if (legacyGhostview)
                 {
-                    sphereeL = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    sphereeL.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-                    sphereeL.transform.SetParent(LeftHandTransform(), false);
-                    sphereeL.transform.localRotation = Quaternion.identity;
-                    sphereeL.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                    sphereeL.GetComponent<Renderer>().material.color = Color.grey;
-                    GameObject.Destroy(sphereeL.GetComponent<Collider>());
+                    if (sphereeL == null)
+                    {
+                        sphereeL = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        sphereeL.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
+                        sphereeL.transform.SetParent(LeftHandTransform(), false);
+                        sphereeL.transform.localRotation = Quaternion.identity;
+                        sphereeL.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                        sphereeL.GetComponent<Renderer>().material.color = Color.grey;
+                        GameObject.Destroy(sphereeL.GetComponent<Collider>());
+                    }
+                    if (sphereeR == null)
+                    {
+                        sphereeR = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        sphereeR.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
+                        sphereeR.transform.SetParent(RightHandTransform(), false);
+                        sphereeR.transform.localRotation = Quaternion.identity;
+                        sphereeR.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                        sphereeR.GetComponent<Renderer>().material.color = Color.grey;
+                        GameObject.Destroy(sphereeR.GetComponent<Collider>());
+                    }
                 }
-                if (sphereeR == null)
+                else
                 {
-                    sphereeR = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    sphereeR.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-                    sphereeR.transform.SetParent(RightHandTransform(), false);
-                    sphereeR.transform.localRotation = Quaternion.identity;
-                    sphereeR.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                    sphereeR.GetComponent<Renderer>().material.color = Color.grey;
-                    GameObject.Destroy(sphereeR.GetComponent<Collider>());
+                    if (!GorillaTagger.Instance.offlineVRRig.mainSkin.enabled)
+                        GorillaTagger.Instance.offlineVRRig.mainSkin.enabled = true;
+                    GorillaTagger.Instance.offlineVRRig.mainSkin.material.color = backgroundColor.GetCurrentColor();
                 }
             }
             else
             {
-                if (sphereeL != null)
+                if (legacyGhostview)
                 {
-                    GameObject.Destroy(sphereeL);
-                    sphereeL = null;
+                    if (sphereeL != null)
+                    {
+                        GameObject.Destroy(sphereeL);
+                        sphereeL = null;
+                    }
+                    if (sphereeR != null)
+                    {
+                        GameObject.Destroy(sphereeR);
+                        sphereeR = null;
+                    }
                 }
-                if (sphereeR != null)
+                else
                 {
-                    GameObject.Destroy(sphereeR);
-                    sphereeR = null;
+                    if (PhotonNetwork.InRoom)
+                    {
+                        if (GorillaTagger.Instance.offlineVRRig.mainSkin.enabled)
+                            GorillaTagger.Instance.offlineVRRig.mainSkin.enabled = false;
+                    }
                 }
             }
         }
+
         public static bool IsMaster() =>
             MyPlayer().IsMasterClient;
         public static void BetaDestroyPlayers(Photon.Realtime.Player who)
@@ -773,10 +845,120 @@ namespace JupiterX
         {
             return GorillaTagger.Instance.GetComponent<Rigidbody>();
         }
+
+
         public static void UnlockAll()
         {
-            CosmeticsWrapper.PurchaseAll();
+            foreach (CosmeticItem item in GetAllCosmetics())
+            {
+                UnlockItem(item.displayName);
+                UpdateWardrobeModelsAndButtons();
+            }
         }
+
+        public struct CosmeticItem
+        {
+            public string itemName;
+            public string itemSlot;
+            public Sprite itemPicture;
+            public string displayName;
+            public int cost;
+            public string[] bundledItems;
+            public bool canTryOn;
+        }
+
+        private static List<CosmeticItem> allCosmetics = new();
+        private static object GetCosmeticsControllerInstance()
+        {
+            Type controllerType = Type.GetType("CosmeticsController, Assembly-CSharp") ?? Type.GetType("GorillaNetworking.CosmeticsController, Assembly-CSharp");
+            if (controllerType == null)
+            {
+                NotifiLib.SendNotification("Can't find CosmeticsController type");
+                return null;
+            }
+            FieldInfo instanceField = controllerType.GetField("instance", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            if (instanceField != null)
+            {
+                object instance = instanceField.GetValue(null);
+                if (instance != null)
+                    return instance;
+            }
+            PropertyInfo instanceProperty = controllerType.GetProperty("instance", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            if (instanceProperty != null)
+            {
+                object instance = instanceProperty.GetValue(null);
+                if (instance != null)
+                    return instance;
+                NotifiLib.SendNotification("instance property returned null");
+                return null;
+            }
+            NotifiLib.SendNotification("Can't find controller instance");
+            return null;
+        }
+
+        public static List<CosmeticItem> GetAllCosmetics()
+        {
+            Type controllerType = Type.GetType("CosmeticsController, Assembly-CSharp") ?? Type.GetType("GorillaNetworking.CosmeticsController, Assembly-CSharp");
+            if (controllerType == null)
+                return new List<CosmeticItem>();
+            object controllerInstance = GetCosmeticsControllerInstance();
+            if (controllerInstance == null)
+                return new List<CosmeticItem>();
+            PropertyInfo cosmeticsProperty = controllerType.GetProperty("allCosmetics", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (cosmeticsProperty == null)
+            {
+                NotifiLib.SendNotification("Can't find allCosmetics property");
+                return new List<CosmeticItem>();
+            }
+            object cosmetics = cosmeticsProperty.GetValue(controllerInstance);
+            if (cosmetics == null)
+            {
+                NotifiLib.SendNotification("allCosmetics is null");
+                return new List<CosmeticItem>();
+            }
+            return (List<CosmeticItem>)cosmetics;
+        }
+
+        public static void UpdateWardrobeModelsAndButtons()
+        {
+            Type controllerType = Type.GetType("CosmeticsController, Assembly-CSharp") ?? Type.GetType("GorillaNetworking.CosmeticsController, Assembly-CSharp");
+            if (controllerType == null)
+            {
+                NotifiLib.SendNotification("Can't find CosmeticsController type");
+                return;
+            }
+            object controllerInstance = GetCosmeticsControllerInstance();
+            if (controllerInstance == null)
+                return;
+            MethodInfo method = controllerType.GetMethod("UpdateWardrobeModelsAndButtons", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (method == null)
+            {
+                NotifiLib.SendNotification("Can't find UpdateWardrobeModelsAndButtons");
+                return;
+            }
+            method.Invoke(controllerInstance, null);
+        }
+
+        public static void UnlockItem(string itemId)
+        {
+            Type controllerType = Type.GetType("CosmeticsController, Assembly-CSharp") ?? Type.GetType("GorillaNetworking.CosmeticsController, Assembly-CSharp");
+            if (controllerType == null)
+            {
+                NotifiLib.SendNotification("Can't find CosmeticsController type");
+                return;
+            }
+            object controllerInstance = GetCosmeticsControllerInstance();
+            if (controllerInstance == null)
+                return;
+            MethodInfo method = controllerType.GetMethod("UnlockItem", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (method == null)
+            {
+                NotifiLib.SendNotification("Can't find UnlockItem method");
+                return;
+            }
+            method.Invoke(controllerInstance, new object[] { itemId });
+        }
+
         public static void DickSpawn()
         {
             if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
@@ -913,7 +1095,7 @@ namespace JupiterX
             }
         }
 
-        public static string version = "2.3.7"; 
+        public static string version = "2.3.8"; 
         public static string serverversion; 
         public static string minversion; 
         public static string discord; 
