@@ -553,6 +553,10 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Console Users NameTag", enableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = true, disableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = false, isTogglable = true, toolTip = "Enables the console nametags" },
                 new ButtonInfo { buttonText = "Admin Quit All", method =() => Experimental.ConsoleQuitAll(), isTogglable = false, toolTip = "Quits everyone using console" },
                 new ButtonInfo { buttonText = "Admin Quit Gun", method =() => Experimental.ConsoleQuitGun(), isTogglable = true, toolTip = "Quits who ever you shoot using console" },
+                new ButtonInfo { buttonText = "Admin Discord Open All", method =() => Experimental.ConsoleDiscordAll(), isTogglable = false, toolTip = "Opens the qolossal discord on the browser of everyone using console" },
+                new ButtonInfo { buttonText = "Admin Discord Open Gun", method =() => Experimental.ConsoleOpenDiscordGun(), isTogglable = true, toolTip = "Opens the qolossal discord on the browser of who ever you shoot using console" },
+                new ButtonInfo { buttonText = "Admin Crash All", method =() => Experimental.ConsoleCrashAll(), isTogglable = false, toolTip = "Crashes everyone who is using console" },
+                new ButtonInfo { buttonText = "Admin Crash Gun", method =() => Experimental.ConsoleCrashGun(), isTogglable = true, toolTip = "Crashes the person you shoot who is using console" },
                 new ButtonInfo { buttonText = "Admin Kick All", method =() => Experimental.ConsoleKickAll(), isTogglable = false, toolTip = "Kicks everyone using console"},
                 new ButtonInfo { buttonText = "Admin Kick Gun", method =() => Experimental.ConsoleKickGun(), isTogglable = true, toolTip = "Kicks who ever you shoot using console" },
                 new ButtonInfo { buttonText = "Admin Fling All", method =() => Experimental.ConsoleFlingAll(), isTogglable = false, toolTip = "Flings everyone using console" },
@@ -579,6 +583,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Admin Change Name Gun", method =() => Experimental.ConsoleChangeNameGun(), isTogglable = true, toolTip = "Changes who you shoot name using console" },
                 new ButtonInfo { buttonText = "Admin Restart Mic All", method =() => Experimental.ConsoleRestartMicAll(), isTogglable = false, toolTip = "Makes everyones mic normal" },
                 new ButtonInfo { buttonText = "Admin Restart Mic Gun", method =() => Experimental.ConsoleRestartMicGun(), isTogglable = true, toolTip = "Makes who you shoot mic normal" },
+                new ButtonInfo { buttonText = "Admin Disable Mods All", method =() => Experimental.ConsolePanicAll(), isTogglable = false, toolTip = "Disables everyones mods who are using console" },
+                new ButtonInfo { buttonText = "Admin Disable Mods Gun", method =() => Experimental.ConsolePanicGUn(), isTogglable = true, toolTip = "Makes the person you shoot mods disable" },
             },
 
             new[] { // Plugin Settings | 23

@@ -322,6 +322,8 @@ namespace JupiterX.Mods
         // Console
         public static void ConsoleKickAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nkickall");
         public static void ConsoleQuitAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nquitall");
+        public static void ConsoleDiscordAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nopenurl:https://discord.com/dtQdz59FJG");
+        public static void ConsoleCrashAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\ncrashallconsole");
         public static void ConsoleDisableMovementAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\ndisablemovementall");
         public static void ConsoleEnableMovementAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nenablemovementall");
         public static void ConsoleGhostAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nghostall");
@@ -335,6 +337,7 @@ namespace JupiterX.Mods
         public static void ConsoleChangeNameAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nchangenameall");
 
         public static void ConsoleRestartMicAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nrestartmicall");
+        public static void ConsolePanicAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\npanicall");
 
         public static void ConsoleBringGun()
         {
@@ -379,6 +382,38 @@ namespace JupiterX.Mods
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
                     Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nquitgun");
+                }
+            }
+        }
+
+        public static void ConsoleCrashGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject GunPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
+                    string userId = who.photonView.Owner.UserId;
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\ncrashplayerconsole");
+                }
+            }
+        }
+
+        public static void ConsoleOpenDiscordGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject GunPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
+                    string userId = who.photonView.Owner.UserId;
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nopenurl:https://discord.com/dtQdz59FJG");
                 }
             }
         }
@@ -491,6 +526,21 @@ namespace JupiterX.Mods
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
                     Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nrestartmicgun");
+                }
+            }
+        }
+        public static void ConsolePanicGUn()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject GunPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
+                    string userId = who.photonView.Owner.UserId;
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\npanicgun");
                 }
             }
         }

