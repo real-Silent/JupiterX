@@ -196,12 +196,13 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Reconnect", method =() => Important.Reconnect(), isTogglable = false, toolTip = "Reconnects you to the current lobby." },
                 new ButtonInfo { buttonText = "Lobby Hop", method =() => Important.LobbyHop(), isTogglable = false, toolTip = "Lets you lobby hop." },
                 new ButtonInfo { buttonText = "Join Random", method =() => Computer.Jrr(), isTogglable = false, toolTip = "Lets you join a random room." },
+
                 new ButtonInfo { buttonText = "Join Code '1'", method =() => Computer.JoinCode("1"), isTogglable = false, toolTip = "Lets you join the code \"1\"." },
-                new ButtonInfo { buttonText = "Join Code 'JupiterX'", method =() => Computer.JoinCode("_@-JupiterX-@_"), isTogglable = false, toolTip = "Lets you join the code \"JupiterX\"." },
-                new ButtonInfo { buttonText = "Join Code 'Mods'", method =() => Computer.JoinCode("MODS"), isTogglable = false, toolTip = "Lets you join the code \"MODS\"." },
-                new ButtonInfo { buttonText = "Join Code 'Mod'", method =() => Computer.JoinCode("MOD"), isTogglable = false, toolTip = "Lets you join the code \"MOD\"." },
-                new ButtonInfo { buttonText = "Join Code 'Pbbv'", method =() => Computer.JoinCode("PBBV"), isTogglable = false, toolTip = "Lets you join the code \"PBBV\"." },
-                new ButtonInfo { buttonText = "Join Code 'Daisy'", method =() => Computer.JoinCode("DAISY"), isTogglable = false, toolTip = "Lets you join the code \"DAISY\"." },
+                new ButtonInfo { buttonText = "Join Code 'JUPITERX'", method =() => Computer.JoinCode("_@-JupiterX-@_"), isTogglable = false, toolTip = "Lets you join the code \"JupiterX\"." },
+                new ButtonInfo { buttonText = "Join Code 'MODS'", method =() => Computer.JoinCode("MODS"), isTogglable = false, toolTip = "Lets you join the code \"MODS\"." },
+                new ButtonInfo { buttonText = "Join Code 'MOD'", method =() => Computer.JoinCode("MOD"), isTogglable = false, toolTip = "Lets you join the code \"MOD\"." },
+                new ButtonInfo { buttonText = "Join Code 'PBBV'", method =() => Computer.JoinCode("PBBV"), isTogglable = false, toolTip = "Lets you join the code \"PBBV\"." },
+                new ButtonInfo { buttonText = "Join Code 'DAISY'", method =() => Computer.JoinCode("DAISY"), isTogglable = false, toolTip = "Lets you join the code \"DAISY\"." },
             },
 
             new ButtonInfo[] { // Movement | 5
