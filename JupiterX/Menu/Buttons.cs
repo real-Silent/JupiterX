@@ -266,7 +266,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Ghost Monke <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => vRRig.GhostMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become a ghost." },
                 new ButtonInfo { buttonText = "Invis Monke <color=grey>[</color><color=cyan>B</color><color=grey>]</color>", method =() => vRRig.InvisMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become invisable." },
                 new ButtonInfo { buttonText = "Grab Rig <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => vRRig.GrabRig(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you grab your rig while holding right grip." },
-                new ButtonInfo { buttonText = "Spaz Rig", method =() => vRRig.SpazRig(), disableMethod = vRRig.FixSpazRig, isTogglable = true, toolTip = "Makes your rig spazz out." },
+                new ButtonInfo { buttonText = "Spaz Rig", method =() => vRRig.SpazRig(), isTogglable = true, toolTip = "Makes your rig spazz out." },
                 new ButtonInfo { buttonText = "Strobe", method =() => vRRig.Strobe(), isTogglable = true, toolTip = "Makes your color go crazy." },
                 new ButtonInfo { buttonText = "Move Rig Gun", method =() => vRRig.MoveRigGun(), isTogglable = true, toolTip = "Moves your rig to the gun point." },
                 new ButtonInfo { buttonText = "Bees", method =() => vRRig.Bees(), disableMethod =() => Utility.FixGhostRig(), isTogglable = true, toolTip = "Makes your rig teleport to other players." },

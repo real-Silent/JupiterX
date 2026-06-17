@@ -58,21 +58,12 @@ namespace JupiterX.Mods
             }
         }
 
-        public static void FixSpazRig()
-        {
-            Utility.myVRRig().head.trackingRotationOffset = Vector3.zero;
-            Utility.myVRRig().rightHand.trackingRotationOffset = Vector3.zero;
-            Utility.myVRRig().leftHand.trackingRotationOffset = Vector3.zero;
-            Utility.GhostView(false);
-        }
-
         public static void SpazRig()
         {
-            Utility.GhostView(true);
-            Utility.myVRRig().head.trackingRotationOffset += Utility.myVRRig().head.trackingRotationOffset = new Vector3(UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100));
-            Utility.myVRRig().rightHand.trackingRotationOffset += Utility.myVRRig().rightHand.trackingRotationOffset = new Vector3(UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100));
-            Utility.myVRRig().leftHand.trackingRotationOffset += Utility.myVRRig().leftHand.trackingRotationOffset = new Vector3(UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100));
-        }
+			(PhotonNetwork.InRoom ? GorillaTagger.Instance.myVRRig.head : GorillaTagger.Instance.offlineVRRig.head).rigTarget.eulerAngles = new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
+			(PhotonNetwork.InRoom ? GorillaTagger.Instance.myVRRig.leftHand : GorillaTagger.Instance.offlineVRRig.leftHand).rigTarget.eulerAngles = new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
+			(PhotonNetwork.InRoom ? GorillaTagger.Instance.myVRRig.rightHand : GorillaTagger.Instance.offlineVRRig.rightHand).rigTarget.eulerAngles = new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
+		}
         public static void Strobe()
         {
             GorillaKeyboardButton buttanpress = new GorillaKeyboardButton();
