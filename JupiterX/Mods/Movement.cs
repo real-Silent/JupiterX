@@ -6,7 +6,57 @@ namespace JupiterX.Mods
 {
     public class Movement
     {
-        public static string[] FlySpeeds = { "Very Slow", "Slow", "Normal", "Fast", "Very Fast", "Way Too Fast" };
+		static Vector3 normal2;
+		static Vector3 vel1;
+		static Vector3 vel2;
+		static float dist2;
+		static int layers;
+		static bool LeftClose2;
+		static bool DoOnce2;
+		static float maxD2;
+		static float ammount;
+		public static void WallWalk()
+		{
+			if (Utility.RightGrip || Utility.LeftGrip)
+            {
+				if (!DoOnce2)
+				{
+					maxD2 = 1f;
+					layers = int.MaxValue;
+					DoOnce2 = true;
+				}
+				RaycastHit raycastHit;
+				Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position, -GorillaTagger.Instance.rightHandTransform.right, out raycastHit, 1f, layers);
+				RaycastHit raycastHit2;
+				Physics.Raycast(GorillaTagger.Instance.leftHandTransform.position, GorillaTagger.Instance.leftHandTransform.right, out raycastHit2, 1f, layers);
+				if (raycastHit2.distance > raycastHit.distance)
+				{
+					normal2 = raycastHit.normal;
+					dist2 = raycastHit.distance;
+				}
+				else
+				{
+					normal2 = raycastHit2.normal;
+					dist2 = raycastHit2.distance;
+					LeftClose2 = true;
+				}
+				if (dist2 < maxD2)
+				{
+					vel2 = normal2 * (ammount * Time.deltaTime);
+					GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity -= vel2;
+				}
+				else
+				{
+					GorillaTagger.Instance.bodyCollider.attachedRigidbody.useGravity = true;
+				}
+			}
+            else
+            {
+				GorillaTagger.Instance.bodyCollider.attachedRigidbody.useGravity = true;
+			}
+		}
+
+		public static string[] FlySpeeds = { "Very Slow", "Slow", "Normal", "Fast", "Very Fast", "Way Too Fast" };
         public static int FlySpeedAmount = 0;
         public static float FlySpeed = 1f;
 
@@ -34,7 +84,25 @@ namespace JupiterX.Mods
                 $"Change Fly Speed <color=grey>[<color=cyan>{FlySpeeds[FlySpeedAmount]}</color>]</color>";
         }
 
-        public static void Fly()
+		public static void LowGravity() =>
+			GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * 6.66f, ForceMode.Acceleration);
+
+		public static void ZeroGravity() =>
+			GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(-Physics.gravity, ForceMode.Acceleration);
+
+		public static void HighGravity() =>
+			GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.down * 7.77f, ForceMode.Acceleration);
+
+		public static void ReverseGravity()
+		{
+			GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * 19.62f, ForceMode.Acceleration);
+			GorillaTagger.Instance.rightHandTransform.parent.rotation = Quaternion.Euler(180f, 0f, 0f);
+		}
+
+		public static void UnflipCharacter() =>
+			GorillaTagger.Instance.rightHandTransform.parent.rotation = Quaternion.identity;
+
+		public static void Fly()
         {
             if (Utility.RightPrimary)
             {
@@ -43,7 +111,17 @@ namespace JupiterX.Mods
             }
         }
 
-        public static void Mosaboost()
+		public static void NoClipFly()
+		{
+			if (Utility.RightPrimary)
+			{
+				Utility.RigidbodyTransform().transform.position += Utility.Head().transform.forward * Time.deltaTime * FlySpeed;
+				Utility.RigidbodyTransform().velocity = Vector3.zero;
+			}
+            NoClip(Utility.RightPrimary);
+		}
+
+		public static void Mosaboost()
         {
             GorillaLocomotion.Player.Instance.maxJumpSpeed = 9.5f;
         }
@@ -196,7 +274,7 @@ namespace JupiterX.Mods
             }
         }
 
-        public static void TFly()
+        public static void TriggerFly()
         {
             if (Utility.RightTrigger)
             {
@@ -212,7 +290,7 @@ namespace JupiterX.Mods
         }
 
 
-        public static string[] ArmSizes = { "Steam", "Long", "Very Long", "Ghost", "Small" };
+        public static string[] ArmSizes = { "Steam", "Long", "Very Long", "Ghost", "Short" };
         public static int ArmSizeAmount = 0;
         public static Vector3 ArmSize = new Vector3(1.15f, 1.15f, 1.15f);
         public static void ChangeArmLength(bool increment = true)
@@ -256,17 +334,31 @@ namespace JupiterX.Mods
 
         public static void Platforms()
         {
-            Utility.CreatePlatform(Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
+            Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
         }
 
-        static bool hasTped = false;
+		public static void TriggerPlatforms()
+		{
+			Utility.CreatePlatform(true, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
+		}
+
+        public static void InvisablePlatforms()
+        {
+			Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey, true);
+		}
+
+        public static void Frozone()
+        {
+			Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey, false, true);
+		}
+
+		static bool hasTped = false;
         public static void TPGun()
         {
             if (JupiterX.Menu.Main.GetGunInput(false))
             {
                 var GunData = JupiterX.Menu.Main.RenderGun();
                 GameObject NewPointer = GunData.Pointer;
-
 
                 if (JupiterX.Menu.Main.GetGunInput(true))
                 {

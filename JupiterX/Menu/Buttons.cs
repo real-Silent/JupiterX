@@ -113,7 +113,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Dynamic Animations", enableMethod =() => dynamicAnimations = true, disableMethod =() => dynamicAnimations = false, toolTip = "Adds more animations to the menu, giving you a better sense of control." },
                 new ButtonInfo { buttonText = "Slow Dynamic Animations", enableMethod =() => slowDynamicAnimations = true, disableMethod =() => slowDynamicAnimations = false, toolTip = "Makes Dynamic Animations slower." },
 
-                new ButtonInfo { buttonText = "Incremental Boost", enableMethod =() => incrementalBoost = true, disableMethod =() => incrementalBoost = false, toolTip = "Allows you to increment faster by holding down your <color=green>grip</color>." },
+                new ButtonInfo { buttonText = "Incremental Boost", enableMethod =() => incrementalBoost = true, disableMethod =() => incrementalBoost = false, toolTip = "Allows you to increment faster by holding down your <color=cyan>grip</color>." },
 
                 new ButtonInfo { buttonText = "Custom Boards", enableMethod =() => CustomBoards = true, disableMethod =() => CustomBoards = false, enabled = CustomBoards, isTogglable = true, toolTip = "Enables the custom boards in stump." },
                 new ButtonInfo { buttonText = "Move Stump Text Gun", method =() => Utility.MoveStumpTextGun(), isTogglable = true, toolTip = "Lets you move the stump text with a gun." },
@@ -207,28 +207,52 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Movement | 5
                 new ButtonInfo { buttonText = "Exit Movement", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
+                new ButtonInfo { buttonText = "Platforms <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Movement.Platforms(), isTogglable = true, toolTip = "Lets you walk on air while holding grip." },
+                new ButtonInfo { buttonText = "Trigger Platforms <color=grey>[</color><color=cyan>T</color><color=grey>]</color>", method =() => Movement.TriggerPlatforms(), isTogglable = true, toolTip = "Lets you walk on air while holding trigger." },
+                new ButtonInfo { buttonText = "Invisable Platforms <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Movement.InvisablePlatforms(), isTogglable = true, toolTip = "Lets you walk on air while holding grip." },
+                new ButtonInfo { buttonText = "Frozone <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Movement.Frozone(), isTogglable = true, toolTip = "Spawns slippery blocks under your hands using <color=cyan>grip</color>." },
+
                 new ButtonInfo { buttonText = "Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.Fly(), isTogglable = true, toolTip = "Lets you fly while holding your right primary." },
-                new ButtonInfo { buttonText = "TFly <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.TFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger." },
+                new ButtonInfo { buttonText = "Trigger Fly <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.TriggerFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger." },
+                new ButtonInfo { buttonText = "Noclip Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.NoClipFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger." },
                 new ButtonInfo { buttonText = "Excel Fly", method =() => Movement.ExcelFly(), isTogglable = true, toolTip = "Lets you fly like iron man."  },
                 new ButtonInfo { buttonText = "Slingshot Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.SlingShotFly(), isTogglable = true, toolTip = "Lets you fly like a slingshot while hold your right primary." },
+
                 new ButtonInfo { buttonText = "Long Arms", method =() => Movement.LongArms(false), disableMethod =() => Movement.LongArms(true), isTogglable = true, toolTip = "Gives you long arms." },
-                new ButtonInfo { buttonText = "Platforms", method =() => Movement.Platforms(), isTogglable = true, toolTip = "Lets you walk on air while holding grip." },
+                
+                new ButtonInfo { buttonText = "No Tag Freeze", method =() => Movement.NoTagFreeze(0), isTogglable = true, toolTip = "Removes the tag freeze you get when you get tagged." },
+                new ButtonInfo { buttonText = "Force Tag Freeze", method =() => Movement.NoTagFreeze(1), disableMethod =() => Movement.NoTagFreeze(0),  isTogglable = true, toolTip = "Lets you act like you have tag freeze." },
+
+                 new ButtonInfo { buttonText = "NoClip <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.NoClip(Utility.RightTrigger), isTogglable = true, toolTip = "Removes object colliders when you hold right trigger." },
+
                 new ButtonInfo { buttonText = "SpeedBoost", method =() => Movement.SpeedBoost(), isTogglable = true, toolTip = "Gives you a speed boost." },
                 new ButtonInfo { buttonText = "Mosa Boost", method =() => Movement.Mosaboost(), isTogglable = true, toolTip = "Gives you a slight speed boost." },
-                new ButtonInfo { buttonText = "No Tag Freeze", method =() => Movement.NoTagFreeze(0), isTogglable = true, toolTip = "Removes the tag freeze you get when you get tagged." },
-                new ButtonInfo { buttonText = "Tag Freeze", method =() => Movement.NoTagFreeze(1), disableMethod =() => Movement.NoTagFreeze(0),  isTogglable = true, toolTip = "Lets you act like you have tag freeze." },
+
                 new ButtonInfo { buttonText = "TP Gun", method =() => Movement.TPGun(), isTogglable = true, toolTip = "Lets you teleport with a gun."  },
                 new ButtonInfo { buttonText = "Car Monke <color=grey>[</color><color=cyan>T</color><color=grey>]</color>", method =() => Movement.CarMonke(), isTogglable = true, toolTip = "Drive around while holding your triggers." },
-                new ButtonInfo { buttonText = "NoClip <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.NoClip(Utility.RightTrigger), isTogglable = true, toolTip = "Removes object colliders when you hold right trigger." },
                 new ButtonInfo { buttonText = "Follow Player Gun", method =() => Movement.FollowPlayerGun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you follow someone with a gun." },
+                
+                new ButtonInfo { buttonText = "Low Gravity", method = Movement.LowGravity, toolTip = "Makes gravity lower on your character."},
+                new ButtonInfo { buttonText = "Zero Gravity", method = Movement.ZeroGravity, toolTip = "Disables gravity on your character."},
+                new ButtonInfo { buttonText = "High Gravity", method = Movement.HighGravity, toolTip = "Makes gravity higher on your character."},
+                new ButtonInfo { buttonText = "Reverse Gravity", method = Movement.ReverseGravity, disableMethod = Movement.UnflipCharacter, toolTip = "Reverses gravity on your character."},
+
+                new ButtonInfo { buttonText = "Wall Walk <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method = Movement.WallWalk, toolTip = "Makes you get brought towards any wall you touch when holding <color=cyan>grip</color>."},
+
                 new ButtonInfo { buttonText = "Checkpoint <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Movement.Checkpoint(), isTogglable = true, toolTip = "Lets you a place a checkpoint to go back to later." },
                 new ButtonInfo { buttonText = "C4 <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Movement.C4(), isTogglable = true, toolTip = "Lets you a place a checkpoint to go back to later." },
+
+                new ButtonInfo { buttonText = "Disable Body Collider", method =() => GorillaTagger.Instance.bodyCollider.enabled = false, disableMethod =() => GorillaTagger.Instance.bodyCollider.enabled = true, toolTip = "Disables your body's collider."},
+                new ButtonInfo { buttonText = "Disable Head Collider", method =() => GorillaTagger.Instance.headCollider.enabled = false, disableMethod =() => GorillaTagger.Instance.headCollider.enabled = true, toolTip = "Disables your head's collider."},
             },
 
             new ButtonInfo[] { // Advantage | 6
                 new ButtonInfo { buttonText = "Exit Advantage", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "Tag All", method =() => Advantage.TagAll(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you tag everyone in the lobby." },
                 new ButtonInfo { buttonText = "Tag Aura", method =() => Advantage.TagAura(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you tag someone when they come close to you." },
+
                 new ButtonInfo { buttonText = "Tag Gun", method =() => Advantage.TagGun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you tag someone with a gun." },
                 new ButtonInfo { buttonText = "Flick Tag Gun", method =() => Advantage.FlickTagGun(), isTogglable = true, toolTip = "Lets you flick tag someone with a gun." },
             },
