@@ -71,7 +71,8 @@
     <Compile Include="Notifications\JoinPatch.cs" />
     <Compile Include="Notifications\ShibaNotificationLib.cs" />
     <Compile Include="Patches\AntiQuit.cs" />
-    <Compile Include="Patches\NoQuitBox.cs" />
+    <Compile Include="Patches\HandTapPatch.cs" />
+    <Compile Include="Patches\QuitBoxPatch.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
