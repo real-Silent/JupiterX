@@ -347,9 +347,60 @@ namespace JupiterX.Mods
 			Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey, true);
 		}
 
-        public static void Frozone()
-        {
-			Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey, false, true);
+		private static readonly Dictionary<bool, List<GameObject>> frozonicPlatforms = new Dictionary<bool, List<GameObject>>();
+		private static readonly Dictionary<bool, int> platformIndex = new Dictionary<bool, int>();
+		public static void HandleFrozone(bool left)
+		{
+			bool grip = left ? Utility.LeftGrip : Utility.RightGrip;
+
+			frozonicPlatforms.TryGetValue(left, out List<GameObject> frozonicPlatformList);
+			if (frozonicPlatformList == null)
+			{
+				frozonicPlatformList = new List<GameObject>();
+				frozonicPlatforms.Add(left, frozonicPlatformList);
+			}
+
+			platformIndex.TryGetValue(left, out int index);
+
+			if (grip)
+			{
+				GameObject platform;
+				if (frozonicPlatformList.Count >= 72)
+					platform = frozonicPlatformList[index];
+				else
+				{
+					platform = GameObject.CreatePrimitive(PrimitiveType.Cube);
+					platform.GetComponent<Renderer>().material.color = Color.grey;
+					platform.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f) * 1f;
+					platform.AddComponent<GorillaSurfaceOverride>().overrideIndex = 61;
+					frozonicPlatformList.Add(platform);
+				}
+
+                Transform hand = left ? Utility.LeftHandTransform() : Utility.RightHandTransform();
+
+				platform.transform.position = hand.position + (hand.right * ((left ? 1f : -1f) * ((0.025f + platform.transform.localScale.x / 2f) * 1f)));
+				platform.transform.rotation = hand.rotation;
+
+				index = (index + 1) % 72;
+			}
+
+			platformIndex[left] = index;
+
+			if (!grip && frozonicPlatformList.Count > 0)
+			{
+				int platformIndex = frozonicPlatformList.Count - 1;
+
+				Object.Destroy(frozonicPlatformList[platformIndex]);
+				frozonicPlatformList.RemoveAt(platformIndex);
+			}
+		}
+
+		public static void Frozone()
+		{
+			HandleFrozone(true);
+			HandleFrozone(false);
+
+			GorillaTagger.Instance.bodyCollider.enabled = !(Utility.LeftGrip || Utility.RightGrip);
 		}
 
 		static bool hasTped = false;

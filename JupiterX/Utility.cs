@@ -1012,93 +1012,58 @@ namespace JupiterX
         }
         public static GameObject platR = null;
         public static GameObject platL = null;
-        public static void CreatePlatform(bool triggerplats, Transform handR, Transform handL, Quaternion rot, Quaternion rott, Vector3 scale, Color color, bool invis = false, bool frozone = false)
+        public static void CreatePlatform(bool triggerplats, Transform handR, Transform handL, Quaternion rot, Quaternion rott, Vector3 scale, Color color, bool invis = false)
         {
-            if (frozone)
+            if (triggerplats ? RightTrigger : RightGrip)
             {
-                if (RightGrip)
+                if (platR == null)
                 {
-                    if (platR == null)
+                    platR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    platR.transform.position = handR.position;
+                    platR.transform.rotation = rot;
+                    platR.transform.localScale = scale;
+                    var rendererR = platR.GetComponent<Renderer>();
+                    if (rendererR != null)
                     {
-                        platR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        platR.transform.position = handR.position;
-                        platR.transform.rotation = rot;
-                        platR.transform.localScale = scale;
-                        var rendererR = platR.GetComponent<Renderer>();
-                        if (rendererR != null)
+                        if (invis)
+                            rendererR.enabled = false;
+                        else
                             rendererR.material.color = color;
-                        GameObject.Destroy(platR, 2f);
-                    }
-                }
-
-                if (LeftGrip)
-                {
-                    if (platL == null)
-                    {
-                        platL = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        platL.transform.position = handL.position;
-                        platL.transform.rotation = rot;
-                        platL.transform.localScale = scale;
-                        var rendererR = platL.GetComponent<Renderer>();
-                        if (rendererR != null)
-                            rendererR.material.color = color;
-                        GameObject.Destroy(platL, 2f);
                     }
                 }
             }
             else
             {
-                if (triggerplats ? RightTrigger : RightGrip)
+                if (platR != null)
                 {
-                    if (platR == null)
+                    GameObject.Destroy(platR);
+                    platR = null;
+                }
+            }
+            if (triggerplats ? LeftTrigger : LeftGrip)
+            {
+                if (platL == null)
+                {
+                    platL = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    platL.transform.position = handL.position;
+                    platL.transform.rotation = rott;
+                    platL.transform.localScale = scale;
+                    var rendererL = platL.GetComponent<Renderer>();
+                    if (rendererL != null)
                     {
-                        platR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        platR.transform.position = handR.position;
-                        platR.transform.rotation = rot;
-                        platR.transform.localScale = scale;
-                        var rendererR = platR.GetComponent<Renderer>();
-                        if (rendererR != null)
-                        {
-                            if (invis)
-                                rendererR.enabled = false;
-                            else
-                                rendererR.material.color = color;
-                        }
+                        if (invis)
+                            rendererL.enabled = false;
+                        else
+                            rendererL.material.color = color;
                     }
                 }
-                else
+            }
+            else
+            {
+                if (platL != null)
                 {
-                    if (platR != null)
-                    {
-                        GameObject.Destroy(platR);
-                        platR = null;
-                    }
-                }
-                if (triggerplats ? LeftTrigger : LeftGrip)
-                {
-                    if (platL == null)
-                    {
-                        platL = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        platL.transform.position = handL.position;
-                        platL.transform.rotation = rott;
-                        platL.transform.localScale = scale;
-                        var rendererL = platL.GetComponent<Renderer>();
-                        if (rendererL != null)
-                        {
-                            if (invis)
-                                rendererL.enabled = false;
-                            else
-                                rendererL.material.color = color;
-                        }
-                    }
-                }
-                else
-                {
-                    if (platL != null)
-                    {
-                        GameObject.Destroy(platL);
-                        platL = null;
-                    }
+                    GameObject.Destroy(platL);
+                    platL = null;
                 }
             }
         }
