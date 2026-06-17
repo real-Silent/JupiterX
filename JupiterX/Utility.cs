@@ -327,6 +327,36 @@ namespace JupiterX
             }
             GhostView(false);
         }
+
+
+        public static int currentFontStyleChoice = 0;
+        private static string[] fontstylestring = new string[] { "Default", "Bold", "Italic", "Bold & Italic" };
+        public static FontStyle currentFontStyle = FontStyle.Normal;
+        public static void ChangeFontStyle(bool increment = true)
+        {
+            if (increment)
+                currentFontStyleChoice = (currentFontStyleChoice + 1) % fontstylestring.Length;
+            else
+                currentFontStyleChoice = (currentFontStyleChoice - 1 + fontstylestring.Length) % fontstylestring.Length;
+            switch (currentFontStyleChoice)
+            {
+                case 0:
+                    currentFontStyle = FontStyle.Normal;
+                    break;
+                case 1:
+                    currentFontStyle = FontStyle.Bold;
+                    break;
+                case 2:
+                    currentFontStyle = FontStyle.Italic;
+                    break;
+                case 3:
+                    currentFontStyle = FontStyle.BoldAndItalic;
+                    break;
+            }
+            Buttons.GetIndex("Change Font Style").overlapText = "Change Font Style <color=grey>[<color=cyan>" + fontstylestring[currentFontStyleChoice] + "</color>]</color>";
+        }
+
+
         static Vector3 closePosition;
         public static void FreezePlayerInMenu()
         {
@@ -1154,7 +1184,8 @@ namespace JupiterX
                 ((int)currentTheme).ToString(),
                 ((int)dropType).ToString(),
                 Movement.FlySpeedAmount.ToString(),
-                Movement.ArmSizeAmount.ToString()
+                Movement.ArmSizeAmount.ToString(),
+                ((int)currentFontStyleChoice).ToString()
             });
             return string.Join("\n", new[] { enabledText, favoriteText, quickActionText, settingsText });
         }
@@ -1187,11 +1218,13 @@ namespace JupiterX
                     dropType = int.Parse(data[2]) - 1;
                     Movement.FlySpeedAmount = int.Parse(data[3]) - 1;
                     Movement.ArmSizeAmount = int.Parse(data[4]) - 1;
+                    currentFontStyleChoice = int.Parse(data[5]) - 1;
                     ChangePageType();
                     ChangeMenuTheme();
                     ChangeDropType();
                     Movement.ChangeFlySpeed();
                     Movement.ChangeArmLength();
+                    ChangeFontStyle();
                 }
             }
             catch { }

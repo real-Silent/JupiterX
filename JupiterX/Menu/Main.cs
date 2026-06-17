@@ -369,7 +369,7 @@ namespace JupiterX.Menu
             text.fontSize = 1;
 			text.color = textColors[0];
 			text.supportRichText = true;
-			text.fontStyle = FontStyle.Normal;
+			text.fontStyle = Utility.currentFontStyle;
 			text.alignment = TextAnchor.MiddleCenter;
 			text.resizeTextForBestFit = true;
 			text.resizeTextMinSize = 0;
@@ -395,7 +395,7 @@ namespace JupiterX.Menu
 				fpsObject.color = textColors[0];
 				fpsObject.fontSize = 1;
 				fpsObject.supportRichText = true;
-				fpsObject.fontStyle = FontStyle.Normal;
+				fpsObject.fontStyle = Utility.currentFontStyle;
 				fpsObject.alignment = TextAnchor.MiddleCenter;
 				fpsObject.horizontalOverflow = UnityEngine.HorizontalWrapMode.Overflow;
 				fpsObject.resizeTextForBestFit = true;
@@ -662,7 +662,7 @@ namespace JupiterX.Menu
             buttonText.color = method.enabled ? textColors[1] : textColors[0];
 
             buttonText.alignment = TextAnchor.MiddleCenter;
-            buttonText.fontStyle = FontStyle.Normal;
+            buttonText.fontStyle = Utility.currentFontStyle;
             buttonText.resizeTextForBestFit = true;
             buttonText.resizeTextMinSize = 0;
 
@@ -724,7 +724,7 @@ namespace JupiterX.Menu
             buttonText.color = textColors[1];
 
             buttonText.alignment = TextAnchor.MiddleCenter;
-            buttonText.fontStyle = FontStyle.Normal;
+            buttonText.fontStyle = Utility.currentFontStyle;
             buttonText.resizeTextForBestFit = true;
             buttonText.resizeTextMinSize = 0;
 
@@ -1201,7 +1201,7 @@ namespace JupiterX.Menu
             promptText.color = textColors[0];
 
             promptText.supportRichText = true;
-            promptText.fontStyle = FontStyle.Normal;
+            promptText.fontStyle = Utility.currentFontStyle;
             promptText.alignment = TextAnchor.MiddleCenter;
             promptText.resizeTextForBestFit = true;
             promptText.resizeTextMinSize = 0;
@@ -1259,7 +1259,7 @@ namespace JupiterX.Menu
 
                 Text text = new GameObject { transform = { parent = canvasObject.transform } }.AddComponent<Text>();
                 text.font = currentFont;
-                text.fontStyle = FontStyle.Normal;
+                text.fontStyle = Utility.currentFontStyle;
                 text.text = CurrentPrompt.AcceptText;
                 text.fontSize = 1;
                 text.alignment = TextAnchor.MiddleCenter;
@@ -1295,7 +1295,7 @@ namespace JupiterX.Menu
                 }
                 Text text = new GameObject { transform = { parent = canvasObject.transform } }.AddComponent<Text>();
                 text.font = currentFont;
-                text.fontStyle = FontStyle.Normal;
+                text.fontStyle = Utility.currentFontStyle;
                 text.text = CurrentPrompt.DeclineText;
                 text.fontSize = 1;
                 text.alignment = TextAnchor.MiddleCenter;
