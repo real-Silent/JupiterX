@@ -1145,22 +1145,54 @@ namespace JupiterX.Menu
                 default:
                     if (dynamicAnimations)
                         lastClickedName = buttonText + (increment ? "+" : "-");
+                    bool boost = incrementalBoost && Utility.RGrip;
                     if (increment)
                     {
                         NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>INCREMENT</color><color=grey>]</color> {target.toolTip}");
-                        try { target.enableMethod?.Invoke(); }
-                        catch (Exception exc)
+                        if (boost)
                         {
-                            Utility.Log($"Error enabling {target.buttonText}: {exc.Message}");
+                            for (int i = 0; i < 5; i++)
+                            {
+                                if (target.enableMethod == null) continue;
+                                try { target.enableMethod.Invoke(); }
+                                catch (Exception exc)
+                                {
+                                    Utility.Log($"Error with mod enableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            try { target.enableMethod?.Invoke(); }
+                            catch (Exception exc)
+                            {
+                                Utility.Log($"Error enabling {target.buttonText}: {exc.Message}");
+                            }
                         }
                     }
                     else
                     {
                         NotifiLib.SendNotification($"<color=grey>[</color><color=red>DECREMENT</color><color=grey>]</color> {target.toolTip}");
-                        try { target.disableMethod?.Invoke(); }
-                        catch (Exception exc)
+                        if (boost)
                         {
-                            Utility.Log($"Error disabling {target.buttonText}: {exc.Message}");
+                            for (int i = 0; i < 5; i++)
+                            {
+                                if (target.enableMethod == null) continue;
+                                if (target.disableMethod == null) continue;
+                                try { target.disableMethod.Invoke(); }
+                                catch (Exception exc)
+                                {
+                                    Utility.Log($"Error with mod disableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            try { target.disableMethod?.Invoke(); }
+                            catch (Exception exc)
+                            {
+                                Utility.Log($"Error disabling {target.buttonText}: {exc.Message}");
+                            }
                         }
                     }
                     break;
@@ -1535,6 +1567,7 @@ namespace JupiterX.Menu
         public static bool slowDynamicAnimations;
 
         public static bool incrementalButtons = true;
+        public static bool incrementalBoost;
 
         public static bool GunSpawned;
         public static bool gunLocked;
