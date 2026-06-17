@@ -37,7 +37,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Overpowered", method =() => CurrentCategoryName = "Overpowered", isTogglable = false, toolTip = "Opens the overpowered page for the menu."},
                 new ButtonInfo { buttonText = "Experimental", method =() => CurrentCategoryName = "Experimental", isTogglable = false, toolTip = "Opens the experimental mods page for the menu."},
                 new ButtonInfo { buttonText = "Master", method =() => CurrentCategoryName = "Master", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
-                new ButtonInfo { buttonText = "GTH", method =() => CurrentCategoryName = "GTH", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
+                new ButtonInfo { buttonText = "Gorilla Tag Horror", method =() => CurrentCategoryName = "Gorilla Tag Horror", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
 
                 new ButtonInfo { buttonText = "Soundboard", method =() => SoundBoard.LoadSoundboard(), isTogglable = false, toolTip = "Opens the soundboard page for the menu."},
 
@@ -649,8 +649,8 @@ namespace JupiterX.Menu
             "Master", 
 
             "Soundboard",           
-            "Players",             
-            "GTH",                  
+            "Players",
+            "Gorilla Tag Horror",                  
 
             "Temporary Category",
             

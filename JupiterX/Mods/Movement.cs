@@ -235,7 +235,7 @@ namespace JupiterX.Mods
                 case 4: ArmSize = new Vector3(0.8f, 0.8f, 0.8f); break;
             }
 
-            Buttons.GetIndex("Change Arm Length").overlapText = $"Change Arm Length <color=cyan>[{ArmSizes[ArmSizeAmount]}]</color>";
+            Buttons.GetIndex("Change Arm Length").overlapText = $"Change Arm Length <color=grey>[<color=cyan>{ArmSizes[ArmSizeAmount]}</color>]</color>";
         }
         public static void LongArms(bool off)
         {
