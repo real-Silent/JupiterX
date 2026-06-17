@@ -64,6 +64,8 @@ namespace JupiterX
             else
                 Utility.HasUsedMenuBeforeNoti = false;
 
+            Utility.CacheSounds(); // For caching the menu sounds causes less lag.
+
             try
             {
                 string allButtonsPath = Path.Combine(Application.persistentDataPath, "JupiterX/AllButtons.txt");
