@@ -3,6 +3,7 @@ using JupiterX.Classes;
 using JupiterX.Notifications;
 using Photon.Pun;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -54,6 +55,9 @@ namespace JupiterX.Menu
                             Utility.PlaySound(Utility.menuOpenSound);
                         CreateMenu();
 
+                        if (dynamicAnimations)
+                            Plugin.StartCoroutine(GrowCoroutine());
+
                         RecenterMenu(RightHanded, keyboardOpen);
 						if (reference == null)
 						{
@@ -67,41 +71,52 @@ namespace JupiterX.Menu
 					    RecenterMenu(RightHanded, keyboardOpen);
 					else
 					{
-						Rigidbody comp = menu.AddComponent<Rigidbody>();
-                        switch (Utility.MainDropType) 
+						if (!dynamicAnimations)
                         {
-                            case 0: // Destroy
-                                UnityEngine.Object.Destroy(menu, Time.deltaTime);
-                                menu = null;
-                                UnityEngine.Object.Destroy(reference);
-                                reference = null;
-                                break;
+                            Rigidbody comp = menu.AddComponent<Rigidbody>();
+                            switch (Utility.MainDropType)
+                            {
+                                case 0: // Destroy
+                                    UnityEngine.Object.Destroy(menu, Time.deltaTime);
+                                    menu = null;
+                                    UnityEngine.Object.Destroy(reference);
+                                    reference = null;
+                                    break;
 
-                            case 1: // Drop
-                                comp.velocity = Vector3.zero;
-                                UnityEngine.Object.Destroy(menu, 5);
-                                menu = null;
-                                UnityEngine.Object.Destroy(reference);
-                                reference = null;
-                                break;
+                                case 1: // Drop
+                                    comp.velocity = Vector3.zero;
+                                    UnityEngine.Object.Destroy(menu, 5);
+                                    menu = null;
+                                    UnityEngine.Object.Destroy(reference);
+                                    reference = null;
+                                    break;
 
-                            case 2: // Drop
-                                comp.useGravity = false;
-                                comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
-                                UnityEngine.Object.Destroy(menu, 5);
-                                menu = null;
-                                UnityEngine.Object.Destroy(reference);
-                                reference = null;
-                                break;
+                                case 2: // Drop
+                                    comp.useGravity = false;
+                                    comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
+                                    UnityEngine.Object.Destroy(menu, 5);
+                                    menu = null;
+                                    UnityEngine.Object.Destroy(reference);
+                                    reference = null;
+                                    break;
 
-                            case 3: // Throw
-                                comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
-                                UnityEngine.Object.Destroy(menu, 5);
-                                menu = null;
-                                UnityEngine.Object.Destroy(reference);
-                                reference = null;
-                                break;
+                                case 3: // Throw
+                                    comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
+                                    UnityEngine.Object.Destroy(menu, 5);
+                                    menu = null;
+                                    UnityEngine.Object.Destroy(reference);
+                                    reference = null;
+                                    break;
+                            }
                         }
+                        else
+                        {
+                            Plugin.StartCoroutine(ShrinkCoroutine());
+
+                            GameObject.Destroy(reference);
+                            reference = null;
+                        }
+
                         if (!DisableMenuSounds)
                             Utility.PlaySound(Utility.menuCloseSound);
                     }
@@ -990,10 +1005,14 @@ namespace JupiterX.Menu
                     break;
 
                 case "PreviousPage":
+                    if (dynamicAnimations)
+                        lastClickedName = "PreviousPage";
                     pageNumber = (pageNumber - 1 < 0) ? lastPage : pageNumber - 1;
                     break;
 
                 case "NextPage":
+                    if (dynamicAnimations)
+                        lastClickedName = "NextPage";
                     pageNumber = (pageNumber + 1 > lastPage) ? 0 : pageNumber + 1;
                     break;
 
@@ -1067,6 +1086,8 @@ namespace JupiterX.Menu
                         }
                         else
                         {
+                            if (dynamicAnimations)
+                                lastClickedName = target.buttonText;
                             if (fromMenu)
                                 NotifiLib.SendNotification($"<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> {target.toolTip}");
                             try { target.disableMethod?.Invoke(); }
@@ -1122,6 +1143,8 @@ namespace JupiterX.Menu
                     }
                     break;
                 default:
+                    if (dynamicAnimations)
+                        lastClickedName = buttonText + (increment ? "+" : "-");
                     if (increment)
                     {
                         NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>INCREMENT</color><color=grey>]</color> {target.toolTip}");
@@ -1410,6 +1433,46 @@ namespace JupiterX.Menu
             NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>{(playername == "NOVA" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.", 10f);
         }
 
+        public static IEnumerator GrowCoroutine()
+        {
+            GameObject menuObject = menu;
+
+            float elapsedTime = 0f;
+            Vector3 target = menu.transform.localScale;
+            while (elapsedTime < (slowDynamicAnimations ? 0.1f : 0.05f))
+            {
+                if (menuObject == null)
+                    yield break;
+
+                menuObject.transform.localScale = Vector3.Lerp(Vector3.zero, target, elapsedTime / (slowDynamicAnimations ? 0.1f : 0.05f));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            if (menuObject == null)
+                yield break;
+
+            menuObject.transform.localScale = target;
+        }
+
+        public static IEnumerator ShrinkCoroutine()
+        {
+            Transform menuTransform = menu.transform;
+            menu = null;
+
+            Vector3 before = menuTransform.localScale;
+            float elapsedTime = 0f;
+            while (elapsedTime < (slowDynamicAnimations ? 0.1f : 0.05f))
+            {
+                menuTransform.localScale = Vector3.Lerp(before, Vector3.zero, elapsedTime / (slowDynamicAnimations ? 0.1f : 0.05f));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            GameObject.Destroy(menuTransform.gameObject);
+        }
+
+
         // Variables
         // Important
         // Objects
@@ -1468,6 +1531,8 @@ namespace JupiterX.Menu
         public static int gunVariation;
         public static int GunDirection;
         public static int GunLineQuality = 50;
+
+        public static bool slowDynamicAnimations;
 
         public static bool incrementalButtons = true;
 
