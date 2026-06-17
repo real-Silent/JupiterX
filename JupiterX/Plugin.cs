@@ -261,9 +261,13 @@ PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
         static TextMeshPro sstumpText = null;
         public static GameObject StumpText = null;
 
-        public static void DoCoroun(System.Collections.IEnumerator coroutine)
+        public static void StartCoroutine(System.Collections.IEnumerator coroutine)
         {
             MelonCoroutines.Start(coroutine);
+        }
+        public static void StopCoroutine(System.Collections.IEnumerator coroutine)
+        {
+            MelonCoroutines.Stop(coroutine);
         }
     }
 }

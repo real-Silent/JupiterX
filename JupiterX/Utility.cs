@@ -201,7 +201,7 @@ namespace JupiterX
             PhotonNetwork.LocalPlayer;
         public static void BanAll()
         {
-            Plugin.DoCoroun(BetaBanAllWithDelay());
+            Plugin.StartCoroutine(BetaBanAllWithDelay());
             if (RTrigger)
                 Toggle("Ban All");
         }
