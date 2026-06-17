@@ -47,6 +47,7 @@
     <Compile Include="Classes\Menu\TimedBehaviour.cs" />
     <Compile Include="Classes\Mods\VRRigExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\VRRigExtensions.cs" />
     <Compile Include="Managers\AchievementManager.cs" />
     <Compile Include="Managers\PluginManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
