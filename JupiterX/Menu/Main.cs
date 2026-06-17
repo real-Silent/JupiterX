@@ -957,14 +957,10 @@ namespace JupiterX.Menu
                     break;
 
                 case "PreviousPage":
-                    if (dynamicAnimations)
-                        lastClickedName = "PreviousPage";
                     pageNumber = (pageNumber - 1 < 0) ? lastPage : pageNumber - 1;
                     break;
 
                 case "NextPage":
-                    if (dynamicAnimations)
-                        lastClickedName = "NextPage";
                     pageNumber = (pageNumber + 1 > lastPage) ? 0 : pageNumber + 1;
                     break;
 
@@ -1038,8 +1034,6 @@ namespace JupiterX.Menu
                         }
                         else
                         {
-                            if (dynamicAnimations)
-                                lastClickedName = target.buttonText;
                             if (fromMenu)
                                 NotifiLib.SendNotification($"<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> {target.toolTip}");
                             try { target.disableMethod?.Invoke(); }
