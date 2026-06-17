@@ -62,6 +62,30 @@ namespace JupiterX
         public static Vector3 menuSize = new Vector3(0.1f, 1f, 1f); // Depth, Width, Height
         public static int buttonsPerPage = 8;
 
+        public static void ChangeGunVariation(bool positive = true)
+        {
+            string[] VariationNames = {
+                "Default",
+                "Lightning",
+                "Wavy",
+                "Blocky",
+                "Zigzag",
+                "Spring",
+                "Bouncy",
+                "Bezier"
+            };
+
+            if (positive)
+                gunVariation++;
+            else
+                gunVariation--;
+
+            gunVariation %= VariationNames.Length;
+            if (gunVariation < 0)
+                gunVariation = VariationNames.Length - 1;
+
+            Buttons.GetIndex("Change Gun Variation").overlapText = "Change Gun Variation <color=grey>[</color><color=cyan>" + VariationNames[gunVariation] + "</color><color=grey>]</color>";
+        }
 
         public static void CategorySettings()
         {

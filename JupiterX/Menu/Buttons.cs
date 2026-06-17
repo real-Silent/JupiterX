@@ -2,6 +2,7 @@
 using JupiterX.Managers;
 using JupiterX.Mods;
 using JupiterX.Notifications;
+using JupiterX.Patches;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -141,13 +142,21 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Swap Gun Hand", enableMethod =() => SwapGunHand = true, disableMethod =() => SwapGunHand = false, isTogglable = true, toolTip = "Swaps the hand of the gun is on." },
                 new ButtonInfo { buttonText = "Gripless Guns", enableMethod =() => GriplessGuns = true, disableMethod =() => GriplessGuns = false, isTogglable = true, toolTip = "Makes the gun work without holding grip." },
                 new ButtonInfo { buttonText = "Triggerless Guns", enableMethod =() => TriggerlessGuns = true, disableMethod =() => TriggerlessGuns = false, isTogglable = true, toolTip = "Makes the gun shoot without holding trigger." },
+
+                new ButtonInfo { buttonText = "Change Gun Variation", overlapText = "Change Gun Variation <color=grey>[</color><color=cyan>Default</color><color=grey>]</color>", method =() => Settings.ChangeGunVariation(), enableMethod =() => Settings.ChangeGunVariation(), disableMethod =() => Settings.ChangeGunVariation(false), incremental = true, isTogglable = false, toolTip = "Changes the look of the gun."},
             },
 
             new ButtonInfo[] { // Important | 2
                 new ButtonInfo { buttonText = "Exit Important", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Quit Game", method =() => Important.QuitGame(), isTogglable = false, toolTip = "Quits your game." },
-                new ButtonInfo { buttonText = "Anti AFK", method =() => Important.AntiAFK(), isTogglable = true, toolTip = "Disables the afk kick you get." },
+
+                new ButtonInfo { buttonText = "Anti Hand Tap", enableMethod =() => HandTapPatch.enabled = true, disableMethod =() => HandTapPatch.enabled = false, toolTip = "Stops all hand tap sounds from being played."},
+
                 new ButtonInfo { buttonText = "Clear Notifcations", method =() => NotificationManager.ClearAllNotifications(), isTogglable = false, toolTip = "Clears all the notifications." },
+
+                new ButtonInfo { buttonText = "Anti AFK", method =() => Important.AntiAFK(), isTogglable = true, toolTip = "Disables the afk kick you get." },
+                new ButtonInfo { buttonText = "Disable Network Triggers", method =() => Important.AntiAFK(), isTogglable = true, toolTip = "Disables the network triggers, so you can change maps without disconnecting." },
+
 
                 new ButtonInfo { buttonText = "Turning", method =() => Important.Turning(), isTogglable = true, toolTip = "Lets you turn." },
             },
