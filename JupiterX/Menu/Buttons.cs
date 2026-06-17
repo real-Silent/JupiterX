@@ -601,7 +601,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Reload Plugins", method = PluginManager.ReloadPlugins, isTogglable = false, toolTip = "Reloads all of your plugins." }
             },
 
-            new[] { // Credits [38]
+            new[] { // Credits | 24
                 new ButtonInfo { buttonText = "Exit Credits", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page." },
 
                 new ButtonInfo { buttonText = "Nova", method =() => Application.OpenURL("https://github.com/novaissilly"), isTogglable = false, toolTip = "Nova is the main developer of <b>JupiterX</b> she makes and ports most of the mods on the menu." },
@@ -612,7 +612,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Saturn", method =() => Application.OpenURL("https://github.com/saturnlamoooooooooooooooo"), isTogglable = false, toolTip = "Helped a lil with <b>JupiterX</b>." },
             },
 
-            new[] // Achievements [45]
+            new[] // Achievements | 25
             {
                 new ButtonInfo { buttonText = "Exit Achievements", method = () => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page." }
             },
@@ -660,6 +660,7 @@ namespace JupiterX.Menu
             "Admin",
             "Plugin Settings",
             "Credits",
+            "Achievements",
             "Internal"
         };
 
