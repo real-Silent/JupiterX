@@ -1,5 +1,4 @@
 ﻿using Console;
-using easyInputs;
 using HarmonyLib;
 using JupiterX.Notifications;
 using Photon.Pun;
@@ -159,12 +158,12 @@ namespace JupiterX.Mods
 
         public static void TimmySpam()
         {
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
             {
                 Transform hand = GorillaTagger.Instance.rightHandTransform;
                 SpawnHorrorPrefab("timmy", hand.position + hand.forward * 5f, hand.rotation);
             }
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
             {
                 Transform hand = GorillaTagger.Instance.leftHandTransform;
                 SpawnHorrorPrefab("timmy", hand.position + hand.forward * 5f, hand.rotation);
@@ -173,12 +172,12 @@ namespace JupiterX.Mods
 
         public static void StalkerSpam()
         {
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
             {
                 Transform hand = GorillaTagger.Instance.rightHandTransform;
                 SpawnHorrorPrefab("stalker", hand.position + hand.forward * 5f, hand.rotation);
             }
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
             {
                 Transform hand = GorillaTagger.Instance.leftHandTransform;
                 SpawnHorrorPrefab("stalker", hand.position + hand.forward * 5f, hand.rotation);
@@ -560,7 +559,7 @@ namespace JupiterX.Mods
         private static GameObject trap = null;
         public static void PlaceTrap()
         {
-            if (EasyInputs.GetTriggerButtonDown(EasyHand.RightHand))
+            if (Utility.RightTrigger)
             {
                 if (trap == null)
                 {
@@ -625,7 +624,7 @@ namespace JupiterX.Mods
 
         public static void TimmyWork()
         {
-            if (EasyInputs.GetTriggerButtonDown(EasyHand.RightHand))
+            if (Utility.RightTrigger)
             {
                 Vector3 pos = new Vector3(-67f, 100f, 18);
                 SpawnTimmy(pos, Quaternion.identity);
@@ -633,7 +632,7 @@ namespace JupiterX.Mods
         }
         public static void StalkerWork()
         {
-            if (EasyInputs.GetTriggerButtonDown(EasyHand.RightHand))
+            if (Utility.RightTrigger)
             {
                 Vector3 pos = new Vector3(-67f, 100f, 18);
                 SpawnStalker(pos, Quaternion.identity);
@@ -643,7 +642,7 @@ namespace JupiterX.Mods
         public static void JoystickControlTimmys()
         {
             List<GameObject> timmys = GetTimmys();
-            Vector2 axis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);
+            Vector2 axis = Utility.RightJoystickAxis;
             foreach (var item in timmys)
             {
                 Vector3 pos = item.transform.position;
@@ -655,7 +654,7 @@ namespace JupiterX.Mods
         public static void JoystickControlStalkers()
         {
             List<GameObject> stalkers = GetStalkers();
-            Vector2 axis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);
+            Vector2 axis = Utility.RightJoystickAxis;
             foreach (var item in stalkers)
             {
                 Vector3 pos = item.transform.position;
@@ -667,7 +666,7 @@ namespace JupiterX.Mods
         public static void JoystickControlMonters()
         {
             List<GameObject> monsters = GetAllMonsters();
-            Vector2 axis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);
+            Vector2 axis = Utility.RightJoystickAxis;
             foreach (var item in monsters)
             {
                 Vector3 pos = item.transform.position;

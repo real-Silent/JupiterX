@@ -67,7 +67,7 @@ namespace JupiterX.Mods
 
         public static void CubeAll()
         {
-            if (Utility.RTrigger)
+            if (Utility.RightTrigger)
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
@@ -226,7 +226,7 @@ namespace JupiterX.Mods
         public static void AutoClicker()
         {
             autoclickstate = !autoclickstate;
-            if (Utility.LTriggerFloat > 0.5f)
+            if (Utility.LeftTriggerFloat > 0.5f)
             {
                 if (PhotonNetwork.InRoom)
                 {
@@ -239,7 +239,7 @@ namespace JupiterX.Mods
                     GorillaTagger.Instance.offlineVRRig.leftHand.MapMyFinger(1f);
                 }
             }
-            if (Utility.RTriggerFloat > 0.5f)
+            if (Utility.RightTriggerFloat > 0.5f)
             {
                 if (PhotonNetwork.InRoom)
                 {

@@ -9,16 +9,16 @@ namespace JupiterX.Mods
         {
             PlayerPrefs.SetString("username", "JupiterX By Nova\nBest Mod Menu");
 
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
                 Utility.BetaSpawnPrefab("Network Player", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
                 Utility.BetaSpawnPrefab("Network Player", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
         }
         public static void EnemySpam()
         {
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
                 Utility.BetaSpawnPrefab("gorillaprefabs/gorillaenemy", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
                 Utility.BetaSpawnPrefab("gorillaprefabs/gorillaenemy", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
         }
 
@@ -29,9 +29,9 @@ namespace JupiterX.Mods
         }
         public static void TargetSpam()
         {
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
                 Utility.BetaSpawnPrefab("STICKABLE TARGET", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
                 Utility.BetaSpawnPrefab("STICKABLE TARGET", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
         }
 
@@ -78,9 +78,9 @@ namespace JupiterX.Mods
 
         public static void CubeSpam()
         {
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
                 Utility.BetaSpawnPrefab("bulletPrefab", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
                 Utility.BetaSpawnPrefab("bulletPrefab", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
         }
         public static void CubeGun()
@@ -129,9 +129,9 @@ namespace JupiterX.Mods
         }
         public static void SpamScoreboard()
         {
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
                 Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
                 Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
         }
 
@@ -167,7 +167,7 @@ namespace JupiterX.Mods
         }
         public static void PrefabLuancher(string prefab)
         {
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -175,7 +175,7 @@ namespace JupiterX.Mods
                     Utility.BetaSpawnPrefab(prefab, s, Utility.RightHandTransform().rotation);
                 }
             }
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
             {
                 for (int i = 0; i < 10; i++)
                 {

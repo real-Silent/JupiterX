@@ -1,5 +1,4 @@
-﻿using easyInputs;
-using GorillaNetworking;
+﻿using GorillaNetworking;
 using Photon.Pun;
 using System;
 using System.Reflection;
@@ -37,7 +36,7 @@ namespace JupiterX.Mods
 
         public static void Turning()
         {
-            Vector2 axis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);
+            Vector2 axis = Utility.RightJoystickAxis;
             if (axis.x > 0.6f)
             {
                 Turn(6f);

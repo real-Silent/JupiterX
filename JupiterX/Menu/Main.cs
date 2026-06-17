@@ -27,25 +27,25 @@ namespace JupiterX.Menu
                 return;
             }
 
-            Utility.RPrim = EasyInputs.GetPrimaryButtonDown(Utility.RightHand);
-            Utility.RSec = EasyInputs.GetSecondaryButtonDown(Utility.RightHand);
-            Utility.RGrip = EasyInputs.GetGripButtonDown(Utility.RightHand);
-            Utility.RTrigger = EasyInputs.GetTriggerButtonDown(Utility.RightHand);
-            Utility.RTriggerFloat = EasyInputs.GetTriggerButtonFloat(Utility.RightHand);
-            Utility.RJoystick = EasyInputs.GetThumbStickButtonDown(Utility.RightHand);
-            Utility.RJoystickAxis = EasyInputs.GetThumbStick2DAxis(Utility.RightHand);
+            Utility.RightPrimary = EasyInputs.GetPrimaryButtonDown(EasyHand.RightHand);
+            Utility.RightSecondary = EasyInputs.GetSecondaryButtonDown(EasyHand.RightHand);
+            Utility.RightGrip = EasyInputs.GetGripButtonDown(EasyHand.RightHand);
+            Utility.RightTrigger = EasyInputs.GetTriggerButtonDown(EasyHand.RightHand);
+            Utility.RightTriggerFloat = EasyInputs.GetTriggerButtonFloat(EasyHand.RightHand);
+            Utility.RightJoystick = EasyInputs.GetThumbStickButtonDown(EasyHand.RightHand);
+            Utility.RightJoystickAxis = EasyInputs.GetThumbStick2DAxis(EasyHand.RightHand);
 
-            Utility.LPrim = EasyInputs.GetPrimaryButtonDown(Utility.LeftHand);
-            Utility.LSec = EasyInputs.GetSecondaryButtonDown(Utility.LeftHand);
-            Utility.LGrip = EasyInputs.GetGripButtonDown(Utility.LeftHand);
-            Utility.LTrigger = EasyInputs.GetTriggerButtonDown(Utility.LeftHand);
-            Utility.LTriggerFloat = EasyInputs.GetTriggerButtonFloat(Utility.LeftHand);
-            Utility.LJoystick = EasyInputs.GetThumbStickButtonDown(Utility.LeftHand);
-            Utility.LJoystickAxis = EasyInputs.GetThumbStick2DAxis(Utility.LeftHand);
+            Utility.LeftPrimary = EasyInputs.GetPrimaryButtonDown(EasyHand.LeftHand);
+            Utility.LeftSecondary = EasyInputs.GetSecondaryButtonDown(EasyHand.LeftHand);
+            Utility.LeftGrip = EasyInputs.GetGripButtonDown(EasyHand.LeftHand);
+            Utility.LeftTrigger = EasyInputs.GetTriggerButtonDown(EasyHand.LeftHand);
+            Utility.LeftTriggerFloat = EasyInputs.GetTriggerButtonFloat(EasyHand.LeftHand);
+            Utility.LeftJoystick = EasyInputs.GetThumbStickButtonDown(EasyHand.LeftHand);
+            Utility.LeftJoystickAxis = EasyInputs.GetThumbStick2DAxis(EasyHand.LeftHand);
 
             try
 			{
-                Utility.toOpen = bothHands ? (Utility.LSec || Utility.RSec) : (!RightHanded && Utility.LSec || (RightHanded && Utility.RSec));
+                Utility.toOpen = bothHands ? (Utility.LeftSecondary || Utility.RightSecondary) : (!RightHanded && Utility.LeftSecondary || (RightHanded && Utility.RightSecondary));
 				bool keyboardOpen = false;
 
                 if (menu == null)
@@ -100,7 +100,7 @@ namespace JupiterX.Menu
 
                                 case 2: // Drop
                                     comp.useGravity = false;
-                                    comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
+                                    comp.velocity = RightHanded ? Utility.ThrowMenu(EasyHand.RightHand) : Utility.ThrowMenu(EasyHand.LeftHand);
                                     UnityEngine.Object.Destroy(menu, 5);
                                     menu = null;
                                     UnityEngine.Object.Destroy(reference);
@@ -108,7 +108,7 @@ namespace JupiterX.Menu
                                     break;
 
                                 case 3: // Throw
-                                    comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
+                                    comp.velocity = RightHanded ? Utility.ThrowMenu(EasyHand.RightHand) : Utility.ThrowMenu(EasyHand.LeftHand);
                                     UnityEngine.Object.Destroy(menu, 5);
                                     menu = null;
                                     UnityEngine.Object.Destroy(reference);
@@ -138,7 +138,7 @@ namespace JupiterX.Menu
             {
                 if (menu != null)
 				{
-                    if (Utility.LTrigger)
+                    if (Utility.LeftTrigger)
                     {
                         if (!Utility.hasTriggeredOnceL)
                         {
@@ -148,7 +148,7 @@ namespace JupiterX.Menu
                     }
                     else
                         Utility.hasTriggeredOnceL = false;
-                    if (Utility.RTrigger)
+                    if (Utility.RightTrigger)
                     {
                         if (!Utility.hasTriggeredOnceR)
                         {
@@ -841,9 +841,9 @@ namespace JupiterX.Menu
             imageTransform.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
         }*/
 
-        public static Texture2D LoadTexture(string resourceName)
+        public static Texture2D LoadTexture(string fileName)
         {
-            using (Stream stream = typeof(Plugin).Assembly.GetManifestResourceStream($"JupiterX.Resources.{resourceName}.png"))
+            using (Stream stream = typeof(Plugin).Assembly.GetManifestResourceStream($"JupiterX.Resources.{fileName}.png"))
             {
                 if (stream == null) return null;
 
@@ -858,7 +858,7 @@ namespace JupiterX.Menu
 
         public static void RecenterMenu()
 		{
-            if (RightHanded || (bothHands && Utility.RSec))
+            if (RightHanded || (bothHands && Utility.RightSecondary))
             {
                 menu.transform.position = GorillaTagger.Instance.rightHandTransform.position;
                 Vector3 rotation = GorillaTagger.Instance.rightHandTransform.rotation.eulerAngles;
@@ -883,7 +883,7 @@ namespace JupiterX.Menu
 			reference = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             if (bothHands)
             {
-                if (Utility.RSec)
+                if (Utility.RightSecondary)
                     reference.transform.parent = GorillaTagger.Instance.leftHandTransform;
                 else
                     reference.transform.parent = GorillaTagger.Instance.rightHandTransform;
@@ -989,8 +989,8 @@ namespace JupiterX.Menu
             {
                 target.overlapText = target.overlapText.Replace(newIndicator, "");
             }
-            bool gripHeld = Utility.LGrip || (Utility.RJoystickAxis.y > 0.5f && Utility.LTriggerFloat > 0.5f);
-            bool triggerHeld = Utility.LTriggerFloat > 0.5f;
+            bool gripHeld = Utility.LeftGrip || (Utility.RightJoystickAxis.y > 0.5f && Utility.LeftTriggerFloat > 0.5f);
+            bool triggerHeld = Utility.LeftTriggerFloat > 0.5f;
 
             switch (true)
             {
@@ -1079,7 +1079,7 @@ namespace JupiterX.Menu
             }
             if (target.label)
                 return;
-            bool triggerHeld = Utility.LTriggerFloat > 0.5f;
+            bool triggerHeld = Utility.LeftTriggerFloat > 0.5f;
             switch (true)
             {
                 case true when fromMenu && !ignoreForce && triggerHeld:
@@ -1097,7 +1097,7 @@ namespace JupiterX.Menu
                 default:
                     if (dynamicAnimations)
                         lastClickedName = buttonText + (increment ? "+" : "-");
-                    bool boost = incrementalBoost && Utility.RGrip;
+                    bool boost = incrementalBoost && Utility.RightGrip;
                     if (increment)
                     {
                         NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>INCREMENT</color><color=grey>]</color> {target.toolTip}");
@@ -1756,7 +1756,7 @@ namespace JupiterX.Menu
         {
             if (SwapGunHand)
             {
-                if (!Utility.LGrip)
+                if (!Utility.LeftGrip)
                 {
                     if (Pointer != null)
                     {
@@ -1767,7 +1767,7 @@ namespace JupiterX.Menu
             }
             else
             {
-                if (!Utility.RGrip)
+                if (!Utility.RightGrip)
                 {
                     if (Pointer != null)
                     {
@@ -1787,9 +1787,9 @@ namespace JupiterX.Menu
                     return GriplessGuns || (SwapGunHand ? giveGunTarget.leftMiddle.calcT > 0.5f : giveGunTarget.rightMiddle.calcT > 0.5f);
             }
             if (isShooting)
-                return TriggerlessGuns || (SwapGunHand ? Utility.LTrigger : Utility.RTrigger) || Mouse.current.leftButton.isPressed;
+                return TriggerlessGuns || (SwapGunHand ? Utility.LeftTrigger : Utility.RightTrigger) || Mouse.current.leftButton.isPressed;
             else
-                return GriplessGuns || (SwapGunHand ? Utility.LGrip : Utility.RGrip) || (HardGunLocks && gunLocked && !Utility.RSec) || Mouse.current.rightButton.isPressed;
+                return GriplessGuns || (SwapGunHand ? Utility.LeftGrip : Utility.RightGrip) || (HardGunLocks && gunLocked && !Utility.RightSecondary) || Mouse.current.rightButton.isPressed;
         }
 
         public static Vector3 GetGunDirection(Transform transform) =>

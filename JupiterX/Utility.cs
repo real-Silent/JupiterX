@@ -1,5 +1,4 @@
 ﻿using Console;
-using easyInputs;
 using ExitGames.Client.Photon;
 using GorillaNetworking;
 using Il2CppSystem.Net;
@@ -17,7 +16,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.UI;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
@@ -202,7 +200,7 @@ namespace JupiterX
         public static void BanAll()
         {
             Plugin.StartCoroutine(BetaBanAllWithDelay());
-            if (RTrigger)
+            if (RightTrigger)
                 Toggle("Ban All");
         }
         static System.Collections.IEnumerator BetaBanAllWithDelay()
@@ -761,9 +759,9 @@ namespace JupiterX
         {
             return Shader.Find("GUI/Text Shader");
         }
-        public static Vector3 ThrowMenu(EasyHand hand)
+        public static Vector3 ThrowMenu(easyInputs.EasyHand hand)
         {
-            return EasyInputs.GetDeviceVelocity(hand);
+            return easyInputs.EasyInputs.GetDeviceVelocity(hand);
         }
         public static void GetTagFreeze(bool enabled)
         {
@@ -918,7 +916,7 @@ namespace JupiterX
 
         public static void DickSpawn()
         {
-            if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
+            if (RightGrip)
             {
                 BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position, RightHandTransform().rotation);
                 BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position + Vector3.up * 0.3f, RightHandTransform().rotation);
@@ -927,7 +925,7 @@ namespace JupiterX
                 BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position + Vector3.left * 0.3f, RightHandTransform().rotation);
                 BetaSpawnPrefab("STICKABLE TARGET", RightHandTransform().position + Vector3.right * 0.3f, RightHandTransform().rotation);
             }
-            if (EasyInputs.GetGripButtonDown(EasyHand.LeftHand))
+            if (LeftGrip)
             {
                 BetaSpawnPrefab("STICKABLE TARGET", LeftHandTransform().position, LeftHandTransform().rotation);
                 BetaSpawnPrefab("STICKABLE TARGET", LeftHandTransform().position + Vector3.up * 0.3f, LeftHandTransform().rotation);
@@ -961,23 +959,21 @@ namespace JupiterX
         {
             return GorillaTagger.Instance.offlineVRRig;
         }
-        public static EasyHand RightHand = EasyHand.RightHand;
-        public static EasyHand LeftHand = EasyHand.LeftHand;
 
-        public static bool RPrim;
-        public static bool LPrim;
-        public static bool RSec;
-        public static bool LSec;
-        public static bool RGrip;
-        public static bool LGrip;
-        public static bool RTrigger;
-        public static bool LTrigger;
-        public static float RTriggerFloat;
-        public static float LTriggerFloat;
-        public static bool RJoystick;
-        public static bool LJoystick;
-        public static Vector2 RJoystickAxis;
-        public static Vector2 LJoystickAxis;
+        public static bool RightPrimary;
+        public static bool LeftPrimary;
+        public static bool RightSecondary;
+        public static bool LeftSecondary;
+        public static bool RightGrip;
+        public static bool LeftGrip;
+        public static bool RightTrigger;
+        public static bool LeftTrigger;
+        public static float RightTriggerFloat;
+        public static float LeftTriggerFloat;
+        public static bool RightJoystick;
+        public static bool LeftJoystick;
+        public static Vector2 RightJoystickAxis;
+        public static Vector2 LeftJoystickAxis;
 
         public static string fps = "0.0";
         public static void UpdateFPS()
@@ -988,7 +984,7 @@ namespace JupiterX
         public static GameObject platL = null;
         public static void CreatePlatform(Transform handR, Transform handL, Quaternion rot, Quaternion rott, Vector3 scale, Color color)
         {
-            if (RGrip)
+            if (RightGrip)
             {
                 if (platR == null)
                 {
@@ -1009,7 +1005,7 @@ namespace JupiterX
                     platR = null;
                 }
             }
-            if (LGrip)
+            if (LeftGrip)
             {
                 if (platL == null)
                 {

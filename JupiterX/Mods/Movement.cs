@@ -1,5 +1,4 @@
-﻿using easyInputs;
-using JupiterX.Menu;
+﻿using JupiterX.Menu;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,7 +36,7 @@ namespace JupiterX.Mods
 
         public static void Fly()
         {
-            if (Utility.RPrim)
+            if (Utility.RightPrimary)
             {
                 Utility.RigidbodyTransform().transform.position += Utility.Head().transform.forward * Time.deltaTime * FlySpeed;
                 Utility.RigidbodyTransform().velocity = Vector3.zero;
@@ -58,7 +57,7 @@ namespace JupiterX.Mods
         private static GameObject point = null;
         public static void Checkpoint()
         {
-            if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
+            if (Utility.RightGrip)
             {
                 if (point == null)
                 {
@@ -72,7 +71,7 @@ namespace JupiterX.Mods
                 point.transform.position = Utility.RightHandTransform().position;
                 point.transform.rotation = Utility.RightHandTransform().rotation;
             }
-            if (EasyInputs.GetPrimaryButtonDown(EasyHand.RightHand))
+            if (Utility.RightPrimary)
             {
                 if (point != null)
                 {
@@ -87,7 +86,7 @@ namespace JupiterX.Mods
         private static GameObject c4 = null;
         public static void C4()
         {
-            if (EasyInputs.GetGripButtonDown(EasyHand.RightHand))
+            if (Utility.RightGrip)
             {
                 if (c4 == null)
                 {
@@ -101,7 +100,7 @@ namespace JupiterX.Mods
                 c4.transform.position = Utility.RightHandTransform().position;
                 c4.transform.rotation = Utility.RightHandTransform().rotation;
             }
-            if (EasyInputs.GetPrimaryButtonDown(EasyHand.RightHand))
+            if (Utility.RightPrimary)
             {
                 if (c4 != null)
                 {
@@ -183,15 +182,15 @@ namespace JupiterX.Mods
 
         public static void CarMonke()
         {
-            if (Utility.RTrigger)
+            if (Utility.RightTrigger)
                 Utility.RigidbodyTransform().velocity += Utility.Head().forward / 2f;
-            if (Utility.LTrigger)
+            if (Utility.LeftTrigger)
                 Utility.RigidbodyTransform().velocity += -Utility.Head().forward / 2f;
         }
 
         public static void SlingShotFly()
         {
-            if (Utility.RPrim)
+            if (Utility.RightPrimary)
             {
                 Utility.RigidbodyTransform().velocity += Utility.Head().transform.forward / 2f;
             }
@@ -199,7 +198,7 @@ namespace JupiterX.Mods
 
         public static void TFly()
         {
-            if (Utility.RTrigger)
+            if (Utility.RightTrigger)
             {
                 Utility.RigidbodyTransform().transform.position += Utility.Head().transform.forward * Time.deltaTime * FlySpeed;
                 Utility.RigidbodyTransform().velocity = Vector3.zero;
@@ -208,8 +207,8 @@ namespace JupiterX.Mods
 
         public static void ExcelFly()
         {
-            if (Utility.RPrim) Utility.RigidbodyTransform().velocity += Utility.RightHandTransform().right / 2f;
-            if (Utility.LPrim) Utility.RigidbodyTransform().velocity += -Utility.LeftHandTransform().right / 2f;
+            if (Utility.RightPrimary) Utility.RigidbodyTransform().velocity += Utility.RightHandTransform().right / 2f;
+            if (Utility.LeftPrimary) Utility.RigidbodyTransform().velocity += -Utility.LeftHandTransform().right / 2f;
         }
 
 

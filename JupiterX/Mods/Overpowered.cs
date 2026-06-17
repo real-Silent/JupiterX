@@ -15,7 +15,7 @@ namespace JupiterX.Mods
         public static void RigSpam()
         {
             Utility.MakeMeMaster();
-            if (Utility.RTrigger)
+            if (Utility.RightTrigger)
             {
                 PhotonNetwork.Destroy(Utility.myVRRig().gameObject);
             }
@@ -328,7 +328,7 @@ namespace JupiterX.Mods
             {
                 if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
                 {
-                    if (Utility.RTrigger)
+                    if (Utility.RightTrigger)
                     {
                         Utility.BetaCrashAllV2(rig);
                         Utility.BetaCrashAllV2(rig);
@@ -347,7 +347,7 @@ namespace JupiterX.Mods
             {
                 if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
                 {
-                    if (Utility.RTrigger)
+                    if (Utility.RightTrigger)
                     {
                         Hashtable domycumbust = new Hashtable(5);
                         domycumbust.Add(0, new Il2CppSystem.Object() { });
@@ -381,7 +381,7 @@ namespace JupiterX.Mods
 
         public static void CrashAllV4()
         {
-            if (Utility.RTrigger)
+            if (Utility.RightTrigger)
             {
                 for (int i = 0; i < 150; i++)
                 {
@@ -394,7 +394,7 @@ namespace JupiterX.Mods
 
         public static void CrashAllV6()
         {
-            if (Utility.RTrigger)
+            if (Utility.RightTrigger)
             {
                 for (int i = 0; i < 700; i++)
                 {
@@ -410,7 +410,7 @@ namespace JupiterX.Mods
         }
         public static void CrashAllV5()
         {
-            if (Utility.RTrigger)
+            if (Utility.RightTrigger)
             {
                 foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
                 {
@@ -526,7 +526,7 @@ namespace JupiterX.Mods
             Utility.MakeMeMaster();
             foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerListOthers)
             {
-                if (Utility.RTrigger)
+                if (Utility.RightTrigger)
                 {
                     Utility.BetaCrashPlayer(player);
                     PhotonNetwork.SendAllOutgoingCommands();
@@ -689,7 +689,7 @@ namespace JupiterX.Mods
         }
         public static void GrabLucy()
         {
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
             {
                 if (Utility.IsMaster())
                 {
@@ -699,7 +699,7 @@ namespace JupiterX.Mods
                 }
                 else { NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
             }
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
             {
                 if (Utility.IsMaster())
                 {

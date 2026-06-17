@@ -9,7 +9,7 @@ namespace JupiterX.Mods
     {
         public static void InvisMonke()
         {
-            if (Utility.RSec)
+            if (Utility.RightSecondary)
             {
                 Utility.myVRRig().enabled = false;
                 Utility.myVRRig().transform.position = new Vector3(20397230f, 32423, 3432);
@@ -24,7 +24,7 @@ namespace JupiterX.Mods
         }
         public static void GhostMonke()
         {
-            if (Utility.RPrim)
+            if (Utility.RightPrimary)
             {
                 Utility.myVRRig().enabled = false;
                 Utility.GhostView(true);
@@ -104,19 +104,19 @@ namespace JupiterX.Mods
 
         public static void GrabRig()
         {
-            if (Utility.RGrip)
+            if (Utility.RightGrip)
             {
                 Utility.myVRRig().enabled = false;
                 Utility.myVRRig().transform.position = Utility.RightHandTransform().position;
                 Utility.GhostView(true);
             }
-            if (Utility.LGrip)
+            if (Utility.LeftGrip)
             {
                 Utility.myVRRig().enabled = false;
                 Utility.myVRRig().transform.position = Utility.LeftHandTransform().position;
                 Utility.GhostView(true);
             }
-            if (!Utility.LGrip || !Utility.RGrip)
+            if (!Utility.LeftGrip || !Utility.RightGrip)
             {
                 Utility.myVRRig().enabled = true;
                 Utility.GhostView(false);

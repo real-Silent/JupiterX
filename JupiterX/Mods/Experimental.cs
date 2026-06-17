@@ -1,8 +1,6 @@
-﻿using easyInputs;
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using GorillaNetworking;
 using Il2CppSystem.Net;
-using JupiterX.Classes;
 using JupiterX.Notifications;
 using Newtonsoft.Json.Linq;
 using Photon.Pun;
@@ -33,7 +31,7 @@ namespace JupiterX.Mods
         {
             if (PhotonNetwork.InRoom)
             {
-                if (EasyInputs.GetTriggerButtonDown(EasyHand.RightHand))
+                if (Utility.RightTrigger)
                 {
                     foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerListOthers)
                     {

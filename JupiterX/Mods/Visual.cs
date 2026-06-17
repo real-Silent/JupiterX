@@ -55,7 +55,7 @@ namespace JupiterX.Mods
         public static readonly List<Renderer> disabledRenderers = new List<Renderer>();
         public static void Xray()
         {
-            if (Utility.RTrigger)
+            if (Utility.RightTrigger)
             {
                 if (disabledRenderers.Count <= 0)
                 {
