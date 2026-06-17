@@ -13,6 +13,7 @@ using UnityEngine.Networking;
 using JupiterX.Classes;
 using Photon.Pun;
 using JupiterX.Notifications;
+using JupiterX.Managers;
 
 namespace JupiterX.Mods
 {
@@ -24,9 +25,16 @@ namespace JupiterX.Mods
         public static float RecoverTime = -1f;
         public static bool LoopAudio = false;
         public static string Subdirectory = "";
+
         public static void LoadSoundboard()
         {
-            string basePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
+			AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
+			{
+				name = "Soundboard",
+				description = "You havent used this before? try using the sounds and dont abuse it."
+			});
+
+			string basePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
             if (!Directory.Exists("JupiterX")) 
                 Directory.CreateDirectory("JupiterX"); 
             if (!Directory.Exists(basePath))
