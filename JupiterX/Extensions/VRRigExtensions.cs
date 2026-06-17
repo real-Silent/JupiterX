@@ -15,6 +15,13 @@ namespace JupiterX.Extensions
             return false;
         }
 
+        public static string Platforms(this VRRig rig)
+        {
+            if (rig.IsPlayerSteam())
+                return "Steam";
+            return "Quest";
+        }
+
         public static Color playerColor(this VRRig rig) 
         {
             Color rigC = rig.mainSkin.material.color;

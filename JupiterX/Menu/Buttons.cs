@@ -3,6 +3,7 @@ using JupiterX.Managers;
 using JupiterX.Mods;
 using JupiterX.Notifications;
 using JupiterX.Patches;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -95,12 +96,6 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Advanced Arraylist", enableMethod =() => Settings.advancedArraylist = true, disableMethod =() => Settings.advancedArraylist = false, toolTip = "Updates the FPS Counter less, making it easier to read."},
                 new ButtonInfo { buttonText = "Flip Arraylist", enableMethod =() => Settings.flipArraylist = true, disableMethod =() => Settings.flipArraylist = false, toolTip = "Flips the arraylist at the top of the screen."},
-
-                new ButtonInfo { buttonText = "FPS Overlay", method =() => NotificationManager.information["FPS"] = Utility.lastDeltaTime.ToString(), disableMethod =() => NotificationManager.information.Remove("FPS"), toolTip = "Displays your FPS on your screen."},
-                new ButtonInfo { buttonText = "Ping Overlay", method = Utility.PingOverlay, disableMethod =() => NotificationManager.information.Remove("Ping"), toolTip = "Displays the server's ping on your screen."},
-                new ButtonInfo { buttonText = "Time Overlay", method =() => NotificationManager.information["Time"] = DateTime.Now.ToString("hh:mm tt"), disableMethod =() => NotificationManager.information.Remove("Time"), toolTip = "Displays your current time on your screen."},
-                new ButtonInfo { buttonText = "Velocity Overlay", method =() => NotificationManager.information["Velocity"] = $"{GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity.magnitude:F1}m/s", disableMethod =() => NotificationManager.information.Remove("Velocity"), toolTip = "Displays your velocity on your screen."},
-                new ButtonInfo { buttonText = "Nearby Overlay", method = Utility.NearbyTaggerOverlay, disableMethod =() => NotificationManager.information.Remove("Nearby"), toolTip = "Displays the distance to the nearest tagger/target on your screen."},
 
                 new ButtonInfo { buttonText = "Disable Arraylist GUI", enableMethod =() => Settings.showEnabledModsVR = false, disableMethod =() => Settings.showEnabledModsVR = true, toolTip = "Disables the GUI that shows the enabled mods."},
                 new ButtonInfo { buttonText = "Disable Notifications", enableMethod =() => { Settings.Notifications = false; NotificationManager.ClearAllNotifications(); }, disableMethod =() => Settings.Notifications = true, toolTip = "Toggles the Notifcations."},
@@ -287,10 +282,24 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Capsule ESP", method =() => Visual.CapsuleESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
                 new ButtonInfo { buttonText = "Sphere ESP", method =() => Visual.SphereESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
 
-                new ButtonInfo { buttonText = "Name Tags", method =() => Visual.NameTagESP(), isTogglable = true, toolTip = "Lets you see player info above there head with a name tag." },
-                new ButtonInfo { buttonText = "Player Info Tags", method =() => Visual.PlayerInfoTags(), isTogglable = true, toolTip = "Lets you see player info above there head with a name tag." },
-                new ButtonInfo { buttonText = "Velocity Label", method =() => Visual.VelocityLabel(), isTogglable = true, toolTip = "Lets you see your velocity with a label on your right hand." },
-                new ButtonInfo { buttonText = "Player Count Label", method =() => Visual.LeftTaggedLabel(), isTogglable = true, toolTip = "Lets you see how manu tagged people are left." },
+                new ButtonInfo { buttonText = "Name Tags", method =() => Visual.NameTags(), disableMethod =() => Visual.DisableNameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their nickname." },
+                new ButtonInfo { buttonText = "ID Name Tags", method =() => Visual.IDTags(), disableMethod =() => Visual.DisableIDTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their ID." },
+                new ButtonInfo { buttonText = "Platform Name Tags", method =() => Visual.PlatformTags(), disableMethod =() => Visual.DisablePlatformTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Platform." },
+                new ButtonInfo { buttonText = "Tagged Name Tags", method =() => Visual.TaggedTags(), disableMethod =() => Visual.DisableTaggedTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Tagged." },
+
+                new ButtonInfo { buttonText = "Velocity Label", method = Visual.VelocityLabel, toolTip = "Puts text on your right hand, showing your velocity."},
+                new ButtonInfo { buttonText = "Nearby Label", method = Visual.NearbyTaggerLabel, toolTip = "Puts text on your left hand, showing you the distance of the nearest tagger."},
+                new ButtonInfo { buttonText = "Last Label", method = Visual.LastLabel, toolTip = "Puts text on your left hand, showing you how many untagged people are left."},
+                new ButtonInfo { buttonText = "Time Label", method = Visual.TimeLabel, toolTip = "Puts text on your right hand, showing how long you've been playing for without getting tagged."},
+
+                new ButtonInfo { buttonText = "FPS Overlay", method =() => NotificationManager.information["FPS"] = Utility.lastDeltaTime.ToString(), disableMethod =() => NotificationManager.information.Remove("FPS"), toolTip = "Displays your FPS on your screen."},
+                new ButtonInfo { buttonText = "Ping Overlay", method = Utility.PingOverlay, disableMethod =() => NotificationManager.information.Remove("Ping"), toolTip = "Displays the server's ping on your screen."},
+                new ButtonInfo { buttonText = "Time Overlay", method =() => NotificationManager.information["Time"] = DateTime.Now.ToString("hh:mm tt"), disableMethod =() => NotificationManager.information.Remove("Time"), toolTip = "Displays your current time on your screen."},
+                new ButtonInfo { buttonText = "Velocity Overlay", method =() => NotificationManager.information["Velocity"] = $"{GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity.magnitude:F1}m/s", disableMethod =() => NotificationManager.information.Remove("Velocity"), toolTip = "Displays your velocity on your screen."},
+                new ButtonInfo { buttonText = "Nearby Overlay", method = Utility.NearbyTaggerOverlay, disableMethod =() => NotificationManager.information.Remove("Nearby"), toolTip = "Displays the distance to the nearest tagger/target on your screen."},
+                new ButtonInfo { buttonText = "Room Information Overlay", method =() => { if (PhotonNetwork.InRoom) { NotificationManager.information["Room Code"] = PhotonNetwork.CurrentRoom.Name; NotificationManager.information["Players"] = PhotonNetwork.PlayerList.Length.ToString(); } else { NotificationManager.information.Remove("Room Code"); NotificationManager.information.Remove("Players"); } }, disableMethod =() => { NotificationManager.information.Remove("Room Code"); NotificationManager.information.Remove("Players"); }, toolTip = "Displays information about the room on your screen."},
+
+                new ButtonInfo { buttonText = "Draw Gun", method = Visual.DrawGun, disableMethod = Visual.DisableDrawGun, toolTip = "Lets you draw on whatever your hand desires." },
 
                 new ButtonInfo { buttonText = "FPS Boost", enableMethod =() => QualitySettings.masterTextureLimit = int.MaxValue, disableMethod =() => QualitySettings.masterTextureLimit = 1, toolTip = "Makes everything low quality in an attempt to boost your FPS."},
                 new ButtonInfo { buttonText = "Full Bright", method =() => Visual.fullBright(), disableMethod =() => Visual.fulldrak(), isTogglable = true, toolTip = "Lets you see in the dark." },

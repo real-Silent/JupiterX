@@ -369,7 +369,7 @@ namespace JupiterX.Menu
             text.fontSize = 1;
 			text.color = textColors[0];
 			text.supportRichText = true;
-			text.fontStyle = FontStyle.Italic;
+			text.fontStyle = FontStyle.Normal;
 			text.alignment = TextAnchor.MiddleCenter;
 			text.resizeTextForBestFit = true;
 			text.resizeTextMinSize = 0;
@@ -395,7 +395,7 @@ namespace JupiterX.Menu
 				fpsObject.color = textColors[0];
 				fpsObject.fontSize = 1;
 				fpsObject.supportRichText = true;
-				fpsObject.fontStyle = FontStyle.Italic;
+				fpsObject.fontStyle = FontStyle.Normal;
 				fpsObject.alignment = TextAnchor.MiddleCenter;
 				fpsObject.horizontalOverflow = UnityEngine.HorizontalWrapMode.Overflow;
 				fpsObject.resizeTextForBestFit = true;
@@ -662,7 +662,7 @@ namespace JupiterX.Menu
             buttonText.color = method.enabled ? textColors[1] : textColors[0];
 
             buttonText.alignment = TextAnchor.MiddleCenter;
-            buttonText.fontStyle = FontStyle.Italic;
+            buttonText.fontStyle = FontStyle.Normal;
             buttonText.resizeTextForBestFit = true;
             buttonText.resizeTextMinSize = 0;
 
@@ -724,7 +724,7 @@ namespace JupiterX.Menu
             buttonText.color = textColors[1];
 
             buttonText.alignment = TextAnchor.MiddleCenter;
-            buttonText.fontStyle = FontStyle.Italic;
+            buttonText.fontStyle = FontStyle.Normal;
             buttonText.resizeTextForBestFit = true;
             buttonText.resizeTextMinSize = 0;
 
