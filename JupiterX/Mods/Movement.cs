@@ -31,7 +31,7 @@ namespace JupiterX.Mods
                 case 5: FlySpeed = 30f; break;  
             }
             Buttons.GetIndex("Change Fly Speed").overlapText =
-                $"Change Fly Speed <color=cyan>[{FlySpeeds[FlySpeedAmount]}]</color>";
+                $"Change Fly Speed <color=grey>[<color=cyan>{FlySpeeds[FlySpeedAmount]}</color>]</color>";
         }
 
         public static void Fly()

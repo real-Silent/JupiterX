@@ -451,7 +451,7 @@ namespace JupiterX
                     MainDropType = 3;
                     break;
             }
-            Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=grey>[<color=cyan>[{dropTypes[dropType]}</color>]</color>";
+            Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=grey>[<color=cyan>{dropTypes[dropType]}</color>]</color>";
         }
         private static string[] MenuThemes = new string[]
         {
@@ -559,7 +559,7 @@ namespace JupiterX
             }
             textColors[0] = Color.white;
             textColors[1] = Color.white;
-            Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=grey>[<color=cyan>[{MenuThemes[currentTheme]}</color>]</color>";
+            Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=grey>[<color=cyan>{MenuThemes[currentTheme]}</color>]</color>";
         }
 
         public static void BetaEmojiName(int emoji) =>
