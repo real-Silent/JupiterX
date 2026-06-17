@@ -28,12 +28,6 @@ namespace JupiterX.Mods
 
         public static void LoadSoundboard()
         {
-			AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
-			{
-				name = "Soundboard",
-				description = "You havent used this before? try using the sounds and dont abuse it."
-			});
-
 			string basePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
             if (!Directory.Exists("JupiterX")) 
                 Directory.CreateDirectory("JupiterX"); 
@@ -77,7 +71,13 @@ namespace JupiterX.Mods
             //soundbuttons.Add(new ButtonInfo { buttonText = "Get More Sounds", method = LoadSoundLibrary, isTogglable = false, toolTip = "Opens a public audio library, where you can download your own sounds." });
             Buttons.CurrentCategoryName = "Soundboard";
             Buttons.buttons[Buttons.GetCategory("Soundboard")] = soundbuttons.ToArray();
-        }
+
+			AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
+			{
+				name = "Soundboard",
+				description = "You havent used this before? try using the sounds and dont abuse it."
+			});
+		}
         public static void LoadSoundLibrary() => 
             MelonCoroutines.Start(LoadSoundLibraryCoroutine());
         private static IEnumerator LoadSoundLibraryCoroutine() // this iiDks btw

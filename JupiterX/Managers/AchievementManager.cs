@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEngine;
 using static JupiterX.Menu.Main;
 
 namespace JupiterX.Managers
@@ -19,7 +20,8 @@ namespace JupiterX.Managers
                 if (_achievements != null) return _achievements;
                 _achievements = new List<Achievement>();
 
-                string[] files = Directory.GetFiles($"{Utility.MainPath}/Achievements");
+                string achievementsFolder = Path.Combine(Application.persistentDataPath, "JupiterX", "Achievements");
+                string[] files = Directory.GetFiles(achievementsFolder);
                 foreach (string file in files)
                 {
                     if (file.EndsWith(".json"))
@@ -72,10 +74,14 @@ namespace JupiterX.Managers
                 return;
 
             Utility.PlaySound(Utility.achievementSound);
-            NotificationManager.SendNotification($"<color=grey>[</color><color=purple>ACHIEVEMENT</color><color=grey>]</color> Achievement unlocked! \"{achievement.name}\"", 20f);
+            NotificationManager.SendNotification($"<color=grey>[</color><color=purple>ACHIEVEMENT</color><color=grey>]</color> Achievement unlocked! \"{achievement.name}\"\n{achievement.description}", 5f);
 
             Achievements.Add(achievement);
-            File.WriteAllText($"{Utility.MainPath}/Achievements/{achievement.name}.json", achievement.ToJObject().ToString());
+            string achievementsFolder = Path.Combine(Application.persistentDataPath, "JupiterX", "Achievements");
+            if (!Directory.Exists(achievementsFolder))
+                Directory.CreateDirectory(achievementsFolder);
+            string filePath = Path.Combine(achievementsFolder, $"{achievement.name}.json");
+            File.WriteAllText(filePath, achievement.ToJObject().ToString());
         }
 
         public struct Achievement
