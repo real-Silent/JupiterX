@@ -1721,6 +1721,7 @@ namespace JupiterX.Menu
         public static GameObject Pointer;
         public static RaycastHit Ray;
         public static LineRenderer line;
+
         public static (RaycastHit Ray, GameObject Pointer) RenderGun()
         {
             if (Pointer == null)
@@ -1731,151 +1732,147 @@ namespace JupiterX.Menu
                 renderer.enabled = disableGunPointer ? false : true;
                 renderer.material.shader = Shader.Find("GUI/Text Shader");
                 GameObject.Destroy(Pointer.GetComponent<Collider>());
-                if (!disableGunLine)
+            }
+
+            Color gunColor = gunLocked || GetGunInput(true) ? buttonColors[1].GetCurrentColor() : buttonColors[0].GetCurrentColor();
+            Pointer.GetComponent<Renderer>().material.color = gunColor;
+
+            Transform gunHand = SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
+            Physics.Raycast(gunHand.position, gunHand.forward + -gunHand.up, out Ray, float.PositiveInfinity, NoInvisLayerMask());
+
+            Vector3 EndPosition = gunLocked ? lockTarget.headMesh.transform.position : Ray.point;
+            Pointer.transform.position = EndPosition;
+
+            if (!disableGunLine)
+            {
+                if (line == null)
                 {
                     line = Pointer.AddComponent<LineRenderer>();
                     line.useWorldSpace = true;
                     line.material = new Material(Shader.Find("GUI/Text Shader"));
-                    line.positionCount = 2;
                     line.startWidth = 0.02f;
                     line.endWidth = 0.02f;
+                    line.numCapVertices = 4;
+                    line.numCornerVertices = 4;
                 }
-            }
-            Pointer.GetComponent<Renderer>().material.color = gunLocked || GetGunInput(true) ? buttonColors[1].GetCurrentColor() : buttonColors[0].GetCurrentColor();
-            Transform gunHand = SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
-            Physics.Raycast(gunHand.position, gunHand.forward + -gunHand.up, out Ray, float.PositiveInfinity, NoInvisLayerMask());
-            Pointer.transform.position = gunLocked ? lockTarget.headMesh.transform.position : Ray.point;
-            if (!disableGunLine)
-            {
-                int Step = lineQuality;
+
+                bool active = GetGunInput(true) || gunLocked;
 
                 Vector3 StartPosition = gunHand.position;
-                Vector3 EndPosition = gunLocked ? lockTarget.transform.position : Ray.point;
                 Vector3 Up = -gunHand.up;
                 Vector3 Right = gunHand.right;
 
-                switch (gunVariation)
+                if (!active)
                 {
-                    case 1: // Lightning
-                        if (GetGunInput(true) || gunLocked)
-                        {
+                    line.positionCount = 2;
+                    line.SetPosition(0, StartPosition);
+                    line.SetPosition(1, EndPosition);
+                    MidPosition = Vector3.zero;
+                    MidVelocity = Vector3.zero;
+                }
+                else
+                {
+                    int Step = Mathf.Max(2, lineQuality);
+                    switch (gunVariation)
+                    {
+                        case 1: // Lightning
                             line.positionCount = Step;
                             line.SetPosition(0, StartPosition);
-
                             for (int i = 1; i < Step - 1; i++)
                             {
                                 Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                line.SetPosition(i, Position + (UnityEngine.Random.Range(0f, 1f) > 0.75f ? new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f)) : Vector3.zero));
+                                line.SetPosition(i, Position + (UnityEngine.Random.value > 0.75f
+                                    ? new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f))
+                                    : Vector3.zero));
                             }
-
                             line.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 2: // Wavy
-                        if (GetGunInput(true) || gunLocked)
-                        {
+                            break;
+                        case 2: // Wavy
                             line.positionCount = Step;
                             line.SetPosition(0, StartPosition);
-
                             for (int i = 1; i < Step - 1; i++)
                             {
                                 float value = i / (float)Step * 50f;
-
                                 Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
                                 line.SetPosition(i, Position + Up * (Mathf.Sin(Time.time * -10f + value) * 0.1f));
                             }
-
                             line.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 3: // Blocky
-                        if (GetGunInput(true) || gunLocked)
-                        {
+                            break;
+                        case 3: // Blocky
                             line.positionCount = Step;
                             line.SetPosition(0, StartPosition);
-
                             for (int i = 1; i < Step - 1; i++)
                             {
                                 Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
                                 line.SetPosition(i, new Vector3(Mathf.Round(Position.x * 25f) / 25f, Mathf.Round(Position.y * 25f) / 25f, Mathf.Round(Position.z * 25f) / 25f));
                             }
-
                             line.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 4: // Sinewave
-                        Step = lineQuality / 2;
-                        if (GetGunInput(true) || gunLocked)
-                        {
+                            break;
+                        case 4: // Sinewave
+                            Step = Mathf.Max(2, lineQuality / 2);
                             line.positionCount = Step;
                             line.SetPosition(0, StartPosition);
-
                             for (int i = 1; i < Step - 1; i++)
                             {
                                 Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
                                 line.SetPosition(i, Position + Up * (Mathf.Sin(Time.time * 10f) * (i % 2 == 0 ? 0.1f : -0.1f)));
                             }
-
                             line.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 5: // Spring
-                        if (GetGunInput(true) || gunLocked)
-                        {
+                            break;
+                        case 5: // Spring
                             line.positionCount = Step;
                             line.SetPosition(0, StartPosition);
-
                             for (int i = 1; i < Step - 1; i++)
                             {
                                 float value = i / (float)Step * 50f;
-
                                 Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
                                 line.SetPosition(i, Position + Right * (Mathf.Cos(Time.time * -10f + value) * 0.1f) + Up * (Mathf.Sin(Time.time * -10f + value) * 0.1f));
                             }
-
                             line.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 6: // Bouncy
-                        if (GetGunInput(true) || gunLocked)
-                        {
+                            break;
+                        case 6: // Bouncy
                             line.positionCount = Step;
                             line.SetPosition(0, StartPosition);
-
                             for (int i = 1; i < Step - 1; i++)
                             {
                                 float value = i / (float)Step * 15f;
                                 line.SetPosition(i, Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f)) + Up * (Mathf.Abs(Mathf.Sin(Time.time * -10f + value)) * 0.3f));
                             }
-
                             line.SetPosition(Step - 1, EndPosition);
-                        }
-                        break;
-                    case 7: // Bezier, credits to Crisp / Kman / Steal / Untitled One of those 4 I don't really know who
-                        Vector3 BaseMid = Vector3.Lerp(StartPosition, EndPosition, 0.5f);
-                        float angle = Time.time * 3f;
-                        Vector3 wobbleOffset = Up * (Mathf.Sin(angle) * 0.15f) + Right * (Mathf.Cos(angle * 1.3f) * 0.15f);
-                        Vector3 targetMid = BaseMid + wobbleOffset;
-                        if (MidPosition == Vector3.zero) MidPosition = targetMid;
-                        Vector3 force = (targetMid - MidPosition) * 40f;
-                        MidVelocity += force * Time.deltaTime;
-                        MidVelocity *= Mathf.Exp(-6f * Time.deltaTime);
-                        MidPosition += MidVelocity * Time.deltaTime;
-                        line.positionCount = Step;
-                        line.SetPosition(0, StartPosition);
-                        Vector3[] points = new Vector3[Step];
-                        for (int i = 0; i < Step; i++)
-                        {
-                            float t = (float)i / (Step - 1);
-                            points[i] = Mathf.Pow(1 - t, 2) * StartPosition + 2 * (1 - t) * t * MidPosition + Mathf.Pow(t, 2) * EndPosition;
-                        }
-
-                        line.positionCount = Step;
-                        line.SetPositions(points);
-                        break;
+                            break;
+                        case 7: // Bezier
+                            Vector3 BaseMid = Vector3.Lerp(StartPosition, EndPosition, 0.5f);
+                            float angle = Time.time * 3f;
+                            Vector3 wobbleOffset = Up * (Mathf.Sin(angle) * 0.15f) + Right * (Mathf.Cos(angle * 1.3f) * 0.15f);
+                            Vector3 targetMid = BaseMid + wobbleOffset;
+                            if (MidPosition == Vector3.zero) MidPosition = targetMid;
+                            Vector3 force = (targetMid - MidPosition) * 40f;
+                            MidVelocity += force * Time.deltaTime;
+                            MidVelocity *= Mathf.Exp(-6f * Time.deltaTime);
+                            MidPosition += MidVelocity * Time.deltaTime;
+                            line.positionCount = Step;
+                            Vector3[] points = new Vector3[Step];
+                            for (int i = 0; i < Step; i++)
+                            {
+                                float t = (float)i / (Step - 1);
+                                points[i] = Mathf.Pow(1 - t, 2) * StartPosition + 2 * (1 - t) * t * MidPosition + Mathf.Pow(t, 2) * EndPosition;
+                            }
+                            line.SetPositions(points);
+                            break;
+                        default:
+                            line.positionCount = 2;
+                            line.SetPosition(0, StartPosition);
+                            line.SetPosition(1, EndPosition);
+                            break;
+                    }
                 }
-                line.startColor = Pointer.GetComponent<Renderer>().material.color;
-                line.endColor = Pointer.GetComponent<Renderer>().material.color;
+
+                line.startColor = gunColor;
+                line.endColor = gunColor;
+            }
+            else if (line != null)
+            {
+                line.positionCount = 0;
             }
             return (Ray, Pointer);
         }
