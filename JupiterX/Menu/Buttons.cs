@@ -6,12 +6,10 @@ using JupiterX.Patches;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
-using static ONSPPropagationMaterial;
 
 namespace JupiterX.Menu
 {
