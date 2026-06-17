@@ -1089,7 +1089,7 @@ namespace JupiterX
             }
         }
 
-        public static string version = "2.3.8"; 
+        public static string version = "2.4.0"; 
         public static string serverversion; 
         public static string minversion; 
         public static string discord; 
