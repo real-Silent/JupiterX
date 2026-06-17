@@ -1,5 +1,6 @@
 ﻿using JupiterX;
 using JupiterX.Classes;
+using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Notifications;
 using MelonLoader;
@@ -58,11 +59,6 @@ namespace JupiterX
             Utility.ogcoc = Utility.codeOfConduct.text;
             Utility.ogmotd = Utility.motd.text;
             Utility.ogmotdtext = Utility.motdText.text;
-
-            if (File.Exists(Utility.HasUsedMenuBefore))
-                Utility.HasUsedMenuBeforeNoti = true;
-            else
-                Utility.HasUsedMenuBeforeNoti = false;
 
             Utility.CacheSounds(); // For caching the menu sounds causes less lag.
 
@@ -142,35 +138,46 @@ namespace JupiterX
                 NotifiLib.SendNotification("<color=cyan>JupiterX is extremely outdated please go to the discord and update it</color>", 60f);
             }
 
-            if (!Utility.HasUsedMenuBeforeNoti)
+            if (File.Exists(Utility.HasUsedMenuBefore))
+                Utility.UsedBeforeNotificaiton = true;
+
+            if (!Utility.UsedBeforeNotificaiton)
             {
                 if (!File.Exists(Utility.HasUsedMenuBefore))
                     File.Create(Utility.HasUsedMenuBefore);
                 File.WriteAllText(Utility.HasUsedMenuBefore, "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
                 NotifiLib.SendNotification("<color=cyan>[INFO]</color> Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!", 20f);
-            }
 
-            if (File.Exists(Utility.HasUsedMenuBefore))
-                Utility.HasUsedMenuBeforeNoti = true;
+                AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
+                {
+                    name = "First Time Use",
+                    description = "Opened and used the menu for the first time."
+                });
+            }
 
             if (Utility.isBetaRelease)
             {
-                if (!Utility.HasSentbetaNoti)
+                if (!Utility.UsedBeforeNotificaiton)
                 {
                     NotifiLib.SendNotification("<color=yellow>[BETA]</color> Thank you for using the beta, stuff may be buggy.", 13f);
-                    Utility.HasSentbetaNoti = true;
+                    Utility.UsedBeforeNotificaiton = true;
+                    if (!File.Exists($"{Utility.MainPath}/ClaimedBetaAchievement.txt"))
+                    {
+                        AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
+                        {
+                            name = "Beta Tester",
+                            description = "Opened and used the menu for the first time."
+                        });
+                        File.WriteAllText($"{Utility.MainPath}/ClaimedBetaAchievement.txt", "");
+                    }
                 }
             }
             else
             {
-                if (!Utility.HasUsedMenuBeforeNoti)
+                if (!Utility.UsedBeforeNotificaiton)
                 {
-                    if (!Utility.HasSentbetaNoti)
-                    {
-                        NotifiLib.SendNotification("<color=cyan>[INFO]</color> Thank you for using jupiterx.", 10f);
-                        Utility.HasSentbetaNoti = true;
-                    }
-                    Utility.HasUsedMenuBeforeNoti = true;
+                    NotifiLib.SendNotification("<color=cyan>[INFO]</color> Thank you for using jupiterx.", 10f);
+                    Utility.UsedBeforeNotificaiton = true;
                 }
             }
 

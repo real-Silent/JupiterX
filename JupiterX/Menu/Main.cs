@@ -1,5 +1,6 @@
 ﻿using easyInputs;
 using JupiterX.Classes;
+using JupiterX.Managers;
 using JupiterX.Notifications;
 using Photon.Pun;
 using System;
@@ -55,20 +56,26 @@ namespace JupiterX.Menu
                             Utility.PlaySound(Utility.menuOpenSound);
                         CreateMenu();
 
+                        menuOpenCount++;
+                        if (menuOpenCount == 100)
+                            AchievementManager.UnlockAchievement(new AchievementManager.Achievement
+                            {
+                                name = "Persistent",
+                                description = "Open the menu 100 times."
+                            });
+
                         if (dynamicAnimations)
                             Plugin.StartCoroutine(GrowCoroutine());
 
-                        RecenterMenu(RightHanded, keyboardOpen);
+                        RecenterMenu();
 						if (reference == null)
-						{
-							CreateReference(RightHanded);
-						}
+						    CreateReference();
 					}
 				}
 				else
 				{
 					if (Utility.toOpen || keyboardOpen)
-					    RecenterMenu(RightHanded, keyboardOpen);
+					    RecenterMenu();
 					else
 					{
 						if (!dynamicAnimations)
@@ -736,7 +743,7 @@ namespace JupiterX.Menu
                 GameObject.Destroy(reference);
                 reference = null;
 
-                CreateReference(RightHanded);
+                CreateReference();
             }
         }
 
@@ -849,77 +856,29 @@ namespace JupiterX.Menu
             }
         }
 
-        public static void RecenterMenu(bool isRightHanded, bool isKeyboardCondition)
+        public static void RecenterMenu()
 		{
-            if (!isKeyboardCondition)
-			{
-				if (isRightHanded || (bothHands && Utility.RSec))
-				{
-                    menu.transform.position = GorillaTagger.Instance.rightHandTransform.position;
-                    Vector3 rotation = GorillaTagger.Instance.rightHandTransform.rotation.eulerAngles;
-                    rotation += new Vector3(0f, 0f, 180f);
-                    menu.transform.rotation = Quaternion.Euler(rotation);
-				}
-				else
-				{
-                    menu.transform.position = GorillaTagger.Instance.leftHandTransform.position;
-                    menu.transform.rotation = GorillaTagger.Instance.leftHandTransform.rotation;
-                }
-                if (flipMenu)
-                {
-                    Vector3 rotation = menu.transform.rotation.eulerAngles;
-                    rotation += new Vector3(0f, 0f, 180f);
-                    menu.transform.rotation = Quaternion.Euler(rotation);
-                }
+            if (RightHanded || (bothHands && Utility.RSec))
+            {
+                menu.transform.position = GorillaTagger.Instance.rightHandTransform.position;
+                Vector3 rotation = GorillaTagger.Instance.rightHandTransform.rotation.eulerAngles;
+                rotation += new Vector3(0f, 0f, 180f);
+                menu.transform.rotation = Quaternion.Euler(rotation);
             }
-			else
-			{
-				try
-				{
-					TPC = GameObject.Find("Shoulder Camera").GetComponent<Camera>();
-				}
-				catch { }
-				if (TPC != null)
-				{
-					TPC.transform.position = new Vector3(-999f, -999f, -999f);
-					TPC.transform.rotation = Quaternion.identity;
-					GameObject bg = GameObject.CreatePrimitive(PrimitiveType.Cube);
-					bg.transform.localScale = new Vector3(10f, 10f, 0.01f);
-					bg.transform.transform.position = TPC.transform.position + TPC.transform.forward;
-					bg.GetComponent<Renderer>().material.color = new Color32((byte)(backgroundColor.colors[0].color.r * 50), (byte)(backgroundColor.colors[0].color.g * 50), (byte)(backgroundColor.colors[0].color.b * 50), 255);
-					GameObject.Destroy(bg, Time.deltaTime);
-					menu.transform.parent = TPC.transform;
-					menu.transform.position = (TPC.transform.position + (Vector3.Scale(TPC.transform.forward, new Vector3(0.5f, 0.5f, 0.5f)))) + (Vector3.Scale(TPC.transform.up, new Vector3(-0.02f, -0.02f, -0.02f)));
-					Vector3 rot = TPC.transform.rotation.eulerAngles;
-					rot = new Vector3(rot.x - 90, rot.y + 90, rot.z);
-					menu.transform.rotation = Quaternion.Euler(rot);
+            else
+            {
+                menu.transform.position = GorillaTagger.Instance.leftHandTransform.position;
+                menu.transform.rotation = GorillaTagger.Instance.leftHandTransform.rotation;
+            }
+            if (flipMenu)
+            {
+                Vector3 rotation = menu.transform.rotation.eulerAngles;
+                rotation += new Vector3(0f, 0f, 180f);
+                menu.transform.rotation = Quaternion.Euler(rotation);
+            }
+        }
 
-					if (reference != null)
-					{
-						if (Mouse.current.leftButton.isPressed)
-						{
-							Ray ray = TPC.ScreenPointToRay(Mouse.current.position.ReadValue());
-							RaycastHit hit;
-							bool worked = Physics.Raycast(ray, out hit, 100);
-							if (worked)
-							{
-								ButtonCollider collide = hit.transform.gameObject.GetComponent<ButtonCollider>();
-								if (collide != null)
-								{
-									collide.OnTriggerEnter(buttonCollider);
-								}
-							}
-						}
-						else
-						{
-							reference.transform.position = new Vector3(999f, -999f, -999f);
-						}
-					}
-				}
-			}
-		}
-
-		public static void CreateReference(bool isRightHanded)
+		public static void CreateReference()
 		{
 			reference = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             if (bothHands)
@@ -929,15 +888,8 @@ namespace JupiterX.Menu
                 else
                     reference.transform.parent = GorillaTagger.Instance.rightHandTransform;
             }
-			else if (isRightHanded)
-			{
-				reference.transform.parent = GorillaTagger.Instance.leftHandTransform;
-			}
-			else
-			{
-				reference.transform.parent = GorillaTagger.Instance.rightHandTransform;
-			}
-			reference.transform.localPosition = new Vector3(0.013f, -0.025f, 0.1f);
+            reference.transform.parent = RightHanded ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
+            reference.transform.localPosition = new Vector3(0.013f, -0.025f, 0.1f);
             reference.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
 			buttonCollider = reference.GetComponent<SphereCollider>();
             reference.GetComponent<Renderer>().material.color = backgroundColor.GetCurrentColor();
@@ -1581,6 +1533,8 @@ namespace JupiterX.Menu
 
         public static Material searchMat;
         public static Material returnMat;
+
+        private static int menuOpenCount;
 
         public static void RoundMenuObject(GameObject toRound, float Bevel = 0.02f)
         {

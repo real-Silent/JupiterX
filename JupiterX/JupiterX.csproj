@@ -47,6 +47,7 @@
     <Compile Include="Classes\Menu\TimedBehaviour.cs" />
     <Compile Include="Classes\Mods\VRRigExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Managers\AchievementManager.cs" />
     <Compile Include="Managers\PluginManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
     <Compile Include="Menu\Main.cs" />
@@ -495,6 +496,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\return.png" />
     <EmbeddedResource Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\achievement.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

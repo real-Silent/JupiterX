@@ -1031,8 +1031,9 @@ namespace JupiterX
                 }
             }
         }
-        public static bool HasSentbetaNoti = false;
-        public static bool HasUsedMenuBeforeNoti = false;
+
+        public static bool BetaNotificiation = false;
+        public static bool UsedBeforeNotificaiton = false;
 
         public static string name = "JupiterX";
         public static string author = "Nova";
@@ -1349,12 +1350,14 @@ namespace JupiterX
         public static AudioClip buttonClickSound = null;
         public static AudioClip menuOpenSound = null;
         public static AudioClip menuCloseSound = null;
+        public static AudioClip achievementSound = null;
 
         public static void CacheSounds()
         {
             buttonClickSound = GetAudioClip("JupiterX.Resources.steal.wav");
             menuOpenSound = GetAudioClip("JupiterX.Resources.menuopen.wav");
             menuCloseSound = GetAudioClip("JupiterX.Resources.menuclose.wav");
+            achievementSound = GetAudioClip("JupiterX.Resources.achievement.wav");
         }
 
         public static List<AudioSource> cachedSources = new List<AudioSource>();
