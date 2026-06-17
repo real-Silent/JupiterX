@@ -177,11 +177,17 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Safety | 3
                 new ButtonInfo { buttonText = "Exit Safety", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
                 new ButtonInfo { buttonText = "Panic", method =() => Utility.Panic(), isTogglable = false, toolTip = "Disables every mod you have enabled." },
+
+                new ButtonInfo { buttonText = "Flush RPCs", method = Utility.FlushRPCS, isTogglable = false, toolTip = "Flushes all RPC calls, good after you stop spamming." },
+
                 new ButtonInfo { buttonText = "Anti Report <color=grey>[</color><color=cyan>DISCONNECT</color><color=grey>]</color>", method =() => Utility.BetaAntiReport(false, true), isTogglable = true, toolTip = "Disconnects you when someone is close to the report button." },
                 new ButtonInfo { buttonText = "Anti Report <color=grey>[</color><color=cyan>CRASH</color><color=grey>]</color>", method =() => Utility.BetaAntiReport(true, false), isTogglable = true, toolTip = "Crashes the person who tries to report you when someone is close to the report button." },
                 new ButtonInfo { buttonText = "Anti Moderator", method =() => Utility.BetaAntiCosmetic("LBAAK."), isTogglable = true, toolTip = "Disconnects you when someone has the moderator stick." },
                 new ButtonInfo { buttonText = "Anti Admin", method =() => Utility.BetaAntiCosmetic("LBAAD."), isTogglable = true, toolTip = "Disconnects you when someone has the admin badge." },
                 new ButtonInfo { buttonText = "Anti Finger Painter", method =() => Utility.BetaAntiCosmetic("LBADE."), isTogglable = true, toolTip = "Disconnects you when someone has the finger painter." },
+
+                new ButtonInfo { buttonText = "Show Anti Cheat Reports <color=grey>[</color><color=cyan>Self</color><color=grey>]</color>", enableMethod =() => AntiCheatPatches.AntiCheatSelf = true, disableMethod =() => AntiCheatPatches.AntiCheatSelf = false, toolTip = "Gives you a notification every time you have been reported by the anti cheat."},
+                new ButtonInfo { buttonText = "Show Anti Cheat Reports <color=grey>[</color><color=cyan>All</color><color=grey>]</color>", enableMethod =() => AntiCheatPatches.AntiCheatAll = true, disableMethod =() => AntiCheatPatches.AntiCheatAll = false, toolTip = "Gives you a notification every time anyone has been reported by the anti cheat."},
             },
 
             new ButtonInfo[] { // Computer | 4
