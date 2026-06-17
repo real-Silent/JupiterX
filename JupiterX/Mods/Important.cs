@@ -19,6 +19,9 @@ namespace JupiterX.Mods
             phc.disableAFKKick = true;
         }
 
+        public static void JoinDiscord() =>
+            Application.OpenURL("https://discord.gg/dtQdz59FJG");
+
         public static void Reconnect()
         {
             PhotonNetwork.Disconnect();

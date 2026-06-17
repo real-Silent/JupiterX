@@ -19,6 +19,8 @@ namespace JupiterX.Menu
         public static ButtonInfo[][] buttons = new ButtonInfo[][]
         {
             new ButtonInfo[] { // Main Mods | 0
+                new ButtonInfo { buttonText = "Join Discord", method = Important.JoinDiscord, isTogglable = false, toolTip = "Invites you to join the <b>Qolossal</b> Discord server."},
+
                 new ButtonInfo { buttonText = "Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Opens the main settings page for the menu."},
                 new ButtonInfo { buttonText = "Players", method =() => Players(), isTogglable = false, toolTip = "Opens the player mods page for the menu."},
 
