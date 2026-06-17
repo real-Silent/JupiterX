@@ -48,6 +48,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Settings | 1
                 new ButtonInfo { buttonText = "Exit Settings", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "Menu Settings", method =() => CurrentCategoryName = "Menu Settings", isTogglable = false, toolTip = "Opens the menu settings page for the menu." },
                 new ButtonInfo { buttonText = "Category Settings", method = Settings.CategorySettings, isTogglable = false, toolTip = "Opens the settings for the categories." },
 
@@ -59,6 +60,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Menu Settings | 17
                 new ButtonInfo { buttonText = "Exit Menu Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+
                 new ButtonInfo { buttonText = "Right Hand", enableMethod =() => RightHanded = true, disableMethod =() => RightHanded = false, toolTip = "Puts the menu on your right hand."},
                 new ButtonInfo { buttonText = "Both Hands", enableMethod =() => bothHands = true, disableMethod =() => bothHands = false, toolTip = "Puts the menu on your both of your hands."},
                 
@@ -130,12 +132,14 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Movement Settings | 18
                 new ButtonInfo { buttonText = "Exit Movement Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+
                 new ButtonInfo { buttonText = "Change Fly Speed", method =() => Movement.ChangeFlySpeed(), enableMethod =() => Movement.ChangeFlySpeed(), disableMethod =() => Movement.ChangeFlySpeed(false), incremental = true, overlapText = "Change Fly Speed <color=grey>[<color=cyan>Very Slow</color>]</color>", isTogglable = false, toolTip = "Changes the current fly speed." },
                 new ButtonInfo { buttonText = "Change Arm Length", method =() => Movement.ChangeArmLength(), enableMethod =() => Movement.ChangeArmLength(), disableMethod =() => Movement.ChangeArmLength(false), incremental = true, overlapText = "Change Arm Length <color=grey>[<color=cyan>Stean</color>]</color>", isTogglable = false, toolTip = "Changes your arm length." },
             },
 
             new ButtonInfo[] { // Gun Settings | 19
                 new ButtonInfo { buttonText = "Exit Gun Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+
                 new ButtonInfo { buttonText = "Disable Gun Pointer", enableMethod =() => disableGunPointer = true, disableMethod =() => disableGunPointer = false, isTogglable = true, toolTip = "Disables the gun pointer." },
                 new ButtonInfo { buttonText = "Small Gun Pointer", enableMethod =() => smallGunPointer = true, disableMethod =() => smallGunPointer = false, isTogglable = true, toolTip = "Makes the gun pointer smaller." },
                 new ButtonInfo { buttonText = "Disable Gun Line", enableMethod =() => disableGunLine = true, disableMethod =() => disableGunLine = false, isTogglable = true, toolTip = "Disables the gun line." },
@@ -148,6 +152,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Important | 2
                 new ButtonInfo { buttonText = "Exit Important", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "Quit Game", method =() => Important.QuitGame(), isTogglable = false, toolTip = "Quits your game." },
 
                 new ButtonInfo { buttonText = "Anti Hand Tap", enableMethod =() => HandTapPatch.enabled = true, disableMethod =() => HandTapPatch.enabled = false, toolTip = "Stops all hand tap sounds from being played."},
@@ -176,6 +181,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Safety | 3
                 new ButtonInfo { buttonText = "Exit Safety", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "Panic", method =() => Utility.Panic(), isTogglable = false, toolTip = "Disables every mod you have enabled." },
 
                 new ButtonInfo { buttonText = "Flush RPCs", method = Utility.FlushRPCS, isTogglable = false, toolTip = "Flushes all RPC calls, good after you stop spamming." },
@@ -192,6 +198,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Computer | 4
                 new ButtonInfo { buttonText = "Exit Computer", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "Disconnect", method =() => Computer.Leave(), isTogglable = false, toolTip = "Disconnects you from the lobby." },
                 new ButtonInfo { buttonText = "Reconnect", method =() => Important.Reconnect(), isTogglable = false, toolTip = "Reconnects you to the current lobby." },
                 new ButtonInfo { buttonText = "Lobby Hop", method =() => Important.LobbyHop(), isTogglable = false, toolTip = "Lets you lobby hop." },
@@ -270,6 +277,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Visual | 8
                 new ButtonInfo { buttonText = "Exit Visual", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "Chams", method =() => Visual.Chams(true), disableMethod =() => Visual.Chams(false), isTogglable = true, toolTip = "Lets you see players through walls." },
                 
                 new ButtonInfo { buttonText = "Tracers", method =() => Visual.Tracers(), isTogglable = true, toolTip = "Points lines at other players." },
@@ -292,6 +300,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Fun | 9
                 new ButtonInfo { buttonText = "Exit Fun", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "No Tap Cooldown", method =() => Fun.NoTapCooldown(), disableMethod =() => Fun.ResetTapcooldown(), isTogglable = true, toolTip = "Removes the hand tap cooldown." },
                 new ButtonInfo { buttonText = "Loud Hand Taps", method =() => Fun.LoadHandTaps(), disableMethod =() => Fun.FixHandTaps(), isTogglable = true, toolTip = "Makes the hand tap sound very loud." },
                 new ButtonInfo { buttonText = "Silent Hand Taps", method =() => Fun.SilentHandTaps(), disableMethod =() => Fun.FixHandTaps(), isTogglable = true, toolTip = "Removes the hand tap sound." },
@@ -323,6 +332,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Name | 10
                 new ButtonInfo { buttonText = "Exit Name", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "Menu Name Tag", method =() => Name.MenuNameTag(), isTogglable = true, toolTip = "Sets your name to the menu name." },
                 new ButtonInfo { buttonText = "Rainbow Owner Name", method =() => Name.ChangeNameSpaz("\nOwner", new string[] { "red", "yellow", "cyan", "blue", "magenta", "lime", "green" }), isTogglable = true, toolTip = "Sets your name as Owner with rainbow text." },
                 new ButtonInfo { buttonText = "Owner Name", method =() => Name.ChangeName("\nOwner", "white"), isTogglable = true, toolTip = "Sets your name as Owner." },
@@ -354,6 +364,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Prefabs | 11
                 new ButtonInfo { buttonText = "Exit Prefabs", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu."},
+
                 new ButtonInfo { buttonText = "Get Fucked Spawn <color=grey>[</color><color=cyan>FOREST</color><color=grey>]</color>", method =() => Experimental.GetFucked(), isTogglable = false, toolTip = "Spawns the word 'Get Fucked' using stickable targets in forest." },
                 new ButtonInfo { buttonText = "Clear Prefabs", method =() => Prefabs.ClearPrefabs(), isTogglable = false, toolTip = "Clears every prefab with a photon view." },
 
@@ -382,6 +393,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Overpowered | 12
                 new ButtonInfo { buttonText = "Exit Overpowered", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "MasterLabel", label = true },
 
                 new ButtonInfo { buttonText = "Cosmetix", method =() => Utility.UnlockAll(), isTogglable = false, toolTip = "Gives you every cosmetic in the game." },
@@ -439,6 +451,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Experimental | 13
                 new ButtonInfo { buttonText = "Exit Experimental", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "Grab RPC Data", method =() => Experimental.GrabRPCData(), isTogglable = false, toolTip = "Grabs all the games rpcs and writes them to a file." },
                 new ButtonInfo { buttonText = "Grab Game Info", method =() => Experimental.GrabGameInfo(), isTogglable = false, toolTip = "Grabs the games info and writes them to a file." },
 
@@ -508,6 +521,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // GTH Mods | 17
                 new ButtonInfo { buttonText = "Exit GTH", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+
                 new ButtonInfo { buttonText = "Spawn Timmy", method =() => GTH.SpawnTimmy(), toolTip = "Spawns a timmy above your head.", isTogglable = true },
                 new ButtonInfo { buttonText = "Spawn Stalker", method =() => GTH.SpawnStalker(), toolTip = "Spawns a stalker above your head.", isTogglable = true },
                 new ButtonInfo { buttonText = "Timmy Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => GTH.TimmySpam(), toolTip = "Lets you spam timmys while holding your grips.", isTogglable = true },
