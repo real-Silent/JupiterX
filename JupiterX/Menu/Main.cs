@@ -51,7 +51,7 @@ namespace JupiterX.Menu
 					if (Utility.toOpen || keyboardOpen)
 					{
                         if (!DisableMenuSounds)
-                            Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuopen.wav");
+                            Utility.PlaySound(Utility.menuOpenSound);
                         CreateMenu();
 
                         RecenterMenu(RightHanded, keyboardOpen);
@@ -64,57 +64,52 @@ namespace JupiterX.Menu
 				else
 				{
 					if (Utility.toOpen || keyboardOpen)
-					{
-						RecenterMenu(RightHanded, keyboardOpen);
-					}
+					    RecenterMenu(RightHanded, keyboardOpen);
 					else
 					{
 						Rigidbody comp = menu.AddComponent<Rigidbody>();
-
                         switch (Utility.MainDropType) 
                         {
-                            case 0:
+                            case 0: // Destroy
                                 UnityEngine.Object.Destroy(menu, Time.deltaTime);
                                 menu = null;
-
                                 UnityEngine.Object.Destroy(reference);
                                 reference = null;
-                                break; // Destroy
+                                break;
+
                             case 1: // Drop
                                 comp.velocity = Vector3.zero;
                                 UnityEngine.Object.Destroy(menu, 5);
                                 menu = null;
-
                                 UnityEngine.Object.Destroy(reference);
                                 reference = null;
                                 break;
+
                             case 2: // Drop
                                 comp.useGravity = false;
                                 comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
                                 UnityEngine.Object.Destroy(menu, 5);
                                 menu = null;
-
                                 UnityEngine.Object.Destroy(reference);
                                 reference = null;
                                 break;
+
                             case 3: // Throw
                                 comp.velocity = RightHanded ? Utility.ThrowMenu(Utility.RightHand) : Utility.ThrowMenu(Utility.LeftHand);
                                 UnityEngine.Object.Destroy(menu, 5);
                                 menu = null;
-
                                 UnityEngine.Object.Destroy(reference);
                                 reference = null;
                                 break;
                         }
-
                         if (!DisableMenuSounds)
-                            Utility.PlayEmbeddedSoundOnHand("JupiterX.Resources.menuclose.wav");
-					}
+                            Utility.PlaySound(Utility.menuCloseSound);
+                    }
 				}
 			}
 			catch (Exception exc)
 			{
-				UnityEngine.Debug.LogError(string.Format("{0} // Error initializing at {1}: {2}", Utility.name, exc.StackTrace, exc.Message));
+				MelonLoader.MelonLogger.Msg(string.Format("{0} // Error with drawing {1} : {2}", Utility.name, exc.StackTrace, exc.Message));
 			}
 
             if (Utility.isTriggers)
@@ -130,9 +125,7 @@ namespace JupiterX.Menu
                         }
                     }
                     else
-                    {
                         Utility.hasTriggeredOnceL = false;
-                    }
                     if (Utility.RTrigger)
                     {
                         if (!Utility.hasTriggeredOnceR)
@@ -142,9 +135,7 @@ namespace JupiterX.Menu
                         }
                     }
                     else
-                    {
                         Utility.hasTriggeredOnceR = false;
-                    }
                 }
             }
 
@@ -154,10 +145,7 @@ namespace JupiterX.Menu
             try
             {
                 if (PhotonNetwork.InRoom)
-                {
                     lastRoom = PhotonNetwork.CurrentRoom.Name;
-                }
-
                 if (PhotonNetwork.InRoom && !lastInRoom)
                 {
                     if (!disableRoomNotifications)
@@ -172,7 +160,6 @@ namespace JupiterX.Menu
                         NotifiLib.SendNotification("<color=grey>[</color><color=blue>LEAVE ROOM</color><color=grey>]</color> Room Code: " + lastRoom + "");
                     lastMasterClient = false;
                 }
-
                 lastInRoom = PhotonNetwork.InRoom;
             }
             catch { }
@@ -216,7 +203,7 @@ namespace JupiterX.Menu
 								}
 								catch (Exception exc)
 								{
-									UnityEngine.Debug.LogError(string.Format("{0} // Error with mod {1} at {2}: {3}", Utility.name, v.buttonText, exc.StackTrace, exc.Message));
+                                    MelonLoader.MelonLogger.Msg(string.Format("{0} // Error with mod {1} at {2}: {3}", Utility.name, v.buttonText, exc.StackTrace, exc.Message));
 								}
 							}
 						}
@@ -225,7 +212,7 @@ namespace JupiterX.Menu
 			}
 			catch (Exception exc)
 			{
-				UnityEngine.Debug.LogError(string.Format("{0} // Error with executing mods at {1}: {2}", Utility.name, exc.StackTrace, exc.Message));
+				MelonLoader.MelonLogger.Msg(string.Format("{0} // Error with executing mods at {1}: {2}", Utility.name, exc.StackTrace, exc.Message));
 			}
 
             if (pointerTrail)
@@ -519,7 +506,6 @@ namespace JupiterX.Menu
 
             int buttonIndexOffset = 0;
             ButtonInfo[] renderButtons = new ButtonInfo[] { };
-
 
             if (CurrentPrompt != null)
                 RenderPrompt();

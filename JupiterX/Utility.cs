@@ -1344,21 +1344,66 @@ namespace JupiterX
             Il2CppSystem.Net.WebClient webClient = new Il2CppSystem.Net.WebClient();
             return webClient.DownloadString(url);
         }
-        public static byte[] LoadEmbeddedSounds(string resourceName)
+
+
+        public static AudioClip buttonClickSound = null;
+        public static AudioClip menuOpenSound = null;
+        public static AudioClip menuCloseSound = null;
+
+        public static void CacheSounds()
+        {
+            buttonClickSound = GetAudioClip("JupiterX.Resources.steal.wav");
+            menuOpenSound = GetAudioClip("JupiterX.Resources.menuopen.wav");
+            menuCloseSound = GetAudioClip("JupiterX.Resources.menuclose.wav");
+        }
+
+        public static List<AudioSource> cachedSources = new List<AudioSource>();
+
+        private static readonly Dictionary<string, AudioClip> CachedClips = new Dictionary<string, AudioClip>();
+        public static AudioClip GetAudioClip(string resourceName)
+        {
+            if (CachedClips.TryGetValue(resourceName, out AudioClip cachedClip))
+                return cachedClip;
+            byte[] soundBytes = LoadEmbeddedSounds(resourceName);
+            if (soundBytes == null)
+                return null;
+            AudioClip clip = WavToAudioClip(soundBytes);
+            if (clip == null)
+                return null;
+            CachedClips[resourceName] = clip;
+            return clip;
+        }
+
+        public static void PlaySound(AudioClip clip, float volume = 0.5f)
+        {
+            if (clip == null)
+                return;
+            AudioSource source = GorillaTagger.Instance.offlineVRRig.gameObject.AddComponent<AudioSource>();
+            source.clip = clip;
+            source.volume = volume;
+            source.loop = false;
+            source.Play();
+            UnityEngine.Object.Destroy(source, clip.length + 0.1f);
+        }
+
+        private static byte[] LoadEmbeddedSounds(string resourceName)
         {
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
             {
                 if (stream == null)
                     return null;
+
                 byte[] bytes = new byte[stream.Length];
                 stream.Read(bytes, 0, bytes.Length);
                 return bytes;
             }
         }
+
         private static AudioClip WavToAudioClip(byte[] fileBytes)
         {
             const int headerSize = 44;
-            if (fileBytes.Length < headerSize) return null;
+            if (fileBytes.Length < headerSize)
+                return null;
             int sampleRate = BitConverter.ToInt32(fileBytes, 24);
             int channels = BitConverter.ToInt16(fileBytes, 22);
             int dataSize = fileBytes.Length - headerSize;
@@ -1366,28 +1411,12 @@ namespace JupiterX
             float[] samples = new float[sampleCount];
             for (int i = 0; i < sampleCount; i++)
             {
-                short sample = BitConverter.ToInt16(fileBytes, headerSize + i * 2);
+                short sample = BitConverter.ToInt16(fileBytes, headerSize + (i * 2));
                 samples[i] = sample / 32768f;
             }
             AudioClip clip = AudioClip.Create("sound", sampleCount / channels, channels, sampleRate, false);
             clip.SetData(samples, 0);
             return clip;
-        }
-        public static void PlayEmbeddedSoundOnHand(string resourceName)
-        {
-            byte[] soundBytes = LoadEmbeddedSounds(resourceName);
-            if (soundBytes == null) return;
-            AudioClip clip = WavToAudioClip(soundBytes);
-            if (clip == null)
-                return;
-            var audioSource = GorillaTagger.Instance.offlineVRRig.gameObject.AddComponent<AudioSource>();
-            if (audioSource != null)
-            {
-                audioSource.clip = clip;
-                audioSource.volume = 0.5f;
-                audioSource.loop = false;
-                audioSource.Play();
-            }
         }
         public static string Credits = "GunLib , Saving/Loading Preferneces , PlayerTab : [iiDk]";
     }
