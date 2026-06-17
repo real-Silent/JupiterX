@@ -43,7 +43,7 @@ namespace JupiterX
         }
         public static void PingOverlay()
         {
-            NotifiLib.information["Ping"] = PhotonNetwork.GetPing() + "ms";
+            NotificationManager.information["Ping"] = PhotonNetwork.GetPing() + "ms";
         }
         public static void NearbyTaggerOverlay()
         {
@@ -58,9 +58,9 @@ namespace JupiterX
                 }
             }
             if (!Mathf.Approximately(closest, float.MaxValue))
-                NotifiLib.information["Nearby"] = $"{closest:F1}m";
+                NotificationManager.information["Nearby"] = $"{closest:F1}m";
             else
-                NotifiLib.information.Remove("Nearby");
+                NotificationManager.information.Remove("Nearby");
         }
         private static Color HexToColor(string hex)
         {
@@ -236,7 +236,7 @@ namespace JupiterX
             byte[] data = Encoding.UTF8.GetBytes(json);
             byte[] response = client.UploadData(url, "POST", data);
             string responseString = Encoding.UTF8.GetString(response);
-            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Success {responseString}", 6f);
+            NotificationManager.SendNotification($"<color=cyan>[INFO]</color> Success {responseString}", 6f);
             client.Dispose();
         }
         public static void BetaTPToSling()
@@ -828,7 +828,7 @@ namespace JupiterX
             Type controllerType = Type.GetType("CosmeticsController, Assembly-CSharp") ?? Type.GetType("GorillaNetworking.CosmeticsController, Assembly-CSharp");
             if (controllerType == null)
             {
-                NotifiLib.SendNotification("Can't find CosmeticsController type");
+                NotificationManager.SendNotification("Can't find CosmeticsController type");
                 return null;
             }
             FieldInfo instanceField = controllerType.GetField("instance", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
@@ -844,10 +844,10 @@ namespace JupiterX
                 object instance = instanceProperty.GetValue(null);
                 if (instance != null)
                     return instance;
-                NotifiLib.SendNotification("instance property returned null");
+                NotificationManager.SendNotification("instance property returned null");
                 return null;
             }
-            NotifiLib.SendNotification("Can't find controller instance");
+            NotificationManager.SendNotification("Can't find controller instance");
             return null;
         }
 
@@ -862,13 +862,13 @@ namespace JupiterX
             PropertyInfo cosmeticsProperty = controllerType.GetProperty("allCosmetics", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             if (cosmeticsProperty == null)
             {
-                NotifiLib.SendNotification("Can't find allCosmetics property");
+                NotificationManager.SendNotification("Can't find allCosmetics property");
                 return new List<CosmeticItem>();
             }
             object cosmetics = cosmeticsProperty.GetValue(controllerInstance);
             if (cosmetics == null)
             {
-                NotifiLib.SendNotification("allCosmetics is null");
+                NotificationManager.SendNotification("allCosmetics is null");
                 return new List<CosmeticItem>();
             }
             return (List<CosmeticItem>)cosmetics;
@@ -879,7 +879,7 @@ namespace JupiterX
             Type controllerType = Type.GetType("CosmeticsController, Assembly-CSharp") ?? Type.GetType("GorillaNetworking.CosmeticsController, Assembly-CSharp");
             if (controllerType == null)
             {
-                NotifiLib.SendNotification("Can't find CosmeticsController type");
+                NotificationManager.SendNotification("Can't find CosmeticsController type");
                 return;
             }
             object controllerInstance = GetCosmeticsControllerInstance();
@@ -888,7 +888,7 @@ namespace JupiterX
             MethodInfo method = controllerType.GetMethod("UpdateWardrobeModelsAndButtons", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             if (method == null)
             {
-                NotifiLib.SendNotification("Can't find UpdateWardrobeModelsAndButtons");
+                NotificationManager.SendNotification("Can't find UpdateWardrobeModelsAndButtons");
                 return;
             }
             method.Invoke(controllerInstance, null);
@@ -899,7 +899,7 @@ namespace JupiterX
             Type controllerType = Type.GetType("CosmeticsController, Assembly-CSharp") ?? Type.GetType("GorillaNetworking.CosmeticsController, Assembly-CSharp");
             if (controllerType == null)
             {
-                NotifiLib.SendNotification("Can't find CosmeticsController type");
+                NotificationManager.SendNotification("Can't find CosmeticsController type");
                 return;
             }
             object controllerInstance = GetCosmeticsControllerInstance();
@@ -908,7 +908,7 @@ namespace JupiterX
             MethodInfo method = controllerType.GetMethod("UnlockItem", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             if (method == null)
             {
-                NotifiLib.SendNotification("Can't find UnlockItem method");
+                NotificationManager.SendNotification("Can't find UnlockItem method");
                 return;
             }
             method.Invoke(controllerInstance, new object[] { itemId });
@@ -1040,12 +1040,12 @@ namespace JupiterX
             if (new WebClient().DownloadString("https://api-nova-two.vercel.app/jupiterx/locks/lock1").Contains("true"))
             {
                 canusemenu = false;
-                NotifiLib.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
+                NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
             }
             if (new WebClient().DownloadString("https://api-nova-two.vercel.app/jupiterx/locks/mainlock").Contains("true"))
             {
                 canusemenu = false;
-                NotifiLib.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
+                NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
             }
         }
 
@@ -1273,7 +1273,7 @@ namespace JupiterX
                         if (rig.concatStringOfCosmeticsAllowed.Contains(cosmeticId))
                         {
                             PhotonNetwork.Disconnect();
-                            NotifiLib.SendNotification("Someone with " + cosmeticId + " joined.", 5f);
+                            NotificationManager.SendNotification("Someone with " + cosmeticId + " joined.", 5f);
                         }
                     }
                 }

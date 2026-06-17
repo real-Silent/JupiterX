@@ -23,7 +23,7 @@ namespace JupiterX.Menu
 		{
             if (Utility.canusemenu == false)
             {
-                NotifiLib.SendNotification("<color=red>[INFO]</color> Menu is locked!", 15f);
+                NotificationManager.SendNotification("<color=red>[INFO]</color> Menu is locked!", 15f);
                 return;
             }
 
@@ -171,15 +171,15 @@ namespace JupiterX.Menu
                 if (PhotonNetwork.InRoom && !lastInRoom)
                 {
                     if (!disableRoomNotifications)
-                        NotifiLib.SendNotification("<color=grey>[</color><color=blue>JOIN ROOM</color><color=grey>]</color> Room Code: " + lastRoom + "");
+                        NotificationManager.SendNotification("<color=grey>[</color><color=blue>JOIN ROOM</color><color=grey>]</color> Room Code: " + lastRoom + "");
                 }
                 if (!PhotonNetwork.InRoom && lastInRoom)
                 {
                     if (clearNotificationsOnDisconnect)
-                        NotifiLib.ClearAllNotifications();
+                        NotificationManager.ClearAllNotifications();
 
                     if (!disableRoomNotifications)
-                        NotifiLib.SendNotification("<color=grey>[</color><color=blue>LEAVE ROOM</color><color=grey>]</color> Room Code: " + lastRoom + "");
+                        NotificationManager.SendNotification("<color=grey>[</color><color=blue>LEAVE ROOM</color><color=grey>]</color> Room Code: " + lastRoom + "");
                     lastMasterClient = false;
                 }
                 lastInRoom = PhotonNetwork.InRoom;
@@ -200,7 +200,7 @@ namespace JupiterX.Menu
                     {
                         if (disableMasterClientNotifications)
                             return;
-                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>MASTER</color><color=grey>]</color> You are now master client.");
+                        NotificationManager.SendNotification("<color=grey>[</color><color=purple>MASTER</color><color=grey>]</color> You are now master client.");
                     }
                     lastMasterClient = Utility.IsMaster();
                 }
@@ -535,25 +535,31 @@ namespace JupiterX.Menu
             {
                 try
                 {
-                    if (Buttons.CurrentCategoryName == "Favorite")
+                    if (CurrentCategoryName == "Main")
                     {
-                        foreach (string favoriteMod in favorites)
+                        List<ButtonInfo> buttons = new List<ButtonInfo>();
+                        foreach (var button in Buttons.buttons[CurrentCategoryIndex])
                         {
-                            if (GetIndex(favoriteMod) == null)
-                                favorites.Remove(favoriteMod);
+                            if (!skipButtons.Contains(button.buttonText))
+                                buttons.Add(button);
                         }
-
+                        renderButtons = buttons.ToArray();
+                    }
+                    else if (CurrentCategoryName == "Favorite")
+                    {
+                        foreach (var favoriteMod in favorites.Where(favoriteMod => Buttons.GetIndex(favoriteMod) == null).ToList())
+                            favorites.Remove(favoriteMod);
                         renderButtons = StringsToInfos(favorites.ToArray());
                     }
-                    else if (Buttons.CurrentCategoryName == "Enabled")
+                    else if (CurrentCategoryName == "Enabled")
                     {
                         List<ButtonInfo> enabledMods = new List<ButtonInfo>() { };
                         int categoryIndex = 0;
-                        foreach (ButtonInfo[] buttonlist in Buttons.buttons)
+                        foreach (ButtonInfo[] buttonlist in buttons)
                         {
                             foreach (ButtonInfo v in buttonlist)
                             {
-                                if (v.enabled && (!Buttons.categoryNames[categoryIndex].Contains("Settings")))
+                                if (v.enabled && (!categoryNames[categoryIndex].Contains("Settings")))
                                     enabledMods.Add(v);
                             }
                             categoryIndex++;
@@ -996,24 +1002,24 @@ namespace JupiterX.Menu
                     if (favorites.Contains(target.buttonText))
                     {
                         favorites.Remove(target.buttonText);
-                        NotifiLib.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Removed from favorites.");
+                        NotificationManager.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Removed from favorites.");
                     }
                     else
                     {
                         favorites.Add(target.buttonText);
-                        NotifiLib.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Added to favorites.");
+                        NotificationManager.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Added to favorites.");
                     }
                     break;
                 case true when fromMenu && !ignoreForce && triggerHeld:
                     if (!quickActions.Contains(target.buttonText))
                     {
                         quickActions.Add(target.buttonText);
-                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
+                        NotificationManager.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
                     }
                     else
                     {
                         quickActions.Remove(target.buttonText);
-                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
+                        NotificationManager.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
                     }
                     break;
                 default:
@@ -1024,7 +1030,7 @@ namespace JupiterX.Menu
                         if (target.enabled)
                         {
                             if (fromMenu)
-                                NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
+                                NotificationManager.SendNotification($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
 
                             try { target.enableMethod?.Invoke(); }
                             catch (Exception exc)
@@ -1035,7 +1041,7 @@ namespace JupiterX.Menu
                         else
                         {
                             if (fromMenu)
-                                NotifiLib.SendNotification($"<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> {target.toolTip}");
+                                NotificationManager.SendNotification($"<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> {target.toolTip}");
                             try { target.disableMethod?.Invoke(); }
                             catch (Exception exc)
                             {
@@ -1046,7 +1052,7 @@ namespace JupiterX.Menu
                     else
                     {
                         if (fromMenu)
-                            NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
+                            NotificationManager.SendNotification($"<color=grey>[</color><color=cyan>ENABLE</color><color=grey>]</color> {target.toolTip}");
 
                         try { target.method?.Invoke(); }
                         catch (Exception exc)
@@ -1080,12 +1086,12 @@ namespace JupiterX.Menu
                     if (!quickActions.Contains(target.buttonText))
                     {
                         quickActions.Add(target.buttonText);
-                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
+                        NotificationManager.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
                     }
                     else
                     {
                         quickActions.Remove(target.buttonText);
-                        NotifiLib.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
+                        NotificationManager.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
                     }
                     break;
                 default:
@@ -1094,7 +1100,7 @@ namespace JupiterX.Menu
                     bool boost = incrementalBoost && Utility.RightGrip;
                     if (increment)
                     {
-                        NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>INCREMENT</color><color=grey>]</color> {target.toolTip}");
+                        NotificationManager.SendNotification($"<color=grey>[</color><color=cyan>INCREMENT</color><color=grey>]</color> {target.toolTip}");
                         if (boost)
                         {
                             for (int i = 0; i < 5; i++)
@@ -1118,7 +1124,7 @@ namespace JupiterX.Menu
                     }
                     else
                     {
-                        NotifiLib.SendNotification($"<color=grey>[</color><color=red>DECREMENT</color><color=grey>]</color> {target.toolTip}");
+                        NotificationManager.SendNotification($"<color=grey>[</color><color=red>DECREMENT</color><color=grey>]</color> {target.toolTip}");
                         if (boost)
                         {
                             for (int i = 0; i < 5; i++)
@@ -1408,7 +1414,7 @@ namespace JupiterX.Menu
             List<ButtonInfo> buttons = Buttons.buttons[0].ToList();
             buttons.Add(new ButtonInfo { buttonText = "Admin", method = () => Buttons.CurrentCategoryName = "Admin", isTogglable = false, toolTip = "Opens the admin mods." });
             Buttons.buttons[0] = buttons.ToArray();
-            NotifiLib.SendNotification($"<color=grey>[</color><color=cyan>{(playername == "NOVA" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.", 10f);
+            NotificationManager.SendNotification($"<color=grey>[</color><color=cyan>{(playername == "NOVA" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.", 10f);
         }
 
         public static IEnumerator GrowCoroutine()
@@ -1485,6 +1491,7 @@ namespace JupiterX.Menu
         public static List<string> quickActions = new List<string> { };
 
         public static List<string> favorites = new List<string> { "Exit Favorite" };
+        public static readonly List<string> skipButtons = new List<string> { };
 
         public static int _currentCategoryIndex;
 

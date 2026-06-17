@@ -3,6 +3,7 @@ using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static JupiterX.Menu.Main;
@@ -61,9 +62,32 @@ namespace JupiterX
         public static Vector3 menuSize = new Vector3(0.1f, 1f, 1f); // Depth, Width, Height
         public static int buttonsPerPage = 8;
 
+
+        public static void CategorySettings()
+        {
+            List<ButtonInfo> buttons = new List<ButtonInfo> { new ButtonInfo { buttonText = "Exit Menu Settings", method = () => { Buttons.CurrentCategoryName = "Settings"; Buttons.buttons[Buttons.GetCategory("Temporary Category")] = Array.Empty<ButtonInfo>(); }, isTogglable = false, toolTip = "Returns you back to the settings menu." } };
+
+            foreach (var button in Buttons.buttons[Buttons.GetCategory("Main")])
+            {
+                buttons.Add(new ButtonInfo
+                {
+                    buttonText = $"Category{button.buttonText.GetHashCode()}",
+                    overlapText = button.buttonText,
+                    enabled = !skipButtons.Contains(button.buttonText),
+                    enableMethod = () => skipButtons.Remove(button.buttonText),
+                    disableMethod = () => skipButtons.Add(button.buttonText),
+                    toolTip = "Toggles the visibility of the category " + button.buttonText + ".",
+                    hideFromArraylist = true
+                });
+            }
+
+            Buttons.buttons[Buttons.GetCategory("Temporary Category")] = buttons.ToArray();
+            Buttons.CurrentCategoryName = "Temporary Category";
+        }
+
         public static void GlobalReturn()
         {
-            NotifiLib.ClearAllNotifications();
+            NotificationManager.ClearAllNotifications();
             Toggle(Buttons.buttons[Buttons.CurrentCategoryIndex][Buttons.GetCategory("Main")].buttonText, true);
 
             if (prompts.Count > 0)

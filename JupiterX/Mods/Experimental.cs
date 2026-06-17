@@ -134,7 +134,7 @@ namespace JupiterX.Mods
             client.Headers.Add("Content-Type", "application/json");
             string response = client.UploadString(url, "POST", jsonData);
             JObject json = JObject.Parse(response);
-            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Response status: 200 {json["data"]?["PlayFabId"]?.ToString()}");
+            NotificationManager.SendNotification($"<color=cyan>[INFO]</color> Response status: 200 {json["data"]?["PlayFabId"]?.ToString()}");
             return new PlayFabLoginResult
             {
                 PlayFabId = json["data"]?["PlayFabId"]?.ToString(),
@@ -156,10 +156,10 @@ namespace JupiterX.Mods
                 EntityToken = data.EntityToken
             };
             PhotonNetwork.ConnectUsingSettings();
-            NotifiLib.SendNotification("<color=cyan>[INFO]</color> Authenticating to PlayFab!", 10f);
+            NotificationManager.SendNotification("<color=cyan>[INFO]</color> Authenticating to PlayFab!", 10f);
             GorillaTagger.Instance.offlineVRRig.GetUserCosmeticsAllowed();
             PhotonNetwork.ConnectToRegion("usw");
-            NotifiLib.SendNotification("<color=cyan>[INFO]</color> Authed!", 5f);
+            NotificationManager.SendNotification("<color=cyan>[INFO]</color> Authed!", 5f);
             GorillaComputer.instance.OnConnectedToMasterStuff();
         }
 

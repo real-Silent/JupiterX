@@ -8,10 +8,10 @@ using UnityEngine.UI;
 namespace JupiterX.Notifications
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
-    public class NotifiLib : MonoBehaviour
+    public class NotificationManager : MonoBehaviour
     {
-        public NotifiLib(IntPtr e) : base(e) { }
-        public static NotifiLib instance;
+        public NotificationManager(IntPtr e) : base(e) { }
+        public static NotificationManager instance;
         public GameObject HUDObj;
         public GameObject HUDObj2;
         private GameObject MainCamera;
@@ -114,6 +114,9 @@ namespace JupiterX.Notifications
                     {
                         foreach (var b in category)
                         {
+                            if (Buttons.buttons[Buttons.GetCategory("Temporary Category")].Contains(b) || b.hideFromArraylist)
+                                continue;
+
                             if (b.enabled)
                             {
                                 string t = b.overlapText ?? b.buttonText;

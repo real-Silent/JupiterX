@@ -12,7 +12,7 @@ namespace JupiterX
         private static void Prefix(Player player)
         {
             if (player != PhotonNetwork.LocalPlayer && !Main.disablePlayerNotifications)
-                NotifiLib.SendNotification($"<color=grey>[</color><color=green>JOIN</color><color=grey>]</color> Name: {Utility.CleanPlayerName(player.NickName)}");
+                NotificationManager.SendNotification($"<color=grey>[</color><color=green>JOIN</color><color=grey>]</color> Name: {Utility.CleanPlayerName(player.NickName)}");
         }
     }
 }

@@ -215,7 +215,7 @@ namespace JupiterX.Mods
             if (clip != null)
                 PlayAudioThroughMicrophone(clip);
             else
-                NotifiLib.SendNotification($"Audio clip with path of {soundpath} is null somehow please make sure everything is correct", 25f);
+                NotificationManager.SendNotification($"Audio clip with path of {soundpath} is null somehow please make sure everything is correct", 25f);
         }
 
         private static AudioClip CreateAudioClipFromWav(byte[] wavData, string clipName)

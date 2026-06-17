@@ -30,7 +30,7 @@ namespace JupiterX.Managers
         private static string PluginsPath => Path.Combine(Application.persistentDataPath, "JupiterX/Plugins");
         public static void ReloadPlugins()
         {
-            NotifiLib.SendNotification("Reloading plugins...", 500);
+            NotificationManager.SendNotification("Reloading plugins...", 500);
             Utility.SavePreferences();
             try
             {

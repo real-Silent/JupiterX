@@ -12,7 +12,7 @@ namespace JupiterX.Patches
         private static void Prefix(Player otherPlayer)
         {
             if (otherPlayer != PhotonNetwork.LocalPlayer && !Main.disablePlayerNotifications)
-                NotifiLib.SendNotification($"<color=grey>[</color><color=red>LEAVE</color><color=grey>]</color> Name: {Utility.CleanPlayerName(otherPlayer.NickName)}");
+                NotificationManager.SendNotification($"<color=grey>[</color><color=red>LEAVE</color><color=grey>]</color> Name: {Utility.CleanPlayerName(otherPlayer.NickName)}");
         }
     }
 }

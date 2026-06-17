@@ -21,14 +21,14 @@ namespace JupiterX.Notifications
             if (instance == null)
                 return;
 
-            NotifiLib.SendNotification(noti, duration);
+            NotificationManager.SendNotification(noti, duration);
 
-            if (NotifiLib.NotifiText == null)
+            if (NotificationManager.NotifiText == null)
                 return;
 
             MelonLoader.MelonCoroutines.Start(
                 instance.AnimatedNotification(
-                    NotifiLib.NotifiText.gameObject,
+                    NotificationManager.NotifiText.gameObject,
                     duration < 0 ? 3f : duration
                 )
             );

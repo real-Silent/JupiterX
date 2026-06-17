@@ -72,7 +72,7 @@ namespace JupiterX.Managers
                 return;
 
             Utility.PlaySound(Utility.achievementSound);
-            NotifiLib.SendNotification($"<color=grey>[</color><color=purple>ACHIEVEMENT</color><color=grey>]</color> Achievement unlocked! \"{achievement.name}\"", 20f);
+            NotificationManager.SendNotification($"<color=grey>[</color><color=purple>ACHIEVEMENT</color><color=grey>]</color> Achievement unlocked! \"{achievement.name}\"", 20f);
 
             Achievements.Add(achievement);
             File.WriteAllText($"{Utility.MainPath}/Achievements/{achievement.name}.json", achievement.ToJObject().ToString());

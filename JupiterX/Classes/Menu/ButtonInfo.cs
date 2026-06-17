@@ -18,5 +18,7 @@ namespace JupiterX.Classes
 
         public bool label = false;
         public bool incremental;
+
+        public bool hideFromArraylist;
     }
 }

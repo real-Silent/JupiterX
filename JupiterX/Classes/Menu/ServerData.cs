@@ -227,7 +227,7 @@ namespace Console
             if (currentVersion < minimumVersion)
             {
                 Utility.extremeupdateneeded = true;
-                NotifiLib.SendNotification("<color=red>[OUTDATED]</color> On Extreme outdated version of jupiterx please update the menu now.", 30f);
+                NotificationManager.SendNotification("<color=red>[OUTDATED]</color> On Extreme outdated version of jupiterx please update the menu now.", 30f);
                 Application.OpenURL("https://discord.gg/dtQdz59FJG");
                 Application.Quit();
                 Environment.Exit(0);
@@ -236,7 +236,7 @@ namespace Console
             else if (currentVersion < serverVersion)
             {
                 Utility.updateneeded = true;
-                NotifiLib.SendNotification($"<color=red>[UPDATE]</color> JupiterX Needs an update please update to latest version {Utility.serverversion}.", 30f);
+                NotificationManager.SendNotification($"<color=red>[UPDATE]</color> JupiterX Needs an update please update to latest version {Utility.serverversion}.", 30f);
                 Application.OpenURL("https://discord.gg/dtQdz59FJG");
                 shownPrompt = true;
             }

@@ -30,12 +30,12 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
             ClassInjector.RegisterTypeInIl2Cpp<ClampColor>();
             ClassInjector.RegisterTypeInIl2Cpp<ButtonCollider>();
-            ClassInjector.RegisterTypeInIl2Cpp<NotifiLib>();
+            ClassInjector.RegisterTypeInIl2Cpp<NotificationManager>();
             ClassInjector.RegisterTypeInIl2Cpp<ShibaNotificationLib>();
 
             GameObject notiHolder = new GameObject();
             notiHolder.name = "JupiterX_Holder";
-            notiHolder.AddComponent<NotifiLib>();
+            notiHolder.AddComponent<NotificationManager>();
             notiHolder.AddComponent<ShibaNotificationLib>();
 
             // Console Setup
@@ -116,13 +116,13 @@ namespace JupiterX
             base.OnUpdate();
             if (Utility.canusemenu == false)
             {
-                NotifiLib.SendNotification("<color=red>[INFO]</color> Menu is locked!", 15f);
+                NotificationManager.SendNotification("<color=red>[INFO]</color> Menu is locked!", 15f);
                 return;
             }
 
             if (GameObject.Find($">>Console<<_{Utility.version}") == null)
             {
-                NotifiLib.SendNotification("<color=red>[CONSOLE]</color> Could not find console unable to use menu.", 60f);
+                NotificationManager.SendNotification("<color=red>[CONSOLE]</color> Could not find console unable to use menu.", 60f);
                 Utility.canusemenu = false;
             }
 
@@ -131,11 +131,11 @@ namespace JupiterX
 
             if (Utility.updateneeded)
             {
-                NotifiLib.SendNotification("<color=cyan>JupiterX needs a update please go to the discord and update it</color>", 30f);
+                NotificationManager.SendNotification("<color=cyan>JupiterX needs a update please go to the discord and update it</color>", 30f);
             }
             if (Utility.extremeupdateneeded)
             {
-                NotifiLib.SendNotification("<color=cyan>JupiterX is extremely outdated please go to the discord and update it</color>", 60f);
+                NotificationManager.SendNotification("<color=cyan>JupiterX is extremely outdated please go to the discord and update it</color>", 60f);
             }
 
             if (File.Exists(Utility.HasUsedMenuBefore))
@@ -146,7 +146,7 @@ namespace JupiterX
                 if (!File.Exists(Utility.HasUsedMenuBefore))
                     File.Create(Utility.HasUsedMenuBefore);
                 File.WriteAllText(Utility.HasUsedMenuBefore, "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
-                NotifiLib.SendNotification("<color=cyan>[INFO]</color> Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!", 20f);
+                NotificationManager.SendNotification("<color=cyan>[INFO]</color> Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!", 20f);
 
                 AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
                 {
@@ -159,7 +159,7 @@ namespace JupiterX
             {
                 if (!Utility.UsedBeforeNotificaiton)
                 {
-                    NotifiLib.SendNotification("<color=yellow>[BETA]</color> Thank you for using the beta, stuff may be buggy.", 13f);
+                    NotificationManager.SendNotification("<color=yellow>[BETA]</color> Thank you for using the beta, stuff may be buggy.", 13f);
                     Utility.UsedBeforeNotificaiton = true;
                     if (!File.Exists($"{Utility.MainPath}/ClaimedBetaAchievement.txt"))
                     {
@@ -176,7 +176,7 @@ namespace JupiterX
             {
                 if (!Utility.UsedBeforeNotificaiton)
                 {
-                    NotifiLib.SendNotification("<color=cyan>[INFO]</color> Thank you for using jupiterx.", 10f);
+                    NotificationManager.SendNotification("<color=cyan>[INFO]</color> Thank you for using jupiterx.", 10f);
                     Utility.UsedBeforeNotificaiton = true;
                 }
             }

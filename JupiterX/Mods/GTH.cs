@@ -586,7 +586,7 @@ namespace JupiterX.Mods
         {
             if (trap == null)
             {
-                NotifiLib.SendNotification("<color=red>[ERROR]</color> Trap has not been placed!");
+                NotificationManager.SendNotification("<color=red>[ERROR]</color> Trap has not been placed!");
                 return;
             }
             List<GameObject> timmys = GetTimmys();
@@ -599,7 +599,7 @@ namespace JupiterX.Mods
         {
             if (trap == null)
             {
-                NotifiLib.SendNotification("<color=red>[ERROR]</color> Trap has not been placed!");
+                NotificationManager.SendNotification("<color=red>[ERROR]</color> Trap has not been placed!");
                 return;
             }
             List<GameObject> stalkers = GetStalkers();
@@ -612,7 +612,7 @@ namespace JupiterX.Mods
         {
             if (trap == null)
             {
-                NotifiLib.SendNotification("<color=red>[ERROR]</color> Trap has not been placed!");
+                NotificationManager.SendNotification("<color=red>[ERROR]</color> Trap has not been placed!");
                 return;
             }
             List<GameObject> monsters = GetAllMonsters();

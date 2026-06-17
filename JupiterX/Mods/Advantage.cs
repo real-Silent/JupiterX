@@ -32,12 +32,12 @@ namespace JupiterX.Mods
                             Utility.myVRRig().transform.position = rig.headConstraint.transform.position;
                             Utility.myVRRig().rightHandTransform.transform.position = rig.headConstraint.transform.position;
                             Utility.RightHandTransform().position = rig.headConstraint.transform.position;
-                            NotifiLib.SendNotification("<color=yellow>[INFO]</color> Tagged all!", 7f);
+                            NotificationManager.SendNotification("<color=yellow>[INFO]</color> Tagged all!", 7f);
                         }
                         else
                         {
                             Utility.myVRRig().enabled = true;
-                            NotifiLib.SendNotification("<color=red>[ERROR]</color> You are not tagged.", 10f);
+                            NotificationManager.SendNotification("<color=red>[ERROR]</color> You are not tagged.", 10f);
                         }
                     }
                 }

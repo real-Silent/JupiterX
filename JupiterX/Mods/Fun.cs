@@ -125,7 +125,7 @@ namespace JupiterX.Mods
 
         public static void GetIdSelf()
         {
-            NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Your userid is {Utility.MyPlayer().UserId}");
+            NotificationManager.SendNotification($"<color=cyan>[INFO]</color> Your userid is {Utility.MyPlayer().UserId}");
             if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids")))
                 Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/Ids"));
             else if (!File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids/SelfId.txt")))
@@ -146,7 +146,7 @@ namespace JupiterX.Mods
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     if (who)
                     {
-                        NotifiLib.SendNotification($"<color=cyan>[INFO]</color> There userid is {who.photonView.Owner.UserId}");
+                        NotificationManager.SendNotification($"<color=cyan>[INFO]</color> There userid is {who.photonView.Owner.UserId}");
                         if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids")))
                             Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/Ids"));
                         else if (!File.Exists(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{who.photonView.Owner.NickName}_UserId.txt")))
@@ -162,12 +162,12 @@ namespace JupiterX.Mods
         {
             if (!PhotonNetwork.InRoom)
             {
-                NotifiLib.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
+                NotificationManager.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
                 return;
             }
             foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
             {
-                NotifiLib.SendNotification($"<color=cyan>[INFO]</color> There userid is {plr.UserId}");
+                NotificationManager.SendNotification($"<color=cyan>[INFO]</color> There userid is {plr.UserId}");
                 if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids")))
                     Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/Ids"));
                 else if (!File.Exists(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{plr.NickName}_UserId.txt")))
@@ -181,7 +181,7 @@ namespace JupiterX.Mods
         {
             if (!PhotonNetwork.InRoom)
             {
-                NotifiLib.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
+                NotificationManager.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
                 return;
             }
             foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerList)
@@ -191,7 +191,7 @@ namespace JupiterX.Mods
                 stringBuilder.AppendLine($"NickName: {plr.NickName}, UserId: {plr.UserId}, Cosmetics: {RigManager.GetVRRigFromPlayer(plr).concatStringOfCosmeticsAllowed}");
                 stringBuilder.Append("\nRoom Info Pulled By JupiterX");
                 string payload = stringBuilder.ToString();
-                NotifiLib.SendNotification($"<color=cyan>[INFO]</color> Grabbed player info for room {PhotonNetwork.CurrentRoom.Name}");
+                NotificationManager.SendNotification($"<color=cyan>[INFO]</color> Grabbed player info for room {PhotonNetwork.CurrentRoom.Name}");
                 if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/RoomInfo")))
                     Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/RoomInfo"));
                 else if (!File.Exists(Path.Combine(Application.persistentDataPath, $"JupiterX/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt")))
