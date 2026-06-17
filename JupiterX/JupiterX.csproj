@@ -498,7 +498,7 @@
     <EmbeddedResource Include="Resources\search.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\achievement.wav" />
+    <EmbeddedResource Include="Resources\achievement.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
