@@ -13,6 +13,63 @@ namespace JupiterX.Mods
 {
     public class Fun
     {
+        // Head mods from seralyth im lazy
+        private static VRMap Head =>
+            PhotonNetwork.InRoom ? GorillaTagger.Instance.myVRRig.head : GorillaTagger.Instance.offlineVRRig.head;
+
+        public static void FixHead()
+        {
+            Vector3 rot = Head.trackingRotationOffset;
+            rot = Vector3.zero;
+            Head.trackingRotationOffset = rot;
+        }
+
+        public static void UpsideDownHead()
+        {
+            Vector3 rot = Head.trackingRotationOffset;
+            rot.z = 180f;
+            Head.trackingRotationOffset = rot;
+        }
+
+        public static void BrokenNeck()
+        {
+            Vector3 rot = Head.trackingRotationOffset;
+            rot.z = 90f;
+            Head.trackingRotationOffset = rot;
+        }
+
+        public static void BackwardsHead()
+        {
+            Vector3 rot = Head.trackingRotationOffset;
+            rot.y = 180f;
+            Head.trackingRotationOffset = rot;
+        }
+
+        public static void SidewaysHead()
+        {
+            Vector3 rot = Head.trackingRotationOffset;
+            rot.y = 90f;
+            Head.trackingRotationOffset = rot;
+        }
+
+        public static float lastBangTime;
+        public static readonly float BPM = 159f;
+
+        public static void HeadBang()
+        {
+            Vector3 rot = Head.trackingRotationOffset;
+
+            if (Time.time > lastBangTime)
+            {
+                rot.x = 50f;
+                lastBangTime = Time.time + 60f / BPM;
+            }
+            else
+                rot.x = Mathf.Lerp(rot.x, 0f, 0.1f);
+            Head.trackingRotationOffset = rot;
+        }
+
+
         private static Recorder _recorder;
         public static Recorder recorder
         {
