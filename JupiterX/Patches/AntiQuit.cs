@@ -7,7 +7,7 @@ public class AntiQuit
 {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Application), nameof(Application.Quit))]
-    public static bool BlocQuit()
+    public static bool BlockQuit()
     {
         return false; 
     }
