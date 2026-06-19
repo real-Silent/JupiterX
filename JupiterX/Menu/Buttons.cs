@@ -64,7 +64,7 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Right Hand", enableMethod =() => RightHanded = true, disableMethod =() => RightHanded = false, toolTip = "Puts the menu on your right hand."},
                 new ButtonInfo { buttonText = "Both Hands", enableMethod =() => bothHands = true, disableMethod =() => bothHands = false, toolTip = "Puts the menu on your both of your hands."},
-                
+
                 new ButtonInfo { buttonText = "Freeze Player In Menu", method =() => Utility.FreezePlayerInMenu(), isTogglable = true, toolTip = "Lets you float while the menu is open."},
                 new ButtonInfo { buttonText = "Ghost In Menu", method =() => Utility.GhostInMenu(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Makes you have ghost monke when menu is open."},
                 new ButtonInfo { buttonText = "Invis In Menu", method =() => Utility.InvisInMeun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Makes you have invis monke when menu is open."},
@@ -83,17 +83,17 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Disable Menu Title", enableMethod =() => MenuTitle = false, disableMethod =() => MenuTitle = true, toolTip = "Toggles the menu title."},
                 new ButtonInfo { buttonText = "Disable Page Number", enableMethod =() => DisablePageNumber = true, disableMethod =() => DisablePageNumber = false, toolTip = "Disables the page number on the title."},
                 new ButtonInfo { buttonText = "Custom Menu Title", enableMethod =() => CustomMenuTitle = true, disableMethod =() => CustomMenuTitle = false, toolTip = "Gives the menu a custom title you choose inside a txt."},
-                new ButtonInfo { buttonText = "Change Page Type", overlapText = $"Change Page Type <color=grey>[<color={inputTextColor}>Side</color>]</color>", method =() => Utility.ChangePageType(), enableMethod =() => Utility.ChangePageType(), disableMethod =() => Utility.ChangePageType(false), incremental = true, isTogglable = false, toolTip = "Changes the page type." },
-                new ButtonInfo { buttonText = "Change Font Style", overlapText = $"Change Font Style <color=grey>[<color={inputTextColor}>Default</color>]</color>", method =() => Utility.ChangeFontStyle(), enableMethod =() => Utility.ChangeFontStyle(), disableMethod =() => Utility.ChangeFontStyle(false), incremental = true, isTogglable = false, toolTip = "Changes the font style of the menu." },
+                new ButtonInfo { buttonText = "Change Page Type", method =() => Utility.ChangePageType(), enableMethod =() => Utility.ChangePageType(), disableMethod =() => Utility.ChangePageType(false), incremental = true, overlapText = "Change Page Type <color=grey>[<color=cyan>Side</color>]</color>", isTogglable = false, toolTip = "Changes the page type." },
+                new ButtonInfo { buttonText = "Change Font Style", method =() => Utility.ChangeFontStyle(), enableMethod =() => Utility.ChangeFontStyle(), disableMethod =() => Utility.ChangeFontStyle(false), incremental = true, overlapText = "Change Font Style <color=grey>[<color=cyan>Default</color>]</color>", isTogglable = false, toolTip = "Changes the font style of the menu." },
 
                 new ButtonInfo { buttonText = "Change Input Text Color", overlapText = "Change Input Text Color <color=grey>[</color><color=cyan>Cyan</color><color=grey>]</color>", method =() => Settings.ChangeInputTextColor(), enableMethod =() => Settings.ChangeInputTextColor(), disableMethod =() => Settings.ChangeInputTextColor(false), incremental = true, isTogglable = false, toolTip = "Changes the color of the input indicator next to the buttons."},
 
                 //new ButtonInfo { buttonText = "Disable Search Button", enableMethod =() => disableSearchButton = true, disableMethod =() => disableSearchButton = false, toolTip = "Disables the search button at the bottom of the menu."},
                 new ButtonInfo { buttonText = "Disable Return Button", enableMethod =() => disableReturnButton = true, disableMethod =() => disableReturnButton = false, toolTip = "Disables the return button at the bottom of the menu."},
 
-                new ButtonInfo { buttonText = "Change Menu Theme", overlapText = $"Change Menu Theme <color=grey>[<color={inputTextColor}>Default</color>]</color>", method =() => Utility.ChangeMenuTheme(), enableMethod =() => Utility.ChangeMenuTheme(), disableMethod =() => Utility.ChangeMenuTheme(false), incremental = true, toolTip = "Changes the menu theme." },
+                new ButtonInfo { buttonText = "Change Menu Theme", method =() => Utility.ChangeMenuTheme(), enableMethod =() => Utility.ChangeMenuTheme(), disableMethod =() => Utility.ChangeMenuTheme(false), incremental = true, overlapText = "Change Menu Theme <color=grey>[<color=cyan>Default</color>]</color>", isTogglable = false, toolTip = "Changes the menu theme." },
                 new ButtonInfo { buttonText = "Menu Outline", enableMethod =() => menuoutline = true, disableMethod =() => menuoutline = false, isTogglable = true, toolTip = "Gives the menu a outline." },
-                new ButtonInfo { buttonText = "Change Drop Type", overlapText = $"Change Drop Type <color=grey>[<color={inputTextColor}>Destroy</color>]</color>", method =() => Utility.ChangeDropType(), enableMethod =() => Utility.ChangeDropType(), disableMethod =() => Utility.ChangeDropType(false), incremental = true, isTogglable = false, toolTip = "Changes the drop type for the menu." },
+                new ButtonInfo { buttonText = "Change Drop Type", method =() => Utility.ChangeDropType(), enableMethod =() => Utility.ChangeDropType(), disableMethod =() => Utility.ChangeDropType(false), incremental = true, overlapText = "Change Drop Type <color=grey>[<color=cyan>Destroy</color>]</color>", isTogglable = false, toolTip = "Changes the drop type for the menu." },
 
                 new ButtonInfo { buttonText = "Advanced Arraylist", enableMethod =() => Settings.advancedArraylist = true, disableMethod =() => Settings.advancedArraylist = false, toolTip = "Updates the FPS Counter less, making it easier to read."},
                 new ButtonInfo { buttonText = "Flip Arraylist", enableMethod =() => Settings.flipArraylist = true, disableMethod =() => Settings.flipArraylist = false, toolTip = "Flips the arraylist at the top of the screen."},
@@ -131,8 +131,8 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Movement Settings | 18
                 new ButtonInfo { buttonText = "Exit Movement Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
 
-                new ButtonInfo { buttonText = "Change Fly Speed", overlapText = $"Change Fly Speed <color=grey>[<color={inputTextColor}>Very Slow</color>]</color>", method =() => Movement.ChangeFlySpeed(), enableMethod =() => Movement.ChangeFlySpeed(), disableMethod =() => Movement.ChangeFlySpeed(false), incremental = true, isTogglable = false, toolTip = "Changes the current fly speed." },
-                new ButtonInfo { buttonText = "Change Arm Length", overlapText = $"Change Arm Length <color=grey>[<color={inputTextColor}>Steam</color>]</color>", method =() => Movement.ChangeArmLength(), enableMethod =() => Movement.ChangeArmLength(), disableMethod =() => Movement.ChangeArmLength(false), incremental = true, isTogglable = false, toolTip = "Changes your arm length." },
+                new ButtonInfo { buttonText = "Change Fly Speed", method =() => Movement.ChangeFlySpeed(), enableMethod =() => Movement.ChangeFlySpeed(), disableMethod =() => Movement.ChangeFlySpeed(false), incremental = true, overlapText = "Change Fly Speed <color=grey>[<color=cyan>Very Slow</color>]</color>", isTogglable = false, toolTip = "Changes the current fly speed." },
+                new ButtonInfo { buttonText = "Change Arm Length", method =() => Movement.ChangeArmLength(), enableMethod =() => Movement.ChangeArmLength(), disableMethod =() => Movement.ChangeArmLength(false), incremental = true, overlapText = "Change Arm Length <color=grey>[<color=cyan>Stean</color>]</color>", isTogglable = false, toolTip = "Changes your arm length." },
             },
 
             new ButtonInfo[] { // Gun Settings | 19
@@ -145,7 +145,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Gripless Guns", enableMethod =() => GriplessGuns = true, disableMethod =() => GriplessGuns = false, isTogglable = true, toolTip = "Makes the gun work without holding grip." },
                 new ButtonInfo { buttonText = "Triggerless Guns", enableMethod =() => TriggerlessGuns = true, disableMethod =() => TriggerlessGuns = false, isTogglable = true, toolTip = "Makes the gun shoot without holding trigger." },
 
-                new ButtonInfo { buttonText = "Change Gun Variation", overlapText = $"Change Gun Variation <color=grey>[<color={inputTextColor}>Default</color>]</color>", method =() => Settings.ChangeGunVariation(), enableMethod =() => Settings.ChangeGunVariation(), disableMethod =() => Settings.ChangeGunVariation(false), incremental = true, isTogglable = false, toolTip = "Changes the look of the gun."},
+                new ButtonInfo { buttonText = "Change Gun Variation", overlapText = "Change Gun Variation <color=grey>[</color><color=cyan>Default</color><color=grey>]</color>", method =() => Settings.ChangeGunVariation(), enableMethod =() => Settings.ChangeGunVariation(), disableMethod =() => Settings.ChangeGunVariation(false), incremental = true, isTogglable = false, toolTip = "Changes the look of the gun."},
             },
 
             new ButtonInfo[] { // Important | 2
@@ -225,7 +225,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Slingshot Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.SlingShotFly(), isTogglable = true, toolTip = "Lets you fly like a slingshot while hold your right primary." },
 
                 new ButtonInfo { buttonText = "Long Arms", method =() => Movement.LongArms(false), disableMethod =() => Movement.LongArms(true), isTogglable = true, toolTip = "Gives you long arms." },
-                
+
                 new ButtonInfo { buttonText = "No Tag Freeze", method =() => Movement.NoTagFreeze(0), isTogglable = true, toolTip = "Removes the tag freeze you get when you get tagged." },
                 new ButtonInfo { buttonText = "Force Tag Freeze", method =() => Movement.NoTagFreeze(1), disableMethod =() => Movement.NoTagFreeze(0),  isTogglable = true, toolTip = "Lets you act like you have tag freeze." },
 
@@ -237,7 +237,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "TP Gun", method =() => Movement.TPGun(), isTogglable = true, toolTip = "Lets you teleport with a gun."  },
                 new ButtonInfo { buttonText = "Car Monke <color=grey>[</color><color=cyan>T</color><color=grey>]</color>", method =() => Movement.CarMonke(), isTogglable = true, toolTip = "Drive around while holding your triggers." },
                 new ButtonInfo { buttonText = "Follow Player Gun", method =() => Movement.FollowPlayerGun(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you follow someone with a gun." },
-                
+
                 new ButtonInfo { buttonText = "Low Gravity", method = Movement.LowGravity, toolTip = "Makes gravity lower on your character."},
                 new ButtonInfo { buttonText = "Zero Gravity", method = Movement.ZeroGravity, toolTip = "Disables gravity on your character."},
                 new ButtonInfo { buttonText = "High Gravity", method = Movement.HighGravity, toolTip = "Makes gravity higher on your character."},
@@ -277,7 +277,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Visual", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
 
                 new ButtonInfo { buttonText = "Chams", method =() => Visual.Chams(true), disableMethod =() => Visual.Chams(false), isTogglable = true, toolTip = "Lets you see players through walls." },
-                
+
                 new ButtonInfo { buttonText = "Tracers", method =() => Visual.Tracers(), isTogglable = true, toolTip = "Points lines at other players." },
                 new ButtonInfo { buttonText = "Box ESP", method =() => Visual.BoxESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
                 new ButtonInfo { buttonText = "Capsule ESP", method =() => Visual.CapsuleESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
@@ -718,32 +718,32 @@ namespace JupiterX.Menu
 
         public static string[] categoryNames =
         {
-            "Main",                
-            "Settings",             
-            "Menu Settings",        
-            "Movement Settings",    
-            "Gun Settings",        
+            "Main",
+            "Settings",
+            "Menu Settings",
+            "Movement Settings",
+            "Gun Settings",
 
-            "Important",           
-            "Safety",               
-            "Computer",             
-            "Movement",             
-            "Advantage",            
-            "VRRig",               
-            "Visual",  
+            "Important",
+            "Safety",
+            "Computer",
+            "Movement",
+            "Advantage",
+            "VRRig",
+            "Visual",
             "Fun",
-            "Name",                
-            "Prefabs",            
+            "Name",
+            "Prefabs",
             "Overpowered",
-            "Experimental",     
-            "Master", 
+            "Experimental",
+            "Master",
 
-            "Soundboard",           
+            "Soundboard",
             "Players",
-            "Gorilla Tag Horror",                  
+            "Gorilla Tag Horror",
 
             "Temporary Category",
-            
+
             "Enabled",
             "Favorite",
             "Menu Presets",
