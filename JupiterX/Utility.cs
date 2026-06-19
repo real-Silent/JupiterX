@@ -353,7 +353,7 @@ namespace JupiterX
                     currentFontStyle = FontStyle.BoldAndItalic;
                     break;
             }
-            Buttons.GetIndex("Change Font Style").overlapText = "Change Font Style <color=grey>[<color=cyan>" + fontstylestring[currentFontStyleChoice] + "</color>]</color>";
+            Buttons.GetIndex("Change Font Style").overlapText = $"Change Font Style <color=grey>[<color={inputTextColor}>" + fontstylestring[currentFontStyleChoice] + "</color>]</color>";
         }
 
 
@@ -458,7 +458,7 @@ namespace JupiterX
                     PageTextPosRight = new Vector3(222222f, -22222222f, -222222222f);
                     break;
             }
-            Buttons.GetIndex("Change Page Type").overlapText = "Change Page Type <color=grey>[<color=cyan>" + PageTypes[PageType] + "</color>]</color>"; 
+            Buttons.GetIndex("Change Page Type").overlapText = $"Change Page Type <color=grey>[<color={inputTextColor}>" + PageTypes[PageType] + "</color>]</color>"; 
         }
         public static int MainDropType = 0;
         private static int dropType = 0;
@@ -481,7 +481,7 @@ namespace JupiterX
                     MainDropType = 3;
                     break;
             }
-            Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=grey>[<color=cyan>{dropTypes[dropType]}</color>]</color>";
+            Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=grey>[<color={inputTextColor}>{dropTypes[dropType]}</color>]</color>";
         }
         private static string[] MenuThemes = new string[]
         {
@@ -589,7 +589,7 @@ namespace JupiterX
             }
             textColors[0] = Color.white;
             textColors[1] = Color.white;
-            Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=grey>[<color=cyan>{MenuThemes[currentTheme]}</color>]</color>";
+            Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=grey>[<color={inputTextColor}>{MenuThemes[currentTheme]}</color>]</color>";
         }
 
         public static void BetaEmojiName(int emoji) =>

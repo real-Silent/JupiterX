@@ -70,9 +70,9 @@ namespace JupiterX
                 "Red",
                 "Orange",
                 "Yellow",
-                "Cyan",
-                "Blue",
                 "Green",
+                "Blue",
+                "Cyan",
                 "Purple",
                 "Pink",
                 "White",
@@ -84,9 +84,9 @@ namespace JupiterX
                 "red",
                 "#ff8000",
                 "yellow",
-                "cyan",
-                "blue",
                 "green",
+                "blue",
+                "cyan",
                 "purple",
                 "#FF00FF",
                 "white",
@@ -130,7 +130,7 @@ namespace JupiterX
             if (gunVariation < 0)
                 gunVariation = VariationNames.Length - 1;
 
-            Buttons.GetIndex("Change Gun Variation").overlapText = "Change Gun Variation <color=grey>[</color><color=cyan>" + VariationNames[gunVariation] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Change Gun Variation").overlapText = $"Change Gun Variation <color=grey>[</color><color={inputTextColor}>" + VariationNames[gunVariation] + "</color><color=grey>]</color>";
         }
 
         public static void CategorySettings()
