@@ -24,7 +24,7 @@ namespace JupiterX
 {
     public class Utility
     {
-        public static void Log(string msg) => 
+        public static void Log(string msg) =>
             MelonLoader.MelonLogger.Msg($"[JUPITERX] Log : {msg}");
         public static void StopCurrentPrompt() =>
             prompts.RemoveAt(0);
@@ -277,7 +277,7 @@ namespace JupiterX
                 }
             }
         }
-        public static void BetaCrashAllV2(VRRig target) 
+        public static void BetaCrashAllV2(VRRig target)
         {
             MakeMeMaster();
             if (target != null)
@@ -291,7 +291,7 @@ namespace JupiterX
         }
         static bool lastfreezegarbadge;
         public static void PacketStresser()
-{
+        {
             for (int I = 0; I < 9; I++)
             {
                 lastfreezegarbadge = !lastfreezegarbadge;
@@ -353,7 +353,7 @@ namespace JupiterX
                     currentFontStyle = FontStyle.BoldAndItalic;
                     break;
             }
-            Buttons.GetIndex("Change Font Style").overlapText = $"Change Font Style <color=grey>[<color={inputTextColor}>" + fontstylestring[currentFontStyleChoice] + "</color>]</color>";
+            Buttons.GetIndex("Change Font Style").overlapText = "Change Font Style <color=grey>[<color=cyan>" + fontstylestring[currentFontStyleChoice] + "</color>]</color>";
         }
 
 
@@ -458,7 +458,7 @@ namespace JupiterX
                     PageTextPosRight = new Vector3(222222f, -22222222f, -222222222f);
                     break;
             }
-            Buttons.GetIndex("Change Page Type").overlapText = $"Change Page Type <color=grey>[<color={inputTextColor}>" + PageTypes[PageType] + "</color>]</color>"; 
+            Buttons.GetIndex("Change Page Type").overlapText = "Change Page Type <color=grey>[<color=cyan>" + PageTypes[PageType] + "</color>]</color>";
         }
         public static int MainDropType = 0;
         private static int dropType = 0;
@@ -481,7 +481,7 @@ namespace JupiterX
                     MainDropType = 3;
                     break;
             }
-            Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=grey>[<color={inputTextColor}>{dropTypes[dropType]}</color>]</color>";
+            Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=grey>[<color=cyan>{dropTypes[dropType]}</color>]</color>";
         }
         private static string[] MenuThemes = new string[]
         {
@@ -589,14 +589,14 @@ namespace JupiterX
             }
             textColors[0] = Color.white;
             textColors[1] = Color.white;
-            Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=grey>[<color={inputTextColor}>{MenuThemes[currentTheme]}</color>]</color>";
+            Buttons.GetIndex("Change Menu Theme").overlapText = $"Change Menu Theme <color=grey>[<color=cyan>{MenuThemes[currentTheme]}</color>]</color>";
         }
 
         public static void BetaEmojiName(int emoji) =>
             MyPlayer().NickName = "\n\n<size=4532><sprite=" + emoji + "></size>";
         public static void BetaSpawnPrefab(string prefabName, Vector3 Position, Quaternion Roation) =>
             PhotonNetwork.Instantiate(prefabName, Position, Roation, 0, null);
-        public static void SetMaster(Photon.Realtime.Player newMaster) => 
+        public static void SetMaster(Photon.Realtime.Player newMaster) =>
             PhotonNetwork.SetMasterClient(newMaster);
         public static void MakeMeMaster() =>
             SetMaster(MyPlayer());
@@ -783,7 +783,7 @@ namespace JupiterX
         }
         public static Shader UnlitShader()
         {
-            return Shader.Find("Unlit/Color"); 
+            return Shader.Find("Unlit/Color");
         }
         public static Shader GUIShader()
         {
@@ -1089,10 +1089,10 @@ namespace JupiterX
             }
         }
 
-        public static string version = "2.4.0"; 
-        public static string serverversion; 
-        public static string minversion; 
-        public static string discord; 
+        public static string version = "2.4.0";
+        public static string serverversion;
+        public static string minversion;
+        public static string discord;
 
         public static bool isBetaRelease = false;
         public static bool updateneeded = false;

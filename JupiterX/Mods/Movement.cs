@@ -6,57 +6,57 @@ namespace JupiterX.Mods
 {
     public class Movement
     {
-		static Vector3 normal2;
-		static Vector3 vel1;
-		static Vector3 vel2;
-		static float dist2;
-		static int layers;
-		static bool LeftClose2;
-		static bool DoOnce2;
-		static float maxD2;
-		static float ammount;
-		public static void WallWalk()
-		{
-			if (Utility.RightGrip || Utility.LeftGrip)
+        static Vector3 normal2;
+        static Vector3 vel1;
+        static Vector3 vel2;
+        static float dist2;
+        static int layers;
+        static bool LeftClose2;
+        static bool DoOnce2;
+        static float maxD2;
+        static float ammount;
+        public static void WallWalk()
+        {
+            if (Utility.RightGrip || Utility.LeftGrip)
             {
-				if (!DoOnce2)
-				{
-					maxD2 = 1f;
-					layers = int.MaxValue;
-					DoOnce2 = true;
-				}
-				RaycastHit raycastHit;
-				Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position, -GorillaTagger.Instance.rightHandTransform.right, out raycastHit, 1f, layers);
-				RaycastHit raycastHit2;
-				Physics.Raycast(GorillaTagger.Instance.leftHandTransform.position, GorillaTagger.Instance.leftHandTransform.right, out raycastHit2, 1f, layers);
-				if (raycastHit2.distance > raycastHit.distance)
-				{
-					normal2 = raycastHit.normal;
-					dist2 = raycastHit.distance;
-				}
-				else
-				{
-					normal2 = raycastHit2.normal;
-					dist2 = raycastHit2.distance;
-					LeftClose2 = true;
-				}
-				if (dist2 < maxD2)
-				{
-					vel2 = normal2 * (ammount * Time.deltaTime);
-					GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity -= vel2;
-				}
-				else
-				{
-					GorillaTagger.Instance.bodyCollider.attachedRigidbody.useGravity = true;
-				}
-			}
+                if (!DoOnce2)
+                {
+                    maxD2 = 1f;
+                    layers = int.MaxValue;
+                    DoOnce2 = true;
+                }
+                RaycastHit raycastHit;
+                Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position, -GorillaTagger.Instance.rightHandTransform.right, out raycastHit, 1f, layers);
+                RaycastHit raycastHit2;
+                Physics.Raycast(GorillaTagger.Instance.leftHandTransform.position, GorillaTagger.Instance.leftHandTransform.right, out raycastHit2, 1f, layers);
+                if (raycastHit2.distance > raycastHit.distance)
+                {
+                    normal2 = raycastHit.normal;
+                    dist2 = raycastHit.distance;
+                }
+                else
+                {
+                    normal2 = raycastHit2.normal;
+                    dist2 = raycastHit2.distance;
+                    LeftClose2 = true;
+                }
+                if (dist2 < maxD2)
+                {
+                    vel2 = normal2 * (ammount * Time.deltaTime);
+                    GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity -= vel2;
+                }
+                else
+                {
+                    GorillaTagger.Instance.bodyCollider.attachedRigidbody.useGravity = true;
+                }
+            }
             else
             {
-				GorillaTagger.Instance.bodyCollider.attachedRigidbody.useGravity = true;
-			}
-		}
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.useGravity = true;
+            }
+        }
 
-		public static string[] FlySpeeds = { "Very Slow", "Slow", "Normal", "Fast", "Very Fast", "Way Too Fast" };
+        public static string[] FlySpeeds = { "Very Slow", "Slow", "Normal", "Fast", "Very Fast", "Way Too Fast" };
         public static int FlySpeedAmount = 0;
         public static float FlySpeed = 1f;
 
@@ -73,36 +73,36 @@ namespace JupiterX.Mods
 
             switch (FlySpeedAmount)
             {
-                case 0: FlySpeed = 1f; break;   
-                case 1: FlySpeed = 3f; break;   
-                case 2: FlySpeed = 7f; break;   
-                case 3: FlySpeed = 14f; break;  
-                case 4: FlySpeed = 18f; break;  
-                case 5: FlySpeed = 30f; break;  
+                case 0: FlySpeed = 1f; break;
+                case 1: FlySpeed = 3f; break;
+                case 2: FlySpeed = 7f; break;
+                case 3: FlySpeed = 14f; break;
+                case 4: FlySpeed = 18f; break;
+                case 5: FlySpeed = 30f; break;
             }
             Buttons.GetIndex("Change Fly Speed").overlapText =
-                $"Change Fly Speed <color=grey>[<color={Main.inputTextColor}>{FlySpeeds[FlySpeedAmount]}</color>]</color>";
+                $"Change Fly Speed <color=grey>[<color=cyan>{FlySpeeds[FlySpeedAmount]}</color>]</color>";
         }
 
-		public static void LowGravity() =>
-			GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * 6.66f, ForceMode.Acceleration);
+        public static void LowGravity() =>
+            GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * 6.66f, ForceMode.Acceleration);
 
-		public static void ZeroGravity() =>
-			GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(-Physics.gravity, ForceMode.Acceleration);
+        public static void ZeroGravity() =>
+            GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(-Physics.gravity, ForceMode.Acceleration);
 
-		public static void HighGravity() =>
-			GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.down * 7.77f, ForceMode.Acceleration);
+        public static void HighGravity() =>
+            GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.down * 7.77f, ForceMode.Acceleration);
 
-		public static void ReverseGravity()
-		{
-			GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * 19.62f, ForceMode.Acceleration);
-			GorillaTagger.Instance.rightHandTransform.parent.rotation = Quaternion.Euler(180f, 0f, 0f);
-		}
+        public static void ReverseGravity()
+        {
+            GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * 19.62f, ForceMode.Acceleration);
+            GorillaTagger.Instance.rightHandTransform.parent.rotation = Quaternion.Euler(180f, 0f, 0f);
+        }
 
-		public static void UnflipCharacter() =>
-			GorillaTagger.Instance.rightHandTransform.parent.rotation = Quaternion.identity;
+        public static void UnflipCharacter() =>
+            GorillaTagger.Instance.rightHandTransform.parent.rotation = Quaternion.identity;
 
-		public static void Fly()
+        public static void Fly()
         {
             if (Utility.RightPrimary)
             {
@@ -111,17 +111,17 @@ namespace JupiterX.Mods
             }
         }
 
-		public static void NoClipFly()
-		{
-			if (Utility.RightPrimary)
-			{
-				Utility.RigidbodyTransform().transform.position += Utility.Head().transform.forward * Time.deltaTime * FlySpeed;
-				Utility.RigidbodyTransform().velocity = Vector3.zero;
-			}
+        public static void NoClipFly()
+        {
+            if (Utility.RightPrimary)
+            {
+                Utility.RigidbodyTransform().transform.position += Utility.Head().transform.forward * Time.deltaTime * FlySpeed;
+                Utility.RigidbodyTransform().velocity = Vector3.zero;
+            }
             NoClip(Utility.RightPrimary);
-		}
+        }
 
-		public static void Mosaboost()
+        public static void Mosaboost()
         {
             GorillaLocomotion.Player.Instance.maxJumpSpeed = 9.5f;
         }
@@ -313,7 +313,7 @@ namespace JupiterX.Mods
                 case 4: ArmSize = new Vector3(0.8f, 0.8f, 0.8f); break;
             }
 
-            Buttons.GetIndex("Change Arm Length").overlapText = $"Change Arm Length <color=grey>[<color={Main.inputTextColor}>{ArmSizes[ArmSizeAmount]}</color>]</color>";
+            Buttons.GetIndex("Change Arm Length").overlapText = $"Change Arm Length <color=grey>[<color=cyan>{ArmSizes[ArmSizeAmount]}</color>]</color>";
         }
         public static void LongArms(bool off)
         {
@@ -321,7 +321,7 @@ namespace JupiterX.Mods
                 Utility.MainTransform().localScale = new Vector3(1f, 1f, 1f);
             else
                 Utility.MainTransform().localScale = ArmSize;
-            
+
         }
         public static void NoTagFreeze(int type)
         {
@@ -337,73 +337,73 @@ namespace JupiterX.Mods
             Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
         }
 
-		public static void TriggerPlatforms()
-		{
-			Utility.CreatePlatform(true, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
-		}
+        public static void TriggerPlatforms()
+        {
+            Utility.CreatePlatform(true, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
+        }
 
         public static void InvisablePlatforms()
         {
-			Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey, true);
-		}
+            Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey, true);
+        }
 
-		private static readonly Dictionary<bool, List<GameObject>> frozonicPlatforms = new Dictionary<bool, List<GameObject>>();
-		private static readonly Dictionary<bool, int> platformIndex = new Dictionary<bool, int>();
-		public static void HandleFrozone(bool left)
-		{
-			bool grip = left ? Utility.LeftGrip : Utility.RightGrip;
+        private static readonly Dictionary<bool, List<GameObject>> frozonicPlatforms = new Dictionary<bool, List<GameObject>>();
+        private static readonly Dictionary<bool, int> platformIndex = new Dictionary<bool, int>();
+        public static void HandleFrozone(bool left)
+        {
+            bool grip = left ? Utility.LeftGrip : Utility.RightGrip;
 
-			frozonicPlatforms.TryGetValue(left, out List<GameObject> frozonicPlatformList);
-			if (frozonicPlatformList == null)
-			{
-				frozonicPlatformList = new List<GameObject>();
-				frozonicPlatforms.Add(left, frozonicPlatformList);
-			}
+            frozonicPlatforms.TryGetValue(left, out List<GameObject> frozonicPlatformList);
+            if (frozonicPlatformList == null)
+            {
+                frozonicPlatformList = new List<GameObject>();
+                frozonicPlatforms.Add(left, frozonicPlatformList);
+            }
 
-			platformIndex.TryGetValue(left, out int index);
+            platformIndex.TryGetValue(left, out int index);
 
-			if (grip)
-			{
-				GameObject platform;
-				if (frozonicPlatformList.Count >= 72)
-					platform = frozonicPlatformList[index];
-				else
-				{
-					platform = GameObject.CreatePrimitive(PrimitiveType.Cube);
-					platform.GetComponent<Renderer>().material.color = Color.grey;
-					platform.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f) * 1f;
-					platform.AddComponent<GorillaSurfaceOverride>().overrideIndex = 61;
-					frozonicPlatformList.Add(platform);
-				}
+            if (grip)
+            {
+                GameObject platform;
+                if (frozonicPlatformList.Count >= 72)
+                    platform = frozonicPlatformList[index];
+                else
+                {
+                    platform = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    platform.GetComponent<Renderer>().material.color = Color.grey;
+                    platform.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f) * 1f;
+                    platform.AddComponent<GorillaSurfaceOverride>().overrideIndex = 61;
+                    frozonicPlatformList.Add(platform);
+                }
 
                 Transform hand = left ? Utility.LeftHandTransform() : Utility.RightHandTransform();
 
-				platform.transform.position = hand.position + (hand.right * ((left ? 1f : -1f) * ((0.025f + platform.transform.localScale.x / 2f) * 1f)));
-				platform.transform.rotation = hand.rotation;
+                platform.transform.position = hand.position + (hand.right * ((left ? 1f : -1f) * ((0.025f + platform.transform.localScale.x / 2f) * 1f)));
+                platform.transform.rotation = hand.rotation;
 
-				index = (index + 1) % 72;
-			}
+                index = (index + 1) % 72;
+            }
 
-			platformIndex[left] = index;
+            platformIndex[left] = index;
 
-			if (!grip && frozonicPlatformList.Count > 0)
-			{
-				int platformIndex = frozonicPlatformList.Count - 1;
+            if (!grip && frozonicPlatformList.Count > 0)
+            {
+                int platformIndex = frozonicPlatformList.Count - 1;
 
-				Object.Destroy(frozonicPlatformList[platformIndex]);
-				frozonicPlatformList.RemoveAt(platformIndex);
-			}
-		}
+                Object.Destroy(frozonicPlatformList[platformIndex]);
+                frozonicPlatformList.RemoveAt(platformIndex);
+            }
+        }
 
-		public static void Frozone()
-		{
-			HandleFrozone(true);
-			HandleFrozone(false);
+        public static void Frozone()
+        {
+            HandleFrozone(true);
+            HandleFrozone(false);
 
-			GorillaTagger.Instance.bodyCollider.enabled = !(Utility.LeftGrip || Utility.RightGrip);
-		}
+            GorillaTagger.Instance.bodyCollider.enabled = !(Utility.LeftGrip || Utility.RightGrip);
+        }
 
-		static bool hasTped = false;
+        static bool hasTped = false;
         public static void TPGun()
         {
             if (JupiterX.Menu.Main.GetGunInput(false))
