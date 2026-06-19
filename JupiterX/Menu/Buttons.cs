@@ -227,7 +227,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "No Tag Freeze", method =() => Movement.NoTagFreeze(0), isTogglable = true, toolTip = "Removes the tag freeze you get when you get tagged." },
                 new ButtonInfo { buttonText = "Force Tag Freeze", method =() => Movement.NoTagFreeze(1), disableMethod =() => Movement.NoTagFreeze(0),  isTogglable = true, toolTip = "Lets you act like you have tag freeze." },
 
-                 new ButtonInfo { buttonText = "NoClip <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.NoClip(Utility.RightTrigger), isTogglable = true, toolTip = "Removes object colliders when you hold right trigger." },
+                new ButtonInfo { buttonText = "NoClip <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.NoClip(Utility.RightTrigger), isTogglable = true, toolTip = "Removes object colliders when you hold right trigger." },
 
                 new ButtonInfo { buttonText = "SpeedBoost", method =() => Movement.SpeedBoost(), isTogglable = true, toolTip = "Gives you a speed boost." },
                 new ButtonInfo { buttonText = "Mosa Boost", method =() => Movement.Mosaboost(), isTogglable = true, toolTip = "Gives you a slight speed boost." },
