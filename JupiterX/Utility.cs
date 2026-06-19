@@ -496,7 +496,7 @@ namespace JupiterX
             buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.black) };
             buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSolidGradient(Color.red) };
         }
-        private static int currentTheme = 0;
+        public static int currentTheme = 0;
         public static void ChangeMenuTheme(bool increment = true)
         {
             currentTheme = increment ? (currentTheme + 1) % MenuThemes.Length : (currentTheme - 1 + MenuThemes.Length) % MenuThemes.Length;

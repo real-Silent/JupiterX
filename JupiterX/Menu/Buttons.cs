@@ -613,6 +613,8 @@ namespace JupiterX.Menu
             new[] { // Menu Presets | 21
                 new ButtonInfo { buttonText = "Exit Menu Presets", method =() => CurrentCategoryName = "Menu Settings", isTogglable = false, toolTip = "Returns to the settings for the menu."},
 
+                new ButtonInfo { buttonText = "Nova Preset", method =() => Presets.NovaPreset(), isTogglable = false, toolTip = "Saves a custom preset."},
+
                 new ButtonInfo { buttonText = "Save Custom Preset 1", method =() => Presets.SaveCustomPreset(1), isTogglable = false, toolTip = "Saves a custom preset."},
                 new ButtonInfo { buttonText = "Load Custom Preset 1", method =() => Presets.LoadCustomPreset(1), isTogglable = false, toolTip = "Loads a custom preset."},
 
