@@ -655,7 +655,7 @@ namespace JupiterX.Menu
             if (favorites.Contains(method.buttonText))
                 buttonText.text += " ✦";
 
-            if (inputTextColor != "green")
+            if (inputTextColor != "cyan")
                 buttonText.text = buttonText.text.Replace(" <color=grey>[</color><color=cyan>", $" <color=grey>[</color><color={inputTextColor}>");
 
             buttonText.supportRichText = true;
