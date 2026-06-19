@@ -1150,7 +1150,8 @@ namespace JupiterX
                 ((int)dropType).ToString(),
                 Movement.FlySpeedAmount.ToString(),
                 Movement.ArmSizeAmount.ToString(),
-                ((int)currentFontStyleChoice).ToString()
+                ((int)currentFontStyleChoice).ToString(),
+                ((int)inputTextColorInt).ToString()
             });
             return string.Join("\n", new[] { enabledText, favoriteText, quickActionText, settingsText });
         }
@@ -1184,12 +1185,14 @@ namespace JupiterX
                     Movement.FlySpeedAmount = int.Parse(data[3]) - 1;
                     Movement.ArmSizeAmount = int.Parse(data[4]) - 1;
                     currentFontStyleChoice = int.Parse(data[5]) - 1;
+                    inputTextColorInt = int.Parse(data[6]) - 1;
                     ChangePageType();
                     ChangeMenuTheme();
                     ChangeDropType();
                     Movement.ChangeFlySpeed();
                     Movement.ChangeArmLength();
                     ChangeFontStyle();
+                    ChangeInputTextColor();
                 }
             }
             catch { }

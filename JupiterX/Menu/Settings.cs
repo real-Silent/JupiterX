@@ -2,6 +2,7 @@
 using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Notifications;
+using Mono.Cecil;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,6 @@ namespace JupiterX
 
         public static Vector3 menuSize = new Vector3(0.1f, 1f, 1f); // Depth, Width, Height
         public static int buttonsPerPage = 8;
-
 
         public static int inputTextColorInt = 3;
         public static void ChangeInputTextColor(bool positive = true)
