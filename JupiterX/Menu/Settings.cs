@@ -62,6 +62,52 @@ namespace JupiterX
         public static Vector3 menuSize = new Vector3(0.1f, 1f, 1f); // Depth, Width, Height
         public static int buttonsPerPage = 8;
 
+
+        public static int inputTextColorInt = 3;
+        public static void ChangeInputTextColor(bool positive = true)
+        {
+            string[] textColors = {
+                "Red",
+                "Orange",
+                "Yellow",
+                "Cyan",
+                "Blue",
+                "Green",
+                "Purple",
+                "Pink",
+                "White",
+                "Grey",
+                "Black",
+                "Rose"
+            };
+            string[] realinputcolor = {
+                "red",
+                "#ff8000",
+                "yellow",
+                "cyan",
+                "blue",
+                "green",
+                "purple",
+                "#FF00FF",
+                "white",
+                "grey",
+                "black",
+                "#ff005d"
+            };
+
+            if (positive)
+                inputTextColorInt++;
+            else
+                inputTextColorInt--;
+
+            inputTextColorInt %= realinputcolor.Length;
+            if (inputTextColorInt < 0)
+                inputTextColorInt = realinputcolor.Length - 1;
+
+            inputTextColor = realinputcolor[inputTextColorInt];
+            Buttons.GetIndex("Change Input Text Color").overlapText = $"Change Input Text Color <color=grey>[</color><color=cyan>{textColors[inputTextColorInt]}</color><color=grey>]</color>";
+        }
+
         public static void ChangeGunVariation(bool positive = true)
         {
             string[] VariationNames = {

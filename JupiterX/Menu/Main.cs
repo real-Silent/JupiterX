@@ -2,7 +2,6 @@
 using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Notifications;
-using Mono.CSharp;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -11,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static JupiterX.Menu.Buttons;
@@ -656,6 +654,9 @@ namespace JupiterX.Menu
 
             if (favorites.Contains(method.buttonText))
                 buttonText.text += " ✦";
+
+            if (inputTextColor != "green")
+                buttonText.text = buttonText.text.Replace(" <color=grey>[</color><color=cyan>", $" <color=grey>[</color><color={inputTextColor}>");
 
             buttonText.supportRichText = true;
             buttonText.fontSize = 1;
@@ -1494,6 +1495,8 @@ namespace JupiterX.Menu
 
         public static List<string> favorites = new List<string> { "Exit Favorite" };
         public static readonly List<string> skipButtons = new List<string> { };
+
+        public static string inputTextColor = "cyan";
 
         public static int _currentCategoryIndex;
 
