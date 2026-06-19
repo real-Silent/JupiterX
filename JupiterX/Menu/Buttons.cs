@@ -538,7 +538,7 @@ namespace JupiterX.Menu
             },
 
             new ButtonInfo[] { // GTH Mods | 17
-                new ButtonInfo { buttonText = "Exit GTH", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
+                new ButtonInfo { buttonText = "Exit Gorilla Tag Horror", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
 
                 new ButtonInfo { buttonText = "Spawn Timmy", method =() => GTH.SpawnTimmy(), toolTip = "Spawns a timmy above your head.", isTogglable = true },
                 new ButtonInfo { buttonText = "Spawn Stalker", method =() => GTH.SpawnStalker(), toolTip = "Spawns a stalker above your head.", isTogglable = true },
