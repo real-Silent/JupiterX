@@ -124,6 +124,13 @@ namespace JupiterX.Menu
                             reference = null;
                         }
 
+                        if (annoyingMode)
+                        {
+                            Rigidbody comp = menu.AddComponent<Rigidbody>();
+                            comp.velocity = RandomVector3(5f);
+                            comp.angularVelocity = RandomVector3(50f);
+                        }
+
                         if (!DisableMenuSounds)
                             Utility.PlaySound(Utility.menuCloseSound);
                     }
@@ -284,8 +291,21 @@ namespace JupiterX.Menu
 			UnityEngine.Object.Destroy(menu.GetComponent<Renderer>());
 			menu.transform.localScale = new Vector3(0.1f, 0.3f, 0.3825f);
 
-			// Menu Background
-			menuBackground = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            if (annoyingMode)
+            {
+                menu.transform.localScale = new Vector3(0.1f, UnityEngine.Random.Range(10f, 40f) / 100f, 0.3825f);
+                backgroundColor = new ExtGradient { colors = ExtGradient.GetSimpleGradient(RandomColor(), RandomColor()) };
+
+                buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSimpleGradient(RandomColor(), RandomColor()) };
+                buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSimpleGradient(RandomColor(), RandomColor()) };
+
+                textColors[0] = RandomColor();
+                textColors[1] = RandomColor();
+                textColors[2] = RandomColor();
+            }
+
+            // Menu Background
+            menuBackground = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			UnityEngine.Object.Destroy(menuBackground.GetComponent<Rigidbody>());
 			UnityEngine.Object.Destroy(menuBackground.GetComponent<BoxCollider>());
 			menuBackground.transform.parent = menu.transform;
@@ -329,6 +349,18 @@ namespace JupiterX.Menu
 					}
 			}.AddComponent<Text>();
 			text.font = currentFont;
+
+            if (annoyingMode)
+            {
+                string[] randomMenuNames = {
+                    "Qolossal", "Titled", "Jupter", "Solar", "SaturnX Client", "Peepee", "MooderX", "Modern Modeling",
+                    "SaturnClient", "WM TROLLING MENU", "ShibaGT Dark", "ModderMenu", "OP Menu", "Overpowered", "RawrX3",
+                    ":3", ">w<", "Silly Kitty", "Goth Client"
+                };
+
+                if (UnityEngine.Random.Range(1, 5) == 2)
+                    text.text = randomMenuNames[UnityEngine.Random.Range(0, randomMenuNames.Length)] + " v" + UnityEngine.Random.Range(8, 159);
+            }
 
             if (CustomMenuTitle)
             {
@@ -535,7 +567,12 @@ namespace JupiterX.Menu
             {
                 try
                 {
-                    if (CurrentCategoryName == "Main")
+                    if (annoyingMode && UnityEngine.Random.Range(1, 5) == 3)
+                    {
+                        ButtonInfo disconnectButton = Buttons.GetIndex("Disconnect");
+                        renderButtons = Enumerable.Repeat(disconnectButton, 15).ToArray();
+                    }
+                    else if (CurrentCategoryName == "Main")
                     {
                         List<ButtonInfo> buttons = new List<ButtonInfo>();
                         foreach (var button in Buttons.buttons[CurrentCategoryIndex])
@@ -887,6 +924,18 @@ namespace JupiterX.Menu
                 rotation += new Vector3(0f, 0f, 180f);
                 menu.transform.rotation = Quaternion.Euler(rotation);
             }
+
+            if (smoothMenuPosition)
+            {
+                smoothTargetPosition = smoothTargetPosition == Vector3.zero ? menu.transform.position : Vector3.Lerp(smoothTargetPosition, menu.transform.position, Time.deltaTime * 10f);
+
+                menu.transform.position = smoothTargetPosition;
+            }
+
+            if (!smoothMenuRotation) return;
+            smoothTargetRotation = smoothTargetRotation == Quaternion.identity ? menu.transform.rotation : Quaternion.Lerp(smoothTargetRotation, menu.transform.rotation, Time.deltaTime * 10f);
+
+            menu.transform.rotation = smoothTargetRotation;
         }
 
 		public static void CreateReference()
@@ -1628,6 +1677,12 @@ namespace JupiterX.Menu
 
             ToRoundRenderer.enabled = false;
         }
+
+        public static Color RandomColor(byte range = 255, byte alpha = 255) =>
+            new Color32((byte)UnityEngine.Random.Range(0, range), (byte)UnityEngine.Random.Range(0, range), (byte)UnityEngine.Random.Range(0, range), alpha);
+
+        public static Vector3 RandomVector3(float range = 1f) =>
+            new Vector3(UnityEngine.Random.Range(-range, range), UnityEngine.Random.Range(-range, range), UnityEngine.Random.Range(-range, range));
 
         public static void RoundObject(GameObject toRound, float bevel = 0.02f)
         {

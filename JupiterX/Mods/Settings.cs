@@ -57,6 +57,13 @@ namespace JupiterX
         public static bool disableGhostview;
         public static bool legacyGhostview;
         public static bool dynamicAnimations;
+        public static bool annoyingMode;
+
+        public static Vector3 smoothTargetPosition = Vector3.zero;
+        public static Quaternion smoothTargetRotation = Quaternion.identity;
+
+        public static bool smoothMenuPosition;
+        public static bool smoothMenuRotation;
 
         public static KeyCode keyboardButton = KeyCode.Q;
 
@@ -106,6 +113,13 @@ namespace JupiterX
 
             inputTextColor = realinputcolor[inputTextColorInt];
             Buttons.GetIndex("Change Input Text Color").overlapText = $"Change Input Text Color <color=grey>[</color><color=cyan>{textColors[inputTextColorInt]}</color><color=grey>]</color>";
+        }
+
+        public static void AnnoyingModeOff()
+        {
+            annoyingMode = false;
+            Utility.currentTheme--;
+            Utility.ChangeMenuTheme();
         }
 
         public static void ChangeGunVariation(bool positive = true)
