@@ -224,6 +224,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Trigger Platforms <color=grey>[</color><color=cyan>T</color><color=grey>]</color>", method =() => Movement.TriggerPlatforms(), isTogglable = true, toolTip = "Lets you walk on air while holding trigger." },
                 new ButtonInfo { buttonText = "Invisable Platforms <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Movement.InvisablePlatforms(), isTogglable = true, toolTip = "Lets you walk on air while holding grip." },
                 new ButtonInfo { buttonText = "Frozone <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Movement.Frozone(), isTogglable = true, toolTip = "Spawns slippery blocks under your hands using <color=cyan>grip</color>." },
+                new ButtonInfo { buttonText = "Platform Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method = Movement.PlatformSpam, toolTip = "Spawns legacy platforms rapidly at your hand for those who have networked platforms."},
+                new ButtonInfo { buttonText = "Platform Gun", method = Movement.PlatformGun, toolTip = "Spawns legacy platforms rapidly wherever your hand desires for those who have networked platforms."},
 
                 new ButtonInfo { buttonText = "Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.Fly(), isTogglable = true, toolTip = "Lets you fly while holding your right primary." },
                 new ButtonInfo { buttonText = "Trigger Fly <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.TriggerFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger." },

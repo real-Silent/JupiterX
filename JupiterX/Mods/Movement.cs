@@ -1,5 +1,8 @@
-﻿using JupiterX.Extensions;
+﻿using ExitGames.Client.Photon;
+using JupiterX.Extensions;
 using JupiterX.Menu;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
@@ -585,6 +588,44 @@ namespace JupiterX.Mods
 
                 Object.Destroy(frozonicPlatformList[platformIndex]);
                 frozonicPlatformList.RemoveAt(platformIndex);
+            }
+        }
+
+        public static void PlatformSpam()
+        {
+            if (Utility.RightGrip)
+            {
+                GameObject platform = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Object.Destroy(platform.GetComponent<BoxCollider>());
+                platform.GetComponent<Renderer>().material.color = Settings.backgroundColor.GetCurrentColor();
+                platform.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+                platform.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                platform.transform.position = GorillaTagger.Instance.rightHandTransform.position;
+                platform.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;
+                Object.Destroy(platform, 1f);
+                //PhotonNetwork.RaiseEvent(69, new object[] { platform.transform.position, platform.transform.rotation }, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendReliable);
+            }
+        }
+
+        public static void PlatformGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject NewPointer = GunData.Pointer;
+
+                if (GetGunInput(true))
+                {
+                    GameObject platform = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    Object.Destroy(platform.GetComponent<BoxCollider>());
+                    platform.GetComponent<Renderer>().material.color = Settings.backgroundColor.GetCurrentColor();
+                    platform.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+                    platform.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                    platform.transform.position = NewPointer.transform.position;
+                    platform.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                    Object.Destroy(platform, 1f);
+                    //PhotonNetwork.RaiseEvent(69, new object[] { platform.transform.position, platform.transform.rotation }, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendReliable);
+                }
             }
         }
 
