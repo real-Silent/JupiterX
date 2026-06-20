@@ -15,7 +15,7 @@ namespace JupiterX.Mods
         }
         public static void AntiAFK()
         {
-            photonNetworkController.disableAFKKick = true;
+            Utility.photonNetworkController.disableAFKKick = true;
         }
 
         public static void JoinDiscord() =>
@@ -24,8 +24,7 @@ namespace JupiterX.Mods
         public static void Reconnect()
         {
             PhotonNetwork.Disconnect();
-            PhotonNetworkController phc = GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>();
-            phc.AttemptToJoinSpecificRoom(Menu.Main.lastRoom);
+            Utility.photonNetworkController.AttemptToJoinSpecificRoom(Menu.Main.lastRoom);
         }
 
         public static void ConnectToRegion(string region)
@@ -72,12 +71,10 @@ namespace JupiterX.Mods
         {
             GameObject mountainsBetaTriggers = GameObject.Find("NetworkTriggers/Networking Trigger");
             GameObject hallandspringNetworkTriggers = GameObject.Find("Global/NetworkTriggers/Networking Trigger");
-
             if (mountainsBetaTriggers != null)
-                mountainsBetaTriggers.SetActive(disable);
-
+                mountainsBetaTriggers.SetActive(!disable);
             if (hallandspringNetworkTriggers != null)
-                hallandspringNetworkTriggers.SetActive(disable);
+                hallandspringNetworkTriggers.SetActive(!disable);
         }
 
 
