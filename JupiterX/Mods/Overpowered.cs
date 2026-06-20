@@ -160,6 +160,14 @@ namespace JupiterX.Mods
             }
         }
 
+        public static void DisableNetworkTriggersSS()
+        {
+            Utility.SetMaster(PhotonNetwork.LocalPlayer);
+            Hashtable hash = new Hashtable();
+            hash.Add("gameMode", "forestcavescanyoncitymountainsMODDEDMODDEDINFECTIONINFECTION");
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        }
+
         public static void KickAll()
         {
             foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
