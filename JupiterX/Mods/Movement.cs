@@ -2,6 +2,7 @@
 using JupiterX.Menu;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 using static JupiterX.Menu.Main;
 
 namespace JupiterX.Mods
@@ -55,6 +56,31 @@ namespace JupiterX.Mods
             else
             {
                 GorillaTagger.Instance.bodyCollider.attachedRigidbody.useGravity = true;
+            }
+        }
+
+        public static Vector3? longJumpPower;
+        public static float? keepVelocityUntil;
+        public static Vector3? velocity;
+
+        public static float playspaceAbusePower = 0.004f;
+        public static void PlayspaceAbuse()
+        {
+            if (Utility.RightPrimary)
+            {
+                keepVelocityUntil ??= Time.time + 0.5f;
+                velocity ??= GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity;
+
+                if (Time.time < keepVelocityUntil)
+                    GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity = velocity.Value;
+
+                longJumpPower ??= (GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity * playspaceAbusePower).X_Z();
+                GorillaTagger.Instance.transform.position += longJumpPower.Value;
+            }
+            else
+            {
+                longJumpPower = null;
+                velocity = null;
             }
         }
 
@@ -113,6 +139,19 @@ namespace JupiterX.Mods
             }
         }
 
+        public static void BarkFly()
+        {
+            Vector3 inputDirection = new Vector3(Utility.LeftJoystickAxis.x, Utility.RightJoystickAxis.y, Utility.LeftJoystickAxis.y);
+
+            Vector3 playerForward = GorillaTagger.Instance.bodyCollider.transform.forward.X_Z();
+            Vector3 playerRight = GorillaTagger.Instance.bodyCollider.transform.right.X_Z();
+
+            Vector3 velocity = inputDirection.x * playerRight + inputDirection.y * Vector3.up + inputDirection.z * playerForward;
+            velocity *= FlySpeed;
+            GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity = Vector3.Lerp(GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity, velocity, 0.12875f);
+
+            ZeroGravity();
+        }
         public static void NoClipFly()
         {
             if (Utility.RightPrimary)
@@ -321,6 +360,93 @@ namespace JupiterX.Mods
             }
         }
 
+
+        public static Vector2 driveLerpDirection = Vector2.zero;
+        public static void Drive()
+        {
+            Vector2 joy = Utility.LeftJoystickAxis;
+            driveLerpDirection = Vector2.Lerp(driveLerpDirection, joy, 0.05f);
+
+            Vector3 addition = GorillaTagger.Instance.bodyCollider.transform.forward * driveLerpDirection.y + GorillaTagger.Instance.bodyCollider.transform.right * driveLerpDirection.x;
+            Physics.Raycast(GorillaTagger.Instance.bodyCollider.transform.position - new Vector3(0f, 0.2f, 0f), Vector3.down, out var Ray, 512f, 131585);
+            Vector3 targetVelocity = addition * 10f;
+
+            if (Ray.distance < 0.2f && (Mathf.Abs(driveLerpDirection.x) > 0.05f || Mathf.Abs(driveLerpDirection.y) > 0.05f))
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity = new Vector3(targetVelocity.x, GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity.y, targetVelocity.z);
+        }
+
+        public static void HardDrive()
+        {
+            if ((Mathf.Abs(Utility.LeftJoystickAxis.x) > 0.05f || Mathf.Abs(Utility.LeftJoystickAxis.y) > 0.05f))
+            {
+                Vector3 direction = GorillaTagger.Instance.bodyCollider.transform.forward * Utility.LeftJoystickAxis.y
+                                  + GorillaTagger.Instance.bodyCollider.transform.right * Utility.LeftJoystickAxis.x;
+
+                Vector3 raycastPosition = GorillaTagger.Instance.bodyCollider.transform.position
+                    + Vector3.up * 5f
+                    + direction * (Time.deltaTime * 10f);
+                Physics.Raycast(raycastPosition, Vector3.down, out var Ray, 50f, 131585);
+
+                Vector3 targetPosition = Ray.point == Vector3.zero ? raycastPosition : Ray.point;
+
+                GorillaTagger.Instance.transform.position = targetPosition + Vector3.up * 0.2f;
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity = Vector3.zero;
+            }
+        }
+
+
+        private static bool previousDash;
+        public static void Dash()
+        {
+            if (Utility.RightPrimary && !previousDash)
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += GorillaLocomotion.Player.Instance.headCollider.transform.forward * FlySpeed;
+
+            previousDash = Utility.RightPrimary;
+        }
+
+        private static readonly float revCooldown = 0.5f;
+        private static float nextrevTime = 0f;
+        public static void ReverseVelocity()
+        {
+            if (Time.time < nextrevTime)
+                return;
+
+            if (Utility.RightPrimary)
+            {
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity = -GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity;
+
+                nextrevTime = Time.time + revCooldown;
+            }
+        }
+
+        private static float flapTime;
+        public static void BirdFly()
+        {
+            if (Vector3.Distance(GorillaTagger.Instance.leftHandTransform.position, GorillaTagger.Instance.headCollider.transform.position) < 0.63f || Vector3.Distance(GorillaTagger.Instance.rightHandTransform.position, GorillaTagger.Instance.headCollider.transform.position) < 0.63f)
+                return;
+
+            if (Vector3.Distance(GorillaTagger.Instance.leftHandTransform.position, GorillaTagger.Instance.rightHandTransform.position) < 1f)
+                return;
+            if (Physics.Raycast(GorillaTagger.Instance.bodyCollider.attachedRigidbody.position, Vector3.down, hitInfo: out _))
+                return;
+
+            UnityEngine.XR.InputDevice LeftHand = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+            UnityEngine.XR.InputDevice RightHand = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+
+            if (LeftHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.deviceVelocity, out Vector3 leftVel) && RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.deviceVelocity, out Vector3 rightVel))
+            {
+                if (Time.time - flapTime < 0.4f) return;
+
+                if (leftVel.y < -1.2f && rightVel.y < -1.2f)
+                {
+                    float force = Mathf.Min(6f * ((Mathf.Abs(leftVel.y) + Mathf.Abs(rightVel.y)) / 2f) / 1.2f, 9f);
+                    GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * force, ForceMode.VelocityChange);
+
+                    flapTime = Time.time;
+                }
+            }
+        }
+
         public static string[] ArmSizes = { "Steam", "Long", "Very Long", "Ghost", "Short" };
         public static int ArmSizeAmount = 0;
         public static Vector3 ArmSize = new Vector3(1.15f, 1.15f, 1.15f);
@@ -361,6 +487,42 @@ namespace JupiterX.Mods
         public static void SpeedBoost()
         {
             GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f; GorillaLocomotion.Player.Instance.jumpMultiplier = 13f;
+        }
+
+        public static void UpAndDown()
+        {
+            if (Utility.RightTriggerFloat > 0.5f || Utility.RightGrip)
+                ZeroGravity();
+
+            if (Utility.RightTriggerFloat > 0.5f)
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += Vector3.up * (Time.deltaTime * FlySpeed * 3f);
+
+            if (Utility.RightGrip)
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += Vector3.up * (Time.deltaTime * FlySpeed * -3f);
+        }
+
+        public static void LeftAndRight()
+        {
+            if (Utility.RightTriggerFloat > 0.5f || Utility.RightGrip)
+                ZeroGravity();
+
+            if (Utility.RightTriggerFloat > 0.5f)
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += GorillaTagger.Instance.bodyCollider.transform.right * (Time.deltaTime * FlySpeed * -3f);
+
+            if (Utility.RightGrip)
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += GorillaTagger.Instance.bodyCollider.transform.right * (Time.deltaTime * FlySpeed * 3f);
+        }
+
+        public static void ForwardsAndBackwards()
+        {
+            if (Utility.RightTriggerFloat > 0.5f || Utility.RightGrip)
+                ZeroGravity();
+
+            if (Utility.RightTriggerFloat > 0.5f)
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += GorillaTagger.Instance.bodyCollider.transform.forward * (Time.deltaTime * FlySpeed * 3f);
+
+            if (Utility.RightGrip)
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += GorillaTagger.Instance.bodyCollider.transform.forward * (Time.deltaTime * FlySpeed * -3f);
         }
 
         public static void Platforms()

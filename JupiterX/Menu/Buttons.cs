@@ -228,9 +228,17 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.Fly(), isTogglable = true, toolTip = "Lets you fly while holding your right primary." },
                 new ButtonInfo { buttonText = "Trigger Fly <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.TriggerFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger." },
                 new ButtonInfo { buttonText = "Noclip Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.NoClipFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger." },
+                new ButtonInfo { buttonText = "Bark Fly <color=grey>[</color><color=cyan>J</color><color=grey>]</color>", method = Movement.BarkFly, toolTip = "Acts like the fly that Bark has. Credits to KyleTheScientist."},
                 new ButtonInfo { buttonText = "Excel Fly", method =() => Movement.ExcelFly(), isTogglable = true, toolTip = "Lets you fly like iron man."  },
                 new ButtonInfo { buttonText = "Slingshot Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.SlingShotFly(), isTogglable = true, toolTip = "Lets you fly like a slingshot while hold your right primary." },
                 new ButtonInfo { buttonText = "Fly Towards Gun", method = Movement.FlyTowardsGun, toolTip = "Sends your character towards whoever your hand desires."},
+
+                new ButtonInfo { buttonText = "Dash <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method = Movement.Dash, toolTip = "Flings your character forwards when pressing <color=cyan>A</color>."},
+                new ButtonInfo { buttonText = "Reverse Velocity <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method = Movement.ReverseVelocity, toolTip = "Reverses your current velocity when you press <color=cyan>A</color>."},
+                new ButtonInfo { buttonText = "Bird Fly", method = Movement.BirdFly, toolTip = "Makes you fly like a bird when you flap your wings."},
+
+                new ButtonInfo { buttonText = "Drive <color=grey>[</color><color=cyan>J</color><color=grey>]</color>", method = Movement.Drive, toolTip = "Lets you drive around in your invisible car. Use the <color=cyan>joystick</color> to move."},
+                new ButtonInfo { buttonText = "Hard Drive <color=grey>[</color><color=cyan>J</color><color=grey>]</color>", overlapText = "Sticky Drive <color=grey>[</color><color=cyan>J</color><color=grey>]</color>", method = Movement.HardDrive, toolTip = "Similar to drive, but locks you to the ground."},
 
                 new ButtonInfo { buttonText = "Long Arms", method =() => Movement.LongArms(false), disableMethod =() => Movement.LongArms(true), isTogglable = true, toolTip = "Gives you long arms." },
 
@@ -238,6 +246,11 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Force Tag Freeze", method =() => Movement.NoTagFreeze(1), disableMethod =() => Movement.NoTagFreeze(0),  isTogglable = true, toolTip = "Lets you act like you have tag freeze." },
 
                 new ButtonInfo { buttonText = "NoClip <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Movement.NoClip(Utility.RightTrigger), isTogglable = true, toolTip = "Removes object colliders when you hold right trigger." },
+                new ButtonInfo { buttonText = "Up And Down", method = Movement.UpAndDown, toolTip = "Makes you go up when holding your <color=cyan>trigger</color>, and down when holding your <color=cyan>grip</color>."},
+                new ButtonInfo { buttonText = "Left And Right", method = Movement.LeftAndRight, toolTip = "Makes you go left when holding your <color=cyan>trigger</color>, and right when holding your <color=cyan>grip</color>."},
+                new ButtonInfo { buttonText = "Forwards And Backwards", method = Movement.ForwardsAndBackwards, toolTip = "Makes you go forwards when holding your <color=cyan>trigger</color>, and backwards when holding your <color=cyan>grip</color>."},
+
+                new ButtonInfo { buttonText = "Long Jump <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", overlapText = "Playspace Abuse <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method = Movement.PlayspaceAbuse, toolTip = "Makes you look like you're legitimately long jumping when holding <color=cyan>A</color>."},
 
                 new ButtonInfo { buttonText = "SpeedBoost", method =() => Movement.SpeedBoost(), isTogglable = true, toolTip = "Gives you a speed boost." },
                 new ButtonInfo { buttonText = "Mosa Boost", method =() => Movement.Mosaboost(), isTogglable = true, toolTip = "Gives you a slight speed boost." },
@@ -272,6 +285,7 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // VRRig | 7
                 new ButtonInfo { buttonText = "Exit VRRig", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
                 new ButtonInfo { buttonText = "Ghost Monke <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => vRRig.GhostMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become a ghost." },
                 new ButtonInfo { buttonText = "Invis Monke <color=grey>[</color><color=cyan>B</color><color=grey>]</color>", method =() => vRRig.InvisMonke(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you become invisable." },
                 new ButtonInfo { buttonText = "Grab Rig <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => vRRig.GrabRig(), disableMethod = Utility.FixGhostRig, isTogglable = true, toolTip = "Lets you grab your rig while holding right grip." },
