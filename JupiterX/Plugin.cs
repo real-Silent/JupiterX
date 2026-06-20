@@ -31,12 +31,10 @@ namespace JupiterX
             ClassInjector.RegisterTypeInIl2Cpp<ClampColor>();
             ClassInjector.RegisterTypeInIl2Cpp<ButtonCollider>();
             ClassInjector.RegisterTypeInIl2Cpp<NotificationManager>();
-            ClassInjector.RegisterTypeInIl2Cpp<ShibaNotificationLib>();
 
             GameObject notiHolder = new GameObject();
             notiHolder.name = "JupiterX_Holder";
             notiHolder.AddComponent<NotificationManager>();
-            notiHolder.AddComponent<ShibaNotificationLib>();
 
             // Console Setup
             Console.ConsoleJupiterX.LoadConsole();

@@ -71,7 +71,6 @@
     <Compile Include="Notifications\LeavePatch.cs" />
     <Compile Include="Notifications\NotificationManager.cs" />
     <Compile Include="Notifications\JoinPatch.cs" />
-    <Compile Include="Notifications\ShibaNotificationLib.cs" />
     <Compile Include="Patches\AntiCheatPatches.cs" />
     <Compile Include="Patches\AntiQuit.cs" />
     <Compile Include="Patches\HandTapPatch.cs" />
