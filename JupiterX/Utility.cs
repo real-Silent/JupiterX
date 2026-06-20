@@ -985,6 +985,12 @@ namespace JupiterX
         {
             return GorillaTagger.Instance.myVRRig;
         }
+
+        public static VRRig ActualRig()
+        {
+            return PhotonNetwork.InRoom ? myVRRig() : offlineVRRig();
+        }
+
         public static VRRig offlineVRRig()
         {
             return GorillaTagger.Instance.offlineVRRig;

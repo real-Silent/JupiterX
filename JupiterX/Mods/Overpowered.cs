@@ -17,7 +17,7 @@ namespace JupiterX.Mods
             Utility.MakeMeMaster();
             if (Utility.RightTrigger)
             {
-                PhotonNetwork.Destroy(Utility.myVRRig().gameObject);
+                PhotonNetwork.Destroy(Utility.ActualRig().gameObject);
             }
         }
 

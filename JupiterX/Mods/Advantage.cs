@@ -26,17 +26,17 @@ namespace JupiterX.Mods
                 {
                     if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
                     {
-                        if (Utility.myVRRig().mainSkin.material.name.Contains("fected") && !rig.mainSkin.material.name.Contains("fected"))
+                        if (Utility.ActualRig().mainSkin.material.name.Contains("fected") && !rig.mainSkin.material.name.Contains("fected"))
                         {
-                            Utility.myVRRig().enabled = false;
-                            Utility.myVRRig().transform.position = rig.headConstraint.transform.position;
-                            Utility.myVRRig().rightHandTransform.transform.position = rig.headConstraint.transform.position;
+                            Utility.ActualRig().enabled = false;
+                            Utility.ActualRig().transform.position = rig.headConstraint.transform.position;
+                            Utility.ActualRig().rightHandTransform.transform.position = rig.headConstraint.transform.position;
                             Utility.RightHandTransform().position = rig.headConstraint.transform.position;
                             NotificationManager.SendNotification("<color=yellow>[INFO]</color> Tagged all!", 7f);
                         }
                         else
                         {
-                            Utility.myVRRig().enabled = true;
+                            Utility.ActualRig().enabled = true;
                             NotificationManager.SendNotification("<color=red>[ERROR]</color> You are not tagged.", 10f);
                         }
                     }
@@ -50,12 +50,12 @@ namespace JupiterX.Mods
             {
                 if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
                 {
-                    if (Utility.myVRRig().mainSkin.material.name.Contains("fected") && !rig.mainSkin.material.name.Contains("fected"))
+                    if (Utility.ActualRig().mainSkin.material.name.Contains("fected") && !rig.mainSkin.material.name.Contains("fected"))
                     {
                         float dis = Vector3.Distance(Utility.MainTransform().position, rig.headConstraint.transform.position);
                         if (dis < 0.75f)
                         {
-                            Utility.myVRRig().rightHandTransform.transform.position = rig.headConstraint.transform.position;
+                            Utility.ActualRig().rightHandTransform.transform.position = rig.headConstraint.transform.position;
                             Utility.RightHandTransform().position = rig.headConstraint.transform.position;
                         }
                     }

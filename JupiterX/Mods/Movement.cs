@@ -244,14 +244,14 @@ namespace JupiterX.Mods
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
-                    Utility.myVRRig().enabled = false;
-                    Utility.myVRRig().transform.position = Main.lockTarget.transform.position;
-                    Utility.myVRRig().rightHandTransform.position = Main.lockTarget.rightHandTransform.position;
-                    Utility.myVRRig().rightHandTransform.rotation = Main.lockTarget.rightHandTransform.rotation;
-                    Utility.myVRRig().leftHandTransform.position = Main.lockTarget.leftHandTransform.position;
-                    Utility.myVRRig().leftHandTransform.rotation = Main.lockTarget.leftHandTransform.rotation;
-                    Utility.myVRRig().headConstraint.transform.position = Main.lockTarget.headConstraint.transform.position;
-                    Utility.myVRRig().headConstraint.transform.rotation = Main.lockTarget.headConstraint.transform.rotation;
+                    Utility.ActualRig().enabled = false;
+                    Utility.ActualRig().transform.position = Main.lockTarget.transform.position;
+                    Utility.ActualRig().rightHandTransform.position = Main.lockTarget.rightHandTransform.position;
+                    Utility.ActualRig().rightHandTransform.rotation = Main.lockTarget.rightHandTransform.rotation;
+                    Utility.ActualRig().leftHandTransform.position = Main.lockTarget.leftHandTransform.position;
+                    Utility.ActualRig().leftHandTransform.rotation = Main.lockTarget.leftHandTransform.rotation;
+                    Utility.ActualRig().headConstraint.transform.position = Main.lockTarget.headConstraint.transform.position;
+                    Utility.ActualRig().headConstraint.transform.rotation = Main.lockTarget.headConstraint.transform.rotation;
                     Utility.GhostView(true);
                 }
 
@@ -271,7 +271,7 @@ namespace JupiterX.Mods
                 if (Main.gunLocked)
                     Main.gunLocked = false;
 
-                Utility.myVRRig().enabled = true;
+                Utility.ActualRig().enabled = true;
                 Utility.GhostView(false);
             }
         }
@@ -617,6 +617,34 @@ namespace JupiterX.Mods
                     hasTped = false;
                 }
             }
+        }
+
+        public static float laggyRigDelay;
+        public static void LaggyRig()
+        {
+            Utility.ActualRig().enabled = false;
+            if (Time.time > laggyRigDelay)
+            {
+                Utility.ActualRig().enabled = true;
+                Utility.ActualRig().LateUpdate();
+                Utility.ActualRig().enabled = false;
+
+                laggyRigDelay = Time.time + 0.5f;
+            }
+        }
+
+        public static bool wasRightPrimaryPressed;
+        public static void UpdateRig()
+        {
+            Utility.ActualRig().enabled = false;
+            if (Utility.RightPrimary && !wasRightPrimaryPressed)
+            {
+                Utility.ActualRig().enabled = true;
+                Utility.ActualRig().LateUpdate();
+                Utility.ActualRig().enabled = false;
+            }
+
+            wasRightPrimaryPressed = Utility.RightPrimary;
         }
     }
 }

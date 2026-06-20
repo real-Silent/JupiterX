@@ -11,13 +11,13 @@ namespace JupiterX.Mods
         {
             if (Utility.RightSecondary)
             {
-                Utility.myVRRig().enabled = false;
-                Utility.myVRRig().transform.position = new Vector3(20397230f, 32423, 3432);
+                Utility.ActualRig().enabled = false;
+                Utility.ActualRig().transform.position = new Vector3(20397230f, 32423, 3432);
                 Utility.GhostView(true);
             }
             else
             {
-                Utility.myVRRig().enabled = true;
+                Utility.ActualRig().enabled = true;
                 Utility.GhostView(false);
             }
 
@@ -26,12 +26,12 @@ namespace JupiterX.Mods
         {
             if (Utility.RightPrimary)
             {
-                Utility.myVRRig().enabled = false;
+                Utility.ActualRig().enabled = false;
                 Utility.GhostView(true);
             }
             else
             {
-                Utility.myVRRig().enabled = true;
+                Utility.ActualRig().enabled = true;
                 Utility.GhostView(false);
             }
         }
@@ -81,13 +81,13 @@ namespace JupiterX.Mods
 
                 if (Main.GetGunInput(true))
                 {
-                    Utility.myVRRig().enabled = false;
-                    Utility.myVRRig().transform.position = Ray.point;
+                    Utility.ActualRig().enabled = false;
+                    Utility.ActualRig().transform.position = Ray.point;
                     Utility.GhostView(true);
                 }
                 else
                 {
-                    Utility.myVRRig().enabled = true;
+                    Utility.ActualRig().enabled = true;
                     Utility.GhostView(false);
                 }
             }
@@ -97,19 +97,19 @@ namespace JupiterX.Mods
         {
             if (Utility.RightGrip)
             {
-                Utility.myVRRig().enabled = false;
-                Utility.myVRRig().transform.position = Utility.RightHandTransform().position;
+                Utility.ActualRig().enabled = false;
+                Utility.ActualRig().transform.position = Utility.RightHandTransform().position;
                 Utility.GhostView(true);
             }
             if (Utility.LeftGrip)
             {
-                Utility.myVRRig().enabled = false;
-                Utility.myVRRig().transform.position = Utility.LeftHandTransform().position;
+                Utility.ActualRig().enabled = false;
+                Utility.ActualRig().transform.position = Utility.LeftHandTransform().position;
                 Utility.GhostView(true);
             }
             if (!Utility.LeftGrip || !Utility.RightGrip)
             {
-                Utility.myVRRig().enabled = true;
+                Utility.ActualRig().enabled = true;
                 Utility.GhostView(false);
             }
         }

@@ -293,6 +293,10 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Strobe", method =() => vRRig.Strobe(), isTogglable = true, toolTip = "Makes your color go crazy." },
                 new ButtonInfo { buttonText = "Move Rig Gun", method =() => vRRig.MoveRigGun(), isTogglable = true, toolTip = "Moves your rig to the gun point." },
                 new ButtonInfo { buttonText = "Bees", method =() => vRRig.Bees(), disableMethod =() => Utility.FixGhostRig(), isTogglable = true, toolTip = "Makes your rig teleport to other players." },
+
+                new ButtonInfo { buttonText = "Laggy Rig", method = Movement.LaggyRig, disableMethod = Utility.FixGhostRig, toolTip = "Makes your rig laggy."},
+                new ButtonInfo { buttonText = "Smooth Rig", method =() => PhotonNetwork.SerializationRate = 30, disableMethod =() => PhotonNetwork.SerializationRate = 10, toolTip = "Makes your rig really smooth."},
+                new ButtonInfo { buttonText = "Update Rig <color=grey>[</color><color=green>A</color><color=grey>]</color>", method = Movement.UpdateRig, disableMethod = Utility.FixGhostRig, toolTip = "Freezes your rig in place. Whenever you click <color=green>A</color>, your rig will update."},
             },
 
             new ButtonInfo[] { // Visual | 8

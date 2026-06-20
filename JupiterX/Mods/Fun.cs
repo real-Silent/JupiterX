@@ -20,7 +20,7 @@ namespace JupiterX.Mods
         private static float headSpinSpeed = 10f;
         public static void SpinHead(string axis)
         {
-            if (Utility.myVRRig().enabled)
+            if (Utility.ActualRig().enabled)
             {
                 Vector3 rot = Head.trackingRotationOffset;
                 switch (axis.ToLower())
