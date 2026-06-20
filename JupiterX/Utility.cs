@@ -1463,6 +1463,5 @@ namespace JupiterX
             clip.SetData(samples, 0);
             return clip;
         }
-        public static string Credits = "GunLib , Saving/Loading Preferneces , PlayerTab : [iiDk]";
     }
 }

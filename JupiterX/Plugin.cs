@@ -207,8 +207,6 @@ PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
                 Utility.cocText.text = cocTextNew;
                 Utility.codeOfConduct.text = "<color=cyan>JupiterX V2</color>";
 
-                string v = Utility.version;
-                string creds = Utility.Credits;
                 Utility.CreateCustomBoards(Utility.motd, Utility.motdText, "<color=cyan>JupiterX V2</color>", Utility.motdtemplate);
             }
             else
