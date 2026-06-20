@@ -1,6 +1,4 @@
-﻿using GorillaNetworking;
-using Photon.Pun;
-using UnityEngine;
+﻿using Photon.Pun;
 
 namespace JupiterX.Mods
 {
@@ -10,16 +8,12 @@ namespace JupiterX.Mods
         {
             string roomname = PhotonNetwork.CurrentRoom.Name;
             if (string.IsNullOrEmpty(roomname))
-            {
                 return;
-            }
-            PhotonNetworkController phc = GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>();
-            phc.AttemptToJoinSpecificRoom(roomname);
+            Utility.photonNetworkController.AttemptToJoinSpecificRoom(roomname);
         }
         public static void Leave()
         {
-            PhotonNetworkController phc = GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>();
-            phc.AttemptDisconnect();
+            Utility.photonNetworkController.AttemptDisconnect();
         }
         public static void Jrr()
         {
@@ -27,8 +21,7 @@ namespace JupiterX.Mods
         }
         public static void JoinCode(string code)
         {
-            PhotonNetworkController phc = GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>();
-            phc.AttemptToJoinSpecificRoom(code);
+            Utility.photonNetworkController.AttemptToJoinSpecificRoom(code);
         }
     }
 }
