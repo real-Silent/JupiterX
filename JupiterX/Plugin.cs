@@ -172,14 +172,6 @@ namespace JupiterX
                     }
                 }
             }
-            else
-            {
-                if (!Utility.UsedBeforeNotificaiton)
-                {
-                    NotificationManager.SendNotification("<color=cyan>[INFO]</color> Thank you for using jupiterx.", 10f);
-                    Utility.UsedBeforeNotificaiton = true;
-                }
-            }
 
             if (Settings.CustomBoards)
             {
