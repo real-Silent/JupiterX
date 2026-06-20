@@ -683,11 +683,11 @@ namespace JupiterX.Menu
 
             string targetButtonText = method.overlapText ?? method.buttonText;
 
-            if (inputTextColor != "cyan")
-                targetButtonText = targetButtonText.Replace(" <color=grey>[</color><color=cyan>", $" <color=grey>[</color><color={inputTextColor}>");
-
             buttonText.font = currentFont;
             targetButtonText = method.buttonText;
+
+            if (inputTextColor != "cyan")
+                targetButtonText = targetButtonText.Replace(" <color=grey>[</color><color=cyan>", $" <color=grey>[</color><color={inputTextColor}>");
 
             if (lowercaseMode)
                 targetButtonText = targetButtonText.ToLower();
