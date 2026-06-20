@@ -310,7 +310,7 @@ namespace JupiterX.Menu
 			UnityEngine.Object.Destroy(menuBackground.GetComponent<BoxCollider>());
 			menuBackground.transform.parent = menu.transform;
 			menuBackground.transform.rotation = Quaternion.identity;
-			menuBackground.transform.localScale = menuSize;
+            menuBackground.transform.localScale *= menuScale; //new Vector3(0.1f, 1f, 1f);
 			menuBackground.transform.position = new Vector3(0.05f, 0f, 0f);
 
             if (Rounding)

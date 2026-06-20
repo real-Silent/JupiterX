@@ -27,6 +27,8 @@ namespace JupiterX
 
         public static Font currentFont = (Resources.GetBuiltinResource<Font>("Arial.ttf") as Font);
 
+        public static float menuScale = 1f;
+
         public static bool VersionText = true;
         public static bool CustomBoards = true;
         public static bool DisconnectButton = false;
@@ -67,7 +69,6 @@ namespace JupiterX
 
         public static KeyCode keyboardButton = KeyCode.Q;
 
-        public static Vector3 menuSize = new Vector3(0.1f, 1f, 1f); // Depth, Width, Height
         public static int buttonsPerPage = 8;
 
         public static int inputTextColorInt = 3;
@@ -145,6 +146,24 @@ namespace JupiterX
                 gunVariation = VariationNames.Length - 1;
 
             Buttons.GetIndex("Change Gun Variation").overlapText = $"Change Gun Variation <color=grey>[</color><color=cyan>" + VariationNames[gunVariation] + "</color><color=grey>]</color>";
+        }
+
+        private static int menuScaleIndex = 10;
+        public static void ChangeMenuScale(bool positive = true)
+        {
+            if (positive)
+                menuScaleIndex++;
+            else
+                menuScaleIndex--;
+
+            if (menuScaleIndex > 30)
+                menuScaleIndex = 2;
+            if (menuScaleIndex < 2)
+                menuScaleIndex = 30;
+
+            menuScale = menuScaleIndex / 10f;
+
+            Buttons.GetIndex("Change Menu Scale").overlapText = "Change Menu Scale <color=grey>[</color><color=cyan>" + menuScale + "</color><color=grey>]</color>";
         }
 
         public static void CategorySettings()
