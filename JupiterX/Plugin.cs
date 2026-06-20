@@ -181,14 +181,6 @@ namespace JupiterX
                 }
             }
 
-            string title = PlayFabSettings.TitleId;
-            string rt = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
-            string vc = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice;
-            string version = PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
-            string packagename = Application.identifier;
-            string ping = PhotonNetwork.GetPing().ToString("F2");
-            string fps = Utility.fps;
-
             if (Settings.CustomBoards)
             {
                 string cocTextNew = $@"-Client Info-
