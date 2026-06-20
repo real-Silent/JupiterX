@@ -617,7 +617,7 @@ namespace JupiterX
                     if (sphereeL == null)
                     {
                         sphereeL = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        sphereeL.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
+                        sphereeL.GetComponent<Renderer>().material.shader = GUIShader();
                         sphereeL.transform.SetParent(LeftHandTransform(), false);
                         sphereeL.transform.localRotation = Quaternion.identity;
                         sphereeL.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -627,7 +627,7 @@ namespace JupiterX
                     if (sphereeR == null)
                     {
                         sphereeR = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        sphereeR.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
+                        sphereeR.GetComponent<Renderer>().material.shader = GUIShader();
                         sphereeR.transform.SetParent(RightHandTransform(), false);
                         sphereeR.transform.localRotation = Quaternion.identity;
                         sphereeR.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);

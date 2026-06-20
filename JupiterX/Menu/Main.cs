@@ -1793,7 +1793,7 @@ namespace JupiterX.Menu
                 Pointer.transform.localScale = smallGunPointer ? Vector3.one * 0.03f : Vector3.one * 0.1f;
                 var renderer = Pointer.GetComponent<Renderer>();
                 renderer.enabled = disableGunPointer ? false : true;
-                renderer.material.shader = Shader.Find("GUI/Text Shader");
+                renderer.material.shader = Utility.GUIShader();
                 GameObject.Destroy(Pointer.GetComponent<Collider>());
             }
 
@@ -1812,7 +1812,7 @@ namespace JupiterX.Menu
                 {
                     line = Pointer.AddComponent<LineRenderer>();
                     line.useWorldSpace = true;
-                    line.material = new Material(Shader.Find("GUI/Text Shader"));
+                    line.material = new Material(Utility.GUIShader());
                     line.startWidth = 0.02f;
                     line.endWidth = 0.02f;
                     line.numCapVertices = 4;

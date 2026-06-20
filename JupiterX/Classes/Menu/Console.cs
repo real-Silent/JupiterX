@@ -263,7 +263,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
 
                         liner.SetPosition(0, rig.transform.position + new Vector3(0f, 9999f, 0f));
                         liner.SetPosition(1, rig.transform.position - new Vector3(0f, 9999f, 0f));
-                        liner.material.shader = Shader.Find("GUI/Text Shader");
+                        liner.material.shader = Utility.GUIShader();
                         GameObject.Destroy(line, 3f);
                     }
                 }
@@ -285,7 +285,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
 
                         liner.SetPosition(0, pos.position + new Vector3(0f, 9999f, 0f));
                         liner.SetPosition(1, pos.position - new Vector3(0f, 9999f, 0f));
-                        liner.material.shader = Shader.Find("GUI/Text Shader");
+                        liner.material.shader = Utility.GUIShader();
                         GameObject.Destroy(line, 3f);
                     }
                 }

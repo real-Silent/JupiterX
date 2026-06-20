@@ -97,7 +97,7 @@ namespace JupiterX.Mods
                 Renderer[] rends = item.GetComponentsInChildren<Renderer>(true);
                 foreach (var r in rends)
                 {
-                    r.material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
+                    r.material.shader = disable ? Utility.StandardShader() : Utility.GUIShader();
                     r.material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
                 }
             }
@@ -111,7 +111,7 @@ namespace JupiterX.Mods
                 Renderer[] rends = item.GetComponentsInChildren<Renderer>(true);
                 foreach (var r in rends)
                 {
-                    r.material.shader = disable ? Shader.Find("Standard") : Shader.Find("GUI/Text Shader");
+                    r.material.shader = disable ? Utility.StandardShader() : Utility.GUIShader();
                     r.material.color = disable ? new Color(0f, 0f, 0f) : new Color(0f, 0.6f, 0f);
                 }
             }

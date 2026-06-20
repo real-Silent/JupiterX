@@ -82,7 +82,7 @@ namespace JupiterX.Mods
                     if (v.material.shader.name == "Standard")
                     {
                         oldMats.Add(v, v.material);
-                        Material replacement = new Material(Shader.Find("Standard"))
+                        Material replacement = new Material(Utility.StandardShader())
                         {
                             color = v.material.color
                         };

@@ -15,7 +15,7 @@ namespace JupiterX.Notifications
         public GameObject HUDObj;
         public GameObject HUDObj2;
         private GameObject MainCamera;
-        private Material AlertText = new Material(Shader.Find("GUI/Text Shader"));
+        private Material AlertText = new Material(Utility.GUIShader());
         public static Text NotifiText;
         public static Text ModText;
         public static Text StatsText;

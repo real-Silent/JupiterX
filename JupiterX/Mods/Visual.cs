@@ -30,7 +30,7 @@ namespace JupiterX.Mods
 
 					trailRenderer.minVertexDistance = 0.05f;
 
-					trailRenderer.material.shader = Shader.Find("GUI/Text Shader");
+					trailRenderer.material.shader = Utility.GUIShader();
 					trailRenderer.time = float.PositiveInfinity;
 
 					trailRenderer.startColor = Color.black;

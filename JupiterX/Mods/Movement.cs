@@ -598,7 +598,7 @@ namespace JupiterX.Mods
                 GameObject platform = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 Object.Destroy(platform.GetComponent<BoxCollider>());
                 platform.GetComponent<Renderer>().material.color = Settings.backgroundColor.GetCurrentColor();
-                platform.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+                platform.GetComponent<Renderer>().material.shader = Utility.StandardShader();
                 platform.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
                 platform.transform.position = GorillaTagger.Instance.rightHandTransform.position;
                 platform.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;
@@ -619,7 +619,7 @@ namespace JupiterX.Mods
                     GameObject platform = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     Object.Destroy(platform.GetComponent<BoxCollider>());
                     platform.GetComponent<Renderer>().material.color = Settings.backgroundColor.GetCurrentColor();
-                    platform.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+                    platform.GetComponent<Renderer>().material.shader = Utility.StandardShader();
                     platform.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
                     platform.transform.position = NewPointer.transform.position;
                     platform.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
