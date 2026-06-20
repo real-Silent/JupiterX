@@ -17,6 +17,48 @@ namespace JupiterX.Mods
         private static VRMap Head =>
             PhotonNetwork.InRoom ? GorillaTagger.Instance.myVRRig.head : GorillaTagger.Instance.offlineVRRig.head;
 
+        private static float headSpinSpeed = 10f;
+        public static void SpinHead(string axis)
+        {
+            if (Utility.myVRRig().enabled)
+            {
+                Vector3 rot = Head.trackingRotationOffset;
+                switch (axis.ToLower())
+                {
+                    case "x":
+                        rot.x += headSpinSpeed;
+                        break;
+                    case "y":
+                        rot.y += headSpinSpeed;
+                        break;
+                    case "z":
+                        rot.z += headSpinSpeed;
+                        break;
+                    default:
+                        return;
+                }
+                Head.trackingRotationOffset = rot;
+            }
+            else
+            {
+                switch (axis.ToLower())
+                {
+                    case "x":
+                        Head.rigTarget.transform.rotation = Quaternion.Euler(Head.rigTarget.transform.rotation.eulerAngles + new Vector3(headSpinSpeed, 0f, 0f));
+                        break;
+                    case "y":
+                        Head.rigTarget.transform.rotation = Quaternion.Euler(Head.rigTarget.transform.rotation.eulerAngles + new Vector3(0f, headSpinSpeed, 0f));
+                        break;
+                    case "z":
+                        Head.rigTarget.transform.rotation = Quaternion.Euler(Head.rigTarget.transform.rotation.eulerAngles + new Vector3(0f, 0f, headSpinSpeed));
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+
+
         public static void FixHead()
         {
             Vector3 rot = Head.trackingRotationOffset;

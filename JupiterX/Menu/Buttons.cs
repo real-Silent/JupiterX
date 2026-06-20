@@ -335,6 +335,10 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Fun | 9
                 new ButtonInfo { buttonText = "Exit Fun", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
 
+                new ButtonInfo { buttonText = "Spin Head X", method =() => Fun.SpinHead("x"), disableMethod = Fun.FixHead, toolTip = "Spins your head on the X axis."},
+                new ButtonInfo { buttonText = "Spin Head Y", method =() => Fun.SpinHead("y"), disableMethod = Fun.FixHead, toolTip = "Spins your head on the Y axis."},
+                new ButtonInfo { buttonText = "Spin Head Z", method =() => Fun.SpinHead("z"), disableMethod = Fun.FixHead, toolTip = "Spins your head on the Z axis."},
+
                 new ButtonInfo { buttonText = "Upside Down Head", method = Fun.UpsideDownHead, disableMethod = Fun.FixHead, toolTip = "Flips your head upside down on the Z axis."},
                 new ButtonInfo { buttonText = "Backwards Head", method = Fun.BackwardsHead, disableMethod = Fun.FixHead, toolTip = "Rotates your head 180 degrees on the Y axis."},
                 new ButtonInfo { buttonText = "Sideways Head", method = Fun.SidewaysHead, disableMethod = Fun.FixHead, toolTip = "Rotates your head 90 degrees on the Y axis."},
