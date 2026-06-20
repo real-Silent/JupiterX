@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.XR;
 using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
 
@@ -310,7 +311,7 @@ namespace JupiterX.Menu
 			UnityEngine.Object.Destroy(menuBackground.GetComponent<BoxCollider>());
 			menuBackground.transform.parent = menu.transform;
 			menuBackground.transform.rotation = Quaternion.identity;
-            menuBackground.transform.localScale *= menuScale; //new Vector3(0.1f, 1f, 1f);
+            menuBackground.transform.localScale = new Vector3(0.1f, 1f, 1f);
 			menuBackground.transform.position = new Vector3(0.05f, 0f, 0f);
 
             if (Rounding)
@@ -621,6 +622,8 @@ namespace JupiterX.Menu
                     CurrentCategoryName = "Main";
                 }
             }
+
+            menu.transform.localScale *= menuScale;
         }
 
         private static void AddButton(float offset, int buttonIndex, ButtonInfo method)
@@ -700,6 +703,8 @@ namespace JupiterX.Menu
             buttonText.supportRichText = true;
             buttonText.fontSize = 1;
             buttonText.color = method.enabled ? textColors[1] : textColors[0];
+
+            buttonText.text = targetButtonText;
 
             buttonText.alignment = TextAnchor.MiddleCenter;
             buttonText.fontStyle = Utility.currentFontStyle;
@@ -1553,8 +1558,6 @@ namespace JupiterX.Menu
 
         public static bool disableSearchButton;
         public static bool disableReturnButton;
-
-        public static bool scaleWithPlayer;
 
         public static Vector3 MidPosition;
         public static Vector3 MidVelocity;
