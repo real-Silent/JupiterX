@@ -15,8 +15,7 @@ namespace JupiterX.Mods
         }
         public static void AntiAFK()
         {
-            PhotonNetworkController phc = GameObject.Find("Photon Manager").GetComponent<PhotonNetworkController>();
-            phc.disableAFKKick = true;
+            photonNetworkController.disableAFKKick = true;
         }
 
         public static void JoinDiscord() =>

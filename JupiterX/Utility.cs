@@ -13,6 +13,7 @@ using PlayFab;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
@@ -1468,6 +1469,14 @@ namespace JupiterX
             AudioClip clip = AudioClip.Create("sound", sampleCount / channels, channels, sampleRate, false);
             clip.SetData(samples, 0);
             return clip;
+        }
+
+        public static PhotonNetworkController photonNetworkController
+        {
+            get
+            {
+                return GameObject.FindObjectsOfType<PhotonNetworkController>().FirstOrDefault();
+            }
         }
     }
 }
