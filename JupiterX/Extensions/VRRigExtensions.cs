@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Photon.Pun;
+using System.Linq;
 using UnityEngine;
 
 namespace JupiterX.Extensions
@@ -26,6 +27,13 @@ namespace JupiterX.Extensions
         {
             Color rigC = rig.mainSkin.material.color;
             return new Color(rigC.r, rigC.g, rigC.b);
+        }
+
+        public static bool IsLocal(this VRRig rig)
+        {
+            if (rig == null || GorillaTagger.Instance == null)
+                return false;
+            return PhotonNetwork.InRoom ? rig == GorillaTagger.Instance.myVRRig  : rig == GorillaTagger.Instance.offlineVRRig;
         }
 
         public static bool IsPlayerSteam(this VRRig rig)

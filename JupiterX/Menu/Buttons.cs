@@ -230,6 +230,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Noclip Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.NoClipFly(), isTogglable = true, toolTip = "Lets you fly while holding your right trigger." },
                 new ButtonInfo { buttonText = "Excel Fly", method =() => Movement.ExcelFly(), isTogglable = true, toolTip = "Lets you fly like iron man."  },
                 new ButtonInfo { buttonText = "Slingshot Fly <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method =() => Movement.SlingShotFly(), isTogglable = true, toolTip = "Lets you fly like a slingshot while hold your right primary." },
+                new ButtonInfo { buttonText = "Fly Towards Gun", method = Movement.FlyTowardsGun, toolTip = "Sends your character towards whoever your hand desires."},
 
                 new ButtonInfo { buttonText = "Long Arms", method =() => Movement.LongArms(false), disableMethod =() => Movement.LongArms(true), isTogglable = true, toolTip = "Gives you long arms." },
 

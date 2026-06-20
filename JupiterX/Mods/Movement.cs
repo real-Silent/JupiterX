@@ -1,6 +1,8 @@
-﻿using JupiterX.Menu;
+﻿using JupiterX.Extensions;
+using JupiterX.Menu;
 using System.Collections.Generic;
 using UnityEngine;
+using static JupiterX.Menu.Main;
 
 namespace JupiterX.Mods
 {
@@ -289,6 +291,35 @@ namespace JupiterX.Mods
             if (Utility.LeftPrimary) Utility.RigidbodyTransform().velocity += -Utility.LeftHandTransform().right / 2f;
         }
 
+        public static void FlyTowardsGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                RaycastHit Ray = GunData.Ray;
+
+                if (gunLocked && lockTarget != null)
+                {
+                    GorillaTagger.Instance.transform.position += (lockTarget.transform.position - GorillaTagger.Instance.bodyCollider.transform.position) * (Time.deltaTime * FlySpeed);
+                    GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity = Vector3.zero;
+                }
+
+                if (GetGunInput(true))
+                {
+                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    if (gunTarget && !gunTarget.IsLocal())
+                    {
+                        gunLocked = true;
+                        lockTarget = gunTarget;
+                    }
+                }
+            }
+            else
+            {
+                if (gunLocked)
+                    gunLocked = false;
+            }
+        }
 
         public static string[] ArmSizes = { "Steam", "Long", "Very Long", "Ghost", "Short" };
         public static int ArmSizeAmount = 0;
