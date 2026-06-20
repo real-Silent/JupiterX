@@ -296,7 +296,7 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Laggy Rig", method = Movement.LaggyRig, disableMethod = Utility.FixGhostRig, toolTip = "Makes your rig laggy."},
                 new ButtonInfo { buttonText = "Smooth Rig", method =() => PhotonNetwork.SerializationRate = 30, disableMethod =() => PhotonNetwork.SerializationRate = 10, toolTip = "Makes your rig really smooth."},
-                new ButtonInfo { buttonText = "Update Rig <color=grey>[</color><color=green>A</color><color=grey>]</color>", method = Movement.UpdateRig, disableMethod = Utility.FixGhostRig, toolTip = "Freezes your rig in place. Whenever you click <color=green>A</color>, your rig will update."},
+                new ButtonInfo { buttonText = "Update Rig <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method = Movement.UpdateRig, disableMethod = Utility.FixGhostRig, toolTip = "Freezes your rig in place. Whenever you click <color=cyan>A</color>, your rig will update."},
             },
 
             new ButtonInfo[] { // Visual | 8
