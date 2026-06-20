@@ -641,22 +641,24 @@ namespace JupiterX.Menu
                 }
             }.AddComponent<Text>();
 
-            buttonText.font = currentFont;
-            buttonText.text = method.buttonText;
-
-            if (lowercaseMode)
-                buttonText.text = buttonText.text.ToLower();
-            if (uppercaseMode)
-                buttonText.text = buttonText.text.ToUpper();
-
-            if (method.overlapText != null)
-                buttonText.text = method.overlapText;
-
-            if (favorites.Contains(method.buttonText))
-                buttonText.text += " ✦";
+            string targetButtonText = method.overlapText ?? method.buttonText;
 
             if (inputTextColor != "cyan")
-                buttonText.text = buttonText.text.Replace(" <color=grey>[</color><color=cyan>", $" <color=grey>[</color><color={inputTextColor}>");
+                targetButtonText = targetButtonText.Replace(" <color=grey>[</color><color=cyan>", $" <color=grey>[</color><color={inputTextColor}>");
+
+            buttonText.font = currentFont;
+            targetButtonText = method.buttonText;
+
+            if (lowercaseMode)
+                targetButtonText = targetButtonText.ToLower();
+            if (uppercaseMode)
+                targetButtonText = targetButtonText.ToUpper();
+
+            if (method.overlapText != null)
+                targetButtonText = method.overlapText;
+
+            if (favorites.Contains(method.buttonText))
+                targetButtonText += " ✦";
 
             buttonText.supportRichText = true;
             buttonText.fontSize = 1;

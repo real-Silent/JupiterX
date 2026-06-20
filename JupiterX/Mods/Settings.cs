@@ -130,7 +130,7 @@ namespace JupiterX
             if (gunVariation < 0)
                 gunVariation = VariationNames.Length - 1;
 
-            Buttons.GetIndex("Change Gun Variation").overlapText = $"Change Gun Variation <color=grey>[</color><color={inputTextColor}>" + VariationNames[gunVariation] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Change Gun Variation").overlapText = $"Change Gun Variation <color=grey>[</color><color=cyan>" + VariationNames[gunVariation] + "</color><color=grey>]</color>";
         }
 
         public static void CategorySettings()

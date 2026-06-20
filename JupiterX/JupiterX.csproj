@@ -52,7 +52,7 @@
     <Compile Include="Managers\PluginManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
     <Compile Include="Menu\Main.cs" />
-    <Compile Include="Menu\Settings.cs" />
+    <Compile Include="Mods\Settings.cs" />
     <Compile Include="Mods\Advantage.cs" />
     <Compile Include="Mods\Computer.cs" />
     <Compile Include="Mods\Experimental.cs" />
