@@ -780,7 +780,10 @@ namespace JupiterX
         }
         public static Shader StandardShader()
         {
-            return Shader.Find("Standard"); // GorillaTag/UberShader
+            if (Shader.Find("GorillaTag/UberShader") == null)
+                return Shader.Find("Standard"); // GorillaTag/UberShader
+            else
+                return Shader.Find("GorillaTag/UberShader");
         }
         public static Shader UnlitShader()
         {
