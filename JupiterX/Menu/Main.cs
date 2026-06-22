@@ -489,7 +489,6 @@ namespace JupiterX.Menu
                 hkbStartTime -= 0.1f;
             }
 
-
             if (quickActions.Count > 0)
             {
                 foreach (string action in quickActions)
