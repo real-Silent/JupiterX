@@ -30,6 +30,7 @@ namespace JupiterX
         public static float menuScale = 1f;
 
         public static bool VersionText = true;
+        public static bool showfps = true;
         public static bool CustomBoards = true;
         public static bool DisconnectButton = false;
         public static bool MenuTitle = true;

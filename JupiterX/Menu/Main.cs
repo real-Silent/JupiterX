@@ -413,23 +413,56 @@ namespace JupiterX.Menu
 
 			if (VersionText)
 			{
-				fpsObject = new GameObject
-				{
-					transform =
-					{
-						parent = canvasObject.transform
-					}
-				}.AddComponent<Text>();
-				fpsObject.font = currentFont;
-				fpsObject.text = "Version: " + Utility.version;
-				fpsObject.color = textColors[0];
-				fpsObject.fontSize = 1;
-				fpsObject.supportRichText = true;
-				fpsObject.fontStyle = Utility.currentFontStyle;
-				fpsObject.alignment = TextAnchor.MiddleCenter;
-				fpsObject.horizontalOverflow = UnityEngine.HorizontalWrapMode.Overflow;
-				fpsObject.resizeTextForBestFit = true;
-				fpsObject.resizeTextMinSize = 0;
+                Text buildLabel = new GameObject
+                {
+                    transform =
+                {
+                    parent = canvasObject.transform
+                }
+                }.AddComponent<Text>();
+                buildLabel.font = currentFont;
+                buildLabel.text = $"Build {Utility.version}";
+
+                if (lowercaseMode)
+                    buildLabel.text = buildLabel.text.ToLower();
+
+                if (uppercaseMode)
+                    buildLabel.text = buildLabel.text.ToUpper();
+
+                buildLabel.fontSize = 1;
+                buildLabel.color = textColors[0];
+                buildLabel.supportRichText = true;
+                buildLabel.fontStyle = FontStyle.Italic;
+                buildLabel.alignment = TextAnchor.MiddleRight;
+                buildLabel.resizeTextForBestFit = true;
+                buildLabel.resizeTextMinSize = 0;
+                component = buildLabel.GetComponent<RectTransform>();
+                component.localPosition = Vector3.zero;
+                component.sizeDelta = new Vector2(0.28f, 0.02f);
+                component.position = new Vector3(0.04f, 0.07f, -0.17f);
+
+                component.rotation = Quaternion.Euler(new Vector3(0f, 90f, 90f));
+			}
+
+            if (showfps)
+            {
+                fpsObject = new GameObject
+                {
+                    transform =
+                    {
+                        parent = canvasObject.transform
+                    }
+                }.AddComponent<Text>();
+                fpsObject.font = currentFont;
+                fpsObject.text = "FPS: " + Utility.fps;
+                fpsObject.color = textColors[0];
+                fpsObject.fontSize = 1;
+                fpsObject.supportRichText = true;
+                fpsObject.fontStyle = Utility.currentFontStyle;
+                fpsObject.alignment = TextAnchor.MiddleCenter;
+                fpsObject.horizontalOverflow = UnityEngine.HorizontalWrapMode.Overflow;
+                fpsObject.resizeTextForBestFit = true;
+                fpsObject.resizeTextMinSize = 0;
 
                 if (lowercaseMode)
                     fpsObject.text = fpsObject.text.ToLower();
@@ -437,13 +470,13 @@ namespace JupiterX.Menu
                     fpsObject.text = fpsObject.text.ToUpper();
 
                 RectTransform component2 = fpsObject.GetComponent<RectTransform>();
-				component2.localPosition = Vector3.zero;
-				component2.sizeDelta = new Vector2(0.28f, 0.02f);
+                component2.localPosition = Vector3.zero;
+                component2.sizeDelta = new Vector2(0.28f, 0.02f);
                 if (NoAutoSizeText)
                     component2.sizeDelta = new Vector2(9f, 0.015f);
                 component2.position = new Vector3(0.06f, 0f, 0.135f);
-				component2.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
-			}
+                component2.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+            }
 
             float hkbStartTime = -0.3f;
 
