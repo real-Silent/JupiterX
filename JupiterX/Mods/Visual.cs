@@ -166,13 +166,16 @@ namespace JupiterX.Mods
         {
             GameObject textHolder = new GameObject("Tag");
             TextMesh nametag = textHolder.AddComponent<TextMesh>();
+            Font arial = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            nametag.font = arial;
+            textHolder.GetComponent<MeshRenderer>().material = arial.material;
             nametag.text = text;
             nametag.color = color;
-            nametag.fontSize = 12;
-            nametag.characterSize = 0.1f;
+            nametag.fontSize = 38;
+            nametag.characterSize = 0.02f;
             nametag.anchor = TextAnchor.MiddleCenter;
             nametag.alignment = TextAlignment.Center;
-            textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1f + (index * -0.15f), 0f);
+            textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.25f + (index * -0.15f), 0f);
             textHolder.transform.LookAt(Camera.main.transform);
             textHolder.transform.Rotate(0f, 180f, 0f);
             Object.Destroy(textHolder, Time.deltaTime);
