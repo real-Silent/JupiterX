@@ -8,6 +8,7 @@ namespace JupiterX.Patches
     class VRRigTorsoPatch
     {
         public static bool enable;
+        [HarmonyPostfix]
         public static void Postfix(VRRig __instance)
         {
             if (enable)
