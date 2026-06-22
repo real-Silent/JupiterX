@@ -300,6 +300,12 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Laggy Rig", method = Movement.LaggyRig, disableMethod = Utility.FixGhostRig, toolTip = "Makes your rig laggy."},
                 new ButtonInfo { buttonText = "Smooth Rig", method =() => PhotonNetwork.SerializationRate = 30, disableMethod =() => PhotonNetwork.SerializationRate = 10, toolTip = "Makes your rig really smooth."},
                 new ButtonInfo { buttonText = "Update Rig <color=grey>[</color><color=cyan>A</color><color=grey>]</color>", method = Movement.UpdateRig, disableMethod = Utility.FixGhostRig, toolTip = "Freezes your rig in place. Whenever you click <color=cyan>A</color>, your rig will update."},
+
+                new ButtonInfo { buttonText = "Decapitation", enableMethod =() => VRRigTorsoPatch.enable = true, method = vRRig.DecapitateRig, disableMethod =() => VRRigTorsoPatch.enable = false, toolTip = "Desyncs your head and body rotations."},
+
+                new ButtonInfo { buttonText = "Paralyze Rig", method = vRRig.ParalyzeRig, disableMethod =() => Utility.ActualRig().enabled = true, toolTip = "Removes your arms from your rig."},
+                new ButtonInfo { buttonText = "Chicken Rig", method = vRRig.ChickenRig, disableMethod =() => Utility.ActualRig().enabled = true, toolTip = "Makes your rig look like a chicken."},
+                new ButtonInfo { buttonText = "Amputate Rig", method = vRRig.AmputateRig, disableMethod =() => Utility.ActualRig().enabled = true, toolTip = "Removes all of your limbs from your rig."},
             },
 
             new ButtonInfo[] { // Visual | 8
@@ -462,7 +468,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Kick All <color=grey>[</color><color=cyan>Stump</color><color=grey>]</color>", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump." },
 
                 new ButtonInfo { buttonText = "Disable Network Triggers <color=grey>[</color><color=cyan>SS</color><color=grey>]</color>", method =() => Overpowered.DisableNetworkTriggersSS(), isTogglable = false, toolTip = "Disables the network triggers, allowing people to join every map without getting disconnected." },
-                new ButtonInfo { buttonText = "Enablw Network Triggers <color=grey>[</color><color=cyan>SS</color><color=grey>]</color>", method =() => Overpowered.EnableNetworkTriggersSS(), isTogglable = false, toolTip = "Enables the network triggers, making people get disconnected when joining new maps." },
+                new ButtonInfo { buttonText = "Enable Network Triggers <color=grey>[</color><color=cyan>SS</color><color=grey>]</color>", method =() => Overpowered.EnableNetworkTriggersSS(), isTogglable = false, toolTip = "Enables the network triggers, making people get disconnected when joining new maps." },
 
                 new ButtonInfo { buttonText = "Create Symbol Name Public", method =() => Overpowered.CreatePublic("<>{][]()@.,/?!"), isTogglable = true, toolTip = "Creates a public room with a symbols as the name." },
                 new ButtonInfo { buttonText = "Create Dot Name Public", method =() => Overpowered.CreatePublic("."), isTogglable = true, toolTip = "Creates a public room with a dot name." },

@@ -107,11 +107,86 @@ namespace JupiterX.Mods
                 Utility.ActualRig().transform.position = Utility.LeftHandTransform().position;
                 Utility.GhostView(true);
             }
-            if (!Utility.LeftGrip || !Utility.RightGrip)
+            if (!Utility.LeftGrip && !Utility.RightGrip)
             {
                 Utility.ActualRig().enabled = true;
                 Utility.GhostView(false);
             }
+        }
+
+        public static float yRotation;
+        public static void DecapitateRig()
+        {
+            if (AreHandsDown())
+            {
+                float targetYRotation = CalculateTorsoYRotation();
+                yRotation = Mathf.LerpAngle(yRotation, targetYRotation, .8f);
+            }
+            else
+            {
+                yRotation = GorillaTagger.Instance.mainCamera.transform.eulerAngles.y;
+            }
+        }
+        private static bool AreHandsDown()
+        {
+            return GorillaTagger.Instance.leftHandTransform.position.y < GorillaTagger.Instance.mainCamera.transform.position.y && GorillaTagger.Instance.rightHandTransform.position.y < GorillaTagger.Instance.mainCamera.transform.position.y;
+        }
+        private static float CalculateTorsoYRotation()
+        {
+            Vector3 headForward = GorillaTagger.Instance.mainCamera.transform.forward;
+            headForward.y = 0;
+            headForward.Normalize();
+            Vector3 handCenter = (GorillaTagger.Instance.leftHandTransform.position + GorillaTagger.Instance.rightHandTransform.position) / 2f;
+            Vector3 handDirection = handCenter - GorillaTagger.Instance.mainCamera.transform.position;
+            handDirection.y = 0;
+            handDirection.Normalize();
+            Vector3 torsoDirection = Vector3.Lerp(headForward, handDirection, 0.45f);
+            torsoDirection.Normalize();
+            if (Vector3.Dot(torsoDirection, headForward) < 0)
+                torsoDirection = headForward;
+            return Quaternion.LookRotation(torsoDirection, Vector3.up).eulerAngles.y;
+        }
+
+        public static void ParalyzeRig()
+        {
+            Utility.ActualRig().enabled = false;
+            Utility.ActualRig().transform.position = GorillaTagger.Instance.bodyCollider.transform.position + new Vector3(0f, 0.15f, 0f);
+            Utility.ActualRig().transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
+            Utility.ActualRig().head.rigTarget.transform.rotation = GorillaTagger.Instance.headCollider.transform.rotation;
+
+            Utility.ActualRig().leftHand.rigTarget.transform.position = GorillaTagger.Instance.bodyCollider.transform.position + GorillaTagger.Instance.bodyCollider.transform.right * -0.08f + GorillaTagger.Instance.bodyCollider.transform.up * 0.12f;
+            Utility.ActualRig().rightHand.rigTarget.transform.position = GorillaTagger.Instance.bodyCollider.transform.position + GorillaTagger.Instance.bodyCollider.transform.right * 0.08f + GorillaTagger.Instance.bodyCollider.transform.up * 0.12f;
+
+            Utility.ActualRig().leftHand.rigTarget.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation * Quaternion.Euler(0f, 180f, 180f);
+            Utility.ActualRig().rightHand.rigTarget.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation * Quaternion.Euler(0f, 180f, 180f);
+        }
+
+        public static void ChickenRig()
+        {
+            Utility.ActualRig().enabled = false;
+            Utility.ActualRig().transform.position = GorillaTagger.Instance.bodyCollider.transform.position + new Vector3(0f, 0.15f, 0f);
+            Utility.ActualRig().transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
+            Utility.ActualRig().head.rigTarget.transform.rotation = GorillaTagger.Instance.headCollider.transform.rotation;
+
+            Utility.ActualRig().leftHand.rigTarget.transform.position = GorillaTagger.Instance.bodyCollider.transform.position + GorillaTagger.Instance.bodyCollider.transform.right * 0.2f + GorillaTagger.Instance.bodyCollider.transform.up * -0.2f;
+            Utility.ActualRig().rightHand.rigTarget.transform.position = GorillaTagger.Instance.bodyCollider.transform.position + GorillaTagger.Instance.bodyCollider.transform.right * -0.2f + GorillaTagger.Instance.bodyCollider.transform.up * -0.2f;
+
+            Utility.ActualRig().leftHand.rigTarget.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
+            Utility.ActualRig().rightHand.rigTarget.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
+        }
+
+        public static void AmputateRig()
+        {
+            Utility.ActualRig().enabled = false;
+            Utility.ActualRig().transform.position = GorillaTagger.Instance.bodyCollider.transform.position + new Vector3(0f, 0.15f, 0f);
+            Utility.ActualRig().transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation;
+            Utility.ActualRig().head.rigTarget.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation * Quaternion.Euler(160f, 90f, 0f);
+
+            Utility.ActualRig().leftHand.rigTarget.transform.position = GorillaTagger.Instance.bodyCollider.transform.position + GorillaTagger.Instance.bodyCollider.transform.right * -0.08f + GorillaTagger.Instance.bodyCollider.transform.up * 0.12f;
+            Utility.ActualRig().rightHand.rigTarget.transform.position = GorillaTagger.Instance.bodyCollider.transform.position + GorillaTagger.Instance.bodyCollider.transform.right * 0.08f + GorillaTagger.Instance.bodyCollider.transform.up * 0.12f;
+
+            Utility.ActualRig().leftHand.rigTarget.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation * Quaternion.Euler(0f, 180f, 180f);
+            Utility.ActualRig().rightHand.rigTarget.transform.rotation = GorillaTagger.Instance.bodyCollider.transform.rotation * Quaternion.Euler(0f, 180f, 180f);
         }
     }
 }
