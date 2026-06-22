@@ -1819,8 +1819,6 @@ namespace JupiterX.Menu
                     line.numCornerVertices = 4;
                 }
 
-                bool active = GetGunInput(true) || gunLocked;
-
                 Vector3 StartPosition = gunHand.position;
                 Vector3 Up = -gunHand.up;
                 Vector3 Right = gunHand.right;
