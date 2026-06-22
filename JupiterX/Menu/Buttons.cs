@@ -461,6 +461,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Kick All <color=grey>[</color><color=cyan>Stump</color><color=grey>]</color>", method =() => Overpowered.KickAll(), isTogglable = true, toolTip = "Lets you kick everyone in stump." },
 
                 new ButtonInfo { buttonText = "Disable Network Triggers <color=grey>[</color><color=cyan>SS</color><color=grey>]</color>", method =() => Overpowered.DisableNetworkTriggersSS(), isTogglable = false, toolTip = "Disables the network triggers, allowing people to join every map without getting disconnected." },
+                new ButtonInfo { buttonText = "Enablw Network Triggers <color=grey>[</color><color=cyan>SS</color><color=grey>]</color>", method =() => Overpowered.EnableNetworkTriggersSS(), isTogglable = false, toolTip = "Enables the network triggers, making people get disconnected when joining new maps." },
 
                 new ButtonInfo { buttonText = "Create Symbol Name Public", method =() => Overpowered.CreatePublic("<>{][]()@.,/?!"), isTogglable = true, toolTip = "Creates a public room with a symbols as the name." },
                 new ButtonInfo { buttonText = "Create Dot Name Public", method =() => Overpowered.CreatePublic("."), isTogglable = true, toolTip = "Creates a public room with a dot name." },
