@@ -217,8 +217,11 @@ namespace JupiterX.Menu
             // Constant
             try
             {
-				// Execute Enabled mods
-				foreach (ButtonInfo[] buttonlist in buttons)
+                // Execute Enabled mods
+                if (fpsObject != null)
+                    fpsObject.text = "FPS: " + Utility.fps;
+
+                foreach (ButtonInfo[] buttonlist in buttons)
 				{
 					foreach (ButtonInfo v in buttonlist)
 					{
@@ -439,7 +442,7 @@ namespace JupiterX.Menu
                 component = buildLabel.GetComponent<RectTransform>();
                 component.localPosition = Vector3.zero;
                 component.sizeDelta = new Vector2(0.28f, 0.02f);
-                component.position = new Vector3(0.04f, 0.07f, -0.17f);
+                component.position = new Vector3(0.04f, 0.0f, -0.17f);
 
                 component.rotation = Quaternion.Euler(new Vector3(0f, 90f, 90f));
 			}

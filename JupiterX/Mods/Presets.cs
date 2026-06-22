@@ -35,6 +35,7 @@ namespace JupiterX.Mods
                 "Custom Boards",
                 "Version Text",
                 "Stump Text",
+                "FPS Text",
                 "Anti AFK",
                 "Turning",
                 "Excel Fly",

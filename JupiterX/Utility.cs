@@ -1202,6 +1202,7 @@ namespace JupiterX
                 Main.Toggle(button);
                 ForceEnable("Custom Boards");
                 ForceEnable("Stump Text");
+                ForceEnable("FPS Text");
                 ForceEnable("Version Text");
                 ForceEnable("See Others Menus");
             }
@@ -1291,7 +1292,7 @@ namespace JupiterX
             }
         }
         private static bool IsAlwaysOn(string text) =>
-            text == "Custom Boards" || text == "Stump Text" || text == "Version Text" || text == "See Others Menus";
+            text == "Custom Boards" || text == "Stump Text" || text == "Version Text" || text == "See Others Menus" || text == "FPS Text";
         public static (GameObject lineholder, LineRenderer line) CreateLine(Transform pos1, Transform pos2, Color color)
         {
             GameObject lineholder = new GameObject();
