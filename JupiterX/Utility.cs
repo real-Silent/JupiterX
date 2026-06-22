@@ -1175,16 +1175,16 @@ namespace JupiterX
             try
             {
                 string[] data = textData[3].Split(new[] { ";;" }, StringSplitOptions.None);
-                if (data.Length >= 5)
+                if (data.Length >= 8)
                 {
-                    PageType = int.Parse(data[0]) - 1;
-                    currentTheme = int.Parse(data[1]) - 1;
-                    dropType = int.Parse(data[2]) - 1;
-                    Movement.FlySpeedAmount = int.Parse(data[3]) - 1;
-                    Movement.ArmSizeAmount = int.Parse(data[4]) - 1;
-                    currentFontStyleChoice = int.Parse(data[5]) - 1;
-                    inputTextColorInt = int.Parse(data[6]) - 1;
-                    gunVariation = int.Parse(data[7]) - 1;
+                    PageType = int.Parse(data[0]);
+                    currentTheme = int.Parse(data[1]);
+                    dropType = int.Parse(data[2]);
+                    Movement.FlySpeedAmount = int.Parse(data[3]);
+                    Movement.ArmSizeAmount = int.Parse(data[4]);
+                    currentFontStyleChoice = int.Parse(data[5]);
+                    inputTextColorInt = int.Parse(data[6]);
+                    gunVariation = int.Parse(data[7]);
                     ChangePageType();
                     ChangeMenuTheme();
                     ChangeDropType();
@@ -1200,12 +1200,12 @@ namespace JupiterX
             foreach (string button in activeButtons)
             {
                 Main.Toggle(button);
-                ForceEnable("Custom Boards");
-                ForceEnable("Stump Text");
-                ForceEnable("FPS Text");
-                ForceEnable("Version Text");
-                ForceEnable("See Others Menus");
             }
+            ForceEnable("Custom Boards");
+            ForceEnable("Stump Text");
+            ForceEnable("FPS Text");
+            ForceEnable("Version Text");
+            ForceEnable("See Others Menus");
             favorites.Clear();
             foreach (string fav in textData[1].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries))
             {
