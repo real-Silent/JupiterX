@@ -170,20 +170,7 @@ namespace JupiterX
                 }
             }
         }
-        public static PhotonView GetOwnerShip(Photon.Realtime.Player newOwner)
-        {
-            foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
-            {
-                PhotonView objectView = obj.GetComponent<PhotonView>();
-                if (objectView != null)
-                {
-                    objectView.Owner = newOwner;
-                    objectView.Controller = newOwner;
-                    return objectView;
-                }
-            }
-            return null;
-        }
+
         public static void DestroyAllPhotonViews()
         {
             foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
