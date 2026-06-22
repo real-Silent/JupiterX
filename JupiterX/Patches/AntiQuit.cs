@@ -3,31 +3,32 @@ using System;
 using UnityEngine;
 
 [HarmonyPatch]
-public class AntiQuit
+internal class AntiQuit
 {
-    [HarmonyPrefix]
     [HarmonyPatch(typeof(Application), nameof(Application.Quit))]
-    public static bool BlockQuit()
-    {
-        return false; 
-    }
     [HarmonyPrefix]
-    [HarmonyPatch(typeof(Environment), nameof(Environment.Exit))]
-    public static bool BlockExit(int exitCode)
-    {
-        return false; 
-    }
-
-    [HarmonyPrefix]
-    [HarmonyPatch(typeof(Environment), nameof(Environment.FailFast), typeof(string))]
-    public static bool BlockEnt(string message)
+    private static bool BlockQuit()
     {
         return false;
     }
 
+    [HarmonyPatch(typeof(Environment), nameof(Environment.Exit))]
     [HarmonyPrefix]
+    private static bool BlockExit(int exitCode)
+    {
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Environment), nameof(Environment.FailFast), typeof(string))]
+    [HarmonyPrefix]
+    private static bool BlockFailFast(string message)
+    {
+        return false;
+    }
+
     [HarmonyPatch(typeof(Environment), nameof(Environment.FailFast), typeof(string), typeof(Exception))]
-    public static bool BlockFastException(string message, Exception exception)
+    [HarmonyPrefix]
+    private static bool BlockFailFastException(string message, Exception exception)
     {
         return false;
     }
