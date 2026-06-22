@@ -12,7 +12,6 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.XR;
 using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
 
@@ -1561,6 +1560,7 @@ namespace JupiterX.Menu
 
         public static Vector3 MidPosition;
         public static Vector3 MidVelocity;
+        private static bool midInitialized;
 
         public static bool SmoothGunPointer;
         public static bool smallGunPointer;
@@ -1825,109 +1825,107 @@ namespace JupiterX.Menu
                 Vector3 Up = -gunHand.up;
                 Vector3 Right = gunHand.right;
 
-                if (!active)
+                int Step = Mathf.Max(2, lineQuality);
+                switch (gunVariation)
                 {
-                    line.positionCount = 2;
-                    line.SetPosition(0, StartPosition);
-                    line.SetPosition(1, EndPosition);
-                    MidPosition = Vector3.zero;
-                    MidVelocity = Vector3.zero;
-                }
-                else
-                {
-                    int Step = Mathf.Max(2, lineQuality);
-                    switch (gunVariation)
-                    {
-                        case 1: // Lightning
-                            line.positionCount = Step;
-                            line.SetPosition(0, StartPosition);
-                            for (int i = 1; i < Step - 1; i++)
-                            {
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                line.SetPosition(i, Position + (UnityEngine.Random.value > 0.75f
-                                    ? new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f))
-                                    : Vector3.zero));
-                            }
-                            line.SetPosition(Step - 1, EndPosition);
-                            break;
-                        case 2: // Wavy
-                            line.positionCount = Step;
-                            line.SetPosition(0, StartPosition);
-                            for (int i = 1; i < Step - 1; i++)
-                            {
-                                float value = i / (float)Step * 50f;
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                line.SetPosition(i, Position + Up * (Mathf.Sin(Time.time * -10f + value) * 0.1f));
-                            }
-                            line.SetPosition(Step - 1, EndPosition);
-                            break;
-                        case 3: // Blocky
-                            line.positionCount = Step;
-                            line.SetPosition(0, StartPosition);
-                            for (int i = 1; i < Step - 1; i++)
-                            {
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                line.SetPosition(i, new Vector3(Mathf.Round(Position.x * 25f) / 25f, Mathf.Round(Position.y * 25f) / 25f, Mathf.Round(Position.z * 25f) / 25f));
-                            }
-                            line.SetPosition(Step - 1, EndPosition);
-                            break;
-                        case 4: // Sinewave
-                            Step = Mathf.Max(2, lineQuality / 2);
-                            line.positionCount = Step;
-                            line.SetPosition(0, StartPosition);
-                            for (int i = 1; i < Step - 1; i++)
-                            {
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                line.SetPosition(i, Position + Up * (Mathf.Sin(Time.time * 10f) * (i % 2 == 0 ? 0.1f : -0.1f)));
-                            }
-                            line.SetPosition(Step - 1, EndPosition);
-                            break;
-                        case 5: // Spring
-                            line.positionCount = Step;
-                            line.SetPosition(0, StartPosition);
-                            for (int i = 1; i < Step - 1; i++)
-                            {
-                                float value = i / (float)Step * 50f;
-                                Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
-                                line.SetPosition(i, Position + Right * (Mathf.Cos(Time.time * -10f + value) * 0.1f) + Up * (Mathf.Sin(Time.time * -10f + value) * 0.1f));
-                            }
-                            line.SetPosition(Step - 1, EndPosition);
-                            break;
-                        case 6: // Bouncy
-                            line.positionCount = Step;
-                            line.SetPosition(0, StartPosition);
-                            for (int i = 1; i < Step - 1; i++)
-                            {
-                                float value = i / (float)Step * 15f;
-                                line.SetPosition(i, Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f)) + Up * (Mathf.Abs(Mathf.Sin(Time.time * -10f + value)) * 0.3f));
-                            }
-                            line.SetPosition(Step - 1, EndPosition);
-                            break;
-                        case 7: // Bezier
-                            Vector3 BaseMid = Vector3.Lerp(StartPosition, EndPosition, 0.5f);
+                    case 1: // Lightning
+                        line.positionCount = Step;
+                        line.SetPosition(0, StartPosition);
+                        for (int i = 1; i < Step - 1; i++)
+                        {
+                            Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
+                            line.SetPosition(i, Position + (UnityEngine.Random.value > 0.75f
+                                ? new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f))
+                                : Vector3.zero));
+                        }
+                        line.SetPosition(Step - 1, EndPosition);
+                        break;
+                    case 2: // Wavy
+                        line.positionCount = Step;
+                        line.SetPosition(0, StartPosition);
+                        for (int i = 1; i < Step - 1; i++)
+                        {
+                            float value = i / (float)Step * 50f;
+                            Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
+                            line.SetPosition(i, Position + Up * (Mathf.Sin(Time.time * -10f + value) * 0.1f));
+                        }
+                        line.SetPosition(Step - 1, EndPosition);
+                        break;
+                    case 3: // Blocky
+                        line.positionCount = Step;
+                        line.SetPosition(0, StartPosition);
+                        for (int i = 1; i < Step - 1; i++)
+                        {
+                            Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
+                            line.SetPosition(i, new Vector3(Mathf.Round(Position.x * 25f) / 25f, Mathf.Round(Position.y * 25f) / 25f, Mathf.Round(Position.z * 25f) / 25f));
+                        }
+                        line.SetPosition(Step - 1, EndPosition);
+                        break;
+                    case 4: // Sinewave
+                        Step = Mathf.Max(2, lineQuality / 2);
+                        line.positionCount = Step;
+                        line.SetPosition(0, StartPosition);
+                        for (int i = 1; i < Step - 1; i++)
+                        {
+                            Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
+                            line.SetPosition(i, Position + Up * (Mathf.Sin(Time.time * 10f) * (i % 2 == 0 ? 0.1f : -0.1f)));
+                        }
+                        line.SetPosition(Step - 1, EndPosition);
+                        break;
+                    case 5: // Spring
+                        line.positionCount = Step;
+                        line.SetPosition(0, StartPosition);
+                        for (int i = 1; i < Step - 1; i++)
+                        {
+                            float value = i / (float)Step * 50f;
+                            Vector3 Position = Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f));
+                            line.SetPosition(i, Position + Right * (Mathf.Cos(Time.time * -10f + value) * 0.1f) + Up * (Mathf.Sin(Time.time * -10f + value) * 0.1f));
+                        }
+                        line.SetPosition(Step - 1, EndPosition);
+                        break;
+                    case 6: // Bouncy
+                        line.positionCount = Step;
+                        line.SetPosition(0, StartPosition);
+                        for (int i = 1; i < Step - 1; i++)
+                        {
+                            float value = i / (float)Step * 15f;
+                            line.SetPosition(i, Vector3.Lerp(StartPosition, EndPosition, i / (Step - 1f)) + Up * (Mathf.Abs(Mathf.Sin(Time.time * -10f + value)) * 0.3f));
+                        }
+                        line.SetPosition(Step - 1, EndPosition);
+                        break;
+                    case 7: // Bezier
+                        {
+                            Step = Mathf.Max(8, lineQuality);
+                            Vector3 baseMid = Vector3.Lerp(StartPosition, EndPosition, 0.5f);
                             float angle = Time.time * 3f;
                             Vector3 wobbleOffset = Up * (Mathf.Sin(angle) * 0.15f) + Right * (Mathf.Cos(angle * 1.3f) * 0.15f);
-                            Vector3 targetMid = BaseMid + wobbleOffset;
-                            if (MidPosition == Vector3.zero) MidPosition = targetMid;
-                            Vector3 force = (targetMid - MidPosition) * 40f;
-                            MidVelocity += force * Time.deltaTime;
-                            MidVelocity *= Mathf.Exp(-6f * Time.deltaTime);
-                            MidPosition += MidVelocity * Time.deltaTime;
+                            Vector3 targetMid = baseMid + wobbleOffset;
+                            if (!midInitialized)
+                            {
+                                MidPosition = targetMid;
+                                MidVelocity = Vector3.zero;
+                                midInitialized = true;
+                            }
+                            float dt = Mathf.Min(Time.deltaTime, 0.033f);
+                            MidVelocity += (targetMid - MidPosition) * 40f * dt;
+                            MidVelocity *= Mathf.Exp(-6f * dt);
+                            MidPosition += MidVelocity * dt;
                             line.positionCount = Step;
                             Vector3[] points = new Vector3[Step];
                             for (int i = 0; i < Step; i++)
                             {
-                                float t = (float)i / (Step - 1);
-                                points[i] = Mathf.Pow(1 - t, 2) * StartPosition + 2 * (1 - t) * t * MidPosition + Mathf.Pow(t, 2) * EndPosition;
+                                float t = i / (float)(Step - 1);
+                                float omt = 1f - t;
+                                points[i] = (omt * omt) * StartPosition + (2f * omt * t) * MidPosition + (t * t) * EndPosition;
                             }
                             line.SetPositions(points);
                             break;
-                        default:
-                            line.positionCount = 2;
-                            line.SetPosition(0, StartPosition);
-                            line.SetPosition(1, EndPosition);
-                            break;
-                    }
+                        }
+                    default:
+                        line.positionCount = 2;
+                        line.SetPosition(0, StartPosition);
+                        line.SetPosition(1, EndPosition);
+                        break;
                 }
 
                 line.startColor = gunColor;
