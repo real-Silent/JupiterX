@@ -173,19 +173,8 @@ namespace JupiterX
 
             if (Settings.CustomBoards)
             {
-                string cocTextNew = $@"-Client Info-
-FPS: {(1f / Time.deltaTime).ToString("F1")}
-Ping: {PhotonNetwork.GetPing()}
-Time: {DateTime.Now.ToLongTimeString()}
--Game Info-
-TitleId: {PlayFabSettings.TitleId}
-Realtime: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}
-Voice: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}
--Local Player Info-
-NickName: {PhotonNetwork.LocalPlayer.NickName}
-UserId: {(PhotonNetwork.IsConnected ? PhotonNetwork.LocalPlayer.UserId : "N/A")}
-Photon Connected: {PhotonNetwork.IsConnected}
-PlayFab Connected: {PlayFabClientAPI.IsClientLoggedIn()}";
+                string gameversion = string.IsNullOrEmpty(PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) ? PhotonNetwork.AppVersion : PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
+                string cocTextNew = $"Username: {PhotonNetwork.LocalPlayer.NickName}, UserID: {PhotonNetwork.LocalPlayer.UserId}\nTitleID: {PlayFabSettings.TitleId}\nRealtimeID: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}\nVoiceID: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}\nVersion: {gameversion}\n\nIf you like usinig <b>JupiterX</b> make sure to join our discord server for more updates and more mods for your modding needs.\ndiscord.gg/dtQdz59FJG\nMenu made by Nova (@novaissilly)";
                 Utility.cocText.text = cocTextNew;
                 Utility.codeOfConduct.text = "<color=cyan>JupiterX V2</color>";
 
