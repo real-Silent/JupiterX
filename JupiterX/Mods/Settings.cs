@@ -66,6 +66,7 @@ namespace JupiterX
 
         public static bool smoothMenuPosition;
         public static bool smoothMenuRotation;
+        public static bool disableFavoritingKeybind;
 
         public static KeyCode keyboardButton = KeyCode.Q;
 
