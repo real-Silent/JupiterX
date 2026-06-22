@@ -1898,7 +1898,7 @@ namespace JupiterX.Menu
                             Step = Mathf.Max(8, lineQuality);
                             Vector3 baseMid = Vector3.Lerp(StartPosition, EndPosition, 0.5f);
                             float angle = Time.time * 3f;
-                            Vector3 wobbleOffset = Up * (Mathf.Sin(angle) * 0.15f) + Right * (Mathf.Cos(angle * 1.3f) * 0.15f);
+                            Vector3 wobbleOffset =  Up * (Mathf.Sin(angle) * 0.15f) +  Right * (Mathf.Cos(angle * 1.3f) * 0.15f);
                             Vector3 targetMid = baseMid + wobbleOffset;
                             if (!midInitialized)
                             {
@@ -1908,7 +1908,7 @@ namespace JupiterX.Menu
                             }
                             float dt = Mathf.Min(Time.deltaTime, 0.033f);
                             MidVelocity += (targetMid - MidPosition) * 40f * dt;
-                            MidVelocity *= Mathf.Exp(-6f * dt);
+                            MidVelocity *= 0.90f;
                             MidPosition += MidVelocity * dt;
                             line.positionCount = Step;
                             Vector3[] points = new Vector3[Step];
