@@ -124,13 +124,6 @@ namespace JupiterX.Menu
                             reference = null;
                         }
 
-                        if (annoyingMode)
-                        {
-                            Rigidbody comp = menu.AddComponent<Rigidbody>();
-                            comp.velocity = RandomVector3(5f);
-                            comp.angularVelocity = RandomVector3(50f);
-                        }
-
                         if (!DisableMenuSounds)
                             Utility.PlaySound(Utility.menuCloseSound);
                     }
@@ -138,7 +131,7 @@ namespace JupiterX.Menu
 			}
 			catch (Exception exc)
 			{
-				MelonLoader.MelonLogger.Msg(string.Format("{0} // Error with drawing {1} : {2}", Utility.name, exc.StackTrace, exc.Message));
+				Utility.Log(string.Format("{0} // Error with drawing {1} : {2}", Utility.name, exc.StackTrace, exc.Message));
 			}
 
             if (Utility.isTriggers)
@@ -235,7 +228,7 @@ namespace JupiterX.Menu
 								}
 								catch (Exception exc)
 								{
-                                    MelonLoader.MelonLogger.Msg(string.Format("{0} // Error with mod {1} at {2}: {3}", Utility.name, v.buttonText, exc.StackTrace, exc.Message));
+                                    Utility.Log(string.Format("{0} // Error with mod {1} at {2}: {3}", Utility.name, v.buttonText, exc.StackTrace, exc.Message));
 								}
 							}
 						}
@@ -244,7 +237,7 @@ namespace JupiterX.Menu
 			}
 			catch (Exception exc)
 			{
-				MelonLoader.MelonLogger.Msg(string.Format("{0} // Error with executing mods at {1}: {2}", Utility.name, exc.StackTrace, exc.Message));
+				Utility.Log(string.Format("{0} // Error with executing mods at {1}: {2}", Utility.name, exc.StackTrace, exc.Message));
 			}
 
             if (pointerTrail)
@@ -294,19 +287,6 @@ namespace JupiterX.Menu
 			UnityEngine.Object.Destroy(menu.GetComponent<Renderer>());
 			menu.transform.localScale = new Vector3(0.1f, 0.3f, 0.3825f);
 
-            if (annoyingMode)
-            {
-                menu.transform.localScale = new Vector3(0.1f, UnityEngine.Random.Range(10f, 40f) / 100f, 0.3825f);
-                backgroundColor = new ExtGradient { colors = ExtGradient.GetSimpleGradient(RandomColor(), RandomColor()) };
-
-                buttonColors[0] = new ExtGradient { colors = ExtGradient.GetSimpleGradient(RandomColor(), RandomColor()) };
-                buttonColors[1] = new ExtGradient { colors = ExtGradient.GetSimpleGradient(RandomColor(), RandomColor()) };
-
-                textColors[0] = RandomColor();
-                textColors[1] = RandomColor();
-                textColors[2] = RandomColor();
-            }
-
             // Menu Background
             menuBackground = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			UnityEngine.Object.Destroy(menuBackground.GetComponent<Rigidbody>());
@@ -352,18 +332,6 @@ namespace JupiterX.Menu
 					}
 			}.AddComponent<Text>();
 			text.font = currentFont;
-
-            if (annoyingMode)
-            {
-                string[] randomMenuNames = {
-                    "Qolossal", "Titled", "Jupter", "Solar", "SaturnX Client", "Peepee", "MooderX", "Modern Modeling",
-                    "SaturnClient", "WM TROLLING MENU", "ShibaGT Dark", "ModderMenu", "OP Menu", "Overpowered", "RawrX3",
-                    ":3", ">w<", "Silly Kitty", "Goth Client"
-                };
-
-                if (UnityEngine.Random.Range(1, 5) == 2)
-                    text.text = randomMenuNames[UnityEngine.Random.Range(0, randomMenuNames.Length)] + " v" + UnityEngine.Random.Range(8, 159);
-            }
 
             if (CustomMenuTitle)
             {
@@ -602,12 +570,7 @@ namespace JupiterX.Menu
             {
                 try
                 {
-                    if (annoyingMode && UnityEngine.Random.Range(1, 5) == 3)
-                    {
-                        ButtonInfo disconnectButton = Buttons.GetIndex("Disconnect");
-                        renderButtons = Enumerable.Repeat(disconnectButton, 15).ToArray();
-                    }
-                    else if (CurrentCategoryName == "Main")
+                    if (CurrentCategoryName == "Main")
                     {
                         List<ButtonInfo> buttons = new List<ButtonInfo>();
                         foreach (var button in Buttons.buttons[CurrentCategoryIndex])
@@ -652,7 +615,7 @@ namespace JupiterX.Menu
                 }
                 catch 
                 {
-                    MelonLoader.MelonLogger.Msg("Menu draw is erroring, returning to home page");
+                    Utility.Log("Menu draw is erroring, returning to home page");
                     CurrentCategoryName = "Main";
                 }
             }
@@ -1076,7 +1039,7 @@ namespace JupiterX.Menu
             ButtonInfo target = GetIndex(buttonText);
             if (target == null)
             {
-                MelonLoader.MelonLogger.Msg($"{buttonText} does not exist");
+                Utility.Log($"{buttonText} does not exist");
                 return;
             }
             string newIndicator = " <color=grey>[</color><color=cyan>New</color><color=grey>]</color>";
@@ -1128,7 +1091,7 @@ namespace JupiterX.Menu
                             try { target.enableMethod?.Invoke(); }
                             catch (Exception exc)
                             {
-                                MelonLoader.MelonLogger.Msg($"Error enabling {target.buttonText}: {exc.Message}");
+                                Utility.Log($"Error enabling {target.buttonText}: {exc.Message}");
                             }
                         }
                         else
@@ -1138,7 +1101,7 @@ namespace JupiterX.Menu
                             try { target.disableMethod?.Invoke(); }
                             catch (Exception exc)
                             {
-                                MelonLoader.MelonLogger.Msg($"Error disabling {target.buttonText}: {exc.Message}");
+                                Utility.Log($"Error disabling {target.buttonText}: {exc.Message}");
                             }
                         }
                     }
@@ -1150,7 +1113,7 @@ namespace JupiterX.Menu
                         try { target.method?.Invoke(); }
                         catch (Exception exc)
                         {
-                            MelonLoader.MelonLogger.Msg($"Error running {target.buttonText}: {exc.Message}");
+                            Utility.Log($"Error running {target.buttonText}: {exc.Message}");
                         }
                     }
                     break;

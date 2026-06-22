@@ -35,11 +35,11 @@ namespace JupiterX.Managers
             try
             {
                 LoadPlugins();
-                MelonLogger.Msg("[JupiterX] Reloaded plugins.");
+                Utility.Log("[JupiterX] Reloaded plugins.");
             }
             catch (Exception e)
             {
-                MelonLogger.Error("[JupiterX] Reload failed: " + e);
+                Utility.Log("[JupiterX] Reload failed: " + e);
             }
             Utility.LoadPreferences();
             Buttons.CurrentCategoryName = "Main";
@@ -101,7 +101,7 @@ namespace JupiterX.Managers
                 }
                 catch (Exception e)
                 {
-                    MelonLogger.Error($"[JupiterX] Failed loading {file}: {e}");
+                    Utility.Log($"[JupiterX] Failed loading {file}: {e}");
                 }
             }
             foreach (var plugin in Plugins)
@@ -141,13 +141,13 @@ namespace JupiterX.Managers
                 }
                 catch (Exception e)
                 {
-                    MelonLogger.Error("[JupiterX] Toggle error: " + e);
+                    Utility.Log("[JupiterX] Toggle error: " + e);
                 }
             }
             var btn = Buttons.GetIndex(plugin.FileName);
             if (btn != null)
                 btn.overlapText = GetStatus(plugin);
-            MelonLogger.Msg($"[JupiterX] {plugin.Name} -> {(plugin.Enabled ? "Enabled" : "Disabled")}");
+            Utility.Log($"[JupiterX] {plugin.Name} -> {(plugin.Enabled ? "Enabled" : "Disabled")}");
         }
         public static void ExecuteUpdate()
         {
