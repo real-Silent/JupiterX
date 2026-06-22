@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace JupiterX.Mods
 {
@@ -105,6 +106,7 @@ namespace JupiterX.Mods
                         box = GameObject.CreatePrimitive(PrimitiveType.Cube);
                         box.transform.position = rig.headConstraint.transform.position;
                         box.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                        GameObject.Destroy(box.GetComponent<BoxCollider>());
                         box.transform.rotation = rig.transform.rotation;
                         box.GetComponent<Renderer>().material.shader = Utility.GUIShader();
                         box.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
@@ -125,6 +127,7 @@ namespace JupiterX.Mods
                         bool isTagged = rig.mainSkin.material.name.Contains("fected");
                         GameObject box = new GameObject("box");
                         box = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                        GameObject.Destroy(box.GetComponent<CapsuleCollider>());
                         box.transform.position = rig.headConstraint.transform.position;
                         box.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                         box.transform.rotation = rig.transform.rotation;
@@ -147,6 +150,7 @@ namespace JupiterX.Mods
                         bool isTagged = rig.mainSkin.material.name.Contains("fected");
                         GameObject sphere = new GameObject("sphere");
                         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        GameObject.Destroy(sphere.GetComponent<SphereCollider>());
                         sphere.transform.position = rig.headConstraint.transform.position;
                         sphere.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                         sphere.transform.rotation = rig.transform.rotation;
@@ -168,7 +172,7 @@ namespace JupiterX.Mods
             nametag.characterSize = 0.1f;
             nametag.anchor = TextAnchor.MiddleCenter;
             nametag.alignment = TextAlignment.Center;
-            textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1f + (index * 0.15f), 0f);
+            textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1f + (index * -0.15f), 0f);
             textHolder.transform.LookAt(Camera.main.transform);
             textHolder.transform.Rotate(0f, 180f, 0f);
             Object.Destroy(textHolder, Time.deltaTime);
@@ -215,6 +219,20 @@ namespace JupiterX.Mods
             }
         }
 
+        public static void MasterTags()
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                {
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    {
+                        DrawTag(rig, rig.photonView.Owner.IsMasterClient ? "Master" : "Not Master", rig.playerColor(), 3);
+                    }
+                }
+            }
+        }
+
         public static void TaggedTags()
         {
             if (PhotonNetwork.InRoom)
@@ -223,7 +241,7 @@ namespace JupiterX.Mods
                 {
                     if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                     {
-                        DrawTag(rig, rig.IsTagged() ? "Tagged" : "", rig.playerColor(), 2);
+                        DrawTag(rig, rig.IsTagged() ? "Tagged" : "", rig.playerColor(), 4);
                     }
                 }
             }

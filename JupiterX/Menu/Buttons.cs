@@ -319,6 +319,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Name Tags", method =() => Visual.NameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their nickname." },
                 new ButtonInfo { buttonText = "ID Name Tags", method =() => Visual.IDNameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their ID." },
                 new ButtonInfo { buttonText = "Platform Name Tags", method =() => Visual.PlatformTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Platform." },
+                new ButtonInfo { buttonText = "Master Name Tags", method =() => Visual.MasterTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show if their Master Client." },
                 new ButtonInfo { buttonText = "Tagged Name Tags", method =() => Visual.TaggedTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Tagged." },
 
                 new ButtonInfo { buttonText = "Velocity Label", method = Visual.VelocityLabel, toolTip = "Puts text on your right hand, showing your velocity."},
