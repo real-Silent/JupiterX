@@ -268,7 +268,7 @@ namespace JupiterX.Mods
                 return;
             try
             {
-                Recorder component = GameObject.Find("NetworkVoice")?.GetComponent<Recorder>() ?? GameObject.Find("Photon Manager")?.GetComponent<Recorder>();
+                Recorder component = GameObject.FindObjectsOfType<Recorder>().FirstOrDefault();
                 if (component == null)
                     return;
                 component.SourceType = Recorder.InputSourceType.AudioClip;
@@ -287,7 +287,7 @@ namespace JupiterX.Mods
         {
             try
             {
-                Recorder component = GameObject.Find("NetworkVoice")?.GetComponent<Recorder>() ?? GameObject.Find("Photon Manager")?.GetComponent<Recorder>();
+                Recorder component = GameObject.FindObjectsOfType<Recorder>().FirstOrDefault();
                 if (component != null)
                 {
                     component.SourceType = Recorder.InputSourceType.Microphone;
