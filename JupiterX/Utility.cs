@@ -1148,7 +1148,8 @@ namespace JupiterX
                 Movement.FlySpeedAmount.ToString(),
                 Movement.ArmSizeAmount.ToString(),
                 ((int)currentFontStyleChoice).ToString(),
-                ((int)inputTextColorInt).ToString()
+                ((int)inputTextColorInt).ToString(),
+                ((int)gunVariation).ToString()
             });
             return string.Join("\n", new[] { enabledText, favoriteText, quickActionText, settingsText });
         }
@@ -1183,6 +1184,7 @@ namespace JupiterX
                     Movement.ArmSizeAmount = int.Parse(data[4]) - 1;
                     currentFontStyleChoice = int.Parse(data[5]) - 1;
                     inputTextColorInt = int.Parse(data[6]) - 1;
+                    gunVariation = int.Parse(data[7]) - 1;
                     ChangePageType();
                     ChangeMenuTheme();
                     ChangeDropType();
@@ -1190,6 +1192,7 @@ namespace JupiterX
                     Movement.ChangeArmLength();
                     ChangeFontStyle();
                     ChangeInputTextColor();
+                    ChangeGunVariation();
                 }
             }
             catch { }
