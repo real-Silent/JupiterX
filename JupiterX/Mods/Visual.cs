@@ -172,10 +172,10 @@ namespace JupiterX.Mods
             nametag.text = text;
             nametag.color = color;
             nametag.fontSize = 38;
-            nametag.characterSize = 0.02f;
+            nametag.characterSize = 0.03f;
             nametag.anchor = TextAnchor.MiddleCenter;
             nametag.alignment = TextAlignment.Center;
-            textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.25f + (index * -0.15f), 0f);
+            textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (index * -0.15f), 0f);
             textHolder.transform.LookAt(Camera.main.transform);
             textHolder.transform.Rotate(0f, 180f, 0f);
             Object.Destroy(textHolder, Time.deltaTime);
