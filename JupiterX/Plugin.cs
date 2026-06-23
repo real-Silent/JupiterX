@@ -59,6 +59,8 @@ namespace JupiterX
             Utility.ogmotdtext = Utility.motdText.text;
 
             Utility.CacheSounds(); // For caching the menu sounds causes less lag.
+            Utility.LoadEmbeddedDll("JupiterX.Resources.NLayer.dll");
+            Utility.LoadEmbeddedDll("JupiterX.Resources.NVorbis.dll");
 
             try
             {

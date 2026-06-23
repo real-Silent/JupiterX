@@ -1,23 +1,19 @@
 ﻿using Il2CppSystem.Net;
 using JupiterX.Menu;
-using MelonLoader;
 using Photon.Voice.Unity;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using NLayer;
 using UnityEngine;
-using UnityEngine.Networking;
 using JupiterX.Classes;
 using Photon.Pun;
-using JupiterX.Notifications;
 using JupiterX.Managers;
 
 namespace JupiterX.Mods
 {
-    public class SoundBoard // this file was made by (@domok.)
+    public class SoundBoard // this original file was made by (@domok.)
     {
         private static bool SoundLoaded = false;
         private static AudioClip downloadedSound = null;
@@ -56,6 +52,10 @@ namespace JupiterX.Mods
             string[] files = Directory.GetFiles(basePath);
             foreach (string file in files)
             {
+                string ext = Path.GetExtension(file).ToLower();
+                if (ext != ".wav" && ext != ".mp3")
+                    continue;
+
                 index++;
                 string fileName = Path.GetFileName(file);
                 string cleanName = RemoveFileExtension(fileName).Replace("_", " ");
@@ -68,7 +68,7 @@ namespace JupiterX.Mods
             }
             soundbuttons.Add(new ButtonInfo { buttonText = "Stop All Sounds", method = () => StopAllSounds(), isTogglable = false, toolTip = "Stops all currently playing sounds." });
             soundbuttons.Add(new ButtonInfo { buttonText = "Reload Sounds", method = () => LoadSoundboard(), isTogglable = false, toolTip = "Reloads all of your sounds." });
-            //soundbuttons.Add(new ButtonInfo { buttonText = "Get More Sounds", method = LoadSoundLibrary, isTogglable = false, toolTip = "Opens a public audio library, where you can download your own sounds." });
+            soundbuttons.Add(new ButtonInfo { buttonText = "Get More Sounds", method = LoadSoundLibrary, isTogglable = false, toolTip = "Opens a public audio library, where you can download your own sounds." });
             Buttons.CurrentCategoryName = "Soundboard";
             Buttons.buttons[Buttons.GetCategory("Soundboard")] = soundbuttons.ToArray();
 
@@ -78,22 +78,20 @@ namespace JupiterX.Mods
 				description = "You havent used this before? try using the sounds and dont abuse it."
 			});
 		}
-        public static void LoadSoundLibrary() => 
-            MelonCoroutines.Start(LoadSoundLibraryCoroutine());
-        private static IEnumerator LoadSoundLibraryCoroutine() // this iiDks btw
+        public static void LoadSoundLibrary()
         {
             string url = "https://github.com/iiDk-the-actual/ModInfo/raw/main/SoundLibrary.txt";
-            UnityWebRequest request = UnityWebRequest.Get(url);
-            yield return request.SendWebRequest();
-#if UNITY_2020_1_OR_NEWER
-    if (request.result != UnityWebRequest.Result.Success)
-#else
-            if (request.isNetworkError || request.isHttpError)
-#endif
+            string libraryText;
+
+            WebClient client = new WebClient();
+            try
             {
-                yield break;
+                libraryText = client.DownloadString(url);
             }
-            string libraryText = request.downloadHandler.text;
+            catch
+            {
+                return;
+            }
             string[] audios = AlphabetizeNoSkip(libraryText.Split('\n'));
             List<ButtonInfo> soundbuttons = new List<ButtonInfo>
             {
@@ -125,8 +123,9 @@ namespace JupiterX.Mods
                     }
                 }
             }
-            Buttons.CurrentCategoryName = "Temporary Category";
-            Buttons.buttons[Buttons.GetCategory("Temporary Category")] = soundbuttons.ToArray();
+
+            Buttons.CurrentCategoryName = "Sound Library";
+            Buttons.buttons[Buttons.GetCategory("Sound Library")] = soundbuttons.ToArray();
         }
         public static string LoadSoundFromURL(string resourcePath, string fileName)
         {
@@ -216,14 +215,16 @@ namespace JupiterX.Mods
             if (!File.Exists(soundpath))
                 return;
             string extension = Path.GetExtension(soundpath).ToLowerInvariant();
-            if (extension != ".wav")
-                return;
-            byte[] soundData = File.ReadAllBytes(soundpath);
-            AudioClip clip = CreateAudioClipFromWav(soundData, Path.GetFileNameWithoutExtension(soundpath));
+            AudioClip clip = null;
+            if (extension == ".wav")
+            {
+                byte[] soundData = File.ReadAllBytes(soundpath);
+                clip = CreateAudioClipFromWav(soundData, Path.GetFileNameWithoutExtension(soundpath));
+            }
+            else if (extension == ".mp3")
+                clip = CreateAudioClipFromMp3(soundpath);
             if (clip != null)
                 PlayAudioThroughMicrophone(clip);
-            else
-                NotificationManager.SendNotification($"Audio clip with path of {soundpath} is null somehow please make sure everything is correct", 25f);
         }
 
         private static AudioClip CreateAudioClipFromWav(byte[] wavData, string clipName)
@@ -254,14 +255,39 @@ namespace JupiterX.Mods
                         samples[i] = (sample - 128) / 128f;
                     }
                 }
-                ExitGames.Client.Photon.Hashtable neededForSoundBoard = new ExitGames.Client.Photon.Hashtable();
-                neededForSoundBoard.Add("imusingthesoundboard", "imusingthesoundboard");
-                PhotonNetwork.LocalPlayer.SetCustomProperties(neededForSoundBoard);
                 audioClip.SetData(samples, 0);
                 return audioClip;
             }
             catch { return null; }
         }
+
+        private static AudioClip CreateAudioClipFromMp3(string path)
+        {
+            try
+            {
+                MpegFile mpegFile = new MpegFile(path);
+                int channels = mpegFile.Channels;
+                int sampleRate = mpegFile.SampleRate;
+                List<float> allSamples = new List<float>();
+                float[] buffer = new float[16384];
+                int read;
+                while ((read = mpegFile.ReadSamples(buffer, 0, buffer.Length)) > 0)
+                {
+                    for (int i = 0; i < read; i++)
+                        allSamples.Add(buffer[i]);
+                }
+                mpegFile.Dispose();
+                if (allSamples.Count == 0)
+                    return null;
+                float[] samples = allSamples.ToArray();
+                int sampleCount = samples.Length / channels;
+                AudioClip audioClip = AudioClip.Create(Path.GetFileNameWithoutExtension(path), sampleCount, channels, sampleRate, false);
+                audioClip.SetData(samples, 0);
+                return audioClip;
+            }
+            catch { return null; }
+        }
+
         private static void PlayAudioThroughMicrophone(AudioClip clip)
         {
             if (clip == null)
@@ -308,39 +334,6 @@ namespace JupiterX.Mods
         {
             if (AudioIsPlaying && RecoverTime > 0 && Time.time >= RecoverTime)
                 RestoreMicrophone();
-        }
-        public static byte[] LoadSoundFromResource(string soundFileName)
-        {
-            try
-            {
-                var assembly = Assembly.GetExecutingAssembly();
-                string resourcePath = $"Light.Sounds.{soundFileName}";
-                using (Stream stream = assembly.GetManifestResourceStream(resourcePath))
-                {
-                    if (stream != null)
-                    {
-                        MemoryStream ms = new MemoryStream();
-                        stream.CopyTo(ms);
-                        return ms.ToArray();
-                    }
-                }
-            }
-            catch { }
-            return null;
-        }
-        public static void PlayResourceSound(string soundFileName)
-        {
-            try
-            {
-                byte[] soundData = LoadSoundFromResource(soundFileName);
-                if (soundData != null && soundData.Length > 0)
-                {
-                    AudioClip clip = CreateAudioClipFromWav(soundData, Path.GetFileNameWithoutExtension(soundFileName));
-                    if (clip != null)
-                        PlayAudioThroughMicrophone(clip);
-                }
-            }
-            catch { }
         }
         public static void PlayLoadedSound()
         {

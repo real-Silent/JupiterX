@@ -3,6 +3,7 @@ using JupiterX.Managers;
 using JupiterX.Mods;
 using JupiterX.Notifications;
 using JupiterX.Patches;
+using OVR;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -750,6 +751,10 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Achievements", method = () => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page." }
             },
 
+            new[] { // Sound Library | 26
+                new ButtonInfo { buttonText = "Exit Sound Library", method =() => SoundBoard.LoadSoundboard(), isTogglable = false, toolTip = "Returns you back to the soundboard." }
+            },
+
             new [] // public not seen to user
             {
                 //new ButtonInfo { buttonText = "Search", method = KeyboardManager.Search, isTogglable = false, toolTip = "Lets you search for specific mods."},
@@ -794,6 +799,7 @@ namespace JupiterX.Menu
             "Plugin Settings",
             "Credits",
             "Achievements",
+            "Sound Library",
             "Internal"
         };
 
