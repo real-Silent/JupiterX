@@ -3,6 +3,7 @@ using HarmonyLib;
 using JupiterX.Notifications;
 using Photon.Pun;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static JupiterX.Menu.Main;
 
@@ -14,14 +15,14 @@ namespace JupiterX.Mods
         {
             get
             {
-                return GameObject.Find("timmy");
+                return Resources.FindObjectsOfTypeAll<GameObject>().Where(x => x != null && x.name.ToLower().Contains("timmy")).FirstOrDefault();
             }
         }
         private static GameObject Stalker
         {
             get
             {
-                return GameObject.Find("stalker");
+                return Resources.FindObjectsOfTypeAll<GameObject>().Where(x => x != null && x.name.ToLower().Contains("stalker")).FirstOrDefault();
             }
         }
         private static void SpawnHorrorPrefab(string name, Vector3 pos, Quaternion rot) => PhotonNetwork.Instantiate($"horror/{name}", pos, rot);
