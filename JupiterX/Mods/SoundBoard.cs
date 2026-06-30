@@ -268,6 +268,7 @@ namespace JupiterX.Mods
             notinroomholder.GetComponent<AudioSource>().clip = clip;
             notinroomholder.GetComponent<AudioSource>().loop = LoopAudio;
             notinroomholder.GetComponent<AudioSource>().volume = volume;
+            notinroomholder.GetComponent<AudioSource>().Play();
         }
 
         private static AudioClip CreateAudioClipFromWav(byte[] wavData, string clipName)
@@ -346,9 +347,6 @@ namespace JupiterX.Mods
                 typeof(Recorder).GetProperty("DebugEchoMode")?.SetValue(component, true);
                 AudioIsPlaying = true;
                 RecoverTime = Time.time + clip.length + 0.4f;
-                ExitGames.Client.Photon.Hashtable neededForSoundBoard = new ExitGames.Client.Photon.Hashtable();
-                neededForSoundBoard.Add("imusingthesoundboard", "imusingthesoundboard");
-                PhotonNetwork.LocalPlayer.SetCustomProperties(neededForSoundBoard);
             }
             catch { }
         }
@@ -371,8 +369,13 @@ namespace JupiterX.Mods
             catch { }
         }
 
-        public static void StopAllSounds() => 
-            RestoreMicrophone();
+        public static void StopAllSounds()
+        {
+            if (PhotonNetwork.InRoom)
+                RestoreMicrophone();
+            else
+                notinroomholder.GetComponent<AudioSource>().Stop();
+        }
 
         public static void PlaySoundFile(string soundpath) => 
             LoadAndPlaySound(soundpath);
