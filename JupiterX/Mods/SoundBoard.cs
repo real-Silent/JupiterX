@@ -1,26 +1,27 @@
 ﻿using Il2CppSystem.Net;
+using JupiterX.Classes;
+using JupiterX.Managers;
 using JupiterX.Menu;
+using NLayer;
+using Photon.Pun;
 using Photon.Voice.Unity;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NLayer;
 using UnityEngine;
-using JupiterX.Classes;
-using Photon.Pun;
-using JupiterX.Managers;
+using UnityEngine.UIElements;
 
 namespace JupiterX.Mods
 {
     public class SoundBoard // this original file was made by (@domok.)
     {
-        private static bool SoundLoaded = false;
-        private static AudioClip downloadedSound = null;
         public static bool AudioIsPlaying = false;
         public static float RecoverTime = -1f;
         public static bool LoopAudio = false;
         public static string Subdirectory = "";
+        public static float volume;
+        private static GameObject notinroomholder = null;
 
         public static void LoadSoundboard()
         {
@@ -61,14 +62,18 @@ namespace JupiterX.Mods
                 string cleanName = RemoveFileExtension(fileName).Replace("_", " ");
                 bool isEnabled = enabledSounds.Contains(cleanName);
                 string relativePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/'), fileName).Replace("\\", "/");
+
                 if (LoopAudio)
                     soundbuttons.Add(new ButtonInfo { buttonText = $"SoundboardSound{index}", overlapText = cleanName, enableMethod = () => PlaySoundFile(relativePath), disableMethod = () => StopAllSounds(), enabled = isEnabled, toolTip = $"Plays \"{cleanName}\" through your microphone." });
                 else
                     soundbuttons.Add(new ButtonInfo { buttonText = $"SoundboardSound{index}", overlapText = cleanName, method = () => PlaySoundFile(relativePath), isTogglable = false, toolTip = $"Plays \"{cleanName}\" through your microphone." });
             }
+            soundbuttons.Add(new ButtonInfo { buttonText = "Volume", enableMethod = () => ChangeVolume(true), method =() => ChangeVolume(), disableMethod = () => ChangeVolume(false), incremental = true, isTogglable = false, toolTip = "Changes the current audio clips volume." });
+            soundbuttons.Add(new ButtonInfo { buttonText = "Loop Audio", enableMethod =() => LoopAudio = true, disableMethod =() => LoopAudio = true, isTogglable = false, toolTip = "Loops the current sound that is playing." });
             soundbuttons.Add(new ButtonInfo { buttonText = "Stop All Sounds", method = () => StopAllSounds(), isTogglable = false, toolTip = "Stops all currently playing sounds." });
             soundbuttons.Add(new ButtonInfo { buttonText = "Reload Sounds", method = () => LoadSoundboard(), isTogglable = false, toolTip = "Reloads all of your sounds." });
             soundbuttons.Add(new ButtonInfo { buttonText = "Get More Sounds", method = LoadSoundLibrary, isTogglable = false, toolTip = "Opens a public audio library, where you can download your own sounds." });
+
             Buttons.CurrentCategoryName = "Soundboard";
             Buttons.buttons[Buttons.GetCategory("Soundboard")] = soundbuttons.ToArray();
 
@@ -78,6 +83,7 @@ namespace JupiterX.Mods
 				description = "You havent used this before? try using the sounds and dont abuse it."
 			});
 		}
+
         public static void LoadSoundLibrary()
         {
             string url = "https://github.com/iiDk-the-actual/ModInfo/raw/main/SoundLibrary.txt";
@@ -123,10 +129,22 @@ namespace JupiterX.Mods
                     }
                 }
             }
-
             Buttons.CurrentCategoryName = "Sound Library";
             Buttons.buttons[Buttons.GetCategory("Sound Library")] = soundbuttons.ToArray();
         }
+
+        private static void ChangeVolume(bool positive = true)
+        {
+            if (positive)
+            {
+                if (positive)
+                    volume++;
+                else
+                    volume--;
+            }
+            Buttons.GetIndex("Volume").overlapText = $"Volume <color=grey>[</color><color=cyan>" + volume + "</color><color=grey>]</color>";
+        }
+
         public static string LoadSoundFromURL(string resourcePath, string fileName)
         {
             string folderName = "JupiterX";
@@ -147,6 +165,7 @@ namespace JupiterX.Mods
             catch { return null; }
         }
 
+
         public static Dictionary<string, AudioClip> audioFilePool = new Dictionary<string, AudioClip> { };
         private static GameObject audiomgr = null;
         public static void Play2DAudio(AudioClip sound, float volume)
@@ -161,6 +180,7 @@ namespace JupiterX.Mods
             ausrc.volume = volume;
             ausrc.PlayOneShot(sound);
         }
+
         public static void DownloadSound(string name, string url)
         {
             if (name.Contains(".."))
@@ -176,10 +196,13 @@ namespace JupiterX.Mods
             if (soundDownloaded.length < 20f)
                 Play2DAudio(soundDownloaded, 1f);
         }
+
         public static string GetFileExtension(string fileName) =>
             fileName.ToLower().Split('.')[fileName.Split('.').Length - 1];
+
         public static string RemoveLastDirectory(string directory) => 
             directory == "" || directory.LastIndexOf('/') <= 0 ? "" : directory.Substring(0, directory.LastIndexOf('/'));
+
         public static string[] AlphabetizeNoSkip(string[] array)
         {
             if (array.Length <= 1)
@@ -188,11 +211,13 @@ namespace JupiterX.Mods
             string[] others = array.OrderBy(s => s).ToArray();
             return others.ToArray();
         }
+
         public static void OpenFolder(string folder)
         {
             Subdirectory = "/" + folder.Trim('/');
             LoadSoundboard();
         }
+
         public static string RemoveFileExtension(string file)
         {
             int index = 0;
@@ -210,6 +235,7 @@ namespace JupiterX.Mods
             }
             return output;
         }
+
         public static void LoadAndPlaySound(string soundpath)
         {
             if (!File.Exists(soundpath))
@@ -223,8 +249,25 @@ namespace JupiterX.Mods
             }
             else if (extension == ".mp3")
                 clip = CreateAudioClipFromMp3(soundpath);
-            if (clip != null)
-                PlayAudioThroughMicrophone(clip);
+
+            if (PhotonNetwork.InRoom)
+            {
+                if (clip != null)
+                    PlayAudioThroughMicrophone(clip);
+            }
+            else
+                PlayClipNotInRoom(clip);
+        }
+
+        private static void PlayClipNotInRoom(AudioClip clip)
+        {
+            notinroomholder = new GameObject();
+            notinroomholder.name = "JupiterX_SHolder";
+            if (notinroomholder.GetComponent<AudioSource>() == null)
+                notinroomholder.AddComponent<AudioSource>();
+            notinroomholder.GetComponent<AudioSource>().clip = clip;
+            notinroomholder.GetComponent<AudioSource>().loop = LoopAudio;
+            notinroomholder.GetComponent<AudioSource>().volume = volume;
         }
 
         private static AudioClip CreateAudioClipFromWav(byte[] wavData, string clipName)
@@ -309,6 +352,7 @@ namespace JupiterX.Mods
             }
             catch { }
         }
+
         public static void RestoreMicrophone()
         {
             try
@@ -326,24 +370,11 @@ namespace JupiterX.Mods
             }
             catch { }
         }
+
         public static void StopAllSounds() => 
             RestoreMicrophone();
+
         public static void PlaySoundFile(string soundpath) => 
             LoadAndPlaySound(soundpath);
-        public static void Update()
-        {
-            if (AudioIsPlaying && RecoverTime > 0 && Time.time >= RecoverTime)
-                RestoreMicrophone();
-        }
-        public static void PlayLoadedSound()
-        {
-            if (downloadedSound != null && SoundLoaded)
-                PlayAudioThroughMicrophone(downloadedSound);
-        }
-        public static void ResetLoadedSound()
-        {
-            SoundLoaded = false;
-            downloadedSound = null;
-        }
     }
 }
