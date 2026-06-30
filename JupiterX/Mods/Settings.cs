@@ -55,6 +55,7 @@ namespace JupiterX
         public static bool hidepointer = false;
         public static bool networkedmenu = true;
         public static bool showEnabledModsVR = true;
+        public static bool loopSounds = false;
         public static bool advancedArraylist;
         public static bool flipArraylist;
         public static bool disableGhostview;

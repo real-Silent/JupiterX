@@ -121,6 +121,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Dynamic Animations", enableMethod =() => dynamicAnimations = true, disableMethod =() => dynamicAnimations = false, toolTip = "Adds more animations to the menu, giving you a better sense of control." },
                 new ButtonInfo { buttonText = "Slow Dynamic Animations", enableMethod =() => slowDynamicAnimations = true, disableMethod =() => slowDynamicAnimations = false, toolTip = "Makes Dynamic Animations slower." },
 
+                new ButtonInfo { buttonText = "Loop Soundboard Sounds", enableMethod =() => loopSounds = true, disableMethod =() => loopSounds = false, toolTip = "Makes Soundboard Sounds loop." },
+
                 new ButtonInfo { buttonText = "Incremental Boost", enableMethod =() => incrementalBoost = true, disableMethod =() => incrementalBoost = false, toolTip = "Allows you to increment faster by holding down your <color=cyan>grip</color>." },
 
                 new ButtonInfo { buttonText = "Custom Boards", enableMethod =() => CustomBoards = true, disableMethod =() => CustomBoards = false, enabled = CustomBoards, isTogglable = true, toolTip = "Enables the custom boards in stump." },

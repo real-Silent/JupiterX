@@ -1,15 +1,15 @@
 ﻿using Il2CppSystem.Net;
+using JupiterX.Classes;
+using JupiterX.Managers;
 using JupiterX.Menu;
+using NLayer;
+using Photon.Pun;
 using Photon.Voice.Unity;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NLayer;
 using UnityEngine;
-using JupiterX.Classes;
-using Photon.Pun;
-using JupiterX.Managers;
 
 namespace JupiterX.Mods
 {
@@ -332,8 +332,27 @@ namespace JupiterX.Mods
             LoadAndPlaySound(soundpath);
         public static void Update()
         {
-            if (AudioIsPlaying && RecoverTime > 0 && Time.time >= RecoverTime)
-                RestoreMicrophone();
+            if (!LoopAudio)
+            {
+                if (AudioIsPlaying && RecoverTime > 0 && Time.time >= RecoverTime) { RestoreMicrophone(); }
+            }
+            else
+            {
+                if (AudioIsPlaying && RecoverTime > 0 && Time.time >= RecoverTime) 
+                {
+                    try
+                    {
+                        Recorder component = GameObject.FindObjectsOfType<Recorder>().FirstOrDefault();
+                        if (component != null)
+                        {
+                            AudioClip clip = component.audioClip;
+                            RestoreMicrophone();
+                            PlayAudioThroughMicrophone(clip);
+                        }
+                    }
+                    catch { }
+                }
+            }   
         }
         public static void PlayLoadedSound()
         {
