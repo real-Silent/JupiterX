@@ -162,8 +162,6 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Quit Game", method =() => Important.QuitGame(), isTogglable = false, toolTip = "Quits your game." },
 
-                new ButtonInfo { buttonText = "Anti Hand Tap", enableMethod =() => HandTapPatch.enabled = true, disableMethod =() => HandTapPatch.enabled = false, toolTip = "Stops all hand tap sounds from being played."},
-
                 new ButtonInfo { buttonText = "Clear Notifcations", method =() => NotificationManager.ClearAllNotifications(), isTogglable = false, toolTip = "Clears all the notifications." },
 
                 new ButtonInfo { buttonText = "Anti AFK", method =() => Important.AntiAFK(), isTogglable = true, toolTip = "Disables the afk kick you get." },
@@ -206,17 +204,19 @@ namespace JupiterX.Menu
             new ButtonInfo[] { // Computer | 4
                 new ButtonInfo { buttonText = "Exit Computer", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
 
-                new ButtonInfo { buttonText = "Disconnect", method =() => Computer.Leave(), isTogglable = false, toolTip = "Disconnects you from the lobby." },
+                new ButtonInfo { buttonText = "Disconnect", method =() => Important.Leave(), isTogglable = false, toolTip = "Disconnects you from the lobby." },
                 new ButtonInfo { buttonText = "Reconnect", method =() => Important.Reconnect(), isTogglable = false, toolTip = "Reconnects you to the current lobby." },
                 new ButtonInfo { buttonText = "Lobby Hop", method =() => Important.LobbyHop(), isTogglable = false, toolTip = "Lets you lobby hop." },
-                new ButtonInfo { buttonText = "Join Random", method =() => Computer.Jrr(), isTogglable = false, toolTip = "Lets you join a random room." },
+                new ButtonInfo { buttonText = "Join Random", method =() => Important.Jrr(), isTogglable = false, toolTip = "Lets you join a random room." },
 
-                new ButtonInfo { buttonText = "Join Code '1'", method =() => Computer.JoinCode("1"), isTogglable = false, toolTip = "Lets you join the code \"1\"." },
-                new ButtonInfo { buttonText = "Join Code 'JUPITERX'", method =() => Computer.JoinCode("_@-JupiterX-@_"), isTogglable = false, toolTip = "Lets you join the code \"JupiterX\"." },
-                new ButtonInfo { buttonText = "Join Code 'MODS'", method =() => Computer.JoinCode("MODS"), isTogglable = false, toolTip = "Lets you join the code \"MODS\"." },
-                new ButtonInfo { buttonText = "Join Code 'MOD'", method =() => Computer.JoinCode("MOD"), isTogglable = false, toolTip = "Lets you join the code \"MOD\"." },
-                new ButtonInfo { buttonText = "Join Code 'PBBV'", method =() => Computer.JoinCode("PBBV"), isTogglable = false, toolTip = "Lets you join the code \"PBBV\"." },
-                new ButtonInfo { buttonText = "Join Code 'DAISY'", method =() => Computer.JoinCode("DAISY"), isTogglable = false, toolTip = "Lets you join the code \"DAISY\"." },
+                new ButtonInfo { buttonText = "Create Room", method =() => Important.CreateRoom(), isTogglable = false, toolTip = "Creates a custom room." },
+
+                new ButtonInfo { buttonText = "Join Code '1'", method =() => Important.JoinCode("1"), isTogglable = false, toolTip = "Lets you join the code \"1\"." },
+                new ButtonInfo { buttonText = "Join Code 'JUPITERX'", method =() => Important.JoinCode("_@-JupiterX-@_"), isTogglable = false, toolTip = "Lets you join the code \"JupiterX\"." },
+                new ButtonInfo { buttonText = "Join Code 'MODS'", method =() => Important.JoinCode("MODS"), isTogglable = false, toolTip = "Lets you join the code \"MODS\"." },
+                new ButtonInfo { buttonText = "Join Code 'MOD'", method =() => Important.JoinCode("MOD"), isTogglable = false, toolTip = "Lets you join the code \"MOD\"." },
+                new ButtonInfo { buttonText = "Join Code 'PBBV'", method =() => Important.JoinCode("PBBV"), isTogglable = false, toolTip = "Lets you join the code \"PBBV\"." },
+                new ButtonInfo { buttonText = "Join Code 'DAISY'", method =() => Important.JoinCode("DAISY"), isTogglable = false, toolTip = "Lets you join the code \"DAISY\"." },
             },
 
             new ButtonInfo[] { // Movement | 5
@@ -501,6 +501,9 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Crash All V5 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV5(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
                 new ButtonInfo { buttonText = "Crash All V6 <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Overpowered.CrashAllV5(), isTogglable = true, toolTip = "Lets you crash all while holding right trigger." },
 
+                new ButtonInfo { buttonText = "Lag on Touch", method =() => Overpowered.LagOnTouch(), isTogglable = true, toolTip = "Lags who ever you touch." },
+                new ButtonInfo { buttonText = "Crash on Touch", method =() => Overpowered.CrashOnTouch(), isTogglable = true, toolTip = "Crashes who ever you touch." },
+
                 new ButtonInfo { buttonText = "Ban All", method =() => Utility.BanAll(), isTogglable = true, toolTip = "Lets you ban everyone in the current room." },
                 new ButtonInfo { buttonText = "Ban Gun", method =() => Overpowered.BanGun(), isTogglable = true, toolTip = "Lets you ban someone you shoot at." },
 
@@ -513,6 +516,8 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Experimental | 13
                 new ButtonInfo { buttonText = "Exit Experimental", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
+                new ButtonInfo { buttonText = "Show Full Mod Amount", method =() => NotificationManager.SendNotification($"Full amount: {buttons.SelectMany(list => list).ToArray().Length}"), isTogglable = false, toolTip = "Shows the amount of mods on the menu." },
 
                 new ButtonInfo { buttonText = "Grab RPC Data", method =() => Experimental.GrabRPCData(), isTogglable = false, toolTip = "Grabs all the games rpcs and writes them to a file." },
                 new ButtonInfo { buttonText = "Grab Game Info", method =() => Experimental.GrabGameInfo(), isTogglable = false, toolTip = "Grabs the games info and writes them to a file." },

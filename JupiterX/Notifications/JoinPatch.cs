@@ -3,16 +3,26 @@ using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
 
 namespace JupiterX
 {
     [HarmonyPatch(typeof(MonoBehaviourPunCallbacks), "OnPlayerEnteredRoom")]
     public class JoinPatch
     {
-        private static void Prefix(Player player)
+        private static void Prefix(Player newPlayer)
         {
-            if (player != PhotonNetwork.LocalPlayer && !Main.disablePlayerNotifications)
-                NotificationManager.SendNotification($"<color=grey>[</color><color=green>JOIN</color><color=grey>]</color> Name: {Utility.CleanPlayerName(player.NickName)}");
+            if (newPlayer == null || string.IsNullOrEmpty(newPlayer.UserId)) return;
+
+            if (newPlayer != PhotonNetwork.LocalPlayer && !notifiedPlayerIds.Contains(newPlayer.UserId) && !Main.disablePlayerNotifications)
+            {
+                notifiedPlayerIds.Add(newPlayer.UserId);
+                NotificationManager.SendNotification($"<color=grey>[</color><color=green>JOIN</color><color=grey>]</color> Name: {Utility.CleanPlayerName(newPlayer.NickName)}");
+            }
         }
+        private static HashSet<string> notifiedPlayerIds = new HashSet<string>();
+
+        public static void ClearNotifiedUser(string userId) =>
+            notifiedPlayerIds.Remove(userId);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using GorillaNetworking;
 using JupiterX.Classes;
+using JupiterX.Extensions;
 using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;
@@ -186,6 +187,39 @@ namespace JupiterX.Mods
                     for (int i = 0; i < 25; i++)
                     {
                         GorillaGameManager.instance.photonView.RPC("JoinPubWithFreinds", plr, null);
+                    }
+                }
+            }
+        }
+
+        public static void LagOnTouch()
+        {
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                {
+                    if (Vector3.Distance(rig.transform.position, Utility.myVRRig().rightHandTransform.position) <= 0.35f || Vector3.Distance(rig.transform.position, Utility.myVRRig().leftHandTransform.position) <= 0.35f)
+                    {
+                        Utility.BetaCrashPlayer(rig.photonView.Owner);
+                    }
+                }
+            }
+        }
+
+        public static void CrashOnTouch()
+        {
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                {
+                    if (Vector3.Distance(rig.transform.position, Utility.myVRRig().rightHandTransform.position) <= 0.35f || Vector3.Distance(rig.transform.position, Utility.myVRRig().leftHandTransform.position) <= 0.35f)
+                    {
+                        for (int i = 0; i < 150; i++)
+                        {
+                            PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { rig.photonView.Owner.ActorNumber } }, SendOptions.SendUnreliable);
+                            PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { rig.photonView.Owner.ActorNumber } }, SendOptions.SendUnreliable);
+                        }
+                        PhotonNetwork.SendAllOutgoingCommands();
                     }
                 }
             }

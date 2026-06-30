@@ -25,9 +25,9 @@ namespace JupiterX.Mods
 
         public static void LoadSoundboard()
         {
-			string basePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
-            if (!Directory.Exists("JupiterX")) 
-                Directory.CreateDirectory("JupiterX"); 
+            string basePath = Path.Combine("JupiterX", "Sounds", Subdirectory.TrimStart('/').Replace("\\", "/"));
+            if (!Directory.Exists("JupiterX"))
+                Directory.CreateDirectory("JupiterX");
             if (!Directory.Exists(basePath))
                 Directory.CreateDirectory(basePath);
             List<string> enabledSounds = new List<string>();
@@ -68,8 +68,8 @@ namespace JupiterX.Mods
                 else
                     soundbuttons.Add(new ButtonInfo { buttonText = $"SoundboardSound{index}", overlapText = cleanName, method = () => PlaySoundFile(relativePath), isTogglable = false, toolTip = $"Plays \"{cleanName}\" through your microphone." });
             }
-            soundbuttons.Add(new ButtonInfo { buttonText = "Volume", enableMethod = () => ChangeVolume(true), method =() => ChangeVolume(), disableMethod = () => ChangeVolume(false), incremental = true, isTogglable = false, toolTip = "Changes the current audio clips volume." });
-            soundbuttons.Add(new ButtonInfo { buttonText = "Loop Audio", enableMethod =() => LoopAudio = true, disableMethod =() => LoopAudio = true, isTogglable = false, toolTip = "Loops the current sound that is playing." });
+            soundbuttons.Add(new ButtonInfo { buttonText = "Volume", enableMethod = () => ChangeVolume(true), method = () => ChangeVolume(), disableMethod = () => ChangeVolume(false), incremental = true, isTogglable = false, toolTip = "Changes the current audio clips volume." });
+            soundbuttons.Add(new ButtonInfo { buttonText = "Loop Audio", enableMethod = () => LoopAudio = true, disableMethod = () => LoopAudio = false, isTogglable = true, toolTip = "Loops the current sound that is playing." });
             soundbuttons.Add(new ButtonInfo { buttonText = "Stop All Sounds", method = () => StopAllSounds(), isTogglable = false, toolTip = "Stops all currently playing sounds." });
             soundbuttons.Add(new ButtonInfo { buttonText = "Reload Sounds", method = () => LoadSoundboard(), isTogglable = false, toolTip = "Reloads all of your sounds." });
             soundbuttons.Add(new ButtonInfo { buttonText = "Get More Sounds", method = LoadSoundLibrary, isTogglable = false, toolTip = "Opens a public audio library, where you can download your own sounds." });
@@ -77,12 +77,12 @@ namespace JupiterX.Mods
             Buttons.CurrentCategoryName = "Soundboard";
             Buttons.buttons[Buttons.GetCategory("Soundboard")] = soundbuttons.ToArray();
 
-			AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
-			{
-				name = "Soundboard",
-				description = "You havent used this before? try using the sounds and dont abuse it."
-			});
-		}
+            AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
+            {
+                name = "Soundboard",
+                description = "You havent used this before? try using the sounds and dont abuse it."
+            });
+        }
 
         public static void LoadSoundLibrary()
         {
@@ -136,12 +136,9 @@ namespace JupiterX.Mods
         private static void ChangeVolume(bool positive = true)
         {
             if (positive)
-            {
-                if (positive)
-                    volume++;
-                else
-                    volume--;
-            }
+                volume++;
+            else
+                volume--;
             Buttons.GetIndex("Volume").overlapText = $"Volume <color=grey>[</color><color=cyan>" + volume + "</color><color=grey>]</color>";
         }
 
@@ -200,7 +197,7 @@ namespace JupiterX.Mods
         public static string GetFileExtension(string fileName) =>
             fileName.ToLower().Split('.')[fileName.Split('.').Length - 1];
 
-        public static string RemoveLastDirectory(string directory) => 
+        public static string RemoveLastDirectory(string directory) =>
             directory == "" || directory.LastIndexOf('/') <= 0 ? "" : directory.Substring(0, directory.LastIndexOf('/'));
 
         public static string[] AlphabetizeNoSkip(string[] array)
@@ -377,7 +374,7 @@ namespace JupiterX.Mods
                 notinroomholder.GetComponent<AudioSource>().Stop();
         }
 
-        public static void PlaySoundFile(string soundpath) => 
+        public static void PlaySoundFile(string soundpath) =>
             LoadAndPlaySound(soundpath);
     }
 }

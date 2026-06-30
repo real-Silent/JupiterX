@@ -1,9 +1,14 @@
-﻿using GorillaNetworking;
+﻿using ExitGames.Client.Photon;
+using GorillaNetworking;
+using JupiterX.Notifications;
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using UnityEngine;
+using static JupiterX.Menu.Main;
 
 namespace JupiterX.Mods
 {
@@ -15,7 +20,8 @@ namespace JupiterX.Mods
         }
         public static void AntiAFK()
         {
-            Utility.photonNetworkController.disableAFKKick = true;
+            if (!Utility.photonNetworkController)
+                Utility.photonNetworkController.disableAFKKick = true;
         }
 
         public static void JoinDiscord() =>
@@ -58,6 +64,19 @@ namespace JupiterX.Mods
             Application.targetFrameRate = int.MaxValue;
         }
 
+        public static void Leave()
+        {
+            Utility.photonNetworkController.AttemptDisconnect();
+        }
+        public static void Jrr()
+        {
+            PhotonNetwork.JoinRandomOrCreateRoom();
+        }
+        public static void JoinCode(string code)
+        {
+            Utility.photonNetworkController.AttemptToJoinSpecificRoom(code);
+        }
+
 
         public static void LobbyHop()
         {
@@ -66,6 +85,119 @@ namespace JupiterX.Mods
             PhotonNetwork.JoinRandomRoom();
         }
 
+        private class RoomConfig
+        {
+            public bool open;
+            public bool bigroomname;
+            public bool maxplayers;
+        }
+
+        public static void CreateRoom()
+        {
+            RoomConfig roomconfig = new RoomConfig();
+            prompts.Clear();
+
+            Prompt("Would you like to make a public room ?", () => 
+            {
+                roomconfig.open = true;
+                Prompt("Big Room Name ?", () =>
+                {
+                    roomconfig.bigroomname = true;
+                    Prompt("255 Players ?", () =>
+                    {
+                        roomconfig.maxplayers = true;
+                        Prompt("Create Room", () =>
+                        {
+                            NotificationManager.SendNotification("Creating room.");
+                            Hashtable roomprops = new Hashtable();
+                            roomprops.Add("gameMode", "forestDEFAULTDEFAULTINFECTIOINFECTION");
+                            RoomOptions roomOptions = new RoomOptions()
+                            {
+                                CustomRoomProperties = roomprops,
+                                PublishUserId = true,
+                                IsOpen = roomconfig.open,
+                                IsVisible = roomconfig.open,
+                                MaxPlayers = roomconfig.maxplayers ? (byte)255 : (byte)10,
+                                SuppressPlayerInfo = true
+                            };
+                            PhotonNetwork.CreateRoom(RandomRoomName(roomconfig.bigroomname), roomOptions);
+                            NotificationManager.SendNotification("Created room.");
+                        }, () =>
+                        {
+                            NotificationManager.SendNotification("Not creating room.");
+                        });
+                    }, () =>
+                    {
+                        roomconfig.maxplayers = false;
+                        NotificationManager.SendNotification("Creating room");
+                    });
+                }, () =>
+                {
+                    roomconfig.bigroomname = false;
+                });
+            }, () => 
+            {
+                roomconfig.open = false;
+                Prompt("Big Room Name ?", () =>
+                {
+                    roomconfig.bigroomname = true;
+                    Prompt("255 Players ?", () =>
+                    {
+                        roomconfig.maxplayers = true;
+                        Prompt("Create Room", () =>
+                        {
+                            NotificationManager.SendNotification("Creating room.");
+                            Hashtable roomprops = new Hashtable();
+                            roomprops.Add("gameMode", "forestDEFAULTDEFAULTINFECTIOINFECTION");
+                            RoomOptions roomOptions = new RoomOptions()
+                            {
+                                CustomRoomProperties = roomprops,
+                                PublishUserId = true,
+                                IsOpen = roomconfig.open,
+                                IsVisible = roomconfig.open,
+                                MaxPlayers = roomconfig.maxplayers ? (byte)255 : (byte)10,
+                                SuppressPlayerInfo = true
+                            };
+                            PhotonNetwork.CreateRoom(RandomRoomName(roomconfig.bigroomname), roomOptions);
+                            NotificationManager.SendNotification("Created room.");
+                        }, () =>
+                        {
+                            NotificationManager.SendNotification("Not creating room.");
+                        });
+                    }, () =>
+                    {
+                        roomconfig.maxplayers = false;
+                        NotificationManager.SendNotification("Creating room");
+                    });
+                }, () =>
+                {
+                    roomconfig.bigroomname = false;
+                });
+            });
+        }
+
+        public static string RandomRoomName(bool bigroomname = false)
+        {
+            while (true)
+            {
+                string text = Generate(bigroomname ? 22 : 4);
+                if (GorillaComputer.instance.CheckAutoBanListForName(text))
+                    return text;
+            }
+        }
+
+        private static readonly System.Random Random = new System.Random();
+        private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        public static string Generate(int length)
+        {
+            if (length <= 0)
+                throw new ArgumentOutOfRangeException(nameof(length));
+            StringBuilder result = new StringBuilder(length);
+            for (int i = 0; i < length; i++)
+                result.Append(Characters[Random.Next(Characters.Length)]);
+            return result.ToString();
+        }
 
         public static void DisableNetworkTriggers(bool disable)
         {

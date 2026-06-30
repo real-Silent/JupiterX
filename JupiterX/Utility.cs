@@ -74,33 +74,32 @@ namespace JupiterX
                 a = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
             return new Color32(r, g, b, a);
         }
+
         static Hashtable jupiterxProp = new Hashtable();
         public static void ThisGuyIsUsingJupiter()
         {
             if (!jupiterxProp.ContainsKey("jupiterx2026revive"))
-            {
                 jupiterxProp.Add("jupiterx2026revive", "jupiterx2026revive");
-            }
             if (PhotonNetwork.InRoom)
             {
-                if (!GorillaTagger.Instance.myVRRig.photonView.Controller.CustomProperties.ContainsKey("jupiterx2026revive"))
+                if (!PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("jupiterx2026revive"))
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(jupiterxProp);
+                if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("jupiterx2026revive"))
                 {
-                    GorillaTagger.Instance.myVRRig.photonView.Controller.SetCustomProperties(jupiterxProp);
-                }
-                if (GorillaTagger.Instance.myVRRig.photonView.Controller.CustomProperties.ContainsKey("jupiterx2026revive"))
-                {
-                    string name = "[JUPITERX] " + GorillaTagger.Instance.myVRRig.photonView.Controller.NickName;
+                    string name = "[JUPITERX] " + PhotonNetwork.LocalPlayer.nickName;
                     GorillaTagger.Instance.myVRRig.playerText.text = name;
                     GorillaTagger.Instance.myVRRig.playerText.color = Color.cyan;
-                    GorillaTagger.Instance.offlineVRRig.playerText.text = name;
-                    GorillaTagger.Instance.offlineVRRig.playerText.color = Color.cyan;
+                    if (GorillaTagger.Instance.offlineVRRig.playerText.text != GorillaTagger.Instance.myVRRig.playerText.text)
+                    {
+                        GorillaTagger.Instance.offlineVRRig.playerText.text = GorillaTagger.Instance.myVRRig.playerText.text;
+                        GorillaTagger.Instance.offlineVRRig.playerText.color = GorillaTagger.Instance.myVRRig.playerText.color;
+                    }
                 }
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                     {
                         string nickname = rig.photonView.Owner.NickName;
-                        string userId = rig.photonView.Owner.UserId;
                         if (rig.photonView.Owner.CustomProperties.ContainsKey("jupiterx2026revive"))
                         {
                             rig.playerText.text = "[JUPITERX] " + nickname;
@@ -178,9 +177,7 @@ namespace JupiterX
                 SetMaster(MyPlayer());
                 PhotonView objectView = obj.GetComponent<PhotonView>();
                 if (objectView != null)
-                {
                     PhotonNetwork.Destroy(objectView);
-                }
             }
         }
         public static Photon.Realtime.Player MyPlayer() =>
@@ -1086,7 +1083,7 @@ namespace JupiterX
             }
         }
 
-        public static string version = "2.4.2";
+        public static string version = "2.4.3";
         public static string serverversion;
         public static string minversion;
         public static string discord;

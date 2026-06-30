@@ -89,9 +89,9 @@ namespace JupiterX.Notifications
                     NotifiText.font = font;
                     ModText.font = font;
                     StatsText.font = font;
-                    NotifiText.fontStyle = FontStyle.Italic;
-                    StatsText.fontStyle = FontStyle.Italic;
-                    ModText.fontStyle = Settings.advancedArraylist ? (FontStyle)((int)FontStyle.Italic % 2) : FontStyle.Italic;
+                    NotifiText.fontStyle = FontStyle.Normal;
+                    StatsText.fontStyle = FontStyle.Normal;
+                    ModText.fontStyle = Settings.advancedArraylist ? (FontStyle)((int)FontStyle.Normal % 2) : FontStyle.Normal;
                 }
                 catch { }
                 ModText.rectTransform.localPosition = new Vector3(-1f, -1f, Settings.flipArraylist ? 0.5f : -0.5f);

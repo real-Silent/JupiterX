@@ -5,9 +5,8 @@ using Photon.Pun;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using static JupiterX.Menu.Main;
 
 namespace JupiterX.Mods
 {
@@ -50,7 +49,7 @@ namespace JupiterX.Mods
 			trailRenderer = null;
 		}
 
-		public static readonly List<Renderer> disabledRenderers = new List<Renderer>();
+        public static readonly List<Renderer> disabledRenderers = new List<Renderer>();
         public static void Xray()
         {
             if (Utility.RightTrigger)
