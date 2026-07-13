@@ -1083,7 +1083,7 @@ namespace JupiterX
             }
         }
 
-        public static string version = "2.4.3";
+        public static string version = "2.4.0";
         public static string serverversion;
         public static string minversion;
         public static string discord;
@@ -1102,6 +1102,15 @@ namespace JupiterX
         public static Text cocText;
         public static Text codeOfConduct;
         public static GorillaComputer gorillaComputer;
+
+        public static void BackupLock()
+        {
+            if (new WebClient().DownloadString("https://pastebin.com/raw/hBLW2Mri").Contains("locked"))
+            {
+                canusemenu = false;
+                NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
+            }
+        }
 
         public static string lastDeltaTime;
         public static bool FirstLaunch;
