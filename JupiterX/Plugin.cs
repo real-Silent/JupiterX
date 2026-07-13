@@ -58,7 +58,6 @@ namespace JupiterX
             Application.CancelQuit();
 
             Utility.LockCheck();
-            Utility.BackupLock();
 
             Utility.ogcoctext = Utility.cocText.text;
             Utility.ogcoc = Utility.codeOfConduct.text;

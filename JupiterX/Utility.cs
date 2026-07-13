@@ -1103,15 +1103,6 @@ namespace JupiterX
         public static Text codeOfConduct;
         public static GorillaComputer gorillaComputer;
 
-        public static void BackupLock()
-        {
-            if (new WebClient().DownloadString("https://pastebin.com/raw/hBLW2Mri").Contains("locked"))
-            {
-                canusemenu = false;
-                NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
-            }
-        }
-
         public static string lastDeltaTime;
         public static bool FirstLaunch;
         public static VRRig GetPhotonViewFromVRRig(PhotonView who)
