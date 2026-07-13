@@ -50,6 +50,7 @@
     <Compile Include="Extensions\VectorExtensions.cs" />
     <Compile Include="Extensions\VRRigExtensions.cs" />
     <Compile Include="Managers\AchievementManager.cs" />
+    <Compile Include="Managers\PlayFabManager.cs" />
     <Compile Include="Managers\PluginManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
     <Compile Include="Menu\Main.cs" />

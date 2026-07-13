@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using GorillaNetworking;
 using Il2CppSystem.Net;
+using JupiterX.Managers;
 using JupiterX.Notifications;
 using Newtonsoft.Json.Linq;
 using Photon.Pun;
@@ -15,16 +16,6 @@ using static JupiterX.Menu.Main;
 // if you remove this it counts as skidding
 namespace JupiterX.Mods
 {
-    public class PlayFabLoginResult
-    {
-        public string PlayFabId;
-        public string SessionTicket;
-
-        public string EntityId;
-        public string EntityType;
-        public string EntityToken;
-    }
-
     public class Experimental
     {
         public static void BalloonSpam()
@@ -116,37 +107,19 @@ namespace JupiterX.Mods
 
         public static void Unban()
         {
-            PlayFabLoginResult result = UnBanSelf();
-            OnLogin(result);
-        }
-
-        private static PlayFabLoginResult UnBanSelf()
-        {
-            string titleId = PlayFabSettings.TitleId;
-            string customId = Utility.Generate(16);
-            string url = $"https://{titleId}.playfabapi.com/Client/LoginWithCustomID";
-            string jsonData = $@"{{
-                ""CustomId"": ""{customId}"",
-                ""CreateAccount"": true,
-                ""TitleId"": ""{titleId}""
-            }}";
-            WebClient client = new WebClient();
-            client.Headers.Add("Content-Type", "application/json");
-            string response = client.UploadString(url, "POST", jsonData);
-            JObject json = JObject.Parse(response);
-            NotificationManager.SendNotification($"<color=cyan>[INFO]</color> Response status: 200 {json["data"]?["PlayFabId"]?.ToString()}");
-            return new PlayFabLoginResult
+            NotificationManager.SendNotification("Unbanning self please be patient.", 4f);
+            PlayFabManager.CreateAccount(new PlayFabManager.CreateAccountRequest()
             {
-                PlayFabId = json["data"]?["PlayFabId"]?.ToString(),
-                SessionTicket = json["data"]?["SessionTicket"]?.ToString(),
-                EntityId = json["data"]?["EntityToken"]?["Entity"]?["Id"]?.ToString(),
-                EntityType = json["data"]?["EntityToken"]?["Entity"]?["Type"]?.ToString(),
-                EntityToken = json["data"]?["EntityToken"]?["EntityToken"]?.ToString()
-            };
+                TitleId = PlayFabSettings.TitleId,
+                CreateAccount = true,
+                CustomId = "OCULUS" + UnityEngine.Random.Range(float.MinValue, float.MaxValue)
+            }, OnLogin);
         }
 
-        private static void OnLogin(PlayFabLoginResult data)
+        private static void OnLogin(PlayFabManager.CreateAccountResponse data)
         {
+            PlayFabClientAPI.ForgetAllCredentials();
+            PhotonNetwork.Disconnect();
             PlayFabSettings.staticPlayer = new PlayFabAuthenticationContext
             {
                 PlayFabId = data.PlayFabId,
@@ -156,7 +129,7 @@ namespace JupiterX.Mods
                 EntityToken = data.EntityToken
             };
             PhotonNetwork.ConnectUsingSettings();
-            NotificationManager.SendNotification("<color=cyan>[INFO]</color> Authenticating to PlayFab!", 10f);
+            NotificationManager.SendNotification("<color=cyan>[INFO]</color> Authenticating to PlayFab!", 5f);
             GorillaTagger.Instance.offlineVRRig.GetUserCosmeticsAllowed();
             PhotonNetwork.ConnectToRegion("usw");
             NotificationManager.SendNotification("<color=cyan>[INFO]</color> Authed!", 5f);
