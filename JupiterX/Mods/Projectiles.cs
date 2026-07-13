@@ -65,51 +65,51 @@ namespace JupiterX.Mods
         public static void SnowballLauncher()
         {
             if (Utility.RightGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(-45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[0], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[0], -1, true, 1 });
             if (Utility.LeftGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(-45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[0], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[0], -1, true, 1 });
         }
         public static void SlingshotLauncher()
         {
             if (Utility.RightGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(-45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[1], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[1], -1, true, 1 });
             if (Utility.LeftGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(-45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[1], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[1], -1, true, 1 });
         }
         public static void CloudLauncher()
         {
             if (Utility.RightGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(-45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[2], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[2], -1, true, 1 });
             if (Utility.LeftGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(-45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[2], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[2], -1, true, 1 });
         }
         public static void CupidLauncher()
         {
             if (Utility.RightGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(-45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[3], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[3], -1, true, 1 });
             if (Utility.LeftGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(-45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[3], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[3], -1, true, 1 });
         }
         public static void IceLauncher()
         {
             if (Utility.RightGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(-45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[4], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[4], -1, true, 1 });
             if (Utility.LeftGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(-45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[4], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[4], -1, true, 1 });
         }
         public static void DeadshotLauncher()
         {
             if (Utility.RightGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(-45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[5], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[5], -1, true, 1 });
             if (Utility.LeftGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(-45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[5], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[5], -1, true, 1 });
         }
         public static void ElfLauncher()
         {
             if (Utility.RightGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(-45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[6], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.RightHandTransform().position, Quaternion.AngleAxis(45f, Utility.RightHandTransform().right) * Utility.RightHandTransform().forward * 15f, types[6], -1, true, 1 });
             if (Utility.LeftGrip)
-                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(-45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[6], -1, true, 1 });
+                RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Utility.LeftHandTransform().position, Quaternion.AngleAxis(45f, Utility.LeftHandTransform().right) * Utility.LeftHandTransform().forward * 15f, types[6], -1, true, 1 });
         }
 
         public static void SnowballGun()
