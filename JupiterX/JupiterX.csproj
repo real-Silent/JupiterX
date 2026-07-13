@@ -24,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Classes\Menu\ButtonCollider.cs" />
@@ -50,8 +52,10 @@
     <Compile Include="Extensions\VectorExtensions.cs" />
     <Compile Include="Extensions\VRRigExtensions.cs" />
     <Compile Include="Managers\AchievementManager.cs" />
+    <Compile Include="Managers\BoxManager.cs" />
     <Compile Include="Managers\PlayFabManager.cs" />
     <Compile Include="Managers\PluginManager.cs" />
+    <Compile Include="Managers\RPCManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
     <Compile Include="Menu\Main.cs" />
     <Compile Include="Mods\Settings.cs" />
