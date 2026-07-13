@@ -3,7 +3,6 @@ using JupiterX.Managers;
 using JupiterX.Mods;
 using JupiterX.Notifications;
 using JupiterX.Patches;
-using OVR;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -611,6 +610,18 @@ namespace JupiterX.Menu
 
             new ButtonInfo[] { // Spammers | 16
                 new ButtonInfo { buttonText = "Exit Spammers", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
+                new ButtonInfo { buttonText = "Hand Tap Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Spammers.HandTapSpam(), isTogglable = true, toolTip = "Lets you spam a sound while holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Bark Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Spammers.BarkSpam(), isTogglable = true, toolTip = "Lets you spam a sound while holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Crystal Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Spammers.CrystalSpam(), isTogglable = true, toolTip = "Lets you spam a sound while holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Metal Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Spammers.MetalSpam(), isTogglable = true, toolTip = "Lets you spam a sound while holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Glass Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Spammers.GlassSpam(), isTogglable = true, toolTip = "Lets you spam a sound while holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Snow Step Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Spammers.SnowStepSpam(), isTogglable = true, toolTip = "Lets you spam a sound while holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Leaf Crunch Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Spammers.LeafCrunchSpam(), isTogglable = true, toolTip = "Lets you spam a sound while holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Random Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Spammers.RandomSpam(), isTogglable = true, toolTip = "Lets you spam a sound while holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+
+                new ButtonInfo { buttonText = "Custom Sound ID", method = Spammers.IncreaseSoundID, enableMethod = Spammers.IncreaseSoundID, disableMethod = Spammers.DecreaseSoundID, incremental = true, isTogglable = false, toolTip = "Changes the Sound ID of the Custom Sound Spam." },
+                new ButtonInfo { buttonText = "Custom Sound Spam", overlapText = "Custom Sound Spam <color=grey>[</color><color=cyan>0</color><color=grey>]</color>", method = Spammers.CustomSoundSpam, toolTip = "Plays the selected sound when holding <color=cyan>G</color>." },
             },
 
             new ButtonInfo[] { // Soundboard | 17
