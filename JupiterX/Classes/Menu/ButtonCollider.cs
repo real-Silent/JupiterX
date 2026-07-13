@@ -1,3 +1,4 @@
+using JupiterX.Managers;
 using System;
 using UnityEngine;
 using static JupiterX.Menu.Main;
@@ -28,6 +29,8 @@ namespace JupiterX.Classes
                     ToggleIncremental(relatedText, positive);
                 else
                     Toggle(relatedText, true);
+                if (serversidedButtonSounds)
+                    RPCManager.RigRPC("PlayHandTap", Photon.Pun.RpcTarget.All, new object[] { 8, false, 2f });
             }
 		}
 	}
