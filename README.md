@@ -2,10 +2,14 @@
 
 With:
 ```
+First Public Menu With Working RPCs for Lemon Loader.
+Projectile Mods.
+Sound Spammers.
 Overpowered Mods.
 One of the first ever soundboards.
 Lucy Mods.
 OP Crashers.
+GTH Mods.
 And more.
 ```
 
