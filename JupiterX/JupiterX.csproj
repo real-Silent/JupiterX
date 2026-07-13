@@ -58,6 +58,7 @@
     <Compile Include="Managers\RPCManager.cs" />
     <Compile Include="Menu\Buttons.cs" />
     <Compile Include="Menu\Main.cs" />
+    <Compile Include="Mods\Projectiles.cs" />
     <Compile Include="Mods\Settings.cs" />
     <Compile Include="Mods\Advantage.cs" />
     <Compile Include="Mods\Experimental.cs" />

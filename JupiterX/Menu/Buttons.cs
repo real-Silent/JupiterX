@@ -40,7 +40,10 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Overpowered", method =() => CurrentCategoryName = "Overpowered", isTogglable = false, toolTip = "Opens the overpowered page for the menu."},
                 new ButtonInfo { buttonText = "Experimental", method =() => CurrentCategoryName = "Experimental", isTogglable = false, toolTip = "Opens the experimental mods page for the menu."},
                 new ButtonInfo { buttonText = "Master", method =() => CurrentCategoryName = "Master", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
-                new ButtonInfo { buttonText = "Gorilla Tag Horror", method =() => CurrentCategoryName = "Gorilla Tag Horror", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
+                new ButtonInfo { buttonText = "Gorilla Tag Horror", method =() => CurrentCategoryName = "Gorilla Tag Horror", isTogglable = false, toolTip = "Opens the gorilla tag horror mods page for the menu."},
+
+                new ButtonInfo { buttonText = "Projectiles", method =() => CurrentCategoryName = "Projectiles", isTogglable = false, toolTip = "Opens the projectiles mods page for the menu."},
+                new ButtonInfo { buttonText = "Sound Spammers", method =() => CurrentCategoryName = "Sound Spammers", isTogglable = false, toolTip = "Opens the sound spammers mods page for the menu."},
 
                 new ButtonInfo { buttonText = "Soundboard", method =() => SoundBoard.LoadSoundboard(), isTogglable = false, toolTip = "Opens the soundboard page for the menu."},
 
@@ -578,15 +581,47 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Spawn Green Lucy", method =() => Overpowered.SpawnColouredLucy(Color.green), isTogglable = true, toolTip = "Spawns the ghost Lucy in forest." },
             },
 
-            new ButtonInfo[] { // Soundboard | 15
+            new ButtonInfo[] { // Projectiles | 15
+                new ButtonInfo { buttonText = "Exit Projectiles", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
+                new ButtonInfo { buttonText = "Snowball Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.SnowballSpam(), isTogglable = true, toolTip = "Lets you spam snowballs when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Slingshot Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.SlingshotSpam(), isTogglable = true, toolTip = "Lets you spam slingshots when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Cloud Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.CloudSpam(), isTogglable = true, toolTip = "Lets you spam clouds when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Cupid Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.CupidSpam(), isTogglable = true, toolTip = "Lets you spam cupid when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Ice Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.IceSpam(), isTogglable = true, toolTip = "Lets you spam ice when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Deadshot Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.DeadshotSpam(), isTogglable = true, toolTip = "Lets you spam deadshot when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Elf Spam <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.ElfSpam(), isTogglable = true, toolTip = "Lets you spam elf when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+
+                new ButtonInfo { buttonText = "Snowball Launcher <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.SnowballLauncher(), isTogglable = true, toolTip = "Lets you launch snowballs when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Slingshot Launcher <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.SlingshotLauncher(), isTogglable = true, toolTip = "Lets you launch slingshots when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Cloud Launcher <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.CloudLauncher(), isTogglable = true, toolTip = "Lets you launch clouds when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Cupid Launcher <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.CupidLauncher(), isTogglable = true, toolTip = "Lets you launch cupid when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Ice Launcher <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.IceLauncher(), isTogglable = true, toolTip = "Lets you launch ice when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Deadshot Launcher <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.DeadshotLauncher(), isTogglable = true, toolTip = "Lets you launch deadshot when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+                new ButtonInfo { buttonText = "Elf Launcher <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.ElfLauncher(), isTogglable = true, toolTip = "Lets you launch elf when holding <color=grey>[</color><color=cyan>G</color><color=grey>]</color>." },
+
+                new ButtonInfo { buttonText = "Snowball Gun <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.SnowballLauncher(), isTogglable = true, toolTip = "Lets you shoot snowballs with a gun." },
+                new ButtonInfo { buttonText = "Slingshot Gun <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.SlingshotLauncher(), isTogglable = true, toolTip = "Lets you shoot slingshots with a gun." },
+                new ButtonInfo { buttonText = "Cloud Gun <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.CloudLauncher(), isTogglable = true, toolTip = "Lets you shoot clouds with a gun." },
+                new ButtonInfo { buttonText = "Cupid Gun <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.CupidLauncher(), isTogglable = true, toolTip = "Lets you shoot cupid with a gun." },
+                new ButtonInfo { buttonText = "Ice Gun <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.IceLauncher(), isTogglable = true, toolTip = "Lets you shoot ice with a gun." },
+                new ButtonInfo { buttonText = "Deadshot Gun <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.DeadshotLauncher(), isTogglable = true, toolTip = "Lets you shoot deadshots with a gun." },
+                new ButtonInfo { buttonText = "Elf Gun <color=grey>[</color><color=cyan>G</color><color=grey>]</color>", method =() => Projectiles.ElfLauncher(), isTogglable = true, toolTip = "Lets you shoot elfs with a gun." },
+            },
+
+            new ButtonInfo[] { // Spammers | 16
+                new ButtonInfo { buttonText = "Exit Spammers", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+            },
+
+            new ButtonInfo[] { // Soundboard | 17
                 new ButtonInfo { buttonText = "Exit Soundboard", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-            new ButtonInfo[] { // Players | 16
+            new ButtonInfo[] { // Players | 18
                 new ButtonInfo { buttonText = "Exit Players", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-            new ButtonInfo[] { // GTH Mods | 17
+            new ButtonInfo[] { // GTH Mods | 19
                 new ButtonInfo { buttonText = "Exit Gorilla Tag Horror", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
 
                 new ButtonInfo { buttonText = "Spawn Timmy", method =() => GTH.SpawnTimmy(), toolTip = "Spawns a timmy above your head.", isTogglable = true },
@@ -649,17 +684,17 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Joystick Control Monsters <color=grey>[</color><color=cyan>RJ</color><color=grey>]</color>", method =() => GTH.JoystickControlMonters(), toolTip = "Lets you control the monsters movement with your right joystick.", isTogglable = true },
             },
 
-            new ButtonInfo[] { }, // Temporary Category | 18
+            new ButtonInfo[] { }, // Temporary Category | 20
 
-             new ButtonInfo[] { // Enabled | 19
+             new ButtonInfo[] { // Enabled | 21
                 new ButtonInfo { buttonText = "Exit Enabled", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-            new ButtonInfo[] { // Favorites | 20
+            new ButtonInfo[] { // Favorites | 22
                 new ButtonInfo { buttonText = "Exit Favorite", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
-            new[] { // Menu Presets | 21
+            new[] { // Menu Presets | 23
                 new ButtonInfo { buttonText = "Exit Menu Presets", method =() => CurrentCategoryName = "Menu Settings", isTogglable = false, toolTip = "Returns to the settings for the menu."},
 
                 new ButtonInfo { buttonText = "Nova Preset", method =() => Presets.NovaPreset(), isTogglable = false, toolTip = "Saves a custom preset."},
@@ -695,7 +730,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Load Custom Preset 10", method =() => Presets.LoadCustomPreset(10), isTogglable = false, toolTip = "Loads a custom preset."},
             },
 
-            new[] { // Admin | 22
+            new[] { // Admin | 24
                 new ButtonInfo { buttonText = "Exit Admin", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Opens the visual page for the menu" },
                 new ButtonInfo { buttonText = "Get Console Users", method =() => Experimental.GetMenuUsers(), isTogglable = false, toolTip = "Gets all users using console" },
                 new ButtonInfo { buttonText = "Console Users NameTag", enableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = true, disableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = false, isTogglable = true, toolTip = "Enables the console nametags" },
@@ -735,12 +770,12 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Admin Disable Mods Gun", method =() => Experimental.ConsolePanicGUn(), isTogglable = true, toolTip = "Makes the person you shoot mods disable" },
             },
 
-            new[] { // Plugin Settings | 23
+            new[] { // Plugin Settings | 25
                 new ButtonInfo { buttonText = "Exit Plugin Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns you back to the settings menu." },
                 new ButtonInfo { buttonText = "Reload Plugins", method = PluginManager.ReloadPlugins, isTogglable = false, toolTip = "Reloads all of your plugins." }
             },
 
-            new[] { // Credits | 24
+            new[] { // Credits | 26
                 new ButtonInfo { buttonText = "Exit Credits", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page." },
 
                 new ButtonInfo { buttonText = "Nova", method =() => Application.OpenURL("https://github.com/novaissilly"), isTogglable = false, toolTip = "Nova is the main developer of <b>JupiterX</b> she makes and ports most of the mods on the menu." },
@@ -751,12 +786,12 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Saturn", method =() => Application.OpenURL("https://github.com/saturnlamoooooooooooooooo"), isTogglable = false, toolTip = "Helped a lil with <b>JupiterX</b>." },
             },
 
-            new[] // Achievements | 25
+            new[] // Achievements | 27
             {
                 new ButtonInfo { buttonText = "Exit Achievements", method = () => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page." }
             },
 
-            new[] { // Sound Library | 26
+            new[] { // Sound Library | 28
                 new ButtonInfo { buttonText = "Exit Sound Library", method =() => SoundBoard.LoadSoundboard(), isTogglable = false, toolTip = "Returns you back to the soundboard." }
             },
 
@@ -790,6 +825,9 @@ namespace JupiterX.Menu
             "Overpowered",
             "Experimental",
             "Master",
+
+            "Projectiles",
+            "Sound Spammers",
 
             "Soundboard",
             "Players",
