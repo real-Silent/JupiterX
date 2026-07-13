@@ -121,6 +121,7 @@ namespace JupiterX.Mods
                 if (GetGunInput(true))
                 {
                     Utility.myVRRig().enabled = false;
+                    Utility.myVRRig().transform.position = Pointer.transform.position;
                     RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Pointer.transform.position, Vector3.zero, types[0], -1, true, 1 });
                 }
                 else
@@ -139,6 +140,7 @@ namespace JupiterX.Mods
                 if (GetGunInput(true))
                 {
                     Utility.myVRRig().enabled = false;
+                    Utility.myVRRig().transform.position = Pointer.transform.position;
                     RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Pointer.transform.position, Vector3.zero, types[1], -1, true, 1 });
                 }
                 else
@@ -156,6 +158,7 @@ namespace JupiterX.Mods
                 if (GetGunInput(true))
                 {
                     Utility.myVRRig().enabled = false;
+                    Utility.myVRRig().transform.position = Pointer.transform.position;
                     RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Pointer.transform.position, Vector3.zero, types[2], -1, true, 1 });
                 }
                 else
@@ -173,6 +176,7 @@ namespace JupiterX.Mods
                 if (GetGunInput(true))
                 {
                     Utility.myVRRig().enabled = false;
+                    Utility.myVRRig().transform.position = Pointer.transform.position;
                     RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Pointer.transform.position, Vector3.zero, types[3], -1, true, 1 });
                 }
                 else
@@ -190,6 +194,7 @@ namespace JupiterX.Mods
                 if (GetGunInput(true))
                 {
                     Utility.myVRRig().enabled = false;
+                    Utility.myVRRig().transform.position = Pointer.transform.position;
                     RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Pointer.transform.position, Vector3.zero, types[4], -1, true, 1 });
                 }
                 else
@@ -207,6 +212,7 @@ namespace JupiterX.Mods
                 if (GetGunInput(true))
                 {
                     Utility.myVRRig().enabled = false;
+                    Utility.myVRRig().transform.position = Pointer.transform.position;
                     RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Pointer.transform.position, Vector3.zero, types[5], -1, true, 1 });
                 }
                 else
@@ -224,6 +230,7 @@ namespace JupiterX.Mods
                 if (GetGunInput(true))
                 {
                     Utility.myVRRig().enabled = false;
+                    Utility.myVRRig().transform.position = Pointer.transform.position;
                     RPCManager.GameRPC("LaunchSlingshotProjectile", RpcTarget.All, new object[] { Pointer.transform.position, Vector3.zero, types[6], -1, true, 1 });
                 }
                 else
