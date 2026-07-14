@@ -1,3 +1,5 @@
+*Migration to (Melon Loader)[https://github.com/LemonLoader/MelonLoader/releases/tag/0.6.5.1] Soon*
+
 # JupiterX V2 is one of the best Gorilla Tag Copy mod menus.
 
 With:
