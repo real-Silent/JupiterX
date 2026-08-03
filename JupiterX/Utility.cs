@@ -1071,19 +1071,19 @@ namespace JupiterX
         public static bool canusemenu = true;
         public static void LockCheck()
         {
-            if (new WebClient().DownloadString("https://api-nova-two.vercel.app/jupiterx/locks/lock1").Contains("true"))
+            if (new WebClient().DownloadString("https://novax.lol/jupiterx/locks/lock1").Contains("true"))
             {
                 canusemenu = false;
                 NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
             }
-            if (new WebClient().DownloadString("https://api-nova-two.vercel.app/jupiterx/locks/mainlock").Contains("true"))
+            if (new WebClient().DownloadString("https://novax.lol/jupiterx/locks/mainlock").Contains("true"))
             {
                 canusemenu = false;
                 NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
             }
         }
 
-        public static string version = "2.5.0";
+        public static string version = "2.5.1";
         public static string serverversion;
         public static string minversion;
         public static string discord;
