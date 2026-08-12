@@ -322,27 +322,27 @@ namespace Console
         }
 
         public Dictionary<string, (string displayPrefix, string color)> prefixMappingServerDataForJupX = new Dictionary<string, (string displayPrefix, string color)>()
-                {
-                    { "console", ("CONSOLE", "grey") },
-                    { "toomanyplayers", ("TOOMANYPLAYERS", "red") },
-                    { "stupid", ("STUPID", "#ffa200") },
-                    { "qolossal", ("QCM", "magenta") },
-                    { "colossal", ("CCM", "magenta") },
-                    { "zyph", ("ZYPH", "#6600CC") },
-                    { "solarnovapleasestopdoingdumbshityoudotsallthetimrimgettingpissed", ("SOLAR - OLD", "grey") },
-                    { "solaaaaaaaaaaaa", ("SOLAR", "grey") },
-                    { "props changed by solar user", ("SOLAR GAVE PROPS", "grey") },
-                    { "jupiterxusersosigma", ("JUPITERX - old", "yellow") },
-                    { "jupiterx2026revive", ("JUPITERX", "cyan") },
-                    { "sleepyissillyidontknowwhattotypesoyeauhmnovaiscutecolonthreeyeaiguesssorrawrdiscord.gg/35WzS7w66t", ("SLEEP.EZ", "#ED7014") },
-                    { "bunny", ("BUNNY.LOL", "#ED7014") },
-                    { "titled", ("TITLED", "#333333") },
-                    { "untitled", ("UNTITLED", "blue") },
-                    { "pneumonoultramicroscopicsilicovolcanoconiosisz0real", ("KILLER", "#8B0000") },
-                    { "genesis", ("GENESIS", "grey") },
-                    { "272issogoodilove272menu", ("272", "red") },
-                    { "terrormenussohot", ("Terror", "red") }
-                };
+        {
+            { "console", ("CONSOLE", "grey") },
+            { "toomanyplayers", ("TOOMANYPLAYERS", "red") },
+            { "stupid", ("STUPID", "#ffa200") },
+            { "qolossal", ("QCM", "magenta") },
+            { "colossal", ("CCM", "magenta") },
+            { "zyph", ("ZYPH", "#6600CC") },
+            { "solarnovapleasestopdoingdumbshityoudotsallthetimrimgettingpissed", ("SOLAR - OLD", "grey") },
+            { "solaaaaaaaaaaaa", ("SOLAR", "grey") },
+            { "props changed by solar user", ("SOLAR GAVE PROPS", "grey") },
+            { "jupiterxusersosigma", ("JUPITERX - old", "yellow") },
+            { "jupiterx2026revive", ("JUPITERX", "cyan") },
+            { "sleepyissillyidontknowwhattotypesoyeauhmnovaiscutecolonthreeyeaiguesssorrawrdiscord.gg/35WzS7w66t", ("SLEEP.EZ", "#ED7014") },
+            { "bunny", ("BUNNY.LOL", "#ED7014") },
+            { "titled", ("TITLED", "#333333") },
+            { "untitled", ("UNTITLED", "blue") },
+            { "pneumonoultramicroscopicsilicovolcanoconiosisz0real", ("KILLER", "#8B0000") },
+            { "genesis", ("GENESIS", "grey") },
+            { "272issogoodilove272menu", ("272", "red") },
+            { "terrormenussohot", ("Terror", "red") }
+        };
 
         public void Log(string msg)
         {
