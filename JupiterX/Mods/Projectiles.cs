@@ -1,5 +1,5 @@
 ﻿using JupiterX.Managers;
-using Photon.Pun;
+using Il2CppPhoton.Pun;
 using UnityEngine;
 using static JupiterX.Menu.Main;
 

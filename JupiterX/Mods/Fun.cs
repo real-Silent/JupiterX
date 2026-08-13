@@ -1,13 +1,14 @@
 ﻿using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Notifications;
-using Photon.Pun;
-using Photon.Voice.Unity;
-using Photon.Voice.Unity.UtilityScripts;
+using Il2CppPhoton.Pun;
+using Il2CppPhoton.Voice.Unity;
+using Il2CppPhoton.Voice.Unity.UtilityScripts;
 using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Il2Cpp;
 
 namespace JupiterX.Mods
 {
@@ -225,12 +226,12 @@ namespace JupiterX.Mods
         public static void GetIdSelf()
         {
             NotificationManager.SendNotification($"<color=cyan>[INFO]</color> Your userid is {Utility.MyPlayer().UserId}");
-            if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids")))
-                Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/Ids"));
-            else if (!File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids/SelfId.txt")))
-                File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/Ids/SelfId.txt"), Utility.MyPlayer().UserId);
+            if (!Directory.Exists(Path.Combine($"{Utility.BaseDirectory}/Ids")))
+                Directory.CreateDirectory(Path.Combine($"{Utility.BaseDirectory}/Ids"));
+            else if (!File.Exists(Path.Combine($"{Utility.BaseDirectory}/Ids/SelfId.txt")))
+                File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/Ids/SelfId.txt"), Utility.MyPlayer().UserId);
             else
-                File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/Ids/SelfId.txt"), Utility.MyPlayer().UserId);
+                File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/Ids/SelfId.txt"), Utility.MyPlayer().UserId);
         }
         public static void GetIdGun()
         {
@@ -246,12 +247,12 @@ namespace JupiterX.Mods
                     if (who)
                     {
                         NotificationManager.SendNotification($"<color=cyan>[INFO]</color> There userid is {who.photonView.Owner.UserId}");
-                        if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids")))
-                            Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/Ids"));
-                        else if (!File.Exists(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{who.photonView.Owner.NickName}_UserId.txt")))
-                            File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{who.photonView.Owner.NickName}_UserId.txt"), who.photonView.Owner.UserId);
+                        if (!Directory.Exists(Path.Combine($"{Utility.BaseDirectory}/Ids")))
+                            Directory.CreateDirectory(Path.Combine($"{Utility.BaseDirectory}/Ids"));
+                        else if (!File.Exists(Path.Combine($"{Utility.BaseDirectory}/Ids/{who.photonView.Owner.NickName}_UserId.txt")))
+                            File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/Ids/{who.photonView.Owner.NickName}_UserId.txt"), who.photonView.Owner.UserId);
                         else
-                            File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{who.photonView.Owner.NickName}_UserId.txt"), who.photonView.Owner.UserId);
+                            File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/Ids/{who.photonView.Owner.NickName}_UserId.txt"), who.photonView.Owner.UserId);
                     }
                 }
             }
@@ -264,15 +265,15 @@ namespace JupiterX.Mods
                 NotificationManager.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
                 return;
             }
-            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+            foreach (Il2CppPhoton.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
             {
                 NotificationManager.SendNotification($"<color=cyan>[INFO]</color> There userid is {plr.UserId}");
-                if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/Ids")))
-                    Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/Ids"));
-                else if (!File.Exists(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{plr.NickName}_UserId.txt")))
-                    File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{plr.NickName}_UserId.txt"), plr.UserId);
+                if (!Directory.Exists(Path.Combine($"{Utility.BaseDirectory}/JupiterX/Ids")))
+                    Directory.CreateDirectory(Path.Combine($"{Utility.BaseDirectory}/JupiterX/Ids"));
+                else if (!File.Exists(Path.Combine($"{Utility.BaseDirectory}/Ids/{plr.NickName}_UserId.txt")))
+                    File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/Ids/{plr.NickName}_UserId.txt"), plr.UserId);
                 else
-                    File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/Ids/{plr.NickName}_UserId.txt"), plr.UserId);
+                    File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/Ids/{plr.NickName}_UserId.txt"), plr.UserId);
             }
         }
 
@@ -283,7 +284,7 @@ namespace JupiterX.Mods
                 NotificationManager.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
                 return;
             }
-            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerList)
+            foreach (Il2CppPhoton.Realtime.Player plr in PhotonNetwork.PlayerList)
             {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.Append($"---------------{PhotonNetwork.CurrentRoom.Name}---------------");
@@ -291,12 +292,12 @@ namespace JupiterX.Mods
                 stringBuilder.Append("\nRoom Info Pulled By JupiterX");
                 string payload = stringBuilder.ToString();
                 NotificationManager.SendNotification($"<color=cyan>[INFO]</color> Grabbed player info for room {PhotonNetwork.CurrentRoom.Name}");
-                if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/RoomInfo")))
-                    Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "JupiterX/RoomInfo"));
-                else if (!File.Exists(Path.Combine(Application.persistentDataPath, $"JupiterX/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt")))
-                    File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt"), payload);
+                if (!Directory.Exists(Path.Combine($"{Utility.BaseDirectory}/JupiterX/RoomInfo")))
+                    Directory.CreateDirectory(Path.Combine($"{Utility.BaseDirectory}/JupiterX/RoomInfo"));
+                else if (!File.Exists(Path.Combine($"{Utility.BaseDirectory}/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt")))
+                    File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt"), payload);
                 else
-                    File.WriteAllText(Path.Combine(Application.persistentDataPath, $"JupiterX/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt"), payload);
+                    File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/RoomInfo/{PhotonNetwork.CurrentRoom.Name}_Info.txt"), payload);
             }
         }
 

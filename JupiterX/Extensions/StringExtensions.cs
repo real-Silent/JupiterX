@@ -8,9 +8,6 @@ namespace JupiterX.Extensions
         public static string ClearTags(this string input) =>
             NoRichtextTags(input);
 
-        public static string EnforceLength(this string str, int maxLength) =>
-            str.Length > maxLength ? str[..maxLength] : str;
-
         public static string ColorToHex(Color color) =>
             ColorUtility.ToHtmlStringRGB(color);
     }

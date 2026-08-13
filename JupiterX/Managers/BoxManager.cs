@@ -1,5 +1,6 @@
-﻿using System;
-using UnhollowerBaseLib;
+﻿using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using System;
 using UnityEngine;
 
 // JupiterX copyright 2026

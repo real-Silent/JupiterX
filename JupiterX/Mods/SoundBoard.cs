@@ -1,16 +1,15 @@
-﻿using Il2CppSystem.Net;
+﻿using System.Net;
 using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Menu;
-using NLayer;
-using Photon.Pun;
-using Photon.Voice.Unity;
+using Il2CppPhoton.Pun;
+using Il2CppPhoton.Voice.Unity;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
+using JupiterX.Notifications;
 
 namespace JupiterX.Mods
 {
@@ -185,8 +184,8 @@ namespace JupiterX.Mods
             if (name.Contains(":"))
                 return;
             string filename = "Sounds" + Subdirectory + "/" + name + "." + GetFileExtension(url);
-            if (File.Exists("JupiterX/" + filename))
-                File.Delete("JupiterX/" + filename);
+            if (File.Exists($"{Utility.BaseDirectory}/" + filename))
+                File.Delete($"{Utility.BaseDirectory}/" + filename);
             if (audioFilePool.ContainsKey(name))
                 audioFilePool.Remove(name);
             AudioClip soundDownloaded = (AudioClip)LoadSoundFromURL(url, filename);
@@ -304,7 +303,9 @@ namespace JupiterX.Mods
 
         private static AudioClip CreateAudioClipFromMp3(string path)
         {
-            try
+            NotificationManager.SendNotification("<color=red>[ERROR]</color> This feature does not currently support MP3 Files please use WAV Files.", 5f);
+            return null;
+            /*try
             {
                 MpegFile mpegFile = new MpegFile(path);
                 int channels = mpegFile.Channels;
@@ -326,7 +327,7 @@ namespace JupiterX.Mods
                 audioClip.SetData(samples, 0);
                 return audioClip;
             }
-            catch { return null; }
+            catch { return null; }*/
         }
 
         private static void PlayAudioThroughMicrophone(AudioClip clip)

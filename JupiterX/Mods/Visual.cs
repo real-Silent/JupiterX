@@ -1,12 +1,12 @@
 ﻿using Console;
-using GorillaNetworking;
+using Il2CppGorillaNetworking;
 using JupiterX.Menu;
-using Photon.Pun;
+using Il2CppPhoton.Pun;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using static JupiterX.Menu.Main;
+using Il2Cpp;
 
 namespace JupiterX.Mods
 {
@@ -259,7 +259,7 @@ namespace JupiterX.Mods
         {
             input = NoRichtextTags(input);
             if (input.Length > length)
-                input = input[..length];
+                input = input[length].ToString();
             return input;
         }
 
@@ -336,7 +336,7 @@ namespace JupiterX.Mods
         public static void VelocityLabel()
         {
             Rigidbody rb = GorillaTagger.Instance.bodyCollider.attachedRigidbody;
-            DrawLabel(GorillaTagger.Instance.rightHandTransform, "Velocity", $"{rb.velocity.magnitude:F1}m/s", rb.velocity.magnitude >= GorillaLocomotion.Player.Instance.maxJumpSpeed ? Color.green : Color.white);
+            DrawLabel(GorillaTagger.Instance.rightHandTransform, "Velocity", $"{rb.velocity.magnitude:F1}m/s", rb.velocity.magnitude >= Il2CppGorillaLocomotion.Player.Instance.maxJumpSpeed ? Color.green : Color.white);
         }
 
         private static string FormatTimer(int seconds)
@@ -409,9 +409,9 @@ namespace JupiterX.Mods
             DrawLabel(GorillaTagger.Instance.leftHandTransform, "LastLabel", left + " left", left <= 1 && !GorillaTagger.Instance.myVRRig.IsTagged() ? Color.green : Color.white);
         }
 
-        public static List<Photon.Realtime.Player> InfectedList()
+        public static List<Il2CppPhoton.Realtime.Player> InfectedList()
 		{
-			List<Photon.Realtime.Player> infected = new List<Photon.Realtime.Player>();
+			List<Il2CppPhoton.Realtime.Player> infected = new List<Il2CppPhoton.Realtime.Player>();
 			if (!PhotonNetwork.InRoom || GorillaGameManager.instance == null)
 				return infected;
 			switch (GorillaComputer.instance.currentGameMode)

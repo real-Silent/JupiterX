@@ -1,5 +1,6 @@
-﻿using Photon.Pun;
-using UnhollowerBaseLib;
+﻿using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2CppPhoton.Pun;
+using Il2Cpp;
 
 // JupiterX copyright 2026
 /*
@@ -21,7 +22,7 @@ namespace JupiterX.Managers
                 args[i] = BoxManager.BoxAny(param[i]);
             GorillaTagger.Instance.myVRRig.photonView.RPC(methodname, target, args);
         }
-        public static void RigRPC(string methodname, Photon.Realtime.Player target, object[] param)
+        public static void RigRPC(string methodname, Il2CppPhoton.Realtime.Player target, object[] param)
         {
             var args = new Il2CppReferenceArray<Il2CppSystem.Object>(param.Length);
             for (int i = 0; i < param.Length; i++)
@@ -35,7 +36,7 @@ namespace JupiterX.Managers
                 args[i] = BoxManager.BoxAny(param[i]);
             GorillaGameManager.instance.photonView.RPC(methodname, target, args);
         }
-        public static void GameRPC(string methodname, Photon.Realtime.Player target, object[] param)
+        public static void GameRPC(string methodname, Il2CppPhoton.Realtime.Player target, object[] param)
         {
             var args = new Il2CppReferenceArray<Il2CppSystem.Object>(param.Length);
             for (int i = 0; i < param.Length; i++)

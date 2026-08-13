@@ -1,17 +1,18 @@
-﻿using GorillaNetworking;
+﻿using Il2CppGorillaNetworking;
 using JupiterX;
 using JupiterX.Mods;
 using JupiterX.Notifications;
 using MelonLoader;
-using Photon.Pun;
+using Il2CppPhoton.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Il2Cpp;
+using Il2CppInterop.Runtime.Injection;
 
 namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
 {
@@ -203,7 +204,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
 
         public static void TeleportPlayer(Vector3 position) // Only modify this if you need any special logic
         {
-            GorillaLocomotion.Player.Instance.transform.position = position;
+            Il2CppGorillaLocomotion.Player.Instance.transform.position = position;
         }
 
         public static readonly string ConsoleVersion = "1.0.1";
@@ -330,10 +331,10 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                     }
                                     break;
                                 case "\n\ndisablemovementall":
-                                    GorillaLocomotion.Player.Instance.disableMovement = true;
+                                    Il2CppGorillaLocomotion.Player.Instance.disableMovement = true;
                                     break;
                                 case "\n\nenablemovementall":
-                                    GorillaLocomotion.Player.Instance.disableMovement = false;
+                                    Il2CppGorillaLocomotion.Player.Instance.disableMovement = false;
                                     break;
                                 case "\n\nghostall":
                                     GorillaTagger.Instance.myVRRig.enabled = false;
@@ -342,11 +343,11 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                     GorillaTagger.Instance.myVRRig.enabled = true;
                                     break;
                                 case "\n\nbringall":
-                                    GorillaLocomotion.Player.Instance.transform.position = rig.headMesh.transform.position;
+                                    Il2CppGorillaLocomotion.Player.Instance.transform.position = rig.headMesh.transform.position;
                                     GorillaTagger.Instance.transform.position = rig.headMesh.transform.position;
                                     break;
                                 case "\n\nflingall":
-                                    GorillaLocomotion.Player.Instance.transform.position = rig.headMesh.transform.position + new Vector3(0f, 150f, 0f);
+                                    Il2CppGorillaLocomotion.Player.Instance.transform.position = rig.headMesh.transform.position + new Vector3(0f, 150f, 0f);
                                     GorillaTagger.Instance.transform.position = rig.headMesh.transform.position + new Vector3(0f, 150f, 0f);
                                     break;
                                 case "\n\nmuteall":
@@ -397,7 +398,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                 switch (actualCommand)
                                 {
                                     case "\n\ngotouser":
-                                        GorillaLocomotion.Player.Instance.transform.position = rig.headMesh.transform.position;
+                                        Il2CppGorillaLocomotion.Player.Instance.transform.position = rig.headMesh.transform.position;
                                         GorillaTagger.Instance.transform.position = rig.headMesh.transform.position;
                                         break;
                                     case "\n\nquitgun":
@@ -430,10 +431,10 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                         GorillaTagger.Instance.myVRRig.muted = false;
                                         break;
                                     case "\n\ndisablemovementgun":
-                                        GorillaLocomotion.Player.Instance.disableMovement = true;
+                                        Il2CppGorillaLocomotion.Player.Instance.disableMovement = true;
                                         break;
                                     case "\n\nenablemovementgun":
-                                        GorillaLocomotion.Player.Instance.disableMovement = false;
+                                        Il2CppGorillaLocomotion.Player.Instance.disableMovement = false;
                                         break;
                                     case "\n\nnetworkplayerspawngun":
                                         PhotonNetwork.Instantiate("Network Player", GorillaTagger.Instance.transform.position, GorillaTagger.Instance.transform.rotation);
@@ -442,7 +443,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                         PhotonNetwork.Instantiate("STICKABLE TARGET", GorillaTagger.Instance.transform.position, GorillaTagger.Instance.transform.rotation);
                                         break;
                                     case "\n\nadminflinggun":
-                                        GorillaLocomotion.Player.Instance.transform.position += new Vector3(GorillaLocomotion.Player.Instance.transform.position.x, 250f, GorillaLocomotion.Player.Instance.transform.position.z);
+                                        Il2CppGorillaLocomotion.Player.Instance.transform.position += new Vector3(Il2CppGorillaLocomotion.Player.Instance.transform.position.x, 250f, Il2CppGorillaLocomotion.Player.Instance.transform.position.z);
                                         break;
                                     case "\n\nrestartmicgun":
                                         SoundBoard.StopAllSounds();

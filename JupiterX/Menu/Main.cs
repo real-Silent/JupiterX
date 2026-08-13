@@ -1,8 +1,8 @@
-﻿using easyInputs;
+﻿using Il2CppeasyInputs;
 using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Notifications;
-using Photon.Pun;
+using Il2CppPhoton.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +14,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
+using Il2Cpp;
+using ColorChanger = JupiterX.Classes.ColorChanger; // NotificationManager.SendNotification("<color=red>[ERROR]</color> This feature doesnt work right now.", 2f);
 
 namespace JupiterX.Menu
 {
@@ -337,7 +339,7 @@ namespace JupiterX.Menu
             {
                 if (MenuTitle)
                 {
-                    string path = Path.Combine(Application.persistentDataPath, "JupiterX/CustomTitle.txt");
+                    string path = Path.Combine($"{Utility.BaseDirectory}/CustomTitle.txt");
                     string CustomTitle;
                     if (File.Exists(path))
                     {
@@ -1267,7 +1269,7 @@ namespace JupiterX.Menu
 
             if (promptImageUrl != null)
             {
-                string fileName = promptImageUrl.Split('/')[^1];
+                string fileName = promptImageUrl.Split('/')[1];
                 string fileExtension = GetFileExtension(fileName);
 
                 Image promptImage = new GameObject

@@ -1,6 +1,6 @@
 ﻿using JupiterX.Managers;
 using JupiterX.Menu;
-using Photon.Pun;
+using Il2CppPhoton.Pun;
 
 namespace JupiterX.Mods
 {
@@ -71,7 +71,7 @@ namespace JupiterX.Mods
         {
             soundId--;
             if (soundId < 0)
-                soundId = GorillaLocomotion.Player.Instance.materialData.Count - 1;
+                soundId = Il2CppGorillaLocomotion.Player.Instance.materialData.Count - 1;
 
             Buttons.GetIndex("Custom Sound Spam").overlapText = "Custom Sound Spam <color=grey>[</color><color=cyan>" + soundId + "</color><color=grey>]</color>";
         }
@@ -79,7 +79,7 @@ namespace JupiterX.Mods
         public static void IncreaseSoundID()
         {
             soundId++;
-            soundId %= GorillaLocomotion.Player.Instance.materialData.Count;
+            soundId %= Il2CppGorillaLocomotion.Player.Instance.materialData.Count;
 
             Buttons.GetIndex("Custom Sound Spam").overlapText = "Custom Sound Spam <color=grey>[</color><color=cyan>" + soundId + "</color><color=grey>]</color>";
         }

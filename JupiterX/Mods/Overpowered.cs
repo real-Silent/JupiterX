@@ -1,13 +1,15 @@
-﻿using ExitGames.Client.Photon;
-using GorillaNetworking;
+﻿using Il2CppExitGames.Client.Photon;
+using Il2Cpp;
+using Il2CppGorillaNetworking;
 using JupiterX.Classes;
-using JupiterX.Extensions;
 using JupiterX.Menu;
 using JupiterX.Notifications;
-using Photon.Pun;
-using Photon.Realtime;
+using Il2CppPhoton.Pun;
+using Il2CppPhoton.Realtime;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
+using Photon = Il2CppPhoton;
+using JupiterX.Managers;
+using ExitGames = Il2CppExitGames;
 
 namespace JupiterX.Mods
 {
@@ -186,7 +188,7 @@ namespace JupiterX.Mods
                 {
                     for (int i = 0; i < 25; i++)
                     {
-                        GorillaGameManager.instance.photonView.RPC("JoinPubWithFreinds", plr, null);
+                        RPCManager.GameRPC("JoinPubWithFreinds", plr, null);
                     }
                 }
             }
@@ -235,16 +237,16 @@ namespace JupiterX.Mods
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetic", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetic", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetic", RpcTarget.Others, null);
+                    RPCManager.RigRPC("RequestCosmetics", RpcTarget.Others, null); 
+                    RPCManager.RigRPC("RequestCosmetics", RpcTarget.Others, null); 
+                    RPCManager.RigRPC("RequestCosmetics", RpcTarget.Others, null); 
+                    RPCManager.RigRPC("RequestCosmetics", RpcTarget.Others, null); 
+                    RPCManager.RigRPC("RequestCosmetics", RpcTarget.Others, null); 
+                    RPCManager.RigRPC("UpdateCosmetics", RpcTarget.Others, null); 
+                    RPCManager.RigRPC("UpdateCosmetics", RpcTarget.Others, null); 
+                    RPCManager.RigRPC("UpdateCosmetic", RpcTarget.Others, null); 
+                    RPCManager.RigRPC("UpdateCosmetic", RpcTarget.Others, null); 
+                    RPCManager.RigRPC("UpdateCosmetic", RpcTarget.Others, null);
                     Utility.BetaCrashPlayer(Main.lockTarget.photonView.Owner);
                 }
 
@@ -277,12 +279,11 @@ namespace JupiterX.Mods
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
                     GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Add(Main.lockTarget.photonView.Owner.UserId);
-                    PhotonView photonView = GorillaGameManager.instance.photonView;
                     if (Main.lockTarget != null && GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Contains(Main.lockTarget.photonView.Owner.UserId))
                     {
                         for (int i = 0; i < 25; i++)
                         {
-                            photonView.RPC("JoinPubWithFreinds", Main.lockTarget.photonView.Owner, null);
+                            RPCManager.GameRPC("JoinPubWithFreinds", Main.lockTarget.photonView.Owner, null);
                         }
                     }
                 }
@@ -333,8 +334,8 @@ namespace JupiterX.Mods
         public static void SlowAll()
         {
             Utility.SetMaster(Utility.MyPlayer());
-            Utility.myVRRig().photonView.RPC("SetSlowedTime", Main.lockTarget.photonView.Owner, null);
-            Utility.myVRRig().photonView.RPC("SetJoinTaggedTime", Main.lockTarget.photonView.Owner, null);
+            RPCManager.RigRPC("SetSlowedTime", Main.lockTarget.photonView.Owner, null);
+            RPCManager.RigRPC("SetJoinTaggedTime", Main.lockTarget.photonView.Owner, null);
         }
 
         public static void SlowGun()
@@ -349,8 +350,8 @@ namespace JupiterX.Mods
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
                     Utility.SetMaster(Utility.MyPlayer());
-                    Utility.myVRRig().photonView.RPC("SetSlowedTime", Main.lockTarget.photonView.Owner, null);
-                    Utility.myVRRig().photonView.RPC("SetJoinTaggedTime", Main.lockTarget.photonView.Owner, null);
+                    RPCManager.RigRPC("SetSlowedTime", Main.lockTarget.photonView.Owner, null);
+                    RPCManager.RigRPC("SetJoinTaggedTime", Main.lockTarget.photonView.Owner, null);
                 }
 
                 if (Main.GetGunInput(true))
@@ -657,7 +658,7 @@ namespace JupiterX.Mods
         }
 
 
-        public static HalloweenGhostChaser lucy
+        /*public static HalloweenGhostChaser lucy
         {
             get
             {
@@ -953,6 +954,6 @@ namespace JupiterX.Mods
                 }
             }
             else { NotificationManager.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
-        }
+        }*/
     }
 }

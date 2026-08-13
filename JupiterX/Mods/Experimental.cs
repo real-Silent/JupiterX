@@ -1,16 +1,17 @@
-﻿using ExitGames.Client.Photon;
-using GorillaNetworking;
-using Il2CppSystem.Net;
+﻿using Il2CppExitGames.Client.Photon;
+using Il2CppGorillaNetworking;
+using System.Net;
 using JupiterX.Managers;
 using JupiterX.Notifications;
-using Newtonsoft.Json.Linq;
-using Photon.Pun;
-using PlayFab;
+using Valve.Newtonsoft.Json.Linq;
+using Il2CppPhoton.Pun;
+using Il2CppPlayFab;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static JupiterX.Menu.Main;
+using Il2Cpp;
 
 // this menu was created by Nova (@novaissilly)
 // if you remove this it counts as skidding
@@ -20,7 +21,8 @@ namespace JupiterX.Mods
     {
         public static void BalloonSpam()
         {
-            if (PhotonNetwork.InRoom)
+            NotificationManager.SendNotification("<color=red>[ERROR]</color> This feature doesnt work right now.", 2f);
+            /*if (PhotonNetwork.InRoom)
             {
                 if (Utility.RightTrigger)
                 {
@@ -45,7 +47,7 @@ namespace JupiterX.Mods
                         }
                     }
                 }
-            }
+            }*/
         }
 
         public static void SetGameMode(string gameModeHash)
@@ -60,7 +62,7 @@ namespace JupiterX.Mods
         public static void GrabRPCData()
         {
             foreach (string rpc in PhotonNetwork.PhotonServerSettings.RpcList)
-                File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/RpcData.txt"), rpc);
+                File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/RpcData.txt"), rpc);
         }
 
         private static readonly Dictionary<Renderer, Material> oldMats = new Dictionary<Renderer, Material>();
@@ -92,17 +94,18 @@ namespace JupiterX.Mods
 
         public static void GrabGameInfo()
         {
-            File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/RpcData.txt"), $"Title: {PlayFabSettings.TitleId}\nRealtime: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}\nVoice: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}");
+            File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/RpcData.txt"), $"Title: {PlayFabSettings.TitleId}\nRealtime: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}\nVoice: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}");
         }
 
         public static void SpazForestTargets()
         {
-            foreach (HitTargetWithScoreCounter target in GameObject.FindObjectsOfType<HitTargetWithScoreCounter>())
-            {
-                target.digitsChange = true;
-                target.hitCooldownTime = 0;
-                target.UpdateTargetState();
-            }
+            NotificationManager.SendNotification("<color=red>[ERROR]</color> This feature doesnt work right now.", 2f);
+            /* foreach (HitTargetWithScoreCounter target in GameObject.FindObjectsOfType<HitTargetWithScoreCounter>())
+             {
+                 target.digitsChange = true;
+                 target.hitCooldownTime = 0;
+                 target.UpdateTargetState();
+             }*/
         }
 
         public static void Unban()

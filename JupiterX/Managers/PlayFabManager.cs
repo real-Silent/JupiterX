@@ -1,9 +1,9 @@
-﻿using Il2CppSystem.Net;
+﻿using System.Net;
 using System;
 using JupiterX.Notifications;
-using Newtonsoft.Json;
+using Valve.Newtonsoft.Json;
 using System.Text;
-using Newtonsoft.Json.Linq;
+using Valve.Newtonsoft.Json.Linq;
 
 namespace JupiterX.Managers
 {

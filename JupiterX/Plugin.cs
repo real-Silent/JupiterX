@@ -1,5 +1,6 @@
-﻿using ExitGames.Client.Photon;
-using GorillaLocomotion;
+﻿using Il2CppExitGames.Client.Photon;
+using Il2CppGorillaLocomotion;
+using Il2CppInterop.Runtime.Injection;
 using JupiterX;
 using JupiterX.Classes;
 using JupiterX.Managers;
@@ -7,15 +8,13 @@ using JupiterX.Menu;
 using JupiterX.Notifications;
 using JupiterX.Patches;
 using MelonLoader;
-using Mono.CSharp;
-using Photon.Pun;
-using Photon.Realtime;
-using PlayFab;
+using Il2CppPhoton.Pun;
+using Il2CppPhoton.Realtime;
+using Il2CppPlayFab;
 using System;
 using System.IO;
 using System.Linq;
-using TMPro;
-using UnhollowerRuntimeLib;
+using Il2CppTMPro;
 using UnityEngine;
 using static JupiterX.Menu.Main;
 
@@ -70,7 +69,7 @@ namespace JupiterX
 
             try
             {
-                string allButtonsPath = Path.Combine(Application.persistentDataPath, "JupiterX/AllButtons.txt");
+                string allButtonsPath = Path.Combine($"{Utility.BaseDirectory}/AllButtons.txt");
 
                 string[] newButtonNames = Buttons.buttons.SelectMany(list => list).Select(button => button.buttonText).ToArray();
                 if (File.Exists(allButtonsPath))
@@ -167,14 +166,14 @@ namespace JupiterX
                 {
                     NotificationManager.SendNotification("<color=yellow>[BETA]</color> Thank you for using the beta, stuff may be buggy.", 13f);
                     Utility.UsedBeforeNotificaiton = true;
-                    if (!File.Exists($"{Utility.MainPath}/ClaimedBetaAchievement.txt"))
+                    if (!File.Exists($"{Utility.BaseDirectory}/ClaimedBetaAchievement.txt"))
                     {
                         AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
                         {
                             name = "Beta Tester",
                             description = "Opened and used the menu for the first time."
                         });
-                        File.WriteAllText($"{Utility.MainPath}/ClaimedBetaAchievement.txt", "");
+                        File.WriteAllText($"{Utility.BaseDirectory}/ClaimedBetaAchievement.txt", "");
                     }
                 }
             }

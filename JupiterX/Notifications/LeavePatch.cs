@@ -1,8 +1,8 @@
 ﻿using HarmonyLib;
 using JupiterX.Menu;
 using JupiterX.Notifications;
-using Photon.Pun;
-using Photon.Realtime;
+using Il2CppPhoton.Pun;
+using Il2CppPhoton.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 

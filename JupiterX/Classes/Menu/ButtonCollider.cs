@@ -1,3 +1,4 @@
+using Il2Cpp;
 using JupiterX.Managers;
 using System;
 using UnityEngine;
@@ -30,7 +31,7 @@ namespace JupiterX.Classes
                 else
                     Toggle(relatedText, true);
                 if (serversidedButtonSounds)
-                    RPCManager.RigRPC("PlayHandTap", Photon.Pun.RpcTarget.All, new object[] { 8, false, 2f });
+                    RPCManager.RigRPC("PlayHandTap", Il2CppPhoton.Pun.RpcTarget.All, new object[] { 8, false, 2f });
             }
 		}
 	}

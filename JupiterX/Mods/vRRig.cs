@@ -1,7 +1,8 @@
-﻿using GorillaNetworking;
+﻿using Il2CppGorillaNetworking;
 using JupiterX.Menu;
-using Photon.Pun;
+using Il2CppPhoton.Pun;
 using UnityEngine;
+using Il2Cpp;
 
 namespace JupiterX.Mods
 {

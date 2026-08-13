@@ -1,17 +1,18 @@
-﻿using GorillaNetworking;
-using Il2CppSystem.Net;
+﻿using Il2CppGorillaNetworking;
+using System.Net;
 using JupiterX;
 using JupiterX.Notifications;
 using MelonLoader;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Photon.Pun;
+using Il2CppPhoton.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using TMPro;
+using Il2CppTMPro;
 using UnityEngine;
+using Il2Cpp;
+using Valve.Newtonsoft.Json.Linq;
+using Valve.Newtonsoft.Json;
 
 namespace Console
 {
@@ -41,7 +42,7 @@ namespace Console
 
         public bool adminnametags = false;
 
-        private ExitGames.Client.Photon.Hashtable consoleHash; // KEEP THIS FOR OTHER INSTANCES OF CONSOLE AS WELL // DO NOT EVER REMOVE
+        private Il2CppExitGames.Client.Photon.Hashtable consoleHash; // KEEP THIS FOR OTHER INSTANCES OF CONSOLE AS WELL // DO NOT EVER REMOVE
 
         private static string LastPollAnswered;
 
@@ -53,12 +54,12 @@ namespace Console
             instance = this;
             DataLoadTime = Time.time + 5f;
 
-            consoleHash = new ExitGames.Client.Photon.Hashtable(); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
+            consoleHash = new Il2CppExitGames.Client.Photon.Hashtable(); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
             consoleHash.Add("console", "console"); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
             PhotonNetwork.LocalPlayer.SetCustomProperties(consoleHash); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
 
-            if (File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/LastPollAnswered.txt")))
-                LastPollAnswered = File.ReadAllText(Path.Combine(Application.persistentDataPath, "JupiterX/LastPollAnswered.txt"));
+            if (File.Exists(Path.Combine($"{Utility.BaseDirectory}/LastPollAnswered.txt")))
+                LastPollAnswered = File.ReadAllText(Path.Combine($"{Utility.BaseDirectory}/LastPollAnswered.txt"));
         }
 
         private readonly Dictionary<VRRig, TextMeshPro> activeTags = new Dictionary<VRRig, TextMeshPro>();
@@ -298,7 +299,7 @@ namespace Console
                     }
 
                     LastPollAnswered = CurrentPoll;
-                    File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/LastPollAnswered.txt"), CurrentPoll);
+                    File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/LastPollAnswered.txt"), CurrentPoll);
                 }
             }
             else
