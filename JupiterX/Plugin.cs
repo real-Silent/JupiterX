@@ -26,10 +26,12 @@ namespace JupiterX
 {
     public class Plugin : MelonMod
     {
-        [Obsolete]
-        public override void OnApplicationStart()
+        public override void OnInitializeMelon()
         {
-            base.OnApplicationStart();
+            base.OnInitializeMelon();
+            Utility.LoadEmbeddedDll("JupiterX.Resources.Valve.Newtonsoft.Json.dll");
+            MelonLogger.Msg("Loaded value newtonsoft");
+
             ClassInjector.RegisterTypeInIl2Cpp<TimedBehaviour>();
             ClassInjector.RegisterTypeInIl2Cpp<RigManager>();
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
@@ -41,12 +43,11 @@ namespace JupiterX
             notiHolder.name = "JupiterX_Holder";
             notiHolder.AddComponent<NotificationManager>();
 
-            // Console Setup
-            Console.ConsoleJupiterX.LoadConsole();
-
-            // Set UpText
             Utility.FindObjects();
             Utility.CreateFilesOnStart();
+
+            // Console Setup
+            Console.ConsoleJupiterX.LoadConsole();
 
             Utility.OnStartFixColor();
 
@@ -56,7 +57,7 @@ namespace JupiterX
             }
             Application.CancelQuit();
 
-            Utility.LockCheck();
+            //Utility.LockCheck();
 
             Utility.ogcoctext = Utility.cocText.text;
             Utility.ogcoc = Utility.codeOfConduct.text;
@@ -119,28 +120,18 @@ namespace JupiterX
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (Utility.canusemenu == false)
-            {
-                NotificationManager.SendNotification("<color=red>[INFO]</color> Menu is locked!", 15f);
-                return;
-            }
-
-            if (GameObject.Find($">>Console<<_{Utility.version}") == null)
-            {
-                NotificationManager.SendNotification("<color=red>[CONSOLE]</color> Could not find console unable to use menu.", 60f);
-                Utility.canusemenu = false;
-            }
-
             Menu.Main.Prefix();
             Utility.UpdateFPS();
 
             if (Utility.updateneeded)
             {
                 NotificationManager.SendNotification("<color=cyan>JupiterX needs a update please go to the discord and update it</color>", 30f);
+                MelonLogger.Msg($"[JUPITERX] Temp Log // udpate needed for somereason");
             }
             if (Utility.extremeupdateneeded)
             {
                 NotificationManager.SendNotification("<color=cyan>JupiterX is extremely outdated please go to the discord and update it</color>", 60f);
+                MelonLogger.Msg($"[JUPITERX] Temp Log // extreme update needed");
             }
 
             if (File.Exists(Utility.HasUsedMenuBefore))
@@ -148,10 +139,13 @@ namespace JupiterX
 
             if (!Utility.UsedBeforeNotificaiton)
             {
+                MelonLogger.Msg($"[JUPITERX] Temp Log // Creating usedbefore file");
                 if (!File.Exists(Utility.HasUsedMenuBefore))
                     File.Create(Utility.HasUsedMenuBefore);
+                MelonLogger.Msg($"[JUPITERX] Temp Log // Created usedbefore file");
                 File.WriteAllText(Utility.HasUsedMenuBefore, "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
                 NotificationManager.SendNotification("<color=cyan>[INFO]</color> Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!", 20f);
+                MelonLogger.Msg($"[JUPITERX] Temp Log // Loaded");
 
                 AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
                 {

@@ -47,7 +47,7 @@ namespace JupiterX
             }
         }
 
-        public static string BaseDirectory = Path.Combine(MelonEnvironment.UserDataDirectory, Application.identifier, "JupiterX");
+        public static string BaseDirectory = Path.Combine(MelonEnvironment.MelonBaseDirectory, "JupiterX");
 
         public static void PingOverlay()
         {
@@ -1076,19 +1076,6 @@ namespace JupiterX
         public static string author = "Nova";
 
         public static bool canusemenu = true;
-        public static void LockCheck()
-        {
-            if (new WebClient().DownloadString("https://novax.lol/jupiterx/locks/lock1").Contains("true"))
-            {
-                canusemenu = false;
-                NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
-            }
-            if (new WebClient().DownloadString("https://novax.lol/jupiterx/locks/mainlock").Contains("true"))
-            {
-                canusemenu = false;
-                NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
-            }
-        }
 
         public static string version = "2.5.1";
         public static string serverversion;

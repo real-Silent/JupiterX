@@ -24,7 +24,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
         public static string MenuName = "jupiterx";
         public static string MenuVersion = Utility.version;
 
-        public static string ConsoleResourceLocation = "Console";
+        public static string ConsoleResourceLocation = Utility.BaseDirectory + "/Console";
         public static string ConsoleSuperAdminIcon = $"{ServerDataJupiterX.AssetsURL}/icon.png";
         public static string ConsoleAdminIcon = $"{ServerDataJupiterX.AssetsURL}/crown.png";
 
