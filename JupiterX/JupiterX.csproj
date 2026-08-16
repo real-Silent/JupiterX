@@ -59,9 +59,21 @@
       <Private>false</Private>
     </Reference>
 
+    <Reference Include="Il2CppSystem">
+      <HintPath>..\..\MelonRefs\Il2CppSystem.dll</HintPath>
+    </Reference>
+
+    <Reference Include="Il2CppSystem.Core">
+      <HintPath>..\..\MelonRefs\Il2CppSystem.Core.dll</HintPath>
+    </Reference>
+
     <Reference Include="MelonLoader">
       <HintPath>..\..\MelonRefs\Melon\MelonLoader.dll</HintPath>
       <Private>false</Private>
+    </Reference>
+
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\MelonRefs\Newtonsoft.Json.dll</HintPath>
     </Reference>
 
     <Reference Include="Preload">
@@ -625,8 +637,5 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Valve.Newtonsoft.Json">
-      <HintPath>..\..\MelonRefs\Melon\Valve.Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>

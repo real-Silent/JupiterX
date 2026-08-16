@@ -1,4 +1,4 @@
-﻿using System.Net;
+﻿using Il2CppSystem.Net;
 using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Menu;

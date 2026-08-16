@@ -1,9 +1,9 @@
 ﻿using Il2CppExitGames.Client.Photon;
 using Il2CppGorillaNetworking;
-using System.Net;
+using Il2CppSystem.Net;
 using JupiterX.Managers;
 using JupiterX.Notifications;
-using Valve.Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using Il2CppPhoton.Pun;
 using Il2CppPlayFab;
 using System;

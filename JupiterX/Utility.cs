@@ -15,12 +15,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+using Il2CppSystem.Net;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-using Valve.Newtonsoft.Json;
+using Newtonsoft.Json;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
 using Photon = Il2CppPhoton;
@@ -1375,7 +1375,7 @@ namespace JupiterX
         public static string ogcoctext;
         public static string DownloadStringFromUrl(string url)
         {
-            System.Net.WebClient webClient = new System.Net.WebClient();
+            Il2CppSystem.Net.WebClient webClient = new Il2CppSystem.Net.WebClient();
             return webClient.DownloadString(url);
         }
 

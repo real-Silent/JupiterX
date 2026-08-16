@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using Valve.Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using static JupiterX.Menu.Main;
 
 namespace JupiterX.Managers

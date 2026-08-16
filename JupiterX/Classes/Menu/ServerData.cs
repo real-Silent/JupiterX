@@ -1,5 +1,5 @@
 ﻿using Il2CppGorillaNetworking;
-using System.Net;
+using Il2CppSystem.Net;
 using JupiterX;
 using JupiterX.Notifications;
 using MelonLoader;
@@ -11,8 +11,8 @@ using System.IO;
 using Il2CppTMPro;
 using UnityEngine;
 using Il2Cpp;
-using Valve.Newtonsoft.Json.Linq;
-using Valve.Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Console
 {
