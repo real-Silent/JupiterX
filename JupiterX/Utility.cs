@@ -1083,17 +1083,15 @@ namespace JupiterX
             }
         }
 
-        public static string version = "2.5.1";
+        public static string version = "2.5.2";
         public static string serverversion;
         public static string minversion;
-        public static string legacyminversion;
-        public static string legacyversion = "2.5.1";
         public static string discord = "https://novax.lol/d";
 
         public static bool isBetaRelease = false;
         public static bool updateneeded = false;
         public static bool extremeupdateneeded = false;
-        public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {legacyversion}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD https://novax.lol/d";
+        public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {version}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD https://novax.lol/d";
 
         public static string MainPath = Path.Combine(Application.persistentDataPath, "JupiterX");
         public static string PreferencesPath = Path.Combine(MainPath, "Preferences.txt");

@@ -214,16 +214,15 @@ namespace Console
             Utility.motdtemplate = (string)data["motd"];
             Utility.serverversion = (string)data["legacy-version"];
             Utility.minversion = (string)data["min-version"];
-            Utility.legacyminversion = (string)data["legacy-minversion"];
             Utility.discord = (string)data["discord-invite"];
 
-            Version currentVersion = new Version(Utility.legacyversion);
+            Version currentVersion = new Version(Utility.version);
             Version serverVersion = new Version(Utility.serverversion);
-            Version minimumVersion = new Version(Utility.legacyminversion);
+            Version minimumVersion = new Version(Utility.minversion);
 
             bool shownPrompt = false;
 
-            Utility.motdtemplate = string.Format(Utility.motdtemplate, Utility.legacyversion, Utility.discord);
+            Utility.motdtemplate = string.Format(Utility.motdtemplate, Utility.version, Utility.discord);
 
             if (currentVersion < minimumVersion)
             {
