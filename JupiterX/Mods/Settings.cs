@@ -2,7 +2,8 @@
 using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Notifications;
-using Il2CppPhoton.Pun;
+using Mono.Cecil;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -213,7 +214,7 @@ namespace JupiterX
             {
                 for (int i = 0; i < PhotonNetwork.PlayerListOthers.Length; i++)
                 {
-                    Il2CppPhoton.Realtime.Player player = PhotonNetwork.PlayerListOthers[i];
+                    Photon.Realtime.Player player = PhotonNetwork.PlayerListOthers[i];
                     buttons.Add(new ButtonInfo
                     {
                         buttonText = $"PlayerButton{i}",
@@ -228,7 +229,7 @@ namespace JupiterX
             Buttons.buttons[Buttons.GetCategory("Players")] = buttons.ToArray();
         }
 
-        static void NavigatePlayer(Il2CppPhoton.Realtime.Player plr)
+        static void NavigatePlayer(Photon.Realtime.Player plr)
         {
             string TargetName = plr.NickName.ToUpper();
             string UserId = plr.UserId;

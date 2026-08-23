@@ -1,8 +1,7 @@
-﻿using Il2CppPhoton.Realtime;
-using Il2CppPhoton.Pun;
+﻿using Photon.Realtime;
+using Photon.Pun;
 using UnityEngine;
 using System;
-using Il2Cpp;
 
 namespace JupiterX.Classes
 {
@@ -12,7 +11,7 @@ namespace JupiterX.Classes
     {
         public RigManager(IntPtr ptr ) : base(ptr) { }
 
-        public static VRRig GetVRRigFromPlayer(Il2CppPhoton.Realtime.Player p)
+        public static VRRig GetVRRigFromPlayer(Player p)
         {
             VRRig rig = null;
             foreach (var rg in GorillaParent.instance.vrrigs)
@@ -65,7 +64,7 @@ namespace JupiterX.Classes
             return p.photonView;
         }
 
-        public static Il2CppPhoton.Realtime.Player GetRandomPlayer(bool includeSelf)
+        public static Photon.Realtime.Player GetRandomPlayer(bool includeSelf)
         {
             if (includeSelf)
             {
@@ -76,12 +75,12 @@ namespace JupiterX.Classes
             }
         }
 
-        public static Il2CppPhoton.Realtime.Player GetPlayerFromVRRig(VRRig p)
+        public static Photon.Realtime.Player GetPlayerFromVRRig(VRRig p)
         {
             return GetPhotonViewFromVRRig(p).Owner;
         }
 
-        public static string GetPlayerInfoAsString(Il2CppPhoton.Realtime.Player who)
+        public static string GetPlayerInfoAsString(Photon.Realtime.Player who)
         {
             VRRig[] rigs = GorillaParent.instance.vrrigs.ToArray();
             int i = rigs.Length;
@@ -92,10 +91,10 @@ namespace JupiterX.Classes
             return playerinfo;
         }
 
-        public static Il2CppPhoton.Realtime.Player GetPlayerFromID(string id)
+        public static Photon.Realtime.Player GetPlayerFromID(string id)
         {
-            Il2CppPhoton.Realtime.Player found = null;
-            foreach (Il2CppPhoton.Realtime.Player target in PhotonNetwork.PlayerList)
+            Photon.Realtime.Player found = null;
+            foreach (Photon.Realtime.Player target in PhotonNetwork.PlayerList)
             {
                 if (target.UserId == id)
                 {

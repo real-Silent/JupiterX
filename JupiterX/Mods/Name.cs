@@ -1,4 +1,4 @@
-﻿using Il2CppPhoton.Pun;
+﻿using Photon.Pun;
 using System.IO;
 
 namespace JupiterX.Mods
@@ -23,7 +23,7 @@ namespace JupiterX.Mods
 
         public static void CustomName()
         {
-            string filePath = Path.Combine($"{Utility.BaseDirectory}/CustomLocalName.txt");
+            string filePath = Path.Combine(UnityEngine.Application.persistentDataPath, "JupiterX/CustomLocalName.txt");
             if (!File.Exists(filePath))
             {
                 File.WriteAllText(filePath, "your name here");

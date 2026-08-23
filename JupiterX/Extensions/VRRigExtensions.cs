@@ -1,5 +1,4 @@
-﻿using Il2Cpp;
-using Il2CppPhoton.Pun;
+﻿using Photon.Pun;
 using System.Linq;
 using UnityEngine;
 

@@ -1,12 +1,11 @@
 ﻿using Console;
 using HarmonyLib;
 using JupiterX.Notifications;
-using Il2CppPhoton.Pun;
+using Photon.Pun;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static JupiterX.Menu.Main;
-using Il2Cpp;
 
 namespace JupiterX.Mods
 {

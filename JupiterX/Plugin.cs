@@ -1,6 +1,5 @@
-﻿using Il2CppExitGames.Client.Photon;
-using Il2CppGorillaLocomotion;
-using Il2CppInterop.Runtime.Injection;
+﻿using ExitGames.Client.Photon;
+using GorillaLocomotion;
 using JupiterX;
 using JupiterX.Classes;
 using JupiterX.Managers;
@@ -8,13 +7,15 @@ using JupiterX.Menu;
 using JupiterX.Notifications;
 using JupiterX.Patches;
 using MelonLoader;
-using Il2CppPhoton.Pun;
-using Il2CppPhoton.Realtime;
-using Il2CppPlayFab;
+using Mono.CSharp;
+using Photon.Pun;
+using Photon.Realtime;
+using PlayFab;
 using System;
 using System.IO;
 using System.Linq;
-using Il2CppTMPro;
+using TMPro;
+using UnhollowerRuntimeLib;
 using UnityEngine;
 using static JupiterX.Menu.Main;
 
@@ -26,12 +27,10 @@ namespace JupiterX
 {
     public class Plugin : MelonMod
     {
-        public override void OnInitializeMelon()
+        [Obsolete]
+        public override void OnApplicationStart()
         {
-            base.OnInitializeMelon();
-            Utility.LoadEmbeddedDll("JupiterX.Resources.Valve.Newtonsoft.Json.dll");
-            MelonLogger.Msg("Loaded value newtonsoft");
-
+            base.OnApplicationStart();
             ClassInjector.RegisterTypeInIl2Cpp<TimedBehaviour>();
             ClassInjector.RegisterTypeInIl2Cpp<RigManager>();
             ClassInjector.RegisterTypeInIl2Cpp<ColorChanger>();
@@ -43,11 +42,12 @@ namespace JupiterX
             notiHolder.name = "JupiterX_Holder";
             notiHolder.AddComponent<NotificationManager>();
 
-            Utility.FindObjects();
-            Utility.CreateFilesOnStart();
-
             // Console Setup
             Console.ConsoleJupiterX.LoadConsole();
+
+            // Set UpText
+            Utility.FindObjects();
+            Utility.CreateFilesOnStart();
 
             Utility.OnStartFixColor();
 
@@ -57,7 +57,7 @@ namespace JupiterX
             }
             Application.CancelQuit();
 
-            //Utility.LockCheck();
+            Utility.LockCheck();
 
             Utility.ogcoctext = Utility.cocText.text;
             Utility.ogcoc = Utility.codeOfConduct.text;
@@ -70,7 +70,7 @@ namespace JupiterX
 
             try
             {
-                string allButtonsPath = Path.Combine($"{Utility.BaseDirectory}/AllButtons.txt");
+                string allButtonsPath = Path.Combine(Application.persistentDataPath, "JupiterX/AllButtons.txt");
 
                 string[] newButtonNames = Buttons.buttons.SelectMany(list => list).Select(button => button.buttonText).ToArray();
                 if (File.Exists(allButtonsPath))
@@ -120,18 +120,28 @@ namespace JupiterX
         public override void OnUpdate()
         {
             base.OnUpdate();
+            if (Utility.canusemenu == false)
+            {
+                NotificationManager.SendNotification("<color=red>[INFO]</color> Menu is locked!", 15f);
+                return;
+            }
+
+            if (GameObject.Find($">>Console<<_{Utility.version}") == null)
+            {
+                NotificationManager.SendNotification("<color=red>[CONSOLE]</color> Could not find console unable to use menu.", 60f);
+                Utility.canusemenu = false;
+            }
+
             Menu.Main.Prefix();
             Utility.UpdateFPS();
 
             if (Utility.updateneeded)
             {
                 NotificationManager.SendNotification("<color=cyan>JupiterX needs a update please go to the discord and update it</color>", 30f);
-                MelonLogger.Msg($"[JUPITERX] Temp Log // udpate needed for somereason");
             }
             if (Utility.extremeupdateneeded)
             {
                 NotificationManager.SendNotification("<color=cyan>JupiterX is extremely outdated please go to the discord and update it</color>", 60f);
-                MelonLogger.Msg($"[JUPITERX] Temp Log // extreme update needed");
             }
 
             if (File.Exists(Utility.HasUsedMenuBefore))
@@ -139,13 +149,10 @@ namespace JupiterX
 
             if (!Utility.UsedBeforeNotificaiton)
             {
-                MelonLogger.Msg($"[JUPITERX] Temp Log // Creating usedbefore file");
                 if (!File.Exists(Utility.HasUsedMenuBefore))
                     File.Create(Utility.HasUsedMenuBefore);
-                MelonLogger.Msg($"[JUPITERX] Temp Log // Created usedbefore file");
                 File.WriteAllText(Utility.HasUsedMenuBefore, "Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!");
                 NotificationManager.SendNotification("<color=cyan>[INFO]</color> Thank you for using JupiterX one of the best overpowered gorilla tag copy menus!", 20f);
-                MelonLogger.Msg($"[JUPITERX] Temp Log // Loaded");
 
                 AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
                 {
@@ -160,14 +167,14 @@ namespace JupiterX
                 {
                     NotificationManager.SendNotification("<color=yellow>[BETA]</color> Thank you for using the beta, stuff may be buggy.", 13f);
                     Utility.UsedBeforeNotificaiton = true;
-                    if (!File.Exists($"{Utility.BaseDirectory}/ClaimedBetaAchievement.txt"))
+                    if (!File.Exists($"{Utility.MainPath}/ClaimedBetaAchievement.txt"))
                     {
                         AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
                         {
                             name = "Beta Tester",
                             description = "Opened and used the menu for the first time."
                         });
-                        File.WriteAllText($"{Utility.BaseDirectory}/ClaimedBetaAchievement.txt", "");
+                        File.WriteAllText($"{Utility.MainPath}/ClaimedBetaAchievement.txt", "");
                     }
                 }
             }
@@ -175,7 +182,7 @@ namespace JupiterX
             if (Settings.CustomBoards)
             {
                 string gameversion = string.IsNullOrEmpty(PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) ? PhotonNetwork.AppVersion : PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
-                string cocTextNew = $"Username: {PhotonNetwork.LocalPlayer.NickName}, UserID: {PhotonNetwork.LocalPlayer.UserId}\nTitleID: {PlayFabSettings.TitleId}\nRealtimeID: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}\nVoiceID: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}\nVersion: {gameversion}\n\nIf you like usinig <b>JupiterX</b> make sure to join our discord server for more updates and more mods for your modding needs.\ndiscord.gg/dtQdz59FJG\nMenu made by Nova (@novaissilly)";
+                string cocTextNew = $"Username: {PhotonNetwork.LocalPlayer.NickName}, UserID: {PhotonNetwork.LocalPlayer.UserId}\nTitleID: {PlayFabSettings.TitleId}\nRealtimeID: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}\nVoiceID: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}\nVersion: {gameversion}\n\nIf you like usinig <b>JupiterX</b> make sure to join our discord server for more updates and more mods for your modding needs.\n{Utility.discord}\nMenu made by Nova (@s1lnt)";
                 Utility.cocText.text = cocTextNew;
                 Utility.codeOfConduct.text = "<color=cyan>JupiterX V2</color>";
 
@@ -195,7 +202,7 @@ namespace JupiterX
             else if (Utility.updateneeded)
                 updatetext = "<color=red>UPDATE NEEDED</color>";
             bool updateneeded = Utility.updateneeded || Utility.extremeupdateneeded;
-            string stumpText = $"<color=#00ffff>JupiterX V2</color>\n<size=1>Thank you for using JupiterX V2\nThe <color=#3333ff>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(updateneeded ? updatetext : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
+            string stumpText = $"<color=#00ffff>Legacy JupiterX V2</color>\n<size=1>Thank you for using Legacy JupiterX V2\nThe <color=#3333ff>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(updateneeded ? updatetext : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
             if (StumpText == null)
             {
                 StumpText = new GameObject("StumpTextObject");

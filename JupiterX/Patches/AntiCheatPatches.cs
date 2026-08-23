@@ -1,10 +1,10 @@
 ﻿using HarmonyLib;
 using JupiterX.Notifications;
-using Il2CppPhoton.Pun;
+using Photon.Pun;
 
 namespace JupiterX.Patches
 {
-    [HarmonyPatch(typeof(Il2Cpp.GorillaNot), "SendReport")]
+    [HarmonyPatch(typeof(GorillaNot), "SendReport")]
     public class AntiCheatPatches
     {
         public static bool AntiCheatSelf;

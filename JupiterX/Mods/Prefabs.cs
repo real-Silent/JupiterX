@@ -1,5 +1,4 @@
-﻿using Il2Cpp;
-using JupiterX.Menu;
+﻿using JupiterX.Menu;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -25,8 +24,8 @@ namespace JupiterX.Mods
 
         public static void ClearPrefabs()
         {
-            Utility.SetMaster(Il2CppPhoton.Pun.PhotonNetwork.LocalPlayer);
-            Il2CppPhoton.Pun.PhotonNetwork.DestroyAll();
+            Utility.SetMaster(Photon.Pun.PhotonNetwork.LocalPlayer);
+            Photon.Pun.PhotonNetwork.DestroyAll();
         }
         public static void TargetSpam()
         {

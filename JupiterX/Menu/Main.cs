@@ -1,8 +1,8 @@
-﻿using Il2CppeasyInputs;
+﻿using easyInputs;
 using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Notifications;
-using Il2CppPhoton.Pun;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,8 +14,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static JupiterX.Menu.Buttons;
 using static JupiterX.Settings;
-using Il2Cpp;
-using ColorChanger = JupiterX.Classes.ColorChanger; // NotificationManager.SendNotification("<color=red>[ERROR]</color> This feature doesnt work right now.", 2f);
 
 namespace JupiterX.Menu
 {
@@ -23,6 +21,12 @@ namespace JupiterX.Menu
 	{
 		public static void Prefix()
 		{
+            if (Utility.canusemenu == false)
+            {
+                NotificationManager.SendNotification("<color=red>[INFO]</color> Menu is locked!", 15f);
+                return;
+            }
+
             Utility.RightPrimary = EasyInputs.GetPrimaryButtonDown(EasyHand.RightHand);
             Utility.RightSecondary = EasyInputs.GetSecondaryButtonDown(EasyHand.RightHand);
             Utility.RightGrip = EasyInputs.GetGripButtonDown(EasyHand.RightHand);
@@ -333,7 +337,7 @@ namespace JupiterX.Menu
             {
                 if (MenuTitle)
                 {
-                    string path = Path.Combine($"{Utility.BaseDirectory}/CustomTitle.txt");
+                    string path = Path.Combine(Application.persistentDataPath, "JupiterX/CustomTitle.txt");
                     string CustomTitle;
                     if (File.Exists(path))
                     {
@@ -1263,7 +1267,7 @@ namespace JupiterX.Menu
 
             if (promptImageUrl != null)
             {
-                string fileName = promptImageUrl.Split('/')[1];
+                string fileName = promptImageUrl.Split('/')[^1];
                 string fileExtension = GetFileExtension(fileName);
 
                 Image promptImage = new GameObject

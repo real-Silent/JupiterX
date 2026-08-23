@@ -1,8 +1,8 @@
-﻿using Il2CppExitGames.Client.Photon;
-using Il2CppGorillaNetworking;
+﻿using ExitGames.Client.Photon;
+using GorillaNetworking;
 using JupiterX.Notifications;
-using Il2CppPhoton.Pun;
-using Il2CppPhoton.Realtime;
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Reflection;
 using System.Text;
@@ -181,7 +181,8 @@ namespace JupiterX.Mods
             while (true)
             {
                 string text = Generate(bigroomname ? 22 : 4);
-                return text;
+                if (GorillaComputer.instance.CheckAutoBanListForName(text))
+                    return text;
             }
         }
 

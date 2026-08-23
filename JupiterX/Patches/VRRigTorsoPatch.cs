@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using JupiterX.Mods;
 using UnityEngine;
-using Il2Cpp;
 
 namespace JupiterX.Patches
 {

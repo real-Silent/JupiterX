@@ -1,9 +1,8 @@
 ﻿using JupiterX.Menu;
 using JupiterX.Notifications;
-using Il2CppPhoton.Pun;
+using Photon.Pun;
 using UnityEngine;
 using static JupiterX.Menu.Main;
-using Il2Cpp;
 
 namespace JupiterX.Mods
 {
@@ -15,7 +14,7 @@ namespace JupiterX.Mods
             {
                 foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
                 {
-                    foreach (Il2CppPhoton.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+                    foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
                     {
                         tagman.AddInfectedPlayer(plr);
                     }

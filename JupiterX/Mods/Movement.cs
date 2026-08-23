@@ -1,13 +1,12 @@
-﻿using Il2CppExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using JupiterX.Extensions;
 using JupiterX.Menu;
-using Il2CppPhoton.Pun;
-using Il2CppPhoton.Realtime;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 using static JupiterX.Menu.Main;
-using Il2Cpp;
 
 namespace JupiterX.Mods
 {
@@ -168,13 +167,13 @@ namespace JupiterX.Mods
 
         public static void Mosaboost()
         {
-            Il2CppGorillaLocomotion.Player.Instance.maxJumpSpeed = 9.5f;
+            GorillaLocomotion.Player.Instance.maxJumpSpeed = 9.5f;
         }
 
         public static void Speedboost()
         {
-            Il2CppGorillaLocomotion.Player.Instance.maxJumpSpeed = 9.7f;
-            Il2CppGorillaLocomotion.Player.Instance.jumpMultiplier = 11.2f;
+            GorillaLocomotion.Player.Instance.maxJumpSpeed = 9.7f;
+            GorillaLocomotion.Player.Instance.jumpMultiplier = 11.2f;
         }
 
         private static GameObject point = null;
@@ -403,7 +402,7 @@ namespace JupiterX.Mods
         public static void Dash()
         {
             if (Utility.RightPrimary && !previousDash)
-                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += Il2CppGorillaLocomotion.Player.Instance.headCollider.transform.forward * FlySpeed;
+                GorillaTagger.Instance.bodyCollider.attachedRigidbody.velocity += GorillaLocomotion.Player.Instance.headCollider.transform.forward * FlySpeed;
 
             previousDash = Utility.RightPrimary;
         }
@@ -490,7 +489,7 @@ namespace JupiterX.Mods
         }
         public static void SpeedBoost()
         {
-            Il2CppGorillaLocomotion.Player.Instance.maxJumpSpeed = 9f; Il2CppGorillaLocomotion.Player.Instance.jumpMultiplier = 13f;
+            GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f; GorillaLocomotion.Player.Instance.jumpMultiplier = 13f;
         }
 
         public static void UpAndDown()

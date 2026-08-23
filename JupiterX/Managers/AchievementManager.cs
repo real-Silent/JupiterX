@@ -1,11 +1,11 @@
 ﻿using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Notifications;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using Newtonsoft.Json.Linq;
 using static JupiterX.Menu.Main;
 
 namespace JupiterX.Managers

@@ -1,8 +1,7 @@
-﻿using Il2CppGorillaNetworking;
+﻿using GorillaNetworking;
 using JupiterX;
-using Il2CppPhoton.Pun;
+using Photon.Pun;
 using UnityEngine;
-using Il2Cpp;
 
 namespace Console
 {
@@ -75,10 +74,10 @@ namespace Console
         public static string GetName(this VRRig rig) =>
             rig.photonView.Owner?.NickName ?? "null";
 
-        public static Il2CppPhoton.Realtime.Player GetPlayer(this VRRig rig) =>
+        public static Photon.Realtime.Player GetPlayer(this VRRig rig) =>
             rig.photonView.Owner;
 
-        public static Il2CppPhoton.Realtime.Player GetPhotonPlayer(this VRRig rig) =>
+        public static Photon.Realtime.Player GetPhotonPlayer(this VRRig rig) =>
             rig.photonView.Owner;
 
         public static VRRig GetVRRigWithoutMe(this VRRig rig)
@@ -92,7 +91,7 @@ namespace Console
 
         public static float[] GetSpeed(this VRRig rig)
         {
-            Il2CppPhoton.Realtime.Player player = rig.GetPlayer();
+            Photon.Realtime.Player player = rig.GetPlayer();
 
             if (player == null || GorillaComputer.instance == null)
                 return new[] { 6.5f, 1.1f };

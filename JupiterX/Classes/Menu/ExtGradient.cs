@@ -1,5 +1,4 @@
 ﻿using Console;
-using Il2Cpp;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -45,12 +44,12 @@ namespace JupiterX.Classes
             customColor = null;
 
             if (colors.Length <= 2)
-                colors = GetSimpleGradient(colors[0].color, colors[1].color);
+                colors = GetSimpleGradient(colors[0].color, colors[^1].color);
 
             if (setMirror && index == 0)
             {
                 colors[0].color = color;
-                colors[1].color = color;
+                colors[^1].color = color;
             }
             else
                 colors[index].color = color;

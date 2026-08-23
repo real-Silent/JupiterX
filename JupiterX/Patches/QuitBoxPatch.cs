@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace JupiterX.Patches
 {
-    [HarmonyPatch(typeof(Il2Cpp.GorillaQuitBox), "OnBoxTriggered")]
+    [HarmonyPatch(typeof(GorillaQuitBox), "OnBoxTriggered")]
     public class QuitBoxPatch
     {
         public static bool enabled = true;
@@ -13,7 +13,7 @@ namespace JupiterX.Patches
         {
             if (teleportToStump)
             {
-                Il2CppGorillaLocomotion.Player.Instance.transform.position = new UnityEngine.Vector3(-67.0116f, 12.5f, 82.4668f);
+                GorillaLocomotion.Player.Instance.transform.position = new UnityEngine.Vector3(-67.0116f, 12.5f, 82.4668f);
                 return false;
             }
             return enabled;

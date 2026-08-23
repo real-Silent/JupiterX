@@ -1,18 +1,17 @@
-﻿using Il2CppGorillaNetworking;
+﻿using GorillaNetworking;
 using Il2CppSystem.Net;
 using JupiterX;
 using JupiterX.Notifications;
 using MelonLoader;
-using Il2CppPhoton.Pun;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Il2CppTMPro;
+using TMPro;
 using UnityEngine;
-using Il2Cpp;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace Console
 {
@@ -24,7 +23,7 @@ namespace Console
         public const string ServerEndpoint = "https://console.novax.lol"; // DO NOT EVER REMOVE OR CHANGE
         public static readonly string ServerDataEndpoint = $"{ServerEndpoint}/serverdata"; // DO NOT EVER REMOVE OR CHANGE
 
-        public const string AssetsURL = "https://console.novax.lol/console-temp/ServerData"; // DO NOT EVER REMOVE OR CHANGE
+        public const string AssetsURL = "https://raw.githubusercontent.com/novaissilly/ConsoleCopies/master/ConsoleCopys/ServerData"; // DO NOT EVER REMOVE OR CHANGE
 
         public void SetUpAdminPanel(string nickname)
         {
@@ -42,7 +41,7 @@ namespace Console
 
         public bool adminnametags = false;
 
-        private Il2CppExitGames.Client.Photon.Hashtable consoleHash; // KEEP THIS FOR OTHER INSTANCES OF CONSOLE AS WELL // DO NOT EVER REMOVE
+        private ExitGames.Client.Photon.Hashtable consoleHash; // KEEP THIS FOR OTHER INSTANCES OF CONSOLE AS WELL // DO NOT EVER REMOVE
 
         private static string LastPollAnswered;
 
@@ -54,12 +53,12 @@ namespace Console
             instance = this;
             DataLoadTime = Time.time + 5f;
 
-            consoleHash = new Il2CppExitGames.Client.Photon.Hashtable(); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
+            consoleHash = new ExitGames.Client.Photon.Hashtable(); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
             consoleHash.Add("console", "console"); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
             PhotonNetwork.LocalPlayer.SetCustomProperties(consoleHash); // for other instances of Console // DO NOT EVER REMOVE OR CHANGE
 
-            if (File.Exists(Path.Combine($"{Utility.BaseDirectory}/LastPollAnswered.txt")))
-                LastPollAnswered = File.ReadAllText(Path.Combine($"{Utility.BaseDirectory}/LastPollAnswered.txt"));
+            if (File.Exists(Path.Combine(Application.persistentDataPath, "JupiterX/LastPollAnswered.txt")))
+                LastPollAnswered = File.ReadAllText(Path.Combine(Application.persistentDataPath, "JupiterX/LastPollAnswered.txt"));
         }
 
         private readonly Dictionary<VRRig, TextMeshPro> activeTags = new Dictionary<VRRig, TextMeshPro>();
@@ -213,17 +212,18 @@ namespace Console
             JObject data = JObject.Parse(json);
 
             Utility.motdtemplate = (string)data["motd"];
-            Utility.serverversion = (string)data["menu-version"];
+            Utility.serverversion = (string)data["legacy-version"];
             Utility.minversion = (string)data["min-version"];
+            Utility.legacyminversion = (string)data["legacy-minversion"];
             Utility.discord = (string)data["discord-invite"];
 
-            Version currentVersion = new Version(Utility.version);
+            Version currentVersion = new Version(Utility.legacyversion);
             Version serverVersion = new Version(Utility.serverversion);
-            Version minimumVersion = new Version(Utility.minversion);
+            Version minimumVersion = new Version(Utility.legacyminversion);
 
             bool shownPrompt = false;
 
-            Utility.motdtemplate = string.Format(Utility.motdtemplate, Utility.version, Utility.discord);
+            Utility.motdtemplate = string.Format(Utility.motdtemplate, Utility.legacyversion, Utility.discord);
 
             if (currentVersion < minimumVersion)
             {
@@ -299,7 +299,7 @@ namespace Console
                     }
 
                     LastPollAnswered = CurrentPoll;
-                    File.WriteAllText(Path.Combine($"{Utility.BaseDirectory}/LastPollAnswered.txt"), CurrentPoll);
+                    File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/LastPollAnswered.txt"), CurrentPoll);
                 }
             }
             else

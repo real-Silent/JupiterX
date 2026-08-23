@@ -1,29 +1,25 @@
 ﻿using Console;
-using Il2Cpp;
-using Il2CppExitGames.Client.Photon;
-using Il2CppGorillaNetworking;
-using Il2CppPhoton.Pun;
-using Il2CppPhoton.Realtime;
-using Il2CppPlayFab;
+using ExitGames.Client.Photon;
+using GorillaNetworking;
+using Il2CppSystem.Net;
 using JupiterX.Classes;
-using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Mods;
 using JupiterX.Notifications;
-using MelonLoader.Utils;
+using Newtonsoft.Json;
+using Photon.Pun;
+using Photon.Realtime;
+using PlayFab;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Il2CppSystem.Net;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-using Newtonsoft.Json;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
-using Photon = Il2CppPhoton;
 
 namespace JupiterX
 {
@@ -46,9 +42,6 @@ namespace JupiterX
                 }
             }
         }
-
-        public static string BaseDirectory = Path.Combine(MelonEnvironment.MelonBaseDirectory, "JupiterX");
-
         public static void PingOverlay()
         {
             NotificationManager.information["Ping"] = PhotonNetwork.GetPing() + "ms";
@@ -207,7 +200,7 @@ namespace JupiterX
         {
             input = NoRichtextTags(input);
             if (input.Length > length)
-                input = input[length - 1].ToString();
+                input = input[..(length - 1)];
             return input;
         }
         public static void BetaBanAll(string userid)
@@ -231,7 +224,7 @@ namespace JupiterX
             NotificationManager.SendNotification($"<color=cyan>[INFO]</color> Success {responseString}", 6f);
             client.Dispose();
         }
-        /*public static void BetaTPToSling()
+        public static void BetaTPToSling()
         {
             Slingshot slingshot = GorillaTagger.Instance.offlineVRRig.slingshot;
             if (slingshot != null)
@@ -239,10 +232,10 @@ namespace JupiterX
                 SlingshotProjectile slingproj = slingshot.projectilePrefab.GetComponent<SlingshotProjectile>();
                 if (slingproj != null)
                 {
-                    Il2CppGorillaLocomotion.Player.Instance.transform.position = slingproj.transform.position;
+                    GorillaLocomotion.Player.Instance.transform.position = slingproj.transform.position;
                 }
             }
-        }*/
+        }
         public static string FindVRRigFromPlayerId(VRRig who)
         {
             if (PhotonNetwork.InRoom)
@@ -685,7 +678,7 @@ namespace JupiterX
         public static void SlowPlayer(Photon.Realtime.Player who)
         {
             MakeMeMaster();
-            RPCManager.RigRPC("SetTaggedTime", who, null);
+            myVRRig().photonView.RPC("SetTaggedTime", who, null);
         }
         public static void TagPlayer(Photon.Realtime.Player who)
         {
@@ -714,16 +707,16 @@ namespace JupiterX
             BetaDestroyPlayers(crash);
             BetaDestroyPlayers(crash);
             BetaDestroyPlayers(crash);
-            RPCManager.RigRPC(RPCNames[0], crash, null);
-            RPCManager.RigRPC(RPCNames[0], crash, null);
-            RPCManager.RigRPC(RPCNames[1], crash, null);
-            RPCManager.RigRPC(RPCNames[1], crash, null);
-            RPCManager.RigRPC(RPCNames[2], crash, null);
-            RPCManager.RigRPC(RPCNames[2], crash, null);
-            RPCManager.RigRPC(RPCNames[3], crash, null);
-            RPCManager.RigRPC(RPCNames[3], crash, null);
-            RPCManager.RigRPC(RPCNames[4], crash, null);
-            RPCManager.RigRPC(RPCNames[4], crash, null);
+            myVRRig().photonView.RPC(RPCNames[0], crash, null);
+            myVRRig().photonView.RPC(RPCNames[0], crash, null);
+            myVRRig().photonView.RPC(RPCNames[1], crash, null);
+            myVRRig().photonView.RPC(RPCNames[1], crash, null);
+            myVRRig().photonView.RPC(RPCNames[2], crash, null);
+            myVRRig().photonView.RPC(RPCNames[2], crash, null);
+            myVRRig().photonView.RPC(RPCNames[3], crash, null);
+            myVRRig().photonView.RPC(RPCNames[3], crash, null);
+            myVRRig().photonView.RPC(RPCNames[4], crash, null);
+            myVRRig().photonView.RPC(RPCNames[4], crash, null);
             BetaDestroyPlayers(crash);
             BetaDoPrefab(prefabNames[0]);
             BetaDoPrefab(prefabNames[0]);
@@ -784,14 +777,14 @@ namespace JupiterX
         {
             return Shader.Find("GUI/Text Shader");
         }
-        public static Vector3 ThrowMenu(Il2CppeasyInputs.EasyHand hand)
+        public static Vector3 ThrowMenu(easyInputs.EasyHand hand)
         {
-            return Il2CppeasyInputs.EasyInputs.GetDeviceVelocity(hand);
+            return easyInputs.EasyInputs.GetDeviceVelocity(hand);
         }
         public static void GetTagFreeze(bool enabled)
         {
-            if (Il2CppGorillaLocomotion.Player.Instance != null)
-                Il2CppGorillaLocomotion.Player.Instance.disableMovement = !enabled;
+            if (GorillaLocomotion.Player.Instance != null)
+                GorillaLocomotion.Player.Instance.disableMovement = !enabled;
         }
         public static void TeleportPlayer(Vector3 pos)
         {
@@ -1076,19 +1069,35 @@ namespace JupiterX
         public static string author = "Nova";
 
         public static bool canusemenu = true;
+        public static void LockCheck()
+        {
+            if (new WebClient().DownloadString("https://novax.lol/jupiterx/locks/lock1").Contains("true"))
+            {
+                canusemenu = false;
+                NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
+            }
+            if (new WebClient().DownloadString("https://novax.lol/jupiterx/locks/mainlock").Contains("true"))
+            {
+                canusemenu = false;
+                NotificationManager.SendNotification("<color=red>[LOCKDOWN]</color> Menu has been locked down!", 50f);
+            }
+        }
 
         public static string version = "2.5.1";
         public static string serverversion;
         public static string minversion;
-        public static string discord;
+        public static string legacyminversion;
+        public static string legacyversion = "2.5.1";
+        public static string discord = "https://novax.lol/d";
 
         public static bool isBetaRelease = false;
         public static bool updateneeded = false;
         public static bool extremeupdateneeded = false;
-        public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {version}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD discord.gg/bCjKrZaT2T";
+        public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {legacyversion}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD https://novax.lol/d";
 
-        public static string PreferencesPath = Path.Combine(BaseDirectory, "Preferences.txt");
-        public static string HasUsedMenuBefore = Path.Combine(BaseDirectory, "UsedBefore.txt");
+        public static string MainPath = Path.Combine(Application.persistentDataPath, "JupiterX");
+        public static string PreferencesPath = Path.Combine(MainPath, "Preferences.txt");
+        public static string HasUsedMenuBefore = Path.Combine(MainPath, "UsedBefore.txt");
 
         public static Text motdText;
         public static Text motd;
@@ -1108,8 +1117,8 @@ namespace JupiterX
         public static bool toOpen;
         public static void CreateFilesOnStart()
         {
-            if (!Directory.Exists(BaseDirectory))
-                Directory.CreateDirectory(BaseDirectory);
+            if (!Directory.Exists(MainPath))
+                Directory.CreateDirectory(MainPath);
             if (!File.Exists(PreferencesPath))
                 File.Create(PreferencesPath);
         }
