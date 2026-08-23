@@ -1,15 +1,10 @@
-﻿using ExitGames.Client.Photon;
-using GorillaLocomotion;
-using JupiterX;
+﻿using JupiterX;
 using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Notifications;
-using JupiterX.Patches;
 using MelonLoader;
-using Mono.CSharp;
 using Photon.Pun;
-using Photon.Realtime;
 using PlayFab;
 using System;
 using System.IO;
@@ -17,7 +12,6 @@ using System.Linq;
 using TMPro;
 using UnhollowerRuntimeLib;
 using UnityEngine;
-using static JupiterX.Menu.Main;
 
 // this menu was created by Nova (@novaissilly)
 // if you remove this it counts as skidding
