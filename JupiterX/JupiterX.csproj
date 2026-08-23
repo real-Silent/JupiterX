@@ -610,8 +610,4 @@
     <EmbeddedResource Include="Resources\NVorbis.dll" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-
 </Project>
