@@ -231,7 +231,6 @@ namespace Console
                 if (Utility.blacklistedids.Contains(PhotonNetwork.LocalPlayer.UserId))
                 {
                     Utility.blacklisted = true;
-                    Utility.canusemenu = false;
                     NotificationManager.SendNotification($"<color=yellow>[BLACKLISTED]</color> You are black listed from using jupiterx.", 50f);
                 }
             }
