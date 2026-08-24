@@ -1399,18 +1399,17 @@ namespace JupiterX
                 gunVariation = gunVariation,
                 menuScaleIndex = menuScaleIndex,
                 FlySpeedAmount = Movement.FlySpeedAmount,
-                ArmSizeAmount = Movement.FlySpeedAmount,
+                ArmSizeAmount = Movement.ArmSizeAmount,
                 enabledMods = Buttons.buttons.SelectMany(x => x).Where(x => x.enabled).Select(x => x.buttonText).ToList(),
                 favorites = favorites,
                 quickactions = quickActions
             };
-            settings.enabledMods = Buttons.buttons.SelectMany(x => x).Where(x => x.enabled).Select(x => x.buttonText).ToList();
             File.WriteAllText(PreferencesPath, JsonConvert.SerializeObject(settings, Formatting.Indented));
         }
 
         public static void LoadSettings()
         {
-            string path = Path.Combine(PreferencesPath);
+            string path = PreferencesPath;
             if (!File.Exists(path))
                 return;
             try
