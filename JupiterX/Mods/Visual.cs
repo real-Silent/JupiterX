@@ -246,57 +246,58 @@ namespace JupiterX.Mods
             sphereEspPool.Clear();
         }
 
-        public static Dictionary<VRRig, (int index, GameObject tagholder)> nametagsPool = new Dictionary<VRRig, (int index, GameObject tagholder)>();
+        public static Dictionary<VRRig, Dictionary<int, GameObject>> nametagsPool =
+    new Dictionary<VRRig, Dictionary<int, GameObject>>();
+
         private static void DrawTag(VRRig rig, string text, Color color, int index)
         {
             if (rig == null)
                 return;
-            if (!nametagsPool.TryGetValue(rig, out var tagData))
+            if (!nametagsPool.TryGetValue(rig, out Dictionary<int, GameObject> tags))
             {
-                GameObject textHolder = new GameObject("Tag");
-                TextMesh nametag = textHolder.AddComponent<TextMesh>();
+                tags = new Dictionary<int, GameObject>();
+                nametagsPool.Add(rig, tags);
+            }
+            if (!tags.TryGetValue(index, out GameObject holder) || holder == null)
+            {
+                holder = new GameObject($"Tag_{index}");
+                TextMesh nametag = holder.AddComponent<TextMesh>();
                 Font arial = Resources.GetBuiltinResource<Font>("Arial.ttf");
                 nametag.font = arial;
-                MeshRenderer renderer = textHolder.GetComponent<MeshRenderer>();
+                MeshRenderer renderer = holder.GetComponent<MeshRenderer>();
                 renderer.material = arial.material;
-                nametagsPool[rig] = (index, textHolder);
-                tagData = (index, textHolder);
+                nametag.fontSize = 38;
+                nametag.characterSize = 0.03f;
+                nametag.anchor = TextAnchor.MiddleCenter;
+                nametag.alignment = TextAlignment.Center;
+                tags[index] = holder;
             }
-            GameObject holder = tagData.tagholder;
-            if (holder == null)
-                return;
             TextMesh tag = holder.GetComponent<TextMesh>();
             if (tag == null)
                 return;
             tag.text = text;
             tag.color = color;
-            tag.fontSize = 38;
-            tag.characterSize = 0.03f;
-            tag.anchor = TextAnchor.MiddleCenter;
-            tag.alignment = TextAlignment.Center;
-            holder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (index * -0.15f), 0f);
-            if (Camera.main != null)
+            holder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f - (index * 0.15f), 0f);
+            Camera cam = Camera.main;
+            if (cam != null)
             {
-                holder.transform.LookAt(Camera.main.transform);
+                holder.transform.LookAt(cam.transform);
                 holder.transform.Rotate(0f, 180f, 0f);
             }
         }
 
         public static void RemoveNameTag(int index)
         {
-            VRRig rigToRemove = null;
-            foreach (var pair in nametagsPool)
+            foreach (var rigPair in nametagsPool)
             {
-                if (pair.Value.index == index)
+                Dictionary<int, GameObject> tags = rigPair.Value;
+                if (tags.TryGetValue(index, out GameObject tagholder))
                 {
-                    if (pair.Value.tagholder != null)
-                        Object.Destroy(pair.Value.tagholder);
-                    rigToRemove = pair.Key;
-                    break;
+                    if (tagholder != null)
+                        Object.Destroy(tagholder);
+                    tags.Remove(index);
                 }
             }
-            if (rigToRemove != null)
-                nametagsPool.Remove(rigToRemove);
         }
 
         public static void NameTags()
