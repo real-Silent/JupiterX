@@ -192,7 +192,7 @@ namespace JupiterX
             else if (Utility.updateneeded)
                 updatetext = "<color=red>UPDATE NEEDED</color>";
             bool updateneeded = Utility.updateneeded || Utility.extremeupdateneeded;
-            string stumpText = $"<color=#00ffff>Legacy JupiterX V2</color>\n<size=1>Thank you for using Legacy JupiterX V2\nThe <color=#3333ff>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(updateneeded ? updatetext : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
+            string stumpText = $"<color=#00ffff>JupiterX V2</color>\n<size=1>Thank you for using JupiterX V2\nThe <color=#3333ff>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(updateneeded ? updatetext : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
             if (StumpText == null)
             {
                 StumpText = new GameObject("StumpTextObject");
