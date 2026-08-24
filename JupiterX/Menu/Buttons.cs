@@ -743,6 +743,7 @@ namespace JupiterX.Menu
 
             new[] { // Admin | 24
                 new ButtonInfo { buttonText = "Exit Admin", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Opens the visual page for the menu" },
+
                 new ButtonInfo { buttonText = "Get Console Users", method =() => Experimental.GetMenuUsers(), isTogglable = false, toolTip = "Gets all users using console" },
                 new ButtonInfo { buttonText = "Console Users NameTag", enableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = true, disableMethod =() => Console.ServerDataJupiterX.instance.adminnametags = false, isTogglable = true, toolTip = "Enables the console nametags" },
                 new ButtonInfo { buttonText = "Admin Quit All", method =() => Experimental.ConsoleQuitAll(), isTogglable = false, toolTip = "Quits everyone using console" },
@@ -783,13 +784,14 @@ namespace JupiterX.Menu
 
             new[] { // Plugin Settings | 25
                 new ButtonInfo { buttonText = "Exit Plugin Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns you back to the settings menu." },
+
                 new ButtonInfo { buttonText = "Reload Plugins", method = PluginManager.ReloadPlugins, isTogglable = false, toolTip = "Reloads all of your plugins." }
             },
 
             new[] { // Credits | 26
                 new ButtonInfo { buttonText = "Exit Credits", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page." },
 
-                new ButtonInfo { buttonText = "Nova", method =() => Application.OpenURL("https://github.com/novaissilly"), isTogglable = false, toolTip = "Nova is the main developer of <b>JupiterX</b> she makes and ports most of the mods on the menu." },
+                new ButtonInfo { buttonText = "Nova", method =() => Application.OpenURL("https://github.com/real-Silent"), isTogglable = false, toolTip = "Nova is the main developer of <b>JupiterX</b> she makes and ports most of the mods on the menu." },
                 new ButtonInfo { buttonText = "Silent", method =() => Application.OpenURL("https://github.com/real-Silent"), isTogglable = false, toolTip = "Silent was the original owner of <b>JupiterX</b> until she changed account to Nova she is just Nova." },
 
                 new ButtonInfo { buttonText = "Z0", method =() => Application.OpenURL("https://github.com/kralsei"), isTogglable = false, toolTip = "Z0 is a helper of <b>JupiterX</b> and has made some of the crash mods and helped in general." },
