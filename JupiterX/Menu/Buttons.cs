@@ -381,7 +381,7 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Fix Mic", method =() => Fun.FixMic(), isTogglable = false, toolTip = "Fixes your mic."  },
                 new ButtonInfo { buttonText = "Low Quality Mic", method =() => Fun.LowQualityMic(), isTogglable = false, toolTip = "Makes your micrphone low quality." },
-                new ButtonInfo { buttonText = "High Quality Mic", method =() => Fun.LowQualityMic(), isTogglable = false, toolTip = "Makes your micrphone high quality." },
+                new ButtonInfo { buttonText = "High Quality Mic", method =() => Fun.HighQualityMic(), isTogglable = false, toolTip = "Makes your micrphone high quality." },
 
                 new ButtonInfo { buttonText = "Bass Boosted Mic", method =() => Fun.BassBoostMic(), isTogglable = false, toolTip = "Makes your micrphone bass boosted." },
                 new ButtonInfo { buttonText = "Extreme Bass Boosted Mic", method =() => Fun.BassBoostMicExtreme(), isTogglable = false, toolTip = "Makes your micrphone hextremely bass boosted." },
