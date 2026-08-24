@@ -318,16 +318,16 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Chams", method =() => Visual.Chams(true), disableMethod =() => Visual.Chams(false), isTogglable = true, toolTip = "Lets you see players through walls." },
 
-                new ButtonInfo { buttonText = "Tracers", method =() => Visual.Tracers(), isTogglable = true, toolTip = "Points lines at other players." },
-                new ButtonInfo { buttonText = "Box ESP", method =() => Visual.BoxESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
-                new ButtonInfo { buttonText = "Capsule ESP", method =() => Visual.CapsuleESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
-                new ButtonInfo { buttonText = "Sphere ESP", method =() => Visual.SphereESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
+                new ButtonInfo { buttonText = "Tracers", method =() => Visual.Tracers(), disableMethod =() => Visual.CleanUpTracers(), isTogglable = true, toolTip = "Points lines at other players." },
+                new ButtonInfo { buttonText = "Box ESP", method =() => Visual.BoxESP(), disableMethod =() => Visual.DisableBoxESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
+                new ButtonInfo { buttonText = "Capsule ESP", method =() => Visual.CapsuleESP(), disableMethod =() => Visual.DisableCapsuleESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
+                new ButtonInfo { buttonText = "Sphere ESP", method =() => Visual.SphereESP(), disableMethod =() => Visual.DisableSphereESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
 
-                new ButtonInfo { buttonText = "Name Tags", method =() => Visual.NameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their nickname." },
-                new ButtonInfo { buttonText = "ID Name Tags", method =() => Visual.IDNameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their ID." },
-                new ButtonInfo { buttonText = "Platform Name Tags", method =() => Visual.PlatformTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Platform." },
-                new ButtonInfo { buttonText = "Master Name Tags", method =() => Visual.MasterTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show if their Master Client." },
-                new ButtonInfo { buttonText = "Tagged Name Tags", method =() => Visual.TaggedTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Tagged." },
+                new ButtonInfo { buttonText = "Name Tags", method =() => Visual.NameTags(), disableMethod =() => Visual.RemoveNameTag(0), isTogglable = true, toolTip = "Gives players name tags above their heads that show their nickname." },
+                new ButtonInfo { buttonText = "ID Name Tags", method =() => Visual.IDNameTags(), disableMethod =() => Visual.RemoveNameTag(1), isTogglable = true, toolTip = "Gives players name tags above their heads that show their ID." },
+                new ButtonInfo { buttonText = "Platform Name Tags", method =() => Visual.PlatformTags(), disableMethod =() => Visual.RemoveNameTag(2), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Platform." },
+                new ButtonInfo { buttonText = "Master Name Tags", method =() => Visual.MasterTags(), disableMethod =() => Visual.RemoveNameTag(3), isTogglable = true, toolTip = "Gives players name tags above their heads that show if their Master Client." },
+                new ButtonInfo { buttonText = "Tagged Name Tags", method =() => Visual.TaggedTags(), disableMethod =() => Visual.RemoveNameTag(4), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Tagged." },
 
                 new ButtonInfo { buttonText = "Velocity Label", method = Visual.VelocityLabel, toolTip = "Puts text on your right hand, showing your velocity."},
                 new ButtonInfo { buttonText = "Nearby Label", method = Visual.NearbyTaggerLabel, toolTip = "Puts text on your left hand, showing you the distance of the nearest tagger."},

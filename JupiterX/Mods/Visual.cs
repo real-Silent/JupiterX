@@ -92,92 +92,211 @@ namespace JupiterX.Mods
             }
         }
 
-		public static void BoxESP()
+        private static readonly Dictionary<VRRig, GameObject> boxEspPool = new Dictionary<VRRig, GameObject>();
+        public static void BoxESP()
         {
-            if (PhotonNetwork.InRoom)
+            if (!PhotonNetwork.InRoom)
+                return;
+            List<VRRig> remove = null;
+            foreach (var pair in boxEspPool)
             {
-                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                if (pair.Key == null || !GorillaParent.instance.vrrigs.Contains(pair.Key))
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    remove ??= new List<VRRig>();
+                    remove.Add(pair.Key);
+                    if (pair.Value != null)
+                        Object.Destroy(pair.Value);
+                }
+            }
+            if (remove != null)
+            {
+                foreach (var rig in remove)
+                    boxEspPool.Remove(rig);
+            }
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                {
+                    if (!boxEspPool.TryGetValue(rig, out GameObject box))
                     {
-                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                        GameObject box = new GameObject("box");
+                        box = new GameObject("box");
                         box = GameObject.CreatePrimitive(PrimitiveType.Cube);
                         box.transform.position = rig.headConstraint.transform.position;
                         box.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                         GameObject.Destroy(box.GetComponent<BoxCollider>());
-                        box.transform.rotation = rig.transform.rotation;
-                        box.GetComponent<Renderer>().material.shader = Utility.GUIShader();
-                        box.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
-                        GameObject.Destroy(box, Time.deltaTime);
+                        boxEspPool[rig] = box;
                     }
+                    bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                    box.transform.rotation = rig.transform.rotation;
+                    box.GetComponent<Renderer>().material.shader = Utility.GUIShader();
+                    box.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
                 }
             }
         }
+        public static void DisableBoxESP()
+        {
+            foreach (var obj in boxEspPool.Values)
+            {
+                if (obj != null)
+                    Object.Destroy(obj);
+            }
+            boxEspPool.Clear();
+        }
 
+        private static readonly Dictionary<VRRig, GameObject> capsuleEspPool = new Dictionary<VRRig, GameObject>();
         public static void CapsuleESP()
         {
-            if (PhotonNetwork.InRoom)
+            if (!PhotonNetwork.InRoom)
+                return;
+            List<VRRig> remove = null;
+            foreach (var pair in capsuleEspPool)
             {
-                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                if (pair.Key == null || !GorillaParent.instance.vrrigs.Contains(pair.Key))
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    remove ??= new List<VRRig>();
+                    remove.Add(pair.Key);
+                    if (pair.Value != null)
+                        Object.Destroy(pair.Value);
+                }
+            }
+            if (remove != null)
+            {
+                foreach (var rig in remove)
+                    capsuleEspPool.Remove(rig);
+            }
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                {
+                    if (!capsuleEspPool.TryGetValue(rig, out GameObject box))
                     {
-                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                        GameObject box = new GameObject("box");
+                        box = new GameObject("box");
                         box = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                        GameObject.Destroy(box.GetComponent<CapsuleCollider>());
                         box.transform.position = rig.headConstraint.transform.position;
                         box.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                        box.transform.rotation = rig.transform.rotation;
-                        box.GetComponent<Renderer>().material.shader = Utility.GUIShader();
-                        box.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
-                        GameObject.Destroy(box, Time.deltaTime);
+                        GameObject.Destroy(box.GetComponent<BoxCollider>());
+                        capsuleEspPool[rig] = box;
                     }
+                    bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                    box.transform.rotation = rig.transform.rotation;
+                    box.GetComponent<Renderer>().material.shader = Utility.GUIShader();
+                    box.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
                 }
             }
         }
+        public static void DisableCapsuleESP()
+        {
+            foreach (var obj in capsuleEspPool.Values)
+            {
+                if (obj != null)
+                    Object.Destroy(obj);
+            }
+            capsuleEspPool.Clear();
+        }
 
+
+        private static readonly Dictionary<VRRig, GameObject> sphereEspPool = new Dictionary<VRRig, GameObject>();
         public static void SphereESP()
         {
-            if (PhotonNetwork.InRoom)
+            if (!PhotonNetwork.InRoom)
+                return;
+            List<VRRig> remove = null;
+            foreach (var pair in sphereEspPool)
             {
-                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                if (pair.Key == null || !GorillaParent.instance.vrrigs.Contains(pair.Key))
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    remove ??= new List<VRRig>();
+                    remove.Add(pair.Key);
+                    if (pair.Value != null)
+                        Object.Destroy(pair.Value);
+                }
+            }
+            if (remove != null)
+            {
+                foreach (var rig in remove)
+                    sphereEspPool.Remove(rig);
+            }
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                {
+                    if (!sphereEspPool.TryGetValue(rig, out GameObject box))
                     {
-                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                        GameObject sphere = new GameObject("sphere");
-                        sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        GameObject.Destroy(sphere.GetComponent<SphereCollider>());
-                        sphere.transform.position = rig.headConstraint.transform.position;
-                        sphere.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                        sphere.transform.rotation = rig.transform.rotation;
-                        sphere.GetComponent<Renderer>().material.shader = Utility.GUIShader();
-                        sphere.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
-                        GameObject.Destroy(sphere, Time.deltaTime);
+                        box = new GameObject("box");
+                        box = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        box.transform.position = rig.headConstraint.transform.position;
+                        box.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                        GameObject.Destroy(box.GetComponent<BoxCollider>());
+                        sphereEspPool[rig] = box;
                     }
+                    bool isTagged = rig.mainSkin.material.name.Contains("fected");
+                    box.transform.rotation = rig.transform.rotation;
+                    box.GetComponent<Renderer>().material.shader = Utility.GUIShader();
+                    box.GetComponent<Renderer>().material.color = isTagged ? Color.red : Color.grey;
                 }
             }
         }
+        public static void DisableSphereESP()
+        {
+            foreach (var obj in sphereEspPool.Values)
+            {
+                if (obj != null)
+                    Object.Destroy(obj);
+            }
+            sphereEspPool.Clear();
+        }
 
+        public static Dictionary<VRRig, (int index, GameObject tagholder)> nametagsPool = new Dictionary<VRRig, (int index, GameObject tagholder)>();
         private static void DrawTag(VRRig rig, string text, Color color, int index)
         {
-            GameObject textHolder = new GameObject("Tag");
-            TextMesh nametag = textHolder.AddComponent<TextMesh>();
-            Font arial = Resources.GetBuiltinResource<Font>("Arial.ttf");
-            nametag.font = arial;
-            textHolder.GetComponent<MeshRenderer>().material = arial.material;
-            nametag.text = text;
-            nametag.color = color;
-            nametag.fontSize = 38;
-            nametag.characterSize = 0.03f;
-            nametag.anchor = TextAnchor.MiddleCenter;
-            nametag.alignment = TextAlignment.Center;
-            textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (index * -0.15f), 0f);
-            textHolder.transform.LookAt(Camera.main.transform);
-            textHolder.transform.Rotate(0f, 180f, 0f);
-            Object.Destroy(textHolder, Time.deltaTime);
+            if (rig == null)
+                return;
+            if (!nametagsPool.TryGetValue(rig, out var tagData))
+            {
+                GameObject textHolder = new GameObject("Tag");
+                TextMesh nametag = textHolder.AddComponent<TextMesh>();
+                Font arial = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                nametag.font = arial;
+                MeshRenderer renderer = textHolder.GetComponent<MeshRenderer>();
+                renderer.material = arial.material;
+                nametagsPool[rig] = (index, textHolder);
+                tagData = (index, textHolder);
+            }
+            GameObject holder = tagData.tagholder;
+            if (holder == null)
+                return;
+            TextMesh tag = holder.GetComponent<TextMesh>();
+            if (tag == null)
+                return;
+            tag.text = text;
+            tag.color = color;
+            tag.fontSize = 38;
+            tag.characterSize = 0.03f;
+            tag.anchor = TextAnchor.MiddleCenter;
+            tag.alignment = TextAlignment.Center;
+            holder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (index * -0.15f), 0f);
+            if (Camera.main != null)
+            {
+                holder.transform.LookAt(Camera.main.transform);
+                holder.transform.Rotate(0f, 180f, 0f);
+            }
+        }
+
+        public static void RemoveNameTag(int index)
+        {
+            VRRig rigToRemove = null;
+            foreach (var pair in nametagsPool)
+            {
+                if (pair.Value.index == index)
+                {
+                    if (pair.Value.tagholder != null)
+                        Object.Destroy(pair.Value.tagholder);
+                    rigToRemove = pair.Key;
+                    break;
+                }
+            }
+            if (rigToRemove != null)
+                nametagsPool.Remove(rigToRemove);
         }
 
         public static void NameTags()
@@ -263,22 +382,48 @@ namespace JupiterX.Mods
             return input;
         }
 
-        static GameObject holder;
-        static LineRenderer tracer;
+        private static Dictionary<VRRig, GameObject> tracersPool = new Dictionary<VRRig, GameObject>();
         public static void Tracers()
         {
-            if (PhotonNetwork.InRoom)
+            if (!PhotonNetwork.InRoom)
+                return;
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    List<VRRig> remove = null;
+                    foreach (var pair in tracersPool)
                     {
-                        bool isTagged = rig.mainSkin.material.name.Contains("fected");
-                        Color lineColor = isTagged ? Color.red : Color.grey;
-                        (holder, tracer) = Utility.CreateLine(Utility.RightHandTransform(), rig.headMesh.transform, lineColor);
+                        if (pair.Key == null || !GorillaParent.instance.vrrigs.Contains(pair.Key))
+                        {
+                            remove ??= new List<VRRig>();
+                            remove.Add(pair.Key);
+                            if (pair.Value != null)
+                                Object.Destroy(pair.Value);
+                        }
+                    }
+                    if (remove != null)
+                    {
+                        foreach (var vrrig in remove)
+                            tracersPool.Remove(vrrig);
+                    }
+                    if (!tracersPool.TryGetValue(rig, out GameObject holder))
+                    {
+                        LineRenderer line;
+                        (holder, line) = Utility.CreateLine(rig.headMesh.transform, Utility.RightHandTransform(), rig.IsTagged() ? Color.red : Color.grey);
+                        tracersPool[rig] = holder;
                     }
                 }
             }
+        }
+        public static void CleanUpTracers()
+        {
+            foreach (var obj in tracersPool.Values)
+            {
+                if (obj != null)
+                    Object.Destroy(obj);
+            }
+            tracersPool.Clear();
         }
 
         public static void fullBright()
