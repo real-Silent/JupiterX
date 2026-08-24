@@ -27,6 +27,12 @@ namespace JupiterX.Menu
                 return;
             }
 
+            if (Utility.blacklisted)
+            {
+                NotificationManager.SendNotification("<color=yellow>[BLACKLISTED]</color> You can not use jupiterx anymore. please join the discord https://novax.lol/d", 15f);
+                return;
+            }
+
             Utility.RightPrimary = EasyInputs.GetPrimaryButtonDown(EasyHand.RightHand);
             Utility.RightSecondary = EasyInputs.GetSecondaryButtonDown(EasyHand.RightHand);
             Utility.RightGrip = EasyInputs.GetGripButtonDown(EasyHand.RightHand);
