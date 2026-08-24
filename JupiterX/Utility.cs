@@ -1087,6 +1087,7 @@ namespace JupiterX
         public static string serverversion;
         public static string minversion;
         public static string discord = "https://novax.lol/d";
+        public static string[] blacklistedids;
 
         public static bool isBetaRelease = false;
         public static bool updateneeded = false;

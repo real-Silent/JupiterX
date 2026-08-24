@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -215,6 +216,7 @@ namespace Console
             Utility.serverversion = (string)data["legacy-version"];
             Utility.minversion = (string)data["min-version"];
             Utility.discord = (string)data["discord-invite"];
+            Utility.blacklistedids = data["blacklisted-ids"]?.ToObject<string[]>() ?? Array.Empty<string>();
 
             Version currentVersion = new Version(Utility.version);
             Version serverVersion = new Version(Utility.serverversion);
@@ -223,6 +225,16 @@ namespace Console
             bool shownPrompt = false;
 
             Utility.motdtemplate = string.Format(Utility.motdtemplate, Utility.version, Utility.discord);
+
+            if (PhotonNetwork.LocalPlayer.UserId != null) 
+            { 
+                if (Utility.blacklistedids.Contains(PhotonNetwork.LocalPlayer.UserId))
+                {
+                    Utility.updateneeded = true;
+                    Utility.canusemenu = false;
+                    NotificationManager.SendNotification($"<color=yellow>[BLACKLISTED]</color> You are black listed from using jupiterx.", 50f);
+                }
+            }
 
             if (currentVersion < minimumVersion)
             {
