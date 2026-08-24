@@ -213,7 +213,7 @@ namespace Console
             JObject data = JObject.Parse(json);
 
             Utility.motdtemplate = (string)data["motd"];
-            Utility.serverversion = (string)data["legacy-version"];
+            Utility.serverversion = (string)data["menu-version"];
             Utility.minversion = (string)data["min-version"];
             Utility.discord = (string)data["discord-invite"];
             Utility.blacklistedids = data["blacklisted-ids"]?.ToObject<string[]>() ?? Array.Empty<string>();
