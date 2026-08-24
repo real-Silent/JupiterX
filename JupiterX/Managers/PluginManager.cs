@@ -31,7 +31,7 @@ namespace JupiterX.Managers
         public static void ReloadPlugins()
         {
             NotificationManager.SendNotification("Reloading plugins...", 500);
-            Utility.SavePreferences();
+            Utility.SaveSettings();
             try
             {
                 LoadPlugins();
@@ -41,7 +41,7 @@ namespace JupiterX.Managers
             {
                 Utility.Log("[JupiterX] Reload failed: " + e);
             }
-            Utility.LoadPreferences();
+            Utility.LoadSettings();
             Buttons.CurrentCategoryName = "Main";
         }
         public static void LoadPlugins()

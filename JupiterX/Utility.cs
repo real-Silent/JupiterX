@@ -20,6 +20,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
+using static Mono.CSharp.Operator;
 
 namespace JupiterX
 {
@@ -819,7 +820,6 @@ namespace JupiterX
             return GorillaTagger.Instance.GetComponent<Rigidbody>();
         }
 
-
         public static void UnlockAll()
         {
             foreach (CosmeticItem item in GetAllCosmetics())
@@ -1094,7 +1094,7 @@ namespace JupiterX
         public static string motdtemplate = @$"THANK YOU FOR USING JUPITERX, THE BEST FREE CHEAT MENU FOR GORILLA TAG COPYS. YOU ARE USING VERSION {version}, IF YOU HAVE PAID FOR THIS MENU YOU HAVE BEEN <color=red>RATTED</color>, JOIN THE DISCORD https://novax.lol/d";
 
         public static string MainPath = Path.Combine(Application.persistentDataPath, "JupiterX");
-        public static string PreferencesPath = Path.Combine(MainPath, "Preferences.txt");
+        public static string PreferencesPath = Path.Combine(MainPath, "Preferences.json");
         public static string HasUsedMenuBefore = Path.Combine(MainPath, "UsedBefore.txt");
 
         public static Text motdText;
@@ -1119,116 +1119,6 @@ namespace JupiterX
                 Directory.CreateDirectory(MainPath);
             if (!File.Exists(PreferencesPath))
                 File.Create(PreferencesPath);
-        }
-        static int loadingPreferencesFrame;
-        static bool hasLoadedPreferences;
-        public static string SavePreferencesToText()
-        {
-            const string separator = ";;";
-            List<string> enabledButtons = new List<string>();
-            foreach (ButtonInfo[] buttonList in Buttons.buttons)
-            {
-                foreach (ButtonInfo button in buttonList)
-                {
-                    if (button != null && button.enabled && button.buttonText != "Save Preferences")
-                        enabledButtons.Add(button.buttonText);
-                }
-            }
-            string enabledText = string.Join(separator, enabledButtons);
-            string favoriteText = favorites != null ? string.Join(separator, favorites) : "";
-            string quickActionText = quickActions != null ? string.Join(separator, quickActions) : "";
-            string settingsText = string.Join(separator, new string[]
-            {
-                ((int)PageType).ToString(),
-                ((int)currentTheme).ToString(),
-                ((int)dropType).ToString(),
-                Movement.FlySpeedAmount.ToString(),
-                Movement.ArmSizeAmount.ToString(),
-                ((int)currentFontStyleChoice).ToString(),
-                ((int)inputTextColorInt).ToString(),
-                ((int)gunVariation).ToString()
-            });
-            return string.Join("\n", new[] { enabledText, favoriteText, quickActionText, settingsText });
-        }
-        public static void SavePreferences() =>
-            File.WriteAllText($"{PreferencesPath}", SavePreferencesToText());
-        private static void ForceEnable(string name)
-        {
-            var btn = Buttons.GetIndex(name);
-            if (btn != null && !btn.enabled)
-                Main.Toggle(name);
-        }
-        public static void LoadPreferencesFromText(string text)
-        {
-            loadingPreferencesFrame = Time.frameCount;
-            Panic();
-            if (string.IsNullOrWhiteSpace(text))
-                return;
-            string[] textData = text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-            if (textData.Length < 4)
-                return;
-            favorites ??= new List<string>();
-            quickActions ??= new List<string>();
-            try
-            {
-                string[] data = textData[3].Split(new[] { ";;" }, StringSplitOptions.None);
-                if (data.Length >= 8)
-                {
-                    PageType = int.Parse(data[0]);
-                    currentTheme = int.Parse(data[1]);
-                    dropType = int.Parse(data[2]);
-                    Movement.FlySpeedAmount = int.Parse(data[3]);
-                    Movement.ArmSizeAmount = int.Parse(data[4]);
-                    currentFontStyleChoice = int.Parse(data[5]);
-                    inputTextColorInt = int.Parse(data[6]);
-                    gunVariation = int.Parse(data[7]);
-                    ChangePageType();
-                    ChangeMenuTheme();
-                    ChangeDropType();
-                    Movement.ChangeFlySpeed();
-                    Movement.ChangeArmLength();
-                    ChangeFontStyle();
-                    ChangeInputTextColor();
-                    ChangeGunVariation();
-                }
-            }
-            catch { }
-            string[] activeButtons = textData[0].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string button in activeButtons)
-            {
-                Main.Toggle(button);
-            }
-            ForceEnable("Custom Boards");
-            ForceEnable("Stump Text");
-            ForceEnable("FPS Text");
-            ForceEnable("Version Text");
-            ForceEnable("See Others Menus");
-            favorites.Clear();
-            foreach (string fav in textData[1].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                favorites.Add(fav);
-            }
-            quickActions.Clear();
-            foreach (string quick in textData[2].Split(new[] { ";;" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                if (Buttons.GetIndex(quick) != null)
-                    quickActions.Add(quick);
-            }
-            hasLoadedPreferences = true;
-        }
-        public static void LoadPreferences()
-        {
-            try
-            {
-                if (!File.Exists($"{PreferencesPath}"))
-                {
-                    hasLoadedPreferences = true;
-                    return;
-                }
-                string text = File.ReadAllText($"{PreferencesPath}");
-                LoadPreferencesFromText(text);
-            }
-            catch (Exception e) { Log("Error loading preferences: " + e.Message); }
         }
         public static void DetectOtherUsers()
         {
@@ -1281,15 +1171,11 @@ namespace JupiterX
             {
                 foreach (ButtonInfo button in btn)
                 {
-                    if (IsAlwaysOn(button.buttonText))
-                        continue;
                     if (button.enabled)
                         Main.Toggle(button.buttonText);
                 }
             }
         }
-        private static bool IsAlwaysOn(string text) =>
-            text == "Custom Boards" || text == "Stump Text" || text == "Version Text" || text == "See Others Menus" || text == "FPS Text";
         public static (GameObject lineholder, LineRenderer line) CreateLine(Transform pos1, Transform pos2, Color color)
         {
             GameObject lineholder = new GameObject();
@@ -1480,6 +1366,101 @@ namespace JupiterX
             {
                 return GameObject.FindObjectsOfType<PhotonNetworkController>().FirstOrDefault();
             }
+        }
+
+        public class SavedSettings
+        {
+            public int currentTheme { get; set; }
+            public int currentFontStyleChoice { get; set; }
+            public int PageType { get; set; }
+            public int dropType { get; set; }
+            public int inputTextColorInt { get; set; }
+            public int gunVariation { get; set; }
+            public int menuScaleIndex { get; set; }
+            public int FlySpeedAmount { get; set; }
+            public int ArmSizeAmount { get; set; }
+            public List<string> enabledMods { get; set; } = new List<string>();
+            public List<string> favorites { get; set; } = new List<string>();
+            public List<string> quickactions { get; set; } = new List<string>();
+        }
+
+        public static void SaveSettings()
+        {
+            Directory.CreateDirectory(MainPath);
+
+            SavedSettings settings = new SavedSettings
+            {
+                currentTheme = currentTheme,
+                currentFontStyleChoice = currentFontStyleChoice,
+                PageType = PageType,
+                dropType = dropType,
+                inputTextColorInt = inputTextColorInt,
+                gunVariation = gunVariation,
+                menuScaleIndex = menuScaleIndex,
+                FlySpeedAmount = Movement.FlySpeedAmount,
+                ArmSizeAmount = Movement.FlySpeedAmount,
+                enabledMods = Buttons.buttons.SelectMany(x => x).Where(x => x.enabled).Select(x => x.buttonText).ToList(),
+                favorites = favorites,
+                quickactions = quickActions
+            };
+            settings.enabledMods = Buttons.buttons.SelectMany(x => x).Where(x => x.enabled).Select(x => x.buttonText).ToList();
+            File.WriteAllText(PreferencesPath, JsonConvert.SerializeObject(settings, Formatting.Indented));
+        }
+
+        public static void LoadSettings()
+        {
+            string path = Path.Combine(PreferencesPath);
+            if (!File.Exists(path))
+                return;
+            try
+            {
+                SavedSettings settings = JsonConvert.DeserializeObject<SavedSettings>(File.ReadAllText(path));
+                if (settings == null)
+                    return;
+
+                currentTheme = settings.currentTheme - 1;
+                ChangeMenuTheme();
+
+                currentFontStyleChoice = settings.currentFontStyleChoice - 1;
+                ChangeFontStyle();
+
+                PageType = settings.PageType - 1;
+                ChangePageType();
+
+                dropType = settings.dropType - 1;
+                ChangeDropType();
+
+                inputTextColorInt = settings.inputTextColorInt - 1;
+                ChangeInputTextColor();
+
+                gunVariation = settings.gunVariation - 1;
+                ChangeGunVariation();
+
+                menuScaleIndex = settings.menuScaleIndex - 1;
+                ChangeMenuScale();
+
+                Movement.FlySpeedAmount = settings.FlySpeedAmount - 1;
+                Movement.ChangeFlySpeed();
+
+                Movement.ArmSizeAmount = settings.ArmSizeAmount - 1;
+                Movement.ChangeArmLength();
+
+                HashSet<string> enabled = settings.enabledMods.ToHashSet();
+                foreach (ButtonInfo button in Buttons.buttons.SelectMany(x => x))
+                {
+                    bool shouldBeEnabled = enabled.Contains(button.buttonText);
+                    if (button.enabled != shouldBeEnabled)
+                        Toggle(button.buttonText);
+                }
+                favorites.Clear();
+                foreach (var fav in settings.favorites)
+                    favorites.Add(fav);
+
+                quickActions.Clear();
+                foreach (var quick in settings.quickactions)
+                    quickActions.Add(quick);
+            }
+            catch { }
         }
     }
 }

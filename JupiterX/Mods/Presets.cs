@@ -11,7 +11,7 @@ namespace JupiterX.Mods
             if (!Directory.Exists($"{Utility.MainPath}/SavedPresets"))
                 Directory.CreateDirectory($"{Utility.MainPath}/SavedPresets");
 
-            File.WriteAllText($"{Utility.MainPath}/SavedPresets/Preset_" + id + ".txt", Utility.SavePreferencesToText());
+            //File.WriteAllText($"{Utility.MainPath}/SavedPresets/Preset_" + id + ".txt", Utility.SavePreferencesToText());
         }
 
         public static void LoadCustomPreset(int id)
@@ -19,7 +19,7 @@ namespace JupiterX.Mods
             if (Directory.Exists($"{Utility.MainPath}/SavedPresets"))
             {
                 string text = File.ReadAllText($"{Utility.MainPath}/SavedPresets/Preset_" + id + ".txt");
-                Utility.LoadPreferencesFromText(text);
+                //Utility.LoadSettings(text);
             }
         }
 

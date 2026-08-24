@@ -143,7 +143,7 @@ namespace JupiterX
             Buttons.GetIndex("Change Gun Variation").overlapText = $"Change Gun Variation <color=grey>[</color><color=cyan>" + VariationNames[gunVariation] + "</color><color=grey>]</color>";
         }
 
-        private static int menuScaleIndex = 10;
+        public static int menuScaleIndex = 10;
         public static void ChangeMenuScale(bool positive = true)
         {
             if (positive)

@@ -97,20 +97,6 @@ namespace JupiterX
             jupixharm.PatchAll();
         }
 
-        [Obsolete]
-        public override void OnApplicationLateStart()
-        {
-            base.OnApplicationLateStart();
-
-            if (File.Exists($"{Utility.PreferencesPath}"))
-            {
-                Utility.LoadPreferences();
-                /*Menu.Main.Toggle("Custom Boards");
-                Menu.Main.Toggle("Stump Text");
-                Menu.Main.Toggle("Version Text");*/
-            }
-        }
-
         public override void OnUpdate()
         {
             base.OnUpdate();
