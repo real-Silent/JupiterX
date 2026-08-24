@@ -489,8 +489,6 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Create 50 Player Room", method =() => Overpowered.CreatePublic(50), isTogglable = true, toolTip = "Creates a public room that has 50 players allowed." },
                 new ButtonInfo { buttonText = "Create 100 Player Room", method =() => Overpowered.CreatePublic(100), isTogglable = true, toolTip = "Creates a public room that has 100 players allowed." },
 
-                new ButtonInfo { buttonText = "Float Gun", method =() => Overpowered.FloatGun(), isTogglable = true, toolTip = "Attempts to make the person you shoot at float." },
-
                 new ButtonInfo { buttonText = "Crash Gun", method =() => Overpowered.CrashGun(), isTogglable = true, toolTip = "Lets you crash someone you shoot at." },
                 new ButtonInfo { buttonText = "Crash Gun V2", method =() => Overpowered.CrashGunV2(), isTogglable = true, toolTip = "Lets you crash someone you shoot at." },
                 new ButtonInfo { buttonText = "Crash Gun V3", overlapText = "Insta Crash Gun", method =() => Overpowered.CrashGunV3(), isTogglable = true, toolTip = "Lets you crash someone you shoot at." },
@@ -1003,4 +1001,6 @@ new ButtonInfo { buttonText = "Get F'd Spawn", method = () => Experimental.GetFu
 new ButtonInfo { buttonText = "Ban Gun [JX Modding Game]", method =() => Overpowered.BanGunJXModding(), isTogglable = true },
 
 new ButtonInfo { buttonText = "Teleport To Slingshot", method =() => Utility.BetaTPToSling(), isTogglable = true },
+
+new ButtonInfo { buttonText = "Float Gun", method =() => Overpowered.FloatGun(), isTogglable = true, toolTip = "Attempts to make the person you shoot at float." },
 */
