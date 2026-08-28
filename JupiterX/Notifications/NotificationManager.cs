@@ -43,6 +43,7 @@ namespace JupiterX.Notifications
             canvas.worldCamera = MainCamera.GetComponent<Camera>();
             RectTransform rect = HUDObj.GetComponent<RectTransform>();
             rect.sizeDelta = new Vector2(5f, 5f);
+            HUDObj2.transform.SetParent(MainCamera.transform);
             HUDObj2.transform.position = MainCamera.transform.position;
             rect.localPosition = new Vector3(0f, 0f, 1.6f);
             HUDObj.transform.localScale = Vector3.one;
