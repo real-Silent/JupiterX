@@ -19,7 +19,6 @@ namespace JupiterX.Managers
             {
                 if (_achievements != null) return _achievements;
                 _achievements = new List<Achievement>();
-
                 string achievementsFolder = Path.Combine(Application.persistentDataPath, "JupiterX", "Achievements");
                 string[] files = Directory.GetFiles(achievementsFolder);
                 foreach (string file in files)
@@ -27,7 +26,6 @@ namespace JupiterX.Managers
                     if (file.EndsWith(".json"))
                         _achievements.Add(Achievement.FromJObject(JObject.Parse(File.ReadAllText(file))));
                 }
-
                 return _achievements;
             }
             set => _achievements = value;
@@ -36,9 +34,7 @@ namespace JupiterX.Managers
         public static void EnterAchievementTab()
         {
             int achievementCount = Achievements.Count;
-
             List<ButtonInfo> achievementButtons = new List<ButtonInfo> { new ButtonInfo { buttonText = "Exit Achievements", method = () => Buttons.CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page." } };
-
             if (achievementCount <= 0)
                 achievementButtons.Add(
                     new ButtonInfo
@@ -60,7 +56,6 @@ namespace JupiterX.Managers
                             toolTip = achievement.description
                         });
                 }
-
             Buttons.buttons[Buttons.GetCategory("Achievements")] = achievementButtons.ToArray();
             Buttons.CurrentCategoryName = "Achievements";
         }
@@ -72,10 +67,8 @@ namespace JupiterX.Managers
         {
             if (HasAchievement(achievement.name))
                 return;
-
             Utility.PlaySound(Utility.achievementSound);
             NotificationManager.SendNotification($"<color=grey>[</color><color=purple>ACHIEVEMENT</color><color=grey>]</color> Achievement unlocked! \"{achievement.name}\"\n{achievement.description}", 5f);
-
             Achievements.Add(achievement);
             string achievementsFolder = Path.Combine(Application.persistentDataPath, "JupiterX", "Achievements");
             if (!Directory.Exists(achievementsFolder))
@@ -87,16 +80,12 @@ namespace JupiterX.Managers
         public struct Achievement
         {
             public string name;
-
             public string description;
-
             public readonly JObject ToJObject() => new JObject
             {
                 ["name"] = name,
-
                 ["description"] = description
             };
-
             public static Achievement FromJObject(JObject obj) => new Achievement
             {
                 name = (string)obj["name"],
