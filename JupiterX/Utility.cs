@@ -594,7 +594,6 @@ namespace JupiterX
         {
             if (disableGhostview)
                 return;
-
             if (enabled)
             {
                 if (legacyGhostview)
@@ -656,6 +655,7 @@ namespace JupiterX
 
         public static bool IsMaster() =>
             MyPlayer().IsMasterClient;
+
         public static void BetaDestroyPlayers(Photon.Realtime.Player who)
         {
             MakeMeMaster();
