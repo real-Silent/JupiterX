@@ -14,7 +14,6 @@ namespace JupiterX.Mods
 {
     public class Fun
     {
-        // Head mods from seralyth im lazy
         private static VRMap Head =>
             PhotonNetwork.InRoom ? GorillaTagger.Instance.myVRRig.head : GorillaTagger.Instance.offlineVRRig.head;
 
@@ -101,7 +100,6 @@ namespace JupiterX.Mods
         public static void HeadBang()
         {
             Vector3 rot = Head.trackingRotationOffset;
-
             if (Time.time > lastBangTime)
             {
                 rot.x = 50f;
@@ -118,7 +116,7 @@ namespace JupiterX.Mods
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                     {
                         PhotonNetwork.Instantiate("bulletPrefab", rig.transform.position + new Vector3(0, 0, 0.6f), rig.headConstraint.transform.rotation);
                     }
@@ -246,7 +244,7 @@ namespace JupiterX.Mods
                 NotificationManager.SendNotification("<color=red>[ERROR]</color> Are you in a room ?");
                 return;
             }
-            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerList)
+            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
             {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.Append($"---------------{PhotonNetwork.CurrentRoom.Name}---------------");
@@ -360,7 +358,7 @@ namespace JupiterX.Mods
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                 {
                     rig.muted = true;
                     GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Mute);
@@ -372,7 +370,7 @@ namespace JupiterX.Mods
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                 {
                     rig.muted = false;
                     GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(false, GorillaPlayerLineButton.ButtonType.Mute);
@@ -405,7 +403,7 @@ namespace JupiterX.Mods
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
                 {
                     GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Report);
                     GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Cheating);
