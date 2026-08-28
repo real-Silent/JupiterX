@@ -147,7 +147,9 @@ namespace JupiterX
         {
             string[] VariationNames = {
                 "Default",
-                "Legacy"
+                "Legacy",
+                "Forward",
+                "Inverted"
             };
 
             if (positive)

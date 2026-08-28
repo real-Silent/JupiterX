@@ -1815,7 +1815,13 @@ namespace JupiterX.Menu
                     gunDirection = gunHand.forward + -gunHand.up;
                     break;
                 case 1:
+                    gunDirection = -gunHand.up;
+                    break;
+                case 2:
                     gunDirection = gunHand.forward;
+                    break;
+                case 3:
+                    gunDirection = gunHand.up + gunHand.forward;
                     break;
             }
 
