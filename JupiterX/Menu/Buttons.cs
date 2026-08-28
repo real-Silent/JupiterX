@@ -391,6 +391,9 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Get ID All", method =() => Fun.GetIdAll(), isTogglable = false, toolTip = "Gets everyone in the room userid and writes it to a file." },
 
                 new ButtonInfo { buttonText = "Grab Player Info", method =() => Fun.GrabRoomInfo(), isTogglable = false, toolTip = "Gets the room info and writes it to a file." },
+
+                new ButtonInfo { buttonText = "Open Basement Door", method =() => Fun.ChangeDoorState(GTDoor.DoorState.Opening), isTogglable = false, toolTip = "Gets the room info and writes it to a file." },
+                new ButtonInfo { buttonText = "Close Basement Door", method =() => Fun.ChangeDoorState(GTDoor.DoorState.Closed), isTogglable = false, toolTip = "Gets the room info and writes it to a file." },
             },
 
             new ButtonInfo[] { // Name | 10

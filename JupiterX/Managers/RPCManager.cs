@@ -1,5 +1,7 @@
 ﻿using Photon.Pun;
+using System.Linq;
 using UnhollowerBaseLib;
+using UnityEngine;
 
 // JupiterX copyright 2026
 /*
@@ -41,6 +43,21 @@ namespace JupiterX.Managers
             for (int i = 0; i < param.Length; i++)
                 args[i] = BoxManager.BoxAny(param[i]);
             GorillaGameManager.instance.photonView.RPC(methodname, target, args);
+        }
+
+        public static void GTDoorRPC(string methodname, RpcTarget target, object[] param)
+        {
+            var args = new Il2CppReferenceArray<Il2CppSystem.Object>(param.Length);
+            for (int i = 0; i < param.Length; i++)
+                args[i] = BoxManager.BoxAny(param[i]);
+            GameObject.FindObjectsOfType<GTDoor>().FirstOrDefault().photonView.RPC(methodname, target, args);
+        }
+        public static void GTDoorRPC(string methodname, Photon.Realtime.Player target, object[] param)
+        {
+            var args = new Il2CppReferenceArray<Il2CppSystem.Object>(param.Length);
+            for (int i = 0; i < param.Length; i++)
+                args[i] = BoxManager.BoxAny(param[i]);
+            GameObject.FindObjectsOfType<GTDoor>().FirstOrDefault().photonView.RPC(methodname, target, args);
         }
     }
 }

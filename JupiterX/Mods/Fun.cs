@@ -1,4 +1,5 @@
 ﻿using JupiterX.Classes;
+using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;
@@ -411,6 +412,11 @@ namespace JupiterX.Mods
                     GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).ReportPlayer(rig.photonView.Owner.UserId, GorillaPlayerLineButton.ButtonType.Cheating, rig.photonView.Owner.NickName);
                 }
             }
+        }
+
+        public static void ChangeDoorState(GTDoor.DoorState state)
+        {
+            RPCManager.GTDoorRPC("ChangeDoorState", RpcTarget.AllViaServer, new object[] { state });
         }
     }
 }

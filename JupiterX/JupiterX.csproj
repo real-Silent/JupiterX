@@ -48,9 +48,8 @@
     <Reference Include="0Harmony">
       <HintPath>..\..\QolossalStuff\Refrences\0Harmony.dll</HintPath>
     </Reference>
-
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Videos\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\QolossalStuff\SoringAssembly\Assembly-CSharp.dll</HintPath>
     </Reference>
 
     <Reference Include="Assembly-CSharp-firstpass">
