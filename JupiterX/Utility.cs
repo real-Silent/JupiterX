@@ -1383,9 +1383,9 @@ namespace JupiterX
             public int menuScaleIndex { get; set; }
             public int FlySpeedAmount { get; set; }
             public int ArmSizeAmount { get; set; }
-            public List<string> enabledMods { get; set; } = new List<string>();
-            public List<string> favorites { get; set; } = new List<string>();
-            public List<string> quickactions { get; set; } = new List<string>();
+            public List<string> enabledMods { get; set; }
+            public List<string> favorites { get; set; }
+            public List<string> quickactions { get; set; }
         }
 
         public static void SaveSettings()
@@ -1408,6 +1408,7 @@ namespace JupiterX
                 favorites = favorites,
                 quickactions = quickActions
             };
+
             File.WriteAllText(PreferencesPath, JsonConvert.SerializeObject(settings, Formatting.Indented));
         }
 
@@ -1418,9 +1419,9 @@ namespace JupiterX
                 return;
             try
             {
-                SavedSettings settings = JsonConvert.DeserializeObject<SavedSettings>(File.ReadAllText(path));
-                if (settings == null)
-                    return;
+                SavedSettings settings = new SavedSettings();
+
+                JsonConvert.PopulateObject(File.ReadAllText(path), settings);
 
                 currentTheme = settings.currentTheme - 1;
                 ChangeMenuTheme();
@@ -1459,6 +1460,7 @@ namespace JupiterX
                     if (button.enabled != shouldBeEnabled)
                         Toggle(button.buttonText);
                 }
+
                 favorites.Clear();
                 foreach (var fav in settings.favorites)
                     favorites.Add(fav);
