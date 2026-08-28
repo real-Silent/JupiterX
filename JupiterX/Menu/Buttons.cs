@@ -54,7 +54,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Settings", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
 
                 new ButtonInfo { buttonText = "Menu Settings", method =() => CurrentCategoryName = "Menu Settings", isTogglable = false, toolTip = "Opens the menu settings page for the menu." },
-                new ButtonInfo { buttonText = "Category Settings", method = Settings.CategorySettings, isTogglable = false, toolTip = "Opens the settings for the categories." },
+                new ButtonInfo { buttonText = "Category Settings", method = CategorySettings, isTogglable = false, toolTip = "Opens the settings for the categories." },
 
                 new ButtonInfo { buttonText = "Movement Settings", method =() => CurrentCategoryName = "Movement Settings", isTogglable = false, toolTip = "Opens the movement settings page for the menu." },
                 new ButtonInfo { buttonText = "Gun Settings", method =() => CurrentCategoryName = "Gun Settings", isTogglable = false, toolTip = "Opens the gun settings page for the menu." },
