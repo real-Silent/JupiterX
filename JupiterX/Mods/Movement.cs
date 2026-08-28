@@ -640,12 +640,12 @@ namespace JupiterX.Mods
         static bool hasTped = false;
         public static void TPGun()
         {
-            if (JupiterX.Menu.Main.GetGunInput(false))
+            if (GetGunInput(false))
             {
-                var GunData = JupiterX.Menu.Main.RenderGun();
+                var GunData = RenderGun();
                 GameObject NewPointer = GunData.Pointer;
 
-                if (JupiterX.Menu.Main.GetGunInput(true))
+                if (GetGunInput(true))
                 {
                     if (!hasTped)
                     {
