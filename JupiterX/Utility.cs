@@ -6,6 +6,7 @@ using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Mods;
 using JupiterX.Notifications;
+using Mono.CSharp;
 using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
@@ -1378,6 +1379,7 @@ namespace JupiterX
             public int dropType { get; set; }
             public int inputTextColorInt { get; set; }
             public int gunVariation { get; set; }
+            public int GunDirection { get; set; }
             public int menuScaleIndex { get; set; }
             public int FlySpeedAmount { get; set; }
             public int ArmSizeAmount { get; set; }
@@ -1398,6 +1400,7 @@ namespace JupiterX
                 dropType = dropType,
                 inputTextColorInt = inputTextColorInt,
                 gunVariation = gunVariation,
+                GunDirection = GunDirection,
                 menuScaleIndex = menuScaleIndex,
                 FlySpeedAmount = Movement.FlySpeedAmount,
                 ArmSizeAmount = Movement.ArmSizeAmount,
@@ -1436,6 +1439,9 @@ namespace JupiterX
 
                 gunVariation = settings.gunVariation - 1;
                 ChangeGunVariation();
+
+                GunDirection = settings.GunDirection - 1;
+                ChangeGunDirection();
 
                 menuScaleIndex = settings.menuScaleIndex - 1;
                 ChangeMenuScale();

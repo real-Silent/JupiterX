@@ -2,6 +2,7 @@
 using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Notifications;
+using Mono.CSharp;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -1805,7 +1806,19 @@ namespace JupiterX.Menu
             Pointer.GetComponent<Renderer>().material.color = gunColor;
 
             Transform gunHand = SwapGunHand ? GorillaTagger.Instance.leftHandTransform : GorillaTagger.Instance.rightHandTransform;
-            Physics.Raycast(gunHand.position, gunHand.forward + -gunHand.up, out Ray, float.PositiveInfinity, NoInvisLayerMask());
+
+            Vector3 gunDirection = gunHand.forward + -gunHand.up;
+            switch (GunDirection)
+            {
+                case 1:
+                    gunDirection = gunHand.forward + -gunHand.up;
+                    break;
+                case 2:
+                    gunDirection = gunHand.forward;
+                    break;
+            }
+
+            Physics.Raycast(gunHand.position, gunDirection, out Ray, float.PositiveInfinity, NoInvisLayerMask());
 
             Vector3 EndPosition = gunLocked ? lockTarget.headMesh.transform.position : Ray.point;
             Pointer.transform.position = EndPosition;
