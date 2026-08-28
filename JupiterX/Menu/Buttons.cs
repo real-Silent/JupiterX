@@ -533,8 +533,7 @@ namespace JupiterX.Menu
 
                 new ButtonInfo { buttonText = "Spam Pop & Unpop Balloon <color=grey>[</color><color=cyan>RT</color><color=grey>]</color>", method =() => Experimental.BalloonSpam(), isTogglable = true, toolTip = "Spams everyones balloon while holding right trigger." },
 
-                new ButtonInfo { buttonText = "Spam Mute All", method =() => Utility.PacketStresser(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
-                new ButtonInfo { buttonText = "Spam Mute All V2", method =() => Utility.BetaSpamMuteAll(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
+                new ButtonInfo { buttonText = "Freeze All", method =() => Utility.PacketStresser(), isTogglable = true, toolTip = "Attempts to freeze everyone in the lobby." },
             },
 
             new ButtonInfo[] { // Master | 14
@@ -1008,4 +1007,6 @@ new ButtonInfo { buttonText = "Ban Gun [JX Modding Game]", method =() => Overpow
 new ButtonInfo { buttonText = "Teleport To Slingshot", method =() => Utility.BetaTPToSling(), isTogglable = true },
 
 new ButtonInfo { buttonText = "Float Gun", method =() => Overpowered.FloatGun(), isTogglable = true, toolTip = "Attempts to make the person you shoot at float." },
+
+new ButtonInfo { buttonText = "Spam Mute All V2", method =() => Utility.BetaSpamMuteAll(), isTogglable = true, toolTip = "Spams all the report and mute buttons." },
 */

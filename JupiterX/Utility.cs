@@ -251,18 +251,7 @@ namespace JupiterX
             }
             return null;
         }
-        public static void BetaSpamMuteAll()
-        {
-            for (int I = 0; I < 9; I++)
-            {
-                lastfreezegarbadge = !lastfreezegarbadge;
-                foreach (GorillaPlayerScoreboardLine line in GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>())
-                {
-                    line.SetReportState(true, GorillaPlayerLineButton.ButtonType.Mute);
-                    line.muteButton.testPress = lastfreezegarbadge;
-                }
-            }
-        }
+
         public static void BetaCrashAllV2(VRRig target)
         {
             MakeMeMaster();
@@ -275,19 +264,21 @@ namespace JupiterX
                 PhotonNetwork.SendDestroyOfPlayer(target.photonView.Controller.ActorNumber);
             }
         }
+
         static bool lastfreezegarbadge;
         public static void PacketStresser()
         {
-            for (int I = 0; I < 9; I++)
+            for (int i = 0; i < 9; i++)
             {
                 lastfreezegarbadge = !lastfreezegarbadge;
                 foreach (GorillaPlayerScoreboardLine line in GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>())
                 {
                     line.muteButton.testPress = lastfreezegarbadge;
-                    line.SetReportState(lastfreezegarbadge, GorillaPlayerLineButton.ButtonType.Mute);
+                    line.PressButton(lastfreezegarbadge, GorillaPlayerLineButton.ButtonType.Mute);
                 }
             }
         }
+
         private static readonly System.Random _random = new System.Random();
         private const string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         public static string Generate(int length)
