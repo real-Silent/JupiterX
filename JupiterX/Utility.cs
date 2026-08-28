@@ -1370,6 +1370,14 @@ namespace JupiterX
             }
         }
 
+        public static PlayFabAuthenticator playFabAuthenticator
+        {
+            get
+            {
+                return GameObject.FindObjectsOfType<PlayFabAuthenticator>().FirstOrDefault();
+            }
+        }
+
         public class SavedSettings
         {
             public int currentTheme { get; set; }
