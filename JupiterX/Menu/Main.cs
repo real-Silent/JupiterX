@@ -1810,10 +1810,11 @@ namespace JupiterX.Menu
             Vector3 gunDirection = gunHand.forward + -gunHand.up;
             switch (GunDirection)
             {
-                case 1:
+                case 0:
+                default:
                     gunDirection = gunHand.forward + -gunHand.up;
                     break;
-                case 2:
+                case 1:
                     gunDirection = gunHand.forward;
                     break;
             }
@@ -1987,6 +1988,7 @@ namespace JupiterX.Menu
                 else
                     return GriplessGuns || (SwapGunHand ? giveGunTarget.leftMiddle.calcT > 0.5f : giveGunTarget.rightMiddle.calcT > 0.5f);
             }
+
             if (isShooting)
                 return TriggerlessGuns || (SwapGunHand ? Utility.LeftTrigger : Utility.RightTrigger) || Mouse.current.leftButton.isPressed;
             else

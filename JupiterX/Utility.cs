@@ -1408,7 +1408,7 @@ namespace JupiterX
                 favorites = favorites,
                 quickactions = quickActions
             };
-
+            settings.enabledMods = Buttons.buttons.SelectMany(x => x).Where(x => x.enabled).Select(x => x.buttonText).ToList();
             File.WriteAllText(PreferencesPath, JsonConvert.SerializeObject(settings, Formatting.Indented));
         }
 
@@ -1419,9 +1419,9 @@ namespace JupiterX
                 return;
             try
             {
-                SavedSettings settings = new SavedSettings();
-
-                JsonConvert.PopulateObject(File.ReadAllText(path), settings);
+                SavedSettings settings = JsonConvert.DeserializeObject<SavedSettings>(File.ReadAllText(path));
+                if (settings == null)
+                    return;
 
                 currentTheme = settings.currentTheme - 1;
                 ChangeMenuTheme();
@@ -1469,7 +1469,7 @@ namespace JupiterX
                 foreach (var quick in settings.quickactions)
                     quickActions.Add(quick);
             }
-            catch { }
+            catch(Exception ex) { Utility.Log($"Unable to load settings {ex}"); }
         }
     }
 }

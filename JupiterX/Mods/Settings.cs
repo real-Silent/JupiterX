@@ -159,7 +159,7 @@ namespace JupiterX
             if (GunDirection < 0)
                 GunDirection = VariationNames.Length - 1;
 
-            Buttons.GetIndex("Change Gun Direction").overlapText = $"Change Gun Direction <color=grey>[</color><color=cyan>" + VariationNames[gunVariation] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Change Gun Direction").overlapText = $"Change Gun Direction <color=grey>[</color><color=cyan>" + VariationNames[GunDirection] + "</color><color=grey>]</color>";
         }
 
         public static int menuScaleIndex = 10;
