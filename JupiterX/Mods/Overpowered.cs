@@ -1,13 +1,11 @@
 ﻿using ExitGames.Client.Photon;
 using GorillaNetworking;
 using JupiterX.Classes;
-using JupiterX.Extensions;
 using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 namespace JupiterX.Mods
 {
@@ -18,7 +16,7 @@ namespace JupiterX.Mods
             Utility.MakeMeMaster();
             if (Utility.RightTrigger)
             {
-                PhotonNetwork.Destroy(Utility.ActualRig().gameObject);
+                GameObject.Destroy(Utility.ActualRig().gameObject);
             }
         }
 
