@@ -208,7 +208,6 @@ namespace JupiterX.Mods
                 hallandspringNetworkTriggers.SetActive(!disable);
         }
 
-
         public static void Turning()
         {
             Vector2 axis = Utility.RightJoystickAxis;
