@@ -40,7 +40,6 @@ namespace JupiterX.Mods
         public static void Bees()
         {
             if (!PhotonNetwork.InRoom) return;
-
             VRRig myRig = GorillaTagger.Instance.myVRRig;
             myRig.enabled = false;
             Utility.GhostView(true);
