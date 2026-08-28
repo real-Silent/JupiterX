@@ -394,12 +394,14 @@ namespace JupiterX.Mods
 
         public static void fullBright()
         {
-            RenderSettings.fog = false; RenderSettings.ambientLight = Color.white;
+            RenderSettings.fog = false;
+            RenderSettings.ambientLight = Color.white;
         }
 
         public static void fulldrak()
         {
-            RenderSettings.fog = true; RenderSettings.ambientLight = Color.black;
+            RenderSettings.fog = true;
+            RenderSettings.ambientLight = Color.black;
         }
 
         public static void Chams(bool chams)
