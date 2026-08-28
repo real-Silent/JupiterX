@@ -297,7 +297,6 @@ namespace JupiterX.Mods
                     if (col != null)
                         col.enabled = !enabled;
                 }
-
                 lastState = enabled;
             }
         }
