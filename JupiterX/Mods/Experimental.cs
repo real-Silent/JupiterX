@@ -64,15 +64,20 @@ namespace JupiterX.Mods
         }
 
         private static readonly Dictionary<Renderer, Material> oldMats = new Dictionary<Renderer, Material>();
+
         public static void BetterFPSBoost()
         {
+            if (oldMats.Count > 0)
+                return;
             foreach (Renderer v in Resources.FindObjectsOfTypeAll<Renderer>())
             {
                 try
                 {
+                    if (v == null || v.material == null)
+                        continue;
                     if (v.material.shader.name == "Standard")
                     {
-                        oldMats.Add(v, v.material);
+                        oldMats[v] = v.material;
                         Material replacement = new Material(Utility.StandardShader())
                         {
                             color = v.material.color
@@ -80,15 +85,31 @@ namespace JupiterX.Mods
                         v.material = replacement;
                     }
                 }
-                catch (Exception exception) { Utility.Log(string.Format("mat error {1} - {0}", exception.Message, exception.StackTrace)); }
+                catch (Exception exception)
+                {
+                    Utility.Log(string.Format("mat error {1} - {0}", exception.Message, exception.StackTrace));
+                }
             }
         }
-
         public static void DisableBetterFPSBoost()
         {
-            foreach (KeyValuePair<Renderer, Material> v in oldMats)
-                v.Key.material = v.Value;
+            foreach (KeyValuePair<Renderer, Material> entry in oldMats)
+            {
+                try
+                {
+                    if (entry.Key != null && entry.Value != null)
+                    {
+                        entry.Key.material = entry.Value;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Utility.Log(string.Format("restore mat error {1} - {0}", exception.Message, exception.StackTrace));
+                }
+            }
+            oldMats.Clear();
         }
+
 
         public static void GrabGameInfo()
         {
