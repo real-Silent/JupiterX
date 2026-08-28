@@ -145,7 +145,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Exit Movement Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns to the settings page of the menu." },
 
                 new ButtonInfo { buttonText = "Change Fly Speed", method =() => Movement.ChangeFlySpeed(), enableMethod =() => Movement.ChangeFlySpeed(), disableMethod =() => Movement.ChangeFlySpeed(false), incremental = true, overlapText = "Change Fly Speed <color=grey>[<color=cyan>Very Slow</color>]</color>", isTogglable = false, toolTip = "Changes the current fly speed." },
-                new ButtonInfo { buttonText = "Change Arm Length", method =() => Movement.ChangeArmLength(), enableMethod =() => Movement.ChangeArmLength(), disableMethod =() => Movement.ChangeArmLength(false), incremental = true, overlapText = "Change Arm Length <color=grey>[<color=cyan>Stean</color>]</color>", isTogglable = false, toolTip = "Changes your arm length." },
+                new ButtonInfo { buttonText = "Change Arm Length", method =() => Movement.ChangeArmLength(), enableMethod =() => Movement.ChangeArmLength(), disableMethod =() => Movement.ChangeArmLength(false), incremental = true, overlapText = "Change Arm Length <color=grey>[<color=cyan>Steam</color>]</color>", isTogglable = false, toolTip = "Changes your arm length." },
             },
 
             new ButtonInfo[] { // Gun Settings | 19
