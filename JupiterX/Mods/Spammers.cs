@@ -72,7 +72,6 @@ namespace JupiterX.Mods
             soundId--;
             if (soundId < 0)
                 soundId = GorillaLocomotion.Player.Instance.materialData.Count - 1;
-
             Buttons.GetIndex("Custom Sound Spam").overlapText = "Custom Sound Spam <color=grey>[</color><color=cyan>" + soundId + "</color><color=grey>]</color>";
         }
 
@@ -80,7 +79,6 @@ namespace JupiterX.Mods
         {
             soundId++;
             soundId %= GorillaLocomotion.Player.Instance.materialData.Count;
-
             Buttons.GetIndex("Custom Sound Spam").overlapText = "Custom Sound Spam <color=grey>[</color><color=cyan>" + soundId + "</color><color=grey>]</color>";
         }
 
