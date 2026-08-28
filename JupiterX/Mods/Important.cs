@@ -77,7 +77,6 @@ namespace JupiterX.Mods
             Utility.photonNetworkController.AttemptToJoinSpecificRoom(code);
         }
 
-
         public static void LobbyHop()
         {
             if (PhotonNetwork.InRoom)
