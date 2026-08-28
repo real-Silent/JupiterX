@@ -265,17 +265,18 @@ namespace JupiterX
             }
         }
 
-        static bool lastfreezegarbadge;
+        private static bool lastfreezegarbadge;
+        private static float Meorw = 0f;
         public static void PacketStresser()
         {
-            for (int i = 0; i < 9; i++)
+            if (Time.time > Meorw)
             {
                 lastfreezegarbadge = !lastfreezegarbadge;
                 foreach (GorillaPlayerScoreboardLine line in GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>())
                 {
-                    line.muteButton.testPress = lastfreezegarbadge;
                     line.PressButton(lastfreezegarbadge, GorillaPlayerLineButton.ButtonType.Mute);
                 }
+                Meorw = Time.time + 0.1f;
             }
         }
 
