@@ -159,7 +159,7 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Triggerless Guns", enableMethod =() => TriggerlessGuns = true, disableMethod =() => TriggerlessGuns = false, isTogglable = true, toolTip = "Makes the gun shoot without holding trigger." },
 
                 new ButtonInfo { buttonText = "Change Gun Variation", overlapText = "Change Gun Variation <color=grey>[</color><color=cyan>Default</color><color=grey>]</color>", method =() => ChangeGunVariation(), enableMethod =() => ChangeGunVariation(), disableMethod =() => ChangeGunVariation(false), incremental = true, isTogglable = false, toolTip = "Changes the look of the gun."},
-                new ButtonInfo { buttonText = "Change Gun Direction", overlapText = "Change Gun Direction <color=grey>[</color><color=cyan>Default</color><color=grey>]</color>", method =() => ChangeGunDirection(), enableMethod =() => ChangeGunDirection(), disableMethod =() => ChangeGunDirection(false), incremental = true, isTogglable = false, toolTip = "Changes the look of the gun."},
+                new ButtonInfo { buttonText = "Change Gun Direction", overlapText = "Change Gun Direction <color=grey>[</color><color=cyan>Default</color><color=grey>]</color>", method =() => ChangeGunDirection(), enableMethod =() => ChangeGunDirection(), disableMethod =() => ChangeGunDirection(false), incremental = true, isTogglable = false, toolTip = "Changes the direction of the gun."},
             },
 
             new ButtonInfo[] { // Important | 2
