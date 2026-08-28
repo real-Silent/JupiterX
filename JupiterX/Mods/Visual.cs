@@ -536,7 +536,11 @@ namespace JupiterX.Mods
 					else
 						infected.AddRange(tagManager.currentInfected.ToArray());
 					break;
-				default:
+                case "HUNT":
+                    GorillaHuntManager huntManager = (GorillaHuntManager)GorillaGameManager.instance;
+                    infected.AddRange(huntManager.currentHunted.ToArray());
+                    break;
+                default:
 					break;
 			}
 			return infected;
