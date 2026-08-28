@@ -279,7 +279,7 @@ namespace JupiterX.Mods
             }
         }
 
-        private static List<Collider> colliders = new List<Collider>();
+        private static List<MeshCollider> colliders = new List<MeshCollider>();
         private static bool collidersCached = false;
         private static bool lastState = false;
 
@@ -287,7 +287,7 @@ namespace JupiterX.Mods
         {
             if (!collidersCached)
             {
-                colliders.AddRange(Object.FindObjectsOfType<Collider>());
+                colliders.AddRange(Object.FindObjectsOfType<MeshCollider>());
                 collidersCached = true;
             }
             if (lastState != enabled)
