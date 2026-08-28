@@ -235,17 +235,12 @@ namespace JupiterX.Mods
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetics", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetic", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetic", RpcTarget.Others, null); 
-                    Utility.myVRRig().photonView.RPC("UpdateCosmetic", RpcTarget.Others, null);
-                    Utility.BetaCrashPlayer(Main.lockTarget.photonView.Owner);
+                    for (int i = 0; i < 25; i++)
+                    {
+                        Utility.myVRRig().photonView.RPC("RequestCosmetics", RpcTarget.Others, null);
+                        Utility.myVRRig().photonView.RPC("UpdatePlayerCosmetic", RpcTarget.Others, null);
+                        Utility.BetaCrashPlayer(Main.lockTarget.photonView.Owner);
+                    }
                 }
 
                 if (Main.GetGunInput(true))

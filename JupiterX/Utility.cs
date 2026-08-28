@@ -674,7 +674,7 @@ namespace JupiterX
                     GameObject.Destroy(gameObject);
             }
         }
-        static string[] RPCNames = { "SetTaggedTime", "UpdatePlayerCosmetics", "RequestCosmetics", "ReportTagRPC" };
+        static string[] RPCNames = { "SetTaggedTime", "UpdatePlayerCosmetic", "RequestCosmetics", "ReportTagRPC" };
         static string[] prefabNames = { "gorillaprefabs/gorillaenemy", "Network Player", "STICKABLE TARGET", "bulletPrefab" };
         public static void SlowPlayer(Photon.Realtime.Player who)
         {
