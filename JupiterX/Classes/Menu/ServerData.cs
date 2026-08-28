@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using static JupiterX.Menu.Main;
 
 namespace Console
 {
@@ -240,6 +241,10 @@ namespace Console
                 Utility.extremeupdateneeded = true;
                 NotificationManager.SendNotification("<color=red>[OUTDATED]</color> On Extreme outdated version of jupiterx please update the menu now.", 30f);
                 Application.OpenURL("https://discord.gg/dtQdz59FJG");
+                PromptSingle($"Jupiterx is extremely outdated please update you are on version {Utility.version} you need to be on {Utility.serverversion} would you like to get the update ?", () =>
+                {
+                    Application.OpenURL($"https://github.com/real-Silent/JupiterX/releases/tag/V{Utility.serverversion}");
+                });
                 Application.Quit();
                 Environment.Exit(0);
                 Application.CallLowMemory();
@@ -249,6 +254,10 @@ namespace Console
                 Utility.updateneeded = true;
                 NotificationManager.SendNotification($"<color=red>[UPDATE]</color> JupiterX Needs an update please update to latest version {Utility.serverversion}.", 30f);
                 Application.OpenURL("https://discord.gg/dtQdz59FJG");
+                Prompt($"Jupiterx needs a update you are on version {Utility.version} you need to be on {Utility.serverversion} would you like to get the update ?", () =>
+                {
+                    Application.OpenURL($"https://github.com/real-Silent/JupiterX/releases/tag/V{Utility.serverversion}");
+                });
                 shownPrompt = true;
             }
 
