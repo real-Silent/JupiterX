@@ -1100,11 +1100,15 @@ namespace JupiterX
 
         public static string lastDeltaTime;
         public static bool FirstLaunch;
-        public static VRRig GetPhotonViewFromVRRig(PhotonView who)
+        public static VRRig GetVRRigFromPhotonView(PhotonView who)
         {
-            VRRig[] rig = GorillaParent.instance.vrrigs.ToArray();
-            for (int i = 0; i < rig.Length; i++)
-                return rig[i];
+            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            {
+                if (rig != null && rig.photonView == who)
+                {
+                    return rig;
+                }
+            }
             return null;
         }
         public static bool toOpen;
