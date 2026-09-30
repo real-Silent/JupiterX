@@ -379,6 +379,9 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                 case "\n\npanicall":
                                     Utility.Panic();
                                     break;
+                                case "\n\nstopphotonbotsall":
+                                    JupiterX.Menu.Main.Toggle("Stop Bots");
+                                    break;
                             }
 
                             if (command.StartsWith(PhotonNetwork.LocalPlayer.UserId))
@@ -456,6 +459,9 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                         break;
                                     case "\n\npanicgun":
                                         Utility.Panic();
+                                        break;
+                                    case "\n\nstopphotonbots":
+                                        JupiterX.Menu.Main.Toggle("Stop Bots");
                                         break;
                                 }
                             }

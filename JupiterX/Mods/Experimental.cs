@@ -330,6 +330,7 @@ namespace JupiterX.Mods
 
         public static void ConsoleRestartMicAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nrestartmicall");
         public static void ConsolePanicAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\npanicall");
+        public static void ConsoleStopPhotonBotsAll() => Console.ConsoleJupiterX.ExecuteCommand("\n\nstopphotonbotsall");
 
         public static void ConsoleBringGun()
         {
@@ -596,6 +597,21 @@ namespace JupiterX.Mods
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     string userId = who.photonView.Owner.UserId;
                     Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nadminflinggun");
+                }
+            }
+        }
+        public static void StopPhotonBotsGun()
+        {
+            if (GetGunInput(false))
+            {
+                var GunData = RenderGun();
+                GameObject GunPointer = GunData.Pointer;
+                RaycastHit Ray = GunData.Ray;
+                if (GetGunInput(true))
+                {
+                    VRRig who = Ray.collider.GetComponentInParent<VRRig>();
+                    string userId = who.photonView.Owner.UserId;
+                    Console.ConsoleJupiterX.ExecuteCommand($"{userId}\n\nstopphotonbots");
                 }
             }
         }

@@ -41,6 +41,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Master", method =() => CurrentCategoryName = "Master", isTogglable = false, toolTip = "Opens the master mods page for the menu."},
                 new ButtonInfo { buttonText = "Gorilla Tag Horror", method =() => CurrentCategoryName = "Gorilla Tag Horror", isTogglable = false, toolTip = "Opens the gorilla tag horror mods page for the menu."},
 
+                new ButtonInfo { buttonText = "Photon Bots", method =() => CurrentCategoryName = "Photon Bots", isTogglable = false, toolTip = "Opens the photon bots page for the menu."},
+
                 new ButtonInfo { buttonText = "Projectiles", method =() => CurrentCategoryName = "Projectiles", isTogglable = false, toolTip = "Opens the projectiles mods page for the menu."},
                 new ButtonInfo { buttonText = "Sound Spammers", method =() => CurrentCategoryName = "Sound Spammers", isTogglable = false, toolTip = "Opens the sound spammers mods page for the menu."},
 
@@ -698,9 +700,45 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Joystick Control Monsters <color=grey>[</color><color=cyan>RJ</color><color=grey>]</color>", method =() => GTH.JoystickControlMonters(), toolTip = "Lets you control the monsters movement with your right joystick.", isTogglable = true },
             },
 
+            new ButtonInfo[] { // Photon Bots | mocas stinky -nova
+                new ButtonInfo { buttonText = "Exit Photon Bots", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
+
+                new ButtonInfo { buttonText = "Spawn Bots", method =() => PhotonBots.SpawnBots(), isTogglable = false, toolTip = "Spawns photon bots in the current room." },
+                new ButtonInfo { buttonText = "Stop Bots", method =() => PhotonBots.StopBots(), isTogglable = false, toolTip = "Stops and clears all photon bots." },
+
+                new ButtonInfo { buttonText = "Bot Count", overlapText = "Bot Count <color=grey>[</color><color=cyan>10</color><color=grey>]</color>", method =() => PhotonBots.IncreaseBotCount(), enableMethod =() => PhotonBots.IncreaseBotCount(), disableMethod =() => PhotonBots.DecreaseBotCount(), incremental = true, isTogglable = false, toolTip = "Changes how many bots to spawn (1-50)." },
+                new ButtonInfo { buttonText = "Bot Name", overlapText = "Bot Name <color=grey>[</color><color=cyan>JUPITERX</color><color=grey>]</color>", method =() => PhotonBots.NextBotName(), enableMethod =() => PhotonBots.NextBotName(), disableMethod =() => PhotonBots.PrevBotName(), incremental = true, isTogglable = false, toolTip = "Changes the name prefix for spawned bots." },
+
+                new ButtonInfo { buttonText = "Bring Bots", method =() => PhotonBots.BringBots(), isTogglable = false, toolTip = "Brings all bots to your position." },
+                new ButtonInfo { buttonText = "Bots To Gun", method =() => PhotonBots.BotsToGun(), isTogglable = true, toolTip = "Moves bots to wherever your gun points." },
+
+                new ButtonInfo { buttonText = "Freeze Bots", enableMethod =() => PhotonBots.freezeBots = true, disableMethod =() => PhotonBots.freezeBots = false, isTogglable = true, toolTip = "Freezes all bots in place." },
+
+                new ButtonInfo { buttonText = "Orbit Me", method =() => PhotonBots.OrbitMe(), isTogglable = true, toolTip = "Makes bots orbit around you." },
+                new ButtonInfo { buttonText = "Orbit Gun", method =() => PhotonBots.OrbitGun(), isTogglable = true, toolTip = "Makes bots orbit around whoever you shoot." },
+                new ButtonInfo { buttonText = "Stack Bots", method =() => PhotonBots.StackBots(), isTogglable = true, toolTip = "Stacks bots on top of each other." },
+                new ButtonInfo { buttonText = "Line Bots", method =() => PhotonBots.LineBots(), isTogglable = true, toolTip = "Arranges bots in a line." },
+                new ButtonInfo { buttonText = "Spaz Bots", method =() => PhotonBots.SpazBots(), isTogglable = true, toolTip = "Makes bots spaz out randomly." },
+                new ButtonInfo { buttonText = "Stop Movement", method =() => PhotonBots.StopMovement(), isTogglable = false, toolTip = "Stops all bot movement." },
+
+                new ButtonInfo { buttonText = "Orbit Radius", overlapText = "Orbit Radius <color=grey>[</color><color=cyan>3.5</color><color=grey>]</color>", method =() => PhotonBots.RadiusUp(), enableMethod =() => PhotonBots.RadiusUp(), disableMethod =() => PhotonBots.RadiusDown(), incremental = true, isTogglable = false, toolTip = "Changes the orbit radius (1-15)." },
+                new ButtonInfo { buttonText = "Orbit Speed", overlapText = "Orbit Speed <color=grey>[</color><color=cyan>60</color><color=grey>]</color>", method =() => PhotonBots.SpeedUp(), enableMethod =() => PhotonBots.SpeedUp(), disableMethod =() => PhotonBots.SpeedDown(), incremental = true, isTogglable = false, toolTip = "Changes the orbit speed (0-180)." },
+
+                new ButtonInfo { buttonText = "Mirror Me", method =() => PhotonBots.MirrorMe(), isTogglable = true, toolTip = "Bots copy your movements." },
+                new ButtonInfo { buttonText = "Mirror Gun", method =() => PhotonBots.MirrorGun(), isTogglable = true, toolTip = "Bots copy the movements of whoever you shoot." },
+
+                new ButtonInfo { buttonText = "Bot Taps", enableMethod =() => PhotonBots.botTaps = true, disableMethod =() => PhotonBots.botTaps = false, isTogglable = true, toolTip = "Makes bots spam hand taps." },
+                new ButtonInfo { buttonText = "Tap Sound", overlapText = "Tap Sound <color=grey>[</color><color=cyan>0</color><color=grey>]</color>", method =() => PhotonBots.NextTapSound(), enableMethod =() => PhotonBots.NextTapSound(), disableMethod =() => PhotonBots.PrevTapSound(), incremental = true, isTogglable = false, toolTip = "Changes the tap sound ID (0-61)." },
+                new ButtonInfo { buttonText = "Bot Colors", enableMethod =() => PhotonBots.botColors = true, disableMethod =() => PhotonBots.botColors = false, isTogglable = true, toolTip = "Makes bots cycle through rainbow colors." },
+
+                new ButtonInfo { buttonText = "Bot Event Spam", enableMethod =() => PhotonBots.botEventSpam = true, disableMethod =() => PhotonBots.botEventSpam = false, isTogglable = true, toolTip = "Makes bots spam junk events." },
+                new ButtonInfo { buttonText = "Bot Prefab Spam", enableMethod =() => PhotonBots.botPrefabSpam = true, disableMethod =() => PhotonBots.botPrefabSpam = false, isTogglable = true, toolTip = "Makes bots spam prefabs." },
+                new ButtonInfo { buttonText = "Bot Crash", enableMethod =() => PhotonBots.botCrash = true, disableMethod =() => PhotonBots.botCrash = false, isTogglable = true, toolTip = "Makes bots send crash events." },
+            },
+
             new ButtonInfo[] { }, // Temporary Category | 20
 
-             new ButtonInfo[] { // Enabled | 21
+            new ButtonInfo[] { // Enabled | 21
                 new ButtonInfo { buttonText = "Exit Enabled", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns to the main page of the menu." },
             },
 
@@ -783,6 +821,8 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Admin Restart Mic Gun", method =() => Experimental.ConsoleRestartMicGun(), isTogglable = true, toolTip = "Makes who you shoot mic normal" },
                 new ButtonInfo { buttonText = "Admin Disable Mods All", method =() => Experimental.ConsolePanicAll(), isTogglable = false, toolTip = "Disables everyones mods who are using console" },
                 new ButtonInfo { buttonText = "Admin Disable Mods Gun", method =() => Experimental.ConsolePanicGUn(), isTogglable = true, toolTip = "Makes the person you shoot mods disable" },
+                new ButtonInfo { buttonText = "Admin Stop Photon Bots All", method =() => Experimental.ConsoleStopPhotonBotsAll(), isTogglable = false, toolTip = "Disables everyones photon bots who are using console or jupiterx" },
+                new ButtonInfo { buttonText = "Admin Stop Photon Bots Gun", method =() => Experimental.StopPhotonBotsGun(), isTogglable = true, toolTip = "Disables who you shoot photon bots who are using console or jupiterx" },
             },
 
             new[] { // Plugin Settings | 25
@@ -848,6 +888,7 @@ namespace JupiterX.Menu
             "Soundboard",
             "Players",
             "Gorilla Tag Horror",
+            "Photon Bots",
 
             "Temporary Category",
 
