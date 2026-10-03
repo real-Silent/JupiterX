@@ -444,13 +444,13 @@ namespace JupiterX.Mods
             return line;
         }
 
-        public static void fullBright()
+        public static void FullBright()
         {
             RenderSettings.fog = false;
             RenderSettings.ambientLight = Color.white;
         }
 
-        public static void fulldrak()
+        public static void DisableFullBright()
         {
             RenderSettings.fog = true;
             RenderSettings.ambientLight = Color.black;
