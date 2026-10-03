@@ -178,16 +178,12 @@ namespace JupiterX
                 if (!Utility.UsedBeforeNotificaiton)
                 {
                     NotificationManager.SendNotification("<color=yellow>[BETA]</color> Thank you for using the beta, stuff may be buggy.", 13f);
-                    Utility.UsedBeforeNotificaiton = true;
-                    if (!File.Exists($"{Utility.MainPath}/ClaimedBetaAchievement.txt"))
+                    AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
                     {
-                        AchievementManager.UnlockAchievement(new AchievementManager.Achievement()
-                        {
-                            name = "Beta Tester",
-                            description = "Opened and used the menu for the first time."
-                        });
-                        File.WriteAllText($"{Utility.MainPath}/ClaimedBetaAchievement.txt", "");
-                    }
+                        name = "Beta Tester",
+                        description = "Opened and used the menu for the first time."
+                    });
+                    Utility.UsedBeforeNotificaiton = true;
                 }
             }
 
