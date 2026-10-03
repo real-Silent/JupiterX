@@ -81,18 +81,12 @@ namespace JupiterX.Mods
             Application.targetFrameRate = int.MaxValue;
         }
 
-        public static void Leave()
-        {
+        public static void Leave() =>
             Utility.photonNetworkController.AttemptDisconnect();
-        }
-        public static void Jrr()
-        {
-            PhotonNetwork.JoinRandomOrCreateRoom();
-        }
-        public static void JoinCode(string code)
-        {
+        public static void Jrr() =>
+            PhotonNetwork.JoinRandomRoom();
+        public static void JoinCode(string code) =>
             Utility.photonNetworkController.AttemptToJoinSpecificRoom(code);
-        }
 
         public static void LobbyHop()
         {
