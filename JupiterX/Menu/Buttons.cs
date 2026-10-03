@@ -344,10 +344,10 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Master Name Tags", method =() => Visual.MasterTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show if their Master Client." },
                 new ButtonInfo { buttonText = "Tagged Name Tags", method =() => Visual.TaggedTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Tagged." },
 
-                new ButtonInfo { buttonText = "Velocity Label", method = Visual.VelocityLabel, toolTip = "Puts text on your right hand, showing your velocity."},
-                new ButtonInfo { buttonText = "Nearby Label", method = Visual.NearbyTaggerLabel, toolTip = "Puts text on your left hand, showing you the distance of the nearest tagger."},
-                new ButtonInfo { buttonText = "Last Label", method = Visual.LastLabel, toolTip = "Puts text on your left hand, showing you how many untagged people are left."},
-                new ButtonInfo { buttonText = "Time Label", method = Visual.TimeLabel, toolTip = "Puts text on your right hand, showing how long you've been playing for without getting tagged."},
+                new ButtonInfo { buttonText = "Velocity Label", method = Visual.VelocityLabel, disableMethod =() => Visual.RemoveLabel(0), toolTip = "Puts text on your right hand, showing your velocity."},
+                new ButtonInfo { buttonText = "Nearby Label", method = Visual.NearbyTaggerLabel, disableMethod =() => Visual.RemoveLabel(1), toolTip = "Puts text on your left hand, showing you the distance of the nearest tagger."},
+                new ButtonInfo { buttonText = "Last Label", method = Visual.LastLabel, disableMethod =() => Visual.RemoveLabel(2), toolTip = "Puts text on your left hand, showing you how many untagged people are left."},
+                new ButtonInfo { buttonText = "Time Label", method = Visual.TimeLabel, disableMethod =() => Visual.RemoveLabel(3), toolTip = "Puts text on your right hand, showing how long you've been playing for without getting tagged."},
 
                 new ButtonInfo { buttonText = "FPS Overlay", method =() => NotificationManager.information["FPS"] = Utility.lastDeltaTime.ToString(), disableMethod =() => NotificationManager.information.Remove("FPS"), toolTip = "Displays your FPS on your screen."},
                 new ButtonInfo { buttonText = "Ping Overlay", method = Utility.PingOverlay, disableMethod =() => NotificationManager.information.Remove("Ping"), toolTip = "Displays the server's ping on your screen."},

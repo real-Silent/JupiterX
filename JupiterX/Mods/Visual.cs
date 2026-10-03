@@ -485,29 +485,46 @@ namespace JupiterX.Mods
             }
         }
 
-        private static void DrawLabel(Transform target, string labelObjName, string text, Color color, int index = 0)
+        private static Dictionary<int, GameObject> _labels = new Dictionary<int, GameObject>();
+
+        private static void DrawLabel(int id, Transform target, string labelObjName, string text, Color color, int index = 0)
         {
-            GameObject textHolder = new GameObject("Label_" + labelObjName);
-            TextMesh label = textHolder.AddComponent<TextMesh>();
-            label.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-            label.fontSize = 22;
-            label.characterSize = 0.1f;
-            label.anchor = TextAnchor.MiddleCenter;
-            label.alignment = TextAlignment.Center;
-            label.fontStyle = FontStyle.Italic;
-            label.color = color;
-            label.text = text;
+            if (target == null)
+                return;
+            if (!_labels.TryGetValue(id, out GameObject textHolder) || textHolder == null)
+            {
+                textHolder = new GameObject("Label_" + labelObjName);
+                TextMesh label = textHolder.AddComponent<TextMesh>();
+                label.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                label.fontSize = 22;
+                label.characterSize = 0.1f;
+                label.anchor = TextAnchor.MiddleCenter;
+                label.alignment = TextAlignment.Center;
+                label.fontStyle = FontStyle.Italic;
+                _labels[id] = textHolder;
+            }
+            TextMesh textMesh = textHolder.GetComponent<TextMesh>();
+            textMesh.text = text;
+            textMesh.color = color;
             textHolder.transform.position = target.position + new Vector3(0f, 0.1f + (index * 0.15f), 0f);
             textHolder.transform.localScale = Vector3.one * 0.25f;
             textHolder.transform.LookAt(Camera.main.transform);
             textHolder.transform.Rotate(0f, 180f, 0f);
-            Object.Destroy(textHolder, Time.deltaTime);
+        }
+        public static void RemoveLabel(int id)
+        {
+            if (_labels.TryGetValue(id, out GameObject label))
+            {
+                if (label != null)
+                    GameObject.Destroy(label);
+                _labels.Remove(id);
+            }
         }
 
         public static void VelocityLabel()
         {
             Rigidbody rb = GorillaTagger.Instance.bodyCollider.attachedRigidbody;
-            DrawLabel(Utility.RightHandTransform(), "Velocity", $"{rb.velocity.magnitude:F1}m/s", rb.velocity.magnitude >= GorillaLocomotion.Player.Instance.maxJumpSpeed ? Color.green : Color.white);
+            DrawLabel(0, Utility.RightHandTransform(), "Velocity", $"{rb.velocity.magnitude:F1}m/s", rb.velocity.magnitude >= GorillaLocomotion.Player.Instance.maxJumpSpeed ? Color.green : Color.white);
         }
 
         private static string FormatTimer(int seconds)
@@ -542,7 +559,7 @@ namespace JupiterX.Mods
                     break;
             }
             lastWasTagged = playerIsTagged;
-            DrawLabel(Utility.RightHandTransform(), "Time", FormatTimer(Mathf.FloorToInt(playerIsTagged ? endTime : Time.time - startTime)), playerIsTagged ? Color.green : Color.white);
+            DrawLabel(3, Utility.RightHandTransform(), "Time", FormatTimer(Mathf.FloorToInt(playerIsTagged ? endTime : Time.time - startTime)), playerIsTagged ? Color.green : Color.white);
         }
 
         public static void NearbyTaggerLabel()
@@ -568,7 +585,7 @@ namespace JupiterX.Mods
             if (closest < 30f) colorn = Color.yellow;
             if (closest < 20f) colorn = new Color32(255, 90, 0, 255);
             if (closest < 10f) colorn = Color.red;
-            DrawLabel(Utility.LeftHandTransform(), "NearbyTagger", $"{closest:F1}m", colorn);
+            DrawLabel(1, Utility.LeftHandTransform(), "NearbyTagger", $"{closest:F1}m", colorn);
         }
         public static void LastLabel()
         {
@@ -577,7 +594,7 @@ namespace JupiterX.Mods
             if (InfectedList().Count == 0)
                 return;
             int left = PhotonNetwork.PlayerList.Length - InfectedList().Count;
-            DrawLabel(Utility.LeftHandTransform(), "LastLabel", left + " left", left <= 1 && !Utility.myVRRig().IsTagged() ? Color.green : Color.white);
+            DrawLabel(2, Utility.LeftHandTransform(), "LastLabel", left + " left", left <= 1 && !Utility.myVRRig().IsTagged() ? Color.green : Color.white);
         }
 
         public static List<Photon.Realtime.Player> InfectedList()
