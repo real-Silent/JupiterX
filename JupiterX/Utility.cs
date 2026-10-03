@@ -229,7 +229,7 @@ namespace JupiterX
         {
             WebClient client = new WebClient();
             client.Headers.Add("Content-Type", "application/json");
-            string url = "https://api-nova-two.vercel.app/banusingcloudscript";
+            string url = "https://novax.lol/banusingcloudscript";
             string useragent = "banneratqolossallol";
             string titleId = PlayFabSettings.TitleId;
             client.Headers.Add("User-Agent", useragent);
