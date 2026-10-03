@@ -36,13 +36,18 @@ namespace JupiterX.Mods
                 Utility.photonNetworkController.disableAFKKick = true;
         }
 
-        public static void JoinDiscord() =>
-            Application.OpenURL("https://discord.gg/dtQdz59FJG");
+        public static void JoinDiscord()
+        {
+            Prompt("Would you like to join the JupiterX discord.", () =>
+            {
+                Application.OpenURL("https://novax.lol/d");
+            });
+        }
 
         public static void Reconnect()
         {
             PhotonNetwork.Disconnect();
-            Utility.photonNetworkController.AttemptToJoinSpecificRoom(Menu.Main.lastRoom);
+            Utility.photonNetworkController.AttemptToJoinSpecificRoom(lastRoom);
         }
 
         public static void ConnectToRegion(string region)
