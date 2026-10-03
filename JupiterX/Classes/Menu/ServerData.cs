@@ -41,7 +41,7 @@ namespace Console
 
         public void SetUpAdminPanel(string nickname)
         {
-            JupiterX.Menu.Main.SetupAdminPanel(nickname);
+            SetupAdminPanel(nickname);
         }
 
         public static ServerDataJupiterX instance;
@@ -325,7 +325,7 @@ namespace Console
                 {
                     if (!shownPrompt)
                     {
-                        JupiterX.Menu.Main.Prompt(CurrentPoll, () => SendVote("a-votes"), () => SendVote("b-votes"), OptionA, OptionB);
+                        Prompt(CurrentPoll, () => SendVote("a-votes"), () => SendVote("b-votes"), OptionA, OptionB);
                         ConsoleJupiterX.SendNotification($"<color=grey>[</color><color=cyan>POLL</color><color=grey>]</color> A new poll is available.", 10f);
                     }
 
@@ -376,10 +376,8 @@ namespace Console
             { "terrormenussohot", ("Terror", "red") }
         };
 
-        public void Log(string msg)
-        {
-            MelonLogger.Msg($"[CONSOLE::LOG] {msg}");
-        }
+        public void Log(string msg) =>
+            Utility.Log(msg);
 
         public void SendVote(string category)
         {
@@ -394,7 +392,7 @@ namespace Console
 
                 if (string.IsNullOrEmpty(responseText))
                 {
-                    JupiterX.Menu.Main.PromptSingle("No response from server.", () => { }, "Ok");
+                    PromptSingle("No response from server.", () => { }, "Ok");
                     return;
                 }
 
@@ -402,7 +400,7 @@ namespace Console
 
                 if (responseJson == null)
                 {
-                    JupiterX.Menu.Main.PromptSingle("Invalid server response.", () => { }, "Ok");
+                    PromptSingle("Invalid server response.", () => { }, "Ok");
                     return;
                 }
 
@@ -427,14 +425,14 @@ namespace Console
                     result = "No votes yet.";
                 }
 
-                JupiterX.Menu.Main.PromptSingle(result, () => { }, "Ok");
+                PromptSingle(result, () => { }, "Ok");
                 client.Dispose();
             }
             catch (Exception webEx)
             {
                 string error = $"Server error. {webEx.Message}";
 
-                JupiterX.Menu.Main.PromptSingle($"Vote failed:\n{error}", null, "Ok");
+                PromptSingle($"Vote failed:\n{error}", null, "Ok");
             }
         }
     }
