@@ -456,6 +456,7 @@ namespace JupiterX.Mods
             RenderSettings.ambientLight = Color.black;
         }
 
+        private static readonly HashSet<VRRig> chamsApplied = new();
         public static void Chams(bool chams)
         {
             if (PhotonNetwork.InRoom)
@@ -467,12 +468,17 @@ namespace JupiterX.Mods
                         bool isTagged = rig.mainSkin.material.name.Contains("fected");
                         if (chams)
                         {
-                            rig.mainSkin.material.shader = Utility.GUIShader();
+                            if (chamsApplied.Add(rig))
+                                rig.mainSkin.material.shader = Utility.GUIShader();
                             rig.currentMatIndex = isTagged ? 1 : 0;
                         }
-                        else
+                        else if (chamsApplied.Remove(rig))
                         {
-                            rig.ChangeMaterialLocal(rig.currentMatIndex);
+                            foreach (GorillaPlayerScoreboardLine line in GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().Where(x => x != null 
+                                && x.linePlayer.UserId == rig.photonView.Owner.UserId))
+                            {
+                                rig.mainSkin.material = rig.materialsToChangeTo[line.currentMatIndex];
+                            }
                         }
                     }
                 }
