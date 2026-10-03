@@ -196,9 +196,9 @@ namespace JupiterX
                 string gameversion = string.IsNullOrEmpty(PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) ? PhotonNetwork.AppVersion : PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
                 string cocTextNew = $"Username: {PhotonNetwork.LocalPlayer.NickName}, UserID: {PhotonNetwork.LocalPlayer.UserId}\nTitleID: {PlayFabSettings.TitleId}\nRealtimeID: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}\nVoiceID: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}\nVersion: {gameversion}\n\nIf you like usinig <b>JupiterX</b> make sure to join our discord server for more updates and more mods for your modding needs.\n{Utility.discord}\nMenu made by Nova (@s1lnt)";
                 Utility.cocText.text = cocTextNew;
-                Utility.codeOfConduct.text = "<color=cyan>JupiterX V2</color>";
+                Utility.codeOfConduct.text = $"<color=cyan>JupiterX V{Utility.version}</color>";
 
-                Utility.CreateCustomBoards(Utility.motd, Utility.motdText, "<color=cyan>JupiterX V2</color>", Utility.motdtemplate);
+                Utility.CreateCustomBoards(Utility.motd, Utility.motdText, $"<color=cyan>JupiterX V{Utility.version}</color>", Utility.motdtemplate);
             }
             else
             {
@@ -214,7 +214,7 @@ namespace JupiterX
             else if (Utility.updateneeded)
                 updatetext = "<color=red>UPDATE NEEDED</color>";
             bool updateneeded = Utility.updateneeded || Utility.extremeupdateneeded;
-            string stumpText = $"<color=#00ffff>JupiterX V2</color>\n<size=1>Thank you for using JupiterX V2\nThe <color=#3333ff>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(updateneeded ? updatetext : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
+            string stumpText = $"<color=#00ffff>JupiterX V{Utility.version}</color>\n<size=1>Thank you for using JupiterX V{Utility.version}\nThe <color=#3333ff>Best</color> Gorilla Tag Copy Menu\n<color=#ff00ff>Version: [{(updateneeded ? updatetext : Utility.version)}] | Beta: {Utility.isBetaRelease}</color></size>";
             if (StumpText == null)
             {
                 StumpText = new GameObject("StumpTextObject");
