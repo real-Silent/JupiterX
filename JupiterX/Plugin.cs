@@ -1,4 +1,16 @@
-﻿using JupiterX;
+﻿// ============================================================
+//  JupiterX
+//  Copyright (c) 2026 Jupiterx (@NAuth). All rights reserved.
+//
+//  This software and its source code are the property of the
+//  author. Unauthorized copying, redistribution, modification,
+//  or reuse of any part of this project, in whole or in part,
+//  without express written permission is strictly prohibited.
+//
+//  Version: 2.0.0 | By Silent/Ashley/Nova (@s1lnt)
+// ============================================================
+
+using JupiterX;
 using JupiterX.Classes;
 using JupiterX.Managers;
 using JupiterX.Menu;
@@ -13,14 +25,30 @@ using TMPro;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
-// this menu was created by Nova (@novaissilly)
-// if you remove this it counts as skidding
-[assembly: MelonInfo(typeof(Plugin), "JupiterX", "2.0.0", "Novaissilly_jupx")]
+[assembly: MelonInfo(typeof(Plugin), "JupiterX", "2.0.0", "Jupiterx.NAuth")]
 [assembly: MelonGame()]
 namespace JupiterX
 {
     public class Plugin : MelonMod
     {
+        private HarmonyLib.Harmony harmonyPatcher;
+        public override void OnInitializeMelon()
+        {
+            base.OnInitializeMelon();
+            Utility.Log("Applying patched");
+            harmonyPatcher = new HarmonyLib.Harmony("jupiterx.nauth.patcher");
+            harmonyPatcher.PatchAll();
+            Utility.Log("Applied patched");
+        }
+
+        public override void OnDeinitializeMelon()
+        {
+            base.OnDeinitializeMelon();
+            Utility.Log("Removing patches");
+            harmonyPatcher.UnpatchSelf();
+            Utility.Log("Removed patched");
+        }
+
         [Obsolete]
         public override void OnApplicationStart()
         {
@@ -58,19 +86,17 @@ namespace JupiterX
             Utility.ogmotd = Utility.motd.text;
             Utility.ogmotdtext = Utility.motdText.text;
 
-            Utility.CacheSounds(); // For caching the menu sounds causes less lag.
+            Utility.CacheSounds();
             Utility.LoadEmbeddedDll("JupiterX.Resources.NLayer.dll");
             Utility.LoadEmbeddedDll("JupiterX.Resources.NVorbis.dll");
 
             try
             {
                 string allButtonsPath = Path.Combine(Application.persistentDataPath, "JupiterX/AllButtons.txt");
-
                 string[] newButtonNames = Buttons.buttons.SelectMany(list => list).Select(button => button.buttonText).ToArray();
                 if (File.Exists(allButtonsPath))
                 {
                     string[] oldButtonNames = File.ReadAllText(allButtonsPath).Split('\n');
-
                     foreach (string name in newButtonNames)
                     {
                         if (oldButtonNames.Contains(name)) continue;
@@ -79,22 +105,18 @@ namespace JupiterX
                         button.overlapText ??= buttonText + " <color=grey>[</color><color=cyan>New</color><color=grey>]</color>";
                     }
                 }
-
                 File.WriteAllText(allButtonsPath, string.Join("\n", newButtonNames));
             }
             catch { }
 
             try
             {
-                JupiterX.Managers.PluginManager.LoadPlugins();
+                Managers.PluginManager.LoadPlugins();
             }
             catch (Exception exc)
             {
-                Utility.Log($"Error with PluginManager.LoadPlugins() at {exc.StackTrace}: {exc.Message}");
+                Utility.Log($"Error with PluginManager::LoadPlugins() at {exc.StackTrace}: {exc.Message}");
             }
-
-            HarmonyLib.Harmony jupixharm = new HarmonyLib.Harmony("Novaissilly_jupx");
-            jupixharm.PatchAll();
         }
 
         [Obsolete]
@@ -220,8 +242,8 @@ namespace JupiterX
                 StumpText.SetActive(false);
             }
 
-            JupiterX.Menu.Main.DestroyPointer();
-            JupiterX.Managers.PluginManager.ExecuteUpdate();
+            Menu.Main.DestroyPointer();
+            Managers.PluginManager.ExecuteUpdate();
 
             Utility.DetectOtherUsers();
         }
