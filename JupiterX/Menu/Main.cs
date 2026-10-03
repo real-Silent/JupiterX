@@ -12,6 +12,7 @@
 
 using easyInputs;
 using JupiterX.Classes.Menu;
+using JupiterX.Extensions;
 using JupiterX.Managers;
 using JupiterX.Notifications;
 using Photon.Pun;
@@ -262,15 +263,14 @@ namespace JupiterX.Menu
             {
                 try
                 {
-                    TrailRenderer trail = reference.AddComponent<TrailRenderer>();
-
+                    TrailRenderer trail = reference.GetOrAddComponent<TrailRenderer>();
+                    _trailMat ??= new Material(Shader.Find("Sprites/Default"));
                     trail.startColor = backgroundColor.GetColor(0);
                     trail.endColor = backgroundColor.GetColor(1);
                     trail.startWidth = 0.015f;
                     trail.endWidth = 0f;
                     trail.minVertexDistance = 0.05f;
-
-                    trail.material.shader = Shader.Find("Sprites/Default");
+                    trail.material = _trailMat;
                     trail.time = 2f;
                 }
                 catch { }
@@ -280,15 +280,14 @@ namespace JupiterX.Menu
             {
                 try
                 {
-                    TrailRenderer trail = menu.AddComponent<TrailRenderer>();
-
+                    TrailRenderer trail = menu.GetOrAddComponent<TrailRenderer>();
+                    _trailMat ??= new Material(Shader.Find("Sprites/Default"));
                     trail.startColor = backgroundColor.GetColor(0);
                     trail.endColor = backgroundColor.GetColor(1);
                     trail.startWidth = 0.015f;
                     trail.endWidth = 0f;
                     trail.minVertexDistance = 0.05f;
-
-                    trail.material.shader = Shader.Find("Sprites/Default");
+                    trail.material = _trailMat;
                     trail.time = 2f;
                 }
                 catch { }

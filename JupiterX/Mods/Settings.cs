@@ -72,6 +72,8 @@ namespace JupiterX
         public static bool legacyGhostview;
         public static bool dynamicAnimations;
 
+        public static Material _trailMat;
+
         public static Vector3 smoothTargetPosition = Vector3.zero;
         public static Quaternion smoothTargetRotation = Quaternion.identity;
 
