@@ -361,7 +361,7 @@ namespace JupiterX
         static Vector3 closePosition;
         public static void FreezePlayerInMenu()
         {
-            if (Main.menu != null)
+            if (menu != null)
             {
                 if (closePosition == Vector3.zero)
                     closePosition = GorillaTagger.Instance.GetComponent<Rigidbody>().transform.position;
@@ -376,14 +376,14 @@ namespace JupiterX
         {
             if (PhotonNetwork.InRoom)
             {
-                if (Main.menu != null)
+                if (menu != null)
                     myVRRig().enabled = false;
                 else
                     myVRRig().enabled = true;
             }
             else
             {
-                if (Main.menu != null)
+                if (menu != null)
                     offlineVRRig().enabled = false;
                 else
                     offlineVRRig().enabled = true;
@@ -393,7 +393,7 @@ namespace JupiterX
         {
             if (PhotonNetwork.InRoom)
             {
-                if (Main.menu != null)
+                if (menu != null)
                 {
                     myVRRig().enabled = false;
                     myVRRig().transform.position = new Vector3(4543f, 34532f, 453);
@@ -403,7 +403,7 @@ namespace JupiterX
             }
             else
             {
-                if (Main.menu != null)
+                if (menu != null)
                 {
                     offlineVRRig().enabled = false;
                     offlineVRRig().transform.position = new Vector3(4543f, 34532f, 453);
@@ -870,9 +870,6 @@ namespace JupiterX
         public static void TeleportPlayer(Vector3 pos) =>
             MainTransform().transform.position = pos;
 
-        public static Transform MainCamera() =>
-            Camera.main.transform;
-
         public static Transform MainTransform() =>
             GorillaTagger.Instance.transform;
 
@@ -1244,7 +1241,7 @@ namespace JupiterX
                 foreach (ButtonInfo button in btn)
                 {
                     if (button.enabled)
-                        Main.Toggle(button.buttonText);
+                        Toggle(button.buttonText);
                 }
             }
         }
