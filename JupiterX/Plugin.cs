@@ -26,7 +26,7 @@ using TMPro;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(Plugin), "JupiterX", "2.0.0", "Jupiterx.NAuth")]
+[assembly: MelonInfo(typeof(Plugin), "JupiterX", Utility.version, "Jupiterx.NAuth")]
 [assembly: MelonGame()]
 namespace JupiterX
 {
