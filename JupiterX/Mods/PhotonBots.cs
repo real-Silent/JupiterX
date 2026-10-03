@@ -11,7 +11,7 @@
 // ============================================================
 
 using ExitGames.Client.Photon;
-using JupiterX.Classes;
+using JupiterX.Classes.Menu;
 using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Notifications;

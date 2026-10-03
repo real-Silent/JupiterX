@@ -15,7 +15,7 @@ using Photon.Pun;
 using UnityEngine;
 using System;
 
-namespace JupiterX.Classes
+namespace JupiterX.Classes.Mods
 {
 
     [MelonLoader.RegisterTypeInIl2Cpp]

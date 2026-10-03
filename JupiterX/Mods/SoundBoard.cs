@@ -11,7 +11,7 @@
 // ============================================================
 
 using Il2CppSystem.Net;
-using JupiterX.Classes;
+using JupiterX.Classes.Menu;
 using JupiterX.Managers;
 using JupiterX.Menu;
 using NLayer;

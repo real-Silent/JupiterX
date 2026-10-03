@@ -13,7 +13,7 @@
 using JupiterX.Menu;
 using UnityEngine;
 
-namespace JupiterX.Classes
+namespace JupiterX.Classes.Menu
 {
     public class FixedColliders
     {

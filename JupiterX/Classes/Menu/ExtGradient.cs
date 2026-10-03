@@ -15,7 +15,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace JupiterX.Classes
+namespace JupiterX.Classes.Menu
 {
     public class ExtGradient
     {

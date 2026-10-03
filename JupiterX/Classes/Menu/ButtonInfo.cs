@@ -12,7 +12,7 @@
 
 using System;
 
-namespace JupiterX.Classes
+namespace JupiterX.Classes.Menu
 {
     public class ButtonInfo
     {

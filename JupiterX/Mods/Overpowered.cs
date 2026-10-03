@@ -12,7 +12,7 @@
 
 using ExitGames.Client.Photon;
 using GorillaNetworking;
-using JupiterX.Classes;
+using JupiterX.Classes.Mods;
 using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;

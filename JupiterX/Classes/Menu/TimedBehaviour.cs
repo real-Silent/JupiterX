@@ -13,7 +13,7 @@
 using System;
 using UnityEngine;
 
-namespace JupiterX.Classes
+namespace JupiterX.Classes.Menu
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
     public class TimedBehaviour : MonoBehaviour

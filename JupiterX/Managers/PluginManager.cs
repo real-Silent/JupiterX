@@ -18,7 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using JupiterX.Classes;
+using JupiterX.Classes.Menu;
 using JupiterX.Notifications;
 
 namespace JupiterX.Managers

@@ -10,7 +10,7 @@
 //  Version: 2.0.0 | By Silent/Ashley/Nova (@s1lnt)
 // ============================================================
 
-using JupiterX.Classes;
+using JupiterX.Classes.Mods;
 using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Notifications;

@@ -11,7 +11,8 @@
 // ============================================================
 
 using JupiterX;
-using JupiterX.Classes;
+using JupiterX.Classes.Menu;
+using JupiterX.Classes.Mods;
 using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Notifications;

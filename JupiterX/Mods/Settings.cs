@@ -11,7 +11,7 @@
 // ============================================================
 
 using Console;
-using JupiterX.Classes;
+using JupiterX.Classes.Menu;
 using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;

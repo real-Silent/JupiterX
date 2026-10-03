@@ -11,7 +11,7 @@
 // ============================================================
 
 using easyInputs;
-using JupiterX.Classes;
+using JupiterX.Classes.Menu;
 using JupiterX.Managers;
 using JupiterX.Notifications;
 using Photon.Pun;

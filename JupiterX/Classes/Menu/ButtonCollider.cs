@@ -16,7 +16,7 @@ using UnityEngine;
 using static JupiterX.Menu.Main;
 using static JupiterX.Settings;
 
-namespace JupiterX.Classes
+namespace JupiterX.Classes.Menu
 {
 
     [MelonLoader.RegisterTypeInIl2Cpp]
