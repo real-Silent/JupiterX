@@ -1,5 +1,5 @@
 ﻿// ============================================================
-//  JupiterX
+//  JupiterX | Plugin.cs
 //  Copyright (c) 2026 Jupiterx (@NAuth). All rights reserved.
 //
 //  This software and its source code are the property of the

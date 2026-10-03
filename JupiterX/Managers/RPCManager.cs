@@ -1,16 +1,19 @@
-﻿using Photon.Pun;
+﻿// ============================================================
+//  JupiterX | Managers/RPCManager.cs
+//  Copyright (c) 2026 Jupiterx (@NAuth). All rights reserved.
+//
+//  This software and its source code are the property of the
+//  author. Unauthorized copying, redistribution, modification,
+//  or reuse of any part of this project, in whole or in part,
+//  without express written permission is strictly prohibited.
+//
+//  Version: 2.0.0 | By Silent/Ashley/Nova (@s1lnt)
+// ============================================================
+
+using Photon.Pun;
 using System.Linq;
 using UnhollowerBaseLib;
 using UnityEngine;
-
-// JupiterX copyright 2026
-/*
- - Please do not skid or say you made this file
- - This file is originally made by nova/silent
- - If this file goes into your mod menu you will be counted as a skidder
- - I have had this file private for 2-3 ish months because of this reason
- - If you want to use this give me credits somewhere
- */
 
 namespace JupiterX.Managers
 {
