@@ -486,6 +486,7 @@ namespace JupiterX
             }
             Buttons.GetIndex("Change Drop Type").overlapText = $"Change Drop Type <color=grey>[<color=cyan>{dropTypes[dropType]}</color>]</color>";
         }
+
         private static string[] MenuThemes = new string[]
         {
             "Default", "Blue", "Rainbow", "Red", "Transparent", "Pastel",
