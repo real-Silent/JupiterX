@@ -68,7 +68,7 @@ namespace JupiterX
             float closest = float.MaxValue;
             foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
             {
-                if (vrrig != null && vrrig != GorillaTagger.Instance.myVRRig && vrrig.IsTagged())
+                if (vrrig != null && vrrig != myVRRig() && vrrig.IsTagged())
                 {
                     float dist = Vector3.Distance(GorillaTagger.Instance.headCollider.transform.position, vrrig.headMesh.transform.position);
                     if (dist < closest)
@@ -105,17 +105,17 @@ namespace JupiterX
                 if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("jupiterx2026revive"))
                 {
                     string name = "[JUPITERX] " + PhotonNetwork.LocalPlayer.nickName;
-                    GorillaTagger.Instance.myVRRig.playerText.text = name;
-                    GorillaTagger.Instance.myVRRig.playerText.color = Color.cyan;
-                    if (GorillaTagger.Instance.offlineVRRig.playerText.text != GorillaTagger.Instance.myVRRig.playerText.text)
+                    myVRRig().playerText.text = name;
+                    myVRRig().playerText.color = Color.cyan;
+                    if (offlineVRRig().playerText.text != myVRRig().playerText.text)
                     {
-                        GorillaTagger.Instance.offlineVRRig.playerText.text = GorillaTagger.Instance.myVRRig.playerText.text;
-                        GorillaTagger.Instance.offlineVRRig.playerText.color = GorillaTagger.Instance.myVRRig.playerText.color;
+                        offlineVRRig().playerText.text = myVRRig().playerText.text;
+                        offlineVRRig().playerText.color = myVRRig().playerText.color;
                     }
                 }
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    if (rig != null && rig != myVRRig())
                     {
                         string nickname = rig.photonView.Owner.NickName;
                         if (rig.photonView.Owner.CustomProperties.ContainsKey("jupiterx2026revive"))
@@ -248,7 +248,7 @@ namespace JupiterX
         }
         public static void BetaTPToSling()
         {
-            Slingshot slingshot = GorillaTagger.Instance.offlineVRRig.slingshot;
+            Slingshot slingshot = offlineVRRig().slingshot;
             if (slingshot != null)
             {
                 SlingshotProjectile slingproj = slingshot.projectilePrefab.GetComponent<SlingshotProjectile>();
@@ -264,7 +264,7 @@ namespace JupiterX
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                    if (rig != null && rig != myVRRig())
                     {
                         return rig.photonView.Owner.UserId;
                     }
@@ -278,7 +278,7 @@ namespace JupiterX
             if (PhotonNetwork.InRoom)
             {
                 MakeMeMaster();
-                if (target != null && target != GorillaTagger.Instance.myVRRig)
+                if (target != null && target != myVRRig())
                 {
                     PhotonNetwork.Destroy(target.photonView);
                     PhotonNetwork.DestroyPlayerObjects(target.photonView.Owner);
@@ -637,10 +637,10 @@ namespace JupiterX
                 }
                 else
                 {
-                    if (!GorillaTagger.Instance.offlineVRRig.mainSkin.enabled)
-                        GorillaTagger.Instance.offlineVRRig.mainSkin.enabled = true;
+                    if (!offlineVRRig().mainSkin.enabled)
+                        offlineVRRig().mainSkin.enabled = true;
                     Color color = backgroundColor.GetCurrentColor();
-                    GorillaTagger.Instance.offlineVRRig.mainSkin.material.color = new Color(color.r, color.g, color.b, 0.4f);
+                    offlineVRRig().mainSkin.material.color = new Color(color.r, color.g, color.b, 0.4f);
                 }
             }
             else
@@ -662,8 +662,8 @@ namespace JupiterX
                 {
                     if (PhotonNetwork.InRoom)
                     {
-                        if (GorillaTagger.Instance.offlineVRRig.mainSkin.enabled)
-                            GorillaTagger.Instance.offlineVRRig.mainSkin.enabled = false;
+                        if (offlineVRRig().mainSkin.enabled)
+                            offlineVRRig().mainSkin.enabled = false;
                     }
                 }
             }
@@ -786,7 +786,7 @@ namespace JupiterX
         {
             GorillaNot.instance.rpcCallLimit = int.MaxValue;
             GorillaNot.instance.OnPlayerLeftRoom(MyPlayer());
-            PhotonNetwork.OpCleanRpcBuffer(GorillaTagger.Instance.myVRRig.photonView);
+            PhotonNetwork.OpCleanRpcBuffer(myVRRig().photonView);
             PhotonNetwork.SendAllOutgoingCommands();
         }
 
@@ -980,7 +980,7 @@ namespace JupiterX
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                    if (rig != null && rig != myVRRig())
                         return rig;
                 }
             }
@@ -1141,7 +1141,7 @@ namespace JupiterX
                 return;
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig == null || rig.photonView == null || rig.photonView.Owner == null || rig == GorillaTagger.Instance.myVRRig)
+                if (rig == null || rig.photonView == null || rig.photonView.Owner == null || rig == myVRRig())
                     continue;
                 var props = rig.photonView.Owner.CustomProperties;
                 if (props == null || !props.ContainsKey("jupiterx2026revive"))
@@ -1213,7 +1213,7 @@ namespace JupiterX
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                    if (rig != null && rig != myVRRig())
                     {
                         if (rig.concatStringOfCosmeticsAllowed.Contains(cosmeticId))
                         {
@@ -1235,7 +1235,7 @@ namespace JupiterX
                         Transform reportBtn = lines.reportButton.gameObject.transform;
                         foreach (VRRig rig in GorillaParent.instance.vrrigs)
                         {
-                            if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                            if (rig != null && rig != myVRRig())
                             {
                                 float disR = Vector3.Distance(reportBtn.transform.position, rig.rightHandTransform.position);
                                 float disL = Vector3.Distance(reportBtn.transform.position, rig.leftHandTransform.position);
@@ -1323,7 +1323,7 @@ namespace JupiterX
         {
             if (clip == null)
                 return;
-            AudioSource source = GorillaTagger.Instance.offlineVRRig.gameObject.AddComponent<AudioSource>();
+            AudioSource source = offlineVRRig().gameObject.AddComponent<AudioSource>();
             source.clip = clip;
             source.volume = volume;
             source.loop = false;
