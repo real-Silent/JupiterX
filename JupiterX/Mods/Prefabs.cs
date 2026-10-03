@@ -20,7 +20,7 @@ namespace JupiterX.Mods
     {
         public static void NetworkPlayerSpam()
         {
-            PlayerPrefs.SetString("username", $"<color=magenta>JupiterX V{Utility.version} By Nova</color> \n https://novax.lol/d");
+            PlayerPrefs.SetString("username", $"<color=#ff00ff>JupiterX V{Utility.version} By Nova</color> \n https://novax.lol/d");
 
             if (PhotonNetwork.InRoom)
             {
@@ -184,7 +184,7 @@ namespace JupiterX.Mods
 
                 if (Main.GetGunInput(true))
                 {
-                    PlayerPrefs.SetString("username", $"<color=magenta>JupiterX V{Utility.version} By Nova</color> \n https://novax.lol/d");
+                    PlayerPrefs.SetString("username", $"<color=#ff00ff>JupiterX V{Utility.version} By Nova</color> \n https://novax.lol/d");
                     if (PhotonNetwork.InRoom)
                     {
                         Utility.BetaSpawnPrefab("Network Player", NewPointer.transform.position, NewPointer.transform.rotation);
