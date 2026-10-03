@@ -108,7 +108,6 @@ namespace JupiterX.Mods
 
         public static float lastBangTime;
         public static readonly float BPM = 159f;
-
         public static void HeadBang()
         {
             Vector3 rot = Head.trackingRotationOffset;
