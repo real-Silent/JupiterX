@@ -1244,12 +1244,18 @@ namespace JupiterX
                 }
             }
         }
+
+        private static Material linermat;
         public static (GameObject lineholder, LineRenderer line) CreateLine(Transform pos1, Transform pos2, Color color)
         {
             GameObject lineholder = new GameObject();
             LineRenderer line = lineholder.AddComponent<LineRenderer>();
             line.positionCount = 2;
-            line.material.shader = GUIShader();
+            if (linermat == null)
+            {
+                linermat = new Material(GUIShader());
+            }
+            line.material = linermat;
             line.useWorldSpace = true;
             line.startWidth = 0.01f;
             line.endWidth = 0.01f;

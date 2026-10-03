@@ -374,7 +374,10 @@ namespace JupiterX.Mods
             return input;
         }
 
-        private static Dictionary<VRRig, GameObject> tracersPool = new Dictionary<VRRig, GameObject>();
+        private static readonly Dictionary<VRRig, LineRenderer> tracersPool = new Dictionary<VRRig, LineRenderer>();
+        private static readonly HashSet<VRRig> liveRigs = new HashSet<VRRig>();
+        private static readonly List<VRRig> staleRigs = new List<VRRig>();
+        private static Material tracerMaterial;
         public static void Tracers()
         {
             if (!PhotonNetwork.InRoom)
@@ -382,43 +385,63 @@ namespace JupiterX.Mods
                 CleanUpTracers();
                 return;
             }
+            VRRig localRig = Utility.myVRRig();
+            Vector3 handPos = Utility.RightHandTransform().position;
+            liveRigs.Clear();
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && rig != Utility.myVRRig())
+                if (rig == null || rig == localRig || !rig.gameObject.activeInHierarchy)
+                    continue;
+
+                liveRigs.Add(rig);
+                if (!tracersPool.TryGetValue(rig, out LineRenderer line) || line == null)
                 {
-                    List<VRRig> remove = null;
-                    foreach (var pair in tracersPool)
-                    {
-                        if (pair.Key == null || !GorillaParent.instance.vrrigs.Contains(pair.Key))
-                        {
-                            remove ??= new List<VRRig>();
-                            remove.Add(pair.Key);
-                            if (pair.Value != null)
-                                Object.Destroy(pair.Value);
-                        }
-                    }
-                    if (remove != null)
-                    {
-                        foreach (var vrrig in remove)
-                            tracersPool.Remove(vrrig);
-                    }
-                    if (!tracersPool.TryGetValue(rig, out GameObject holder))
-                    {
-                        LineRenderer line;
-                        (holder, line) = Utility.CreateLine(rig.headMesh.transform, Utility.RightHandTransform(), rig.IsTagged() ? Color.red : Color.grey);
-                        tracersPool[rig] = holder;
-                    }
+                    line = CreateTracer();
+                    tracersPool[rig] = line;
                 }
+                Color color = rig.IsTagged() ? Color.red : Color.grey;
+                line.startColor = color;
+                line.endColor = color;
+                line.SetPosition(0, rig.headMesh.transform.position);
+                line.SetPosition(1, handPos);
+            }
+            staleRigs.Clear();
+            foreach (var pair in tracersPool)
+            {
+                if (pair.Key == null || pair.Value == null || !liveRigs.Contains(pair.Key))
+                    staleRigs.Add(pair.Key);
+            }
+            foreach (VRRig rig in staleRigs)
+            {
+                LineRenderer line = tracersPool[rig];
+                if (line != null)
+                    Object.Destroy(line.gameObject);
+                tracersPool.Remove(rig);
             }
         }
         public static void CleanUpTracers()
         {
-            foreach (var obj in tracersPool.Values)
+            foreach (LineRenderer line in tracersPool.Values)
             {
-                if (obj != null)
-                    Object.Destroy(obj);
+                if (line != null)
+                    Object.Destroy(line.gameObject);
             }
             tracersPool.Clear();
+        }
+        private static LineRenderer CreateTracer()
+        {
+            if (tracerMaterial == null)
+                tracerMaterial = new Material(Utility.GUIShader());
+            GameObject holder = new GameObject("Tracer");
+            LineRenderer line = holder.AddComponent<LineRenderer>();
+            line.sharedMaterial = tracerMaterial;
+            line.positionCount = 2;
+            line.useWorldSpace = true;
+            line.startWidth = 0.01f;
+            line.endWidth = 0.01f;
+            line.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            line.receiveShadows = false;
+            return line;
         }
 
         public static void fullBright()
