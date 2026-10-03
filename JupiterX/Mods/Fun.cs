@@ -204,6 +204,7 @@ namespace JupiterX.Mods
             else
                 File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/Ids/SelfId.txt"), Utility.MyPlayer().UserId);
         }
+
         public static void GetIdGun()
         {
             if (Main.GetGunInput(false))
