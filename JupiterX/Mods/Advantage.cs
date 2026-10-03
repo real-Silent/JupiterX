@@ -10,7 +10,6 @@
 //  Version: 2.0.0 | By Silent/Ashley/Nova (@s1lnt)
 // ============================================================
 
-using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;
 using UnityEngine;
@@ -36,7 +35,7 @@ namespace JupiterX.Mods
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
                         if (Utility.ActualRig().mainSkin.material.name.Contains("fected") && !rig.mainSkin.material.name.Contains("fected"))
                         {
@@ -60,7 +59,7 @@ namespace JupiterX.Mods
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                if (rig != null && rig != Utility.myVRRig())
                 {
                     if (Utility.ActualRig().mainSkin.material.name.Contains("fected") && !rig.mainSkin.material.name.Contains("fected"))
                     {
@@ -77,22 +76,19 @@ namespace JupiterX.Mods
 
         public static void TagGun()
         {
-            if (Main.GetGunInput(false))
+            if (GetGunInput(false))
             {
-                var GunData = Main.RenderGun();
+                var GunData = RenderGun();
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-                if (Main.GetGunInput(true))
+                if (GetGunInput(true))
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
-                    if (who)
+                    if (who != null && who != Utility.myVRRig())
                     {
-                        GorillaGameManager.instance.GetComponent<PhotonView>().RPC(
-                                "ReportTagRPC",
-                                RpcTarget.MasterClient,
-                                new Il2CppSystem.Object[] { who.photonView.Owner }
-                            );
+                        GorillaGameManager.instance.GetComponent<PhotonView>().RPC("ReportTagRPC", RpcTarget.MasterClient, 
+                            new Il2CppSystem.Object[] { who.photonView.Owner });
                     }
                 }
             }
@@ -100,36 +96,36 @@ namespace JupiterX.Mods
 
         public static void TagGunRPC()
         {
-            if (Main.GetGunInput(false))
+            if (GetGunInput(false))
             {
-                var GunData = Main.RenderGun();
+                var GunData = RenderGun();
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-                if (Main.gunLocked && Main.lockTarget != null)
+                if (gunLocked && lockTarget != null)
                 {
                     Utility.MakeMeMaster();
                     foreach (GorillaTagManager tagman in GameObject.FindObjectsOfType<GorillaTagManager>())
                     {
-                        tagman.AddInfectedPlayer(Main.lockTarget.photonView.Owner);
+                        tagman.AddInfectedPlayer(lockTarget.photonView.Owner);
                     }
                 }
 
-                if (Main.GetGunInput(true))
+                if (GetGunInput(true))
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
-                    if (who)
+                    if (who != null && who != Utility.myVRRig())
                     {
-                        Main.gunLocked = true;
-                        Main.lockTarget = who;
+                        gunLocked = true;
+                        lockTarget = who;
                     }
                 }
             }
             else
             {
-                Main.lockTarget = null;
-                if (Main.gunLocked)
-                    Main.gunLocked = false;
+                lockTarget = null;
+                if (gunLocked)
+                    gunLocked = false;
             }
         }
 

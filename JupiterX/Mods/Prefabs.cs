@@ -11,6 +11,7 @@
 // ============================================================
 
 using JupiterX.Menu;
+using Photon.Pun;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -19,32 +20,44 @@ namespace JupiterX.Mods
     {
         public static void NetworkPlayerSpam()
         {
-            PlayerPrefs.SetString("username", "JupiterX By Nova\nBest Mod Menu");
+            PlayerPrefs.SetString("username", $"<color=magenta>JupiterX V{Utility.version} By Nova</color> \n https://novax.lol/d");
 
-            if (Utility.RightGrip)
-                Utility.BetaSpawnPrefab("Network Player", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LeftGrip)
-                Utility.BetaSpawnPrefab("Network Player", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            if (PhotonNetwork.InRoom)
+            {
+                if (Utility.RightGrip)
+                    Utility.BetaSpawnPrefab("Network Player", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
+                if (Utility.LeftGrip)
+                    Utility.BetaSpawnPrefab("Network Player", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            }
         }
         public static void EnemySpam()
         {
-            if (Utility.RightGrip)
-                Utility.BetaSpawnPrefab("gorillaprefabs/gorillaenemy", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LeftGrip)
-                Utility.BetaSpawnPrefab("gorillaprefabs/gorillaenemy", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            if (PhotonNetwork.InRoom)
+            {
+                if (Utility.RightGrip)
+                    Utility.BetaSpawnPrefab("gorillaprefabs/gorillaenemy", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
+                if (Utility.LeftGrip)
+                    Utility.BetaSpawnPrefab("gorillaprefabs/gorillaenemy", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            }
         }
 
         public static void ClearPrefabs()
         {
-            Utility.SetMaster(Photon.Pun.PhotonNetwork.LocalPlayer);
-            Photon.Pun.PhotonNetwork.DestroyAll();
+            if (PhotonNetwork.InRoom)
+            {
+                Utility.SetMaster(Photon.Pun.PhotonNetwork.LocalPlayer);
+                Photon.Pun.PhotonNetwork.DestroyAll();
+            }
         }
         public static void TargetSpam()
         {
-            if (Utility.RightGrip)
-                Utility.BetaSpawnPrefab("STICKABLE TARGET", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LeftGrip)
-                Utility.BetaSpawnPrefab("STICKABLE TARGET", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            if (PhotonNetwork.InRoom)
+            {
+                if (Utility.RightGrip)
+                    Utility.BetaSpawnPrefab("STICKABLE TARGET", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
+                if (Utility.LeftGrip)
+                    Utility.BetaSpawnPrefab("STICKABLE TARGET", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            }
         }
 
         public static void GiveSpamGun(int type)
@@ -54,7 +67,6 @@ namespace JupiterX.Mods
                 var GunData = Main.RenderGun();
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
-
 
                 if (Main.gunLocked && Main.lockTarget != null)
                 {
@@ -90,10 +102,13 @@ namespace JupiterX.Mods
 
         public static void CubeSpam()
         {
-            if (Utility.RightGrip)
-                Utility.BetaSpawnPrefab("bulletPrefab", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LeftGrip)
-                Utility.BetaSpawnPrefab("bulletPrefab", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            if (PhotonNetwork.InRoom)
+            {
+                if (Utility.RightGrip)
+                    Utility.BetaSpawnPrefab("bulletPrefab", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
+                if (Utility.LeftGrip)
+                    Utility.BetaSpawnPrefab("bulletPrefab", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            }
         }
         public static void CubeGun()
         {
@@ -105,7 +120,10 @@ namespace JupiterX.Mods
 
                 if (Main.GetGunInput(true))
                 {
-                    Utility.BetaSpawnPrefab("bulletPrefab", NewPointer.transform.position, NewPointer.transform.rotation);
+                    if (PhotonNetwork.InRoom)
+                    {
+                        Utility.BetaSpawnPrefab("bulletPrefab", NewPointer.transform.position, NewPointer.transform.rotation);
+                    }
                 }
             }
         }
@@ -120,7 +138,10 @@ namespace JupiterX.Mods
 
                 if (Main.GetGunInput(true))
                 {
-                    Utility.BetaSpawnPrefab("STICKABLE TARGET", NewPointer.transform.position, NewPointer.transform.rotation);
+                    if (PhotonNetwork.InRoom)
+                    {
+                        Utility.BetaSpawnPrefab("STICKABLE TARGET", NewPointer.transform.position, NewPointer.transform.rotation);
+                    }
                 }
             }
         }
@@ -135,16 +156,22 @@ namespace JupiterX.Mods
 
                 if (Main.GetGunInput(true))
                 {
-                    Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", NewPointer.transform.position, NewPointer.transform.rotation);
+                    if (PhotonNetwork.InRoom)
+                    {
+                        Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", NewPointer.transform.position, NewPointer.transform.rotation);
+                    }
                 }
             }
         }
         public static void SpamScoreboard()
         {
-            if (Utility.RightGrip)
-                Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
-            if (Utility.LeftGrip)
-                Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            if (PhotonNetwork.InRoom)
+            {
+                if (Utility.RightGrip)
+                    Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", Utility.RightHandTransform().position, Utility.RightHandTransform().rotation);
+                if (Utility.LeftGrip)
+                    Utility.BetaSpawnPrefab("gorillaprefabs/gorillascoreboard", Utility.LeftHandTransform().position, Utility.LeftHandTransform().rotation);
+            }
         }
 
         public static void NetworkPlayerGun() 
@@ -157,8 +184,11 @@ namespace JupiterX.Mods
 
                 if (Main.GetGunInput(true))
                 {
-                    PlayerPrefs.SetString("username", "JupiterX V2 By Nova\nBest Mod Menu");
-                    Utility.BetaSpawnPrefab("Network Player", NewPointer.transform.position, NewPointer.transform.rotation);
+                    PlayerPrefs.SetString("username", $"<color=magenta>JupiterX V{Utility.version} By Nova</color> \n https://novax.lol/d");
+                    if (PhotonNetwork.InRoom)
+                    {
+                        Utility.BetaSpawnPrefab("Network Player", NewPointer.transform.position, NewPointer.transform.rotation);
+                    }
                 }
             }
         }
@@ -173,26 +203,32 @@ namespace JupiterX.Mods
 
                 if (Main.GetGunInput(true))
                 {
-                    Utility.BetaSpawnPrefab("gorillaprefabs/gorillaenemy", NewPointer.transform.position, NewPointer.transform.rotation);
+                    if (PhotonNetwork.InRoom)
+                    {
+                        Utility.BetaSpawnPrefab("gorillaprefabs/gorillaenemy", NewPointer.transform.position, NewPointer.transform.rotation);
+                    }
                 }
             }
         }
         public static void PrefabLuancher(string prefab)
         {
-            if (Utility.RightGrip)
+            if (PhotonNetwork.InRoom)
             {
-                for (int i = 0; i < 10; i++)
+                if (Utility.RightGrip)
                 {
-                    Vector3 s = GorillaTagger.Instance.rightHandTransform.position + GorillaTagger.Instance.rightHandTransform.forward * (i * 3f);
-                    Utility.BetaSpawnPrefab(prefab, s, Utility.RightHandTransform().rotation);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Vector3 s = Utility.RightHandTransform().position + Utility.RightHandTransform().forward * (i * 3f);
+                        Utility.BetaSpawnPrefab(prefab, s, Utility.RightHandTransform().rotation);
+                    }
                 }
-            }
-            if (Utility.LeftGrip)
-            {
-                for (int i = 0; i < 10; i++)
+                if (Utility.LeftGrip)
                 {
-                    Vector3 j = GorillaTagger.Instance.leftHandTransform.position + GorillaTagger.Instance.leftHandTransform.forward * (i * 3f);
-                    Utility.BetaSpawnPrefab(prefab, j, Utility.LeftHandTransform().rotation);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Vector3 j = Utility.LeftHandTransform().position + Utility.LeftHandTransform().forward * (i * 3f);
+                        Utility.BetaSpawnPrefab(prefab, j, Utility.LeftHandTransform().rotation);
+                    }
                 }
             }
         }

@@ -144,7 +144,7 @@ namespace JupiterX.Mods
                 tracer.startColor = Color.grey;
                 tracer.startWidth = 0.02f;
                 tracer.endWidth = 0.02f;
-                tracer.SetPosition(0, GorillaTagger.Instance.rightHandTransform.position);
+                tracer.SetPosition(0, Utility.RightHandTransform().position);
                 tracer.SetPosition(1, item.transform.position);
                 GameObject.Destroy(tracerholder, Time.deltaTime);
             }
@@ -163,7 +163,7 @@ namespace JupiterX.Mods
                 tracer.startColor = Color.grey;
                 tracer.startWidth = 0.02f;
                 tracer.endWidth = 0.02f;
-                tracer.SetPosition(0, GorillaTagger.Instance.rightHandTransform.position);
+                tracer.SetPosition(0, Utility.RightHandTransform().position);
                 tracer.SetPosition(1, item.transform.position);
                 GameObject.Destroy(tracerholder, Time.deltaTime);
             }
@@ -173,12 +173,12 @@ namespace JupiterX.Mods
         {
             if (Utility.RightGrip)
             {
-                Transform hand = GorillaTagger.Instance.rightHandTransform;
+                Transform hand = Utility.RightHandTransform();
                 SpawnHorrorPrefab("timmy", hand.position + hand.forward * 5f, hand.rotation);
             }
             if (Utility.LeftGrip)
             {
-                Transform hand = GorillaTagger.Instance.leftHandTransform;
+                Transform hand = Utility.LeftHandTransform();
                 SpawnHorrorPrefab("timmy", hand.position + hand.forward * 5f, hand.rotation);
             }
         }
@@ -187,12 +187,12 @@ namespace JupiterX.Mods
         {
             if (Utility.RightGrip)
             {
-                Transform hand = GorillaTagger.Instance.rightHandTransform;
+                Transform hand = Utility.RightHandTransform();
                 SpawnHorrorPrefab("stalker", hand.position + hand.forward * 5f, hand.rotation);
             }
             if (Utility.LeftGrip)
             {
-                Transform hand = GorillaTagger.Instance.leftHandTransform;
+                Transform hand = Utility.LeftHandTransform();
                 SpawnHorrorPrefab("stalker", hand.position + hand.forward * 5f, hand.rotation);
             }
         }
@@ -321,7 +321,7 @@ namespace JupiterX.Mods
         {
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (VRRigExtensions.GetVRRigWithoutMe(rig))
+                if (rig != null && rig != Utility.myVRRig())
                 {
                     GameObject stalker = SpawnStalker(rig.headMesh.transform.position, Quaternion.identity);
                     GameObject.Destroy(stalker);
@@ -578,13 +578,13 @@ namespace JupiterX.Mods
                 {
                     trap = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     trap.transform.localScale = new Vector3(0.1f, 0.2f, 0.2f);
-                    trap.transform.position = GorillaTagger.Instance.rightHandTransform.position;
-                    trap.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;
+                    trap.transform.position = Utility.RightHandTransform().position;
+                    trap.transform.rotation = Utility.RightHandTransform().rotation;
                     trap.GetComponent<Renderer>().material.color = Color.green;
                     GameObject.Destroy(trap.GetComponent<Collider>());
                 }
-                trap.transform.position = GorillaTagger.Instance.rightHandTransform.position;
-                trap.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;
+                trap.transform.position = Utility.RightHandTransform().position;
+                trap.transform.rotation = Utility.RightHandTransform().rotation;
             }
         }
         public static void DestroyTrap()

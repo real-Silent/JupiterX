@@ -352,7 +352,7 @@ namespace JupiterX.Mods
                         {
                             VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                             VRRig me = null;
-                            try { if (GorillaTagger.Instance != null) me = GorillaTagger.Instance.myVRRig; } catch { }
+                            try { if (GorillaTagger.Instance != null) me = Utility.myVRRig(); } catch { }
                             if (who != null && who != me)
                             {
                                 orbitTarget = who;
@@ -403,8 +403,8 @@ namespace JupiterX.Mods
                 }
                 else
                 {
-                    if (GorillaTagger.Instance == null || GorillaTagger.Instance.myVRRig == null) return;
-                    src = GorillaTagger.Instance.myVRRig;
+                    if (GorillaTagger.Instance == null || Utility.myVRRig() == null) return;
+                    src = Utility.myVRRig();
                     isMe = true;
                 }
                 if (src == null) return;
@@ -608,7 +608,7 @@ namespace JupiterX.Mods
                         {
                             VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                             VRRig me = null;
-                            try { if (GorillaTagger.Instance != null) me = GorillaTagger.Instance.myVRRig; } catch { }
+                            try { if (GorillaTagger.Instance != null) me = Utility.myVRRig(); } catch { }
                             if (who != null && who != me)
                             {
                                 orbitTarget = who;

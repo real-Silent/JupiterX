@@ -41,9 +41,9 @@ namespace JupiterX.Mods
                     DoOnce2 = true;
                 }
                 RaycastHit raycastHit;
-                Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position, -GorillaTagger.Instance.rightHandTransform.right, out raycastHit, 1f, layers);
+                Physics.Raycast(Utility.RightHandTransform().position, -Utility.RightHandTransform().right, out raycastHit, 1f, layers);
                 RaycastHit raycastHit2;
-                Physics.Raycast(GorillaTagger.Instance.leftHandTransform.position, GorillaTagger.Instance.leftHandTransform.right, out raycastHit2, 1f, layers);
+                Physics.Raycast(Utility.LeftHandTransform().position, Utility.LeftHandTransform().right, out raycastHit2, 1f, layers);
                 if (raycastHit2.distance > raycastHit.distance)
                 {
                     normal2 = raycastHit.normal;
@@ -136,11 +136,11 @@ namespace JupiterX.Mods
         public static void ReverseGravity()
         {
             GorillaTagger.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * 19.62f, ForceMode.Acceleration);
-            GorillaTagger.Instance.rightHandTransform.parent.rotation = Quaternion.Euler(180f, 0f, 0f);
+            Utility.RightHandTransform().parent.rotation = Quaternion.Euler(180f, 0f, 0f);
         }
 
         public static void UnflipCharacter() =>
-            GorillaTagger.Instance.rightHandTransform.parent.rotation = Quaternion.identity;
+            Utility.RightHandTransform().parent.rotation = Quaternion.identity;
 
         public static void Fly()
         {
@@ -433,10 +433,10 @@ namespace JupiterX.Mods
         private static float flapTime;
         public static void BirdFly()
         {
-            if (Vector3.Distance(GorillaTagger.Instance.leftHandTransform.position, GorillaTagger.Instance.headCollider.transform.position) < 0.63f || Vector3.Distance(GorillaTagger.Instance.rightHandTransform.position, GorillaTagger.Instance.headCollider.transform.position) < 0.63f)
+            if (Vector3.Distance(Utility.LeftHandTransform().position, GorillaTagger.Instance.headCollider.transform.position) < 0.63f || Vector3.Distance(Utility.RightHandTransform().position, GorillaTagger.Instance.headCollider.transform.position) < 0.63f)
                 return;
 
-            if (Vector3.Distance(GorillaTagger.Instance.leftHandTransform.position, GorillaTagger.Instance.rightHandTransform.position) < 1f)
+            if (Vector3.Distance(Utility.LeftHandTransform().position, Utility.RightHandTransform().position) < 1f)
                 return;
             if (Physics.Raycast(GorillaTagger.Instance.bodyCollider.attachedRigidbody.position, Vector3.down, hitInfo: out _))
                 return;
@@ -615,8 +615,8 @@ namespace JupiterX.Mods
                 platform.GetComponent<Renderer>().material.color = Settings.backgroundColor.GetCurrentColor();
                 platform.GetComponent<Renderer>().material.shader = Utility.StandardShader();
                 platform.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
-                platform.transform.position = GorillaTagger.Instance.rightHandTransform.position;
-                platform.transform.rotation = GorillaTagger.Instance.rightHandTransform.rotation;
+                platform.transform.position = Utility.RightHandTransform().position;
+                platform.transform.rotation = Utility.RightHandTransform().rotation;
                 Object.Destroy(platform, 1f);
                 //PhotonNetwork.RaiseEvent(69, new object[] { platform.transform.position, platform.transform.rotation }, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendReliable);
             }

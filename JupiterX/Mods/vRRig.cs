@@ -52,7 +52,7 @@ namespace JupiterX.Mods
         public static void Bees()
         {
             if (!PhotonNetwork.InRoom) return;
-            VRRig myRig = GorillaTagger.Instance.myVRRig;
+            VRRig myRig = Utility.myVRRig();
             myRig.enabled = false;
             Utility.GhostView(true);
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
@@ -71,9 +71,9 @@ namespace JupiterX.Mods
 
         public static void SpazRig()
         {
-			(PhotonNetwork.InRoom ? GorillaTagger.Instance.myVRRig.head : GorillaTagger.Instance.offlineVRRig.head).rigTarget.eulerAngles = new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
-			(PhotonNetwork.InRoom ? GorillaTagger.Instance.myVRRig.leftHand : GorillaTagger.Instance.offlineVRRig.leftHand).rigTarget.eulerAngles = new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
-			(PhotonNetwork.InRoom ? GorillaTagger.Instance.myVRRig.rightHand : GorillaTagger.Instance.offlineVRRig.rightHand).rigTarget.eulerAngles = new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
+            Utility.ActualRig().head.rigTarget.eulerAngles = new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
+            Utility.ActualRig().leftHand.rigTarget.eulerAngles = new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
+            Utility.ActualRig().rightHand.rigTarget.eulerAngles = new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
 		}
         public static void Strobe()
         {
@@ -140,7 +140,7 @@ namespace JupiterX.Mods
         }
         private static bool AreHandsDown()
         {
-            return GorillaTagger.Instance.leftHandTransform.position.y < GorillaTagger.Instance.mainCamera.transform.position.y && GorillaTagger.Instance.rightHandTransform.position.y < GorillaTagger.Instance.mainCamera.transform.position.y;
+            return Utility.LeftHandTransform().position.y < GorillaTagger.Instance.mainCamera.transform.position.y && Utility.RightHandTransform().position.y < GorillaTagger.Instance.mainCamera.transform.position.y;
         }
 
         private static float CalculateTorsoYRotation()
@@ -148,7 +148,7 @@ namespace JupiterX.Mods
             Vector3 headForward = GorillaTagger.Instance.mainCamera.transform.forward;
             headForward.y = 0;
             headForward.Normalize();
-            Vector3 handCenter = (GorillaTagger.Instance.leftHandTransform.position + GorillaTagger.Instance.rightHandTransform.position) / 2f;
+            Vector3 handCenter = (Utility.LeftHandTransform().position + Utility.RightHandTransform().position) / 2f;
             Vector3 handDirection = handCenter - GorillaTagger.Instance.mainCamera.transform.position;
             handDirection.y = 0;
             handDirection.Normalize();

@@ -13,10 +13,12 @@
 using ExitGames.Client.Photon;
 using GorillaNetworking;
 using JupiterX.Classes.Mods;
+using JupiterX.Managers;
 using JupiterX.Menu;
 using JupiterX.Notifications;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Linq;
 using UnityEngine;
 
 namespace JupiterX.Mods
@@ -25,19 +27,25 @@ namespace JupiterX.Mods
     {
         public static void RigSpam()
         {
-            Utility.MakeMeMaster();
-            if (Utility.RightTrigger)
+            if (PhotonNetwork.InRoom)
             {
-                GameObject.Destroy(Utility.ActualRig().gameObject);
+                Utility.MakeMeMaster();
+                if (Utility.RightTrigger)
+                {
+                    GameObject.Destroy(Utility.myVRRig().gameObject);
+                }
             }
         }
 
         public static void AlawysMaster()
         {
-            Utility.MakeMeMaster();
-            PhotonNetwork.CurrentRoom.SetMasterClient(Utility.MyPlayer());
-            GorillaNot.instance.currentMasterClient = Utility.MyPlayer();
-            GorillaNot.instance.OnMasterClientSwitched(Utility.MyPlayer());
+            if (PhotonNetwork.InRoom)
+            {
+                Utility.MakeMeMaster();
+                PhotonNetwork.CurrentRoom.SetMasterClient(Utility.MyPlayer());
+                GorillaNot.instance.currentMasterClient = Utility.MyPlayer();
+                GorillaNot.instance.OnMasterClientSwitched(Utility.MyPlayer());
+            }
         }
 
         public static void LongNamePub() =>
@@ -189,14 +197,17 @@ namespace JupiterX.Mods
 
         public static void KickAll()
         {
-            foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+            if (PhotonNetwork.InRoom)
             {
-                GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Add(plr.UserId);
-                if (Main.lockTarget != null && GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Contains(plr.UserId))
+                foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
                 {
-                    for (int i = 0; i < 25; i++)
+                    GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Add(plr.UserId);
+                    if (GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Contains(plr.UserId))
                     {
-                        GorillaGameManager.instance.photonView.RPC("JoinPubWithFreinds", plr, null);
+                        for (int i = 0; i < 25; i++)
+                        {
+                            GorillaGameManager.instance.photonView.RPC("JoinPubWithFreinds", plr, null);
+                        }
                     }
                 }
             }
@@ -204,13 +215,16 @@ namespace JupiterX.Mods
 
         public static void LagOnTouch()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (Vector3.Distance(rig.transform.position, Utility.myVRRig().rightHandTransform.position) <= 0.35f || Vector3.Distance(rig.transform.position, Utility.myVRRig().leftHandTransform.position) <= 0.35f)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
-                        Utility.BetaCrashPlayer(rig.photonView.Owner);
+                        if (Vector3.Distance(rig.transform.position, Utility.myVRRig().rightHandTransform.position) <= 0.35f || Vector3.Distance(rig.transform.position, Utility.myVRRig().leftHandTransform.position) <= 0.35f)
+                        {
+                            Utility.BetaCrashPlayer(rig.photonView.Owner);
+                        }
                     }
                 }
             }
@@ -218,18 +232,21 @@ namespace JupiterX.Mods
 
         public static void CrashOnTouch()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (Vector3.Distance(rig.transform.position, Utility.myVRRig().rightHandTransform.position) <= 0.35f || Vector3.Distance(rig.transform.position, Utility.myVRRig().leftHandTransform.position) <= 0.35f)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
-                        for (int i = 0; i < 150; i++)
+                        if (Vector3.Distance(rig.transform.position, Utility.myVRRig().rightHandTransform.position) <= 0.35f || Vector3.Distance(rig.transform.position, Utility.myVRRig().leftHandTransform.position) <= 0.35f)
                         {
-                            PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { rig.photonView.Owner.ActorNumber } }, SendOptions.SendUnreliable);
-                            PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { rig.photonView.Owner.ActorNumber } }, SendOptions.SendUnreliable);
+                            for (int i = 0; i < 150; i++)
+                            {
+                                PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { TargetActors = new int[] { rig.photonView.Owner.ActorNumber } }, SendOptions.SendUnreliable);
+                                PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { TargetActors = new int[] { rig.photonView.Owner.ActorNumber } }, SendOptions.SendUnreliable);
+                            }
+                            PhotonNetwork.SendAllOutgoingCommands();
                         }
-                        PhotonNetwork.SendAllOutgoingCommands();
                     }
                 }
             }
@@ -322,7 +339,7 @@ namespace JupiterX.Mods
                 if (Main.GetGunInput(true))
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
-                    if (who && who != GorillaTagger.Instance.myVRRig)
+                    if (who && who != Utility.myVRRig())
                     {
                         Utility.BetaBanAll(who.photonView.Owner.UserId);
                     }
@@ -379,18 +396,21 @@ namespace JupiterX.Mods
 
         public static void CrashAllV2()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (Utility.RightTrigger)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
-                        Utility.BetaCrashAllV2(rig);
-                        Utility.BetaCrashAllV2(rig);
-                        Utility.BetaCrashAllV2(rig);
-                        Utility.BetaCrashAllV2(rig);
-                        Utility.BetaCrashAllV2(rig);
-                        PhotonNetwork.SendAllOutgoingCommands();
+                        if (Utility.RightTrigger)
+                        {
+                            Utility.BetaCrashAllV2(rig);
+                            Utility.BetaCrashAllV2(rig);
+                            Utility.BetaCrashAllV2(rig);
+                            Utility.BetaCrashAllV2(rig);
+                            Utility.BetaCrashAllV2(rig);
+                            PhotonNetwork.SendAllOutgoingCommands();
+                        }
                     }
                 }
             }
@@ -398,88 +418,75 @@ namespace JupiterX.Mods
 
         public static void CrashAllV3()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && !rig.photonView.IsMine && !rig.isMyPlayer)
+                if (Utility.RightTrigger)
                 {
-                    if (Utility.RightTrigger)
-                    {
-                        Hashtable domycumbust = new Hashtable(5);
-                        domycumbust.Add(0, new Il2CppSystem.Object() { });
-                        domycumbust.Add(1, new Il2CppSystem.Object() { });
-                        domycumbust.Add(2, new Il2CppSystem.Object() { });
-                        domycumbust.Add(3, new Il2CppSystem.Object() { });
-                        domycumbust.Add(4, new Il2CppSystem.Object() { });
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(207, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(207, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(207, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(207, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(207, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(201, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(201, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(201, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(250, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(250, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(250, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(249, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(249, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(249, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.NetworkingClient.OpRaiseEvent(199, domycumbust, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
-                        PhotonNetwork.SendAllOutgoingCommands();
-                    }
+                    Hashtable hash = new Hashtable(1);
+                    hash.Add(0, BoxManager.BoxAny(float.NaN));
+                    PhotonNetwork.NetworkingClient.OpRaiseEvent(207, hash, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
+                    PhotonNetwork.NetworkingClient.OpRaiseEvent((byte)UnityEngine.Random.Range(200, 212), hash, null, ExitGames.Client.Photon.SendOptions.SendUnreliable);
+                    PhotonNetwork.SendAllOutgoingCommands();
                 }
             }
         }
 
         public static void CrashAllV4()
         {
-            if (Utility.RightTrigger)
+            if (PhotonNetwork.InRoom)
             {
-                for (int i = 0; i < 150; i++)
+                if (Utility.RightTrigger)
                 {
-                    PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
-                    PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    for (int i = 0; i < 150; i++)
+                    {
+                        PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    }
+                    PhotonNetwork.SendAllOutgoingCommands();
                 }
-                PhotonNetwork.SendAllOutgoingCommands();
             }
         }
 
         public static void CrashAllV6()
         {
-            if (Utility.RightTrigger)
+            if (PhotonNetwork.InRoom)
             {
-                for (int i = 0; i < 700; i++)
+                if (Utility.RightTrigger)
                 {
-                    PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
-                    PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
-                }
-                for (int j = 0; j < 700; j++)
-                {
-                    PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
-                    PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    for (int i = 0; i < 700; i++)
+                    {
+                        PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    }
+                    for (int j = 0; j < 700; j++)
+                    {
+                        PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    }
                 }
             }
         }
+
         public static void CrashAllV5()
         {
-            if (Utility.RightTrigger)
+            if (PhotonNetwork.InRoom)
             {
-                foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+                if (Utility.RightTrigger)
                 {
-                    PhotonNetwork.DestroyPlayerObjects(plr);
-                    PhotonNetwork.SendDestroyOfPlayer(plr.ActorNumber);
-                    PhotonNetwork.OpRemoveCompleteCacheOfPlayer(plr.ActorNumber);
+                    foreach (Photon.Realtime.Player plr in PhotonNetwork.PlayerListOthers)
+                    {
+                        PhotonNetwork.DestroyPlayerObjects(plr);
+                        PhotonNetwork.SendDestroyOfPlayer(plr.ActorNumber);
+                        PhotonNetwork.OpRemoveCompleteCacheOfPlayer(plr.ActorNumber);
+                    }
+                    for (int i = 0; i < 150; i++)
+                    {
+                        PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                        PhotonNetwork.RaiseEvent((byte)UnityEngine.Random.Range(200, 212), null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
+                    }
+                    PhotonNetwork.SendAllOutgoingCommands();
                 }
-                for (int i = 0; i < 150; i++)
-                {
-                    PhotonNetwork.RaiseEvent(2, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
-                    PhotonNetwork.RaiseEvent(3, null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
-                    PhotonNetwork.RaiseEvent((byte)UnityEngine.Random.Range(200, 212), null, new RaiseEventOptions { Receivers = ReceiverGroup.Others }, SendOptions.SendUnreliable);
-                }
-                PhotonNetwork.SendAllOutgoingCommands();
             }
         }
 
@@ -578,13 +585,16 @@ namespace JupiterX.Mods
 
         public static void CrashAll()
         {
-            Utility.MakeMeMaster();
-            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerListOthers)
+            if (PhotonNetwork.InRoom)
             {
-                if (Utility.RightTrigger)
+                Utility.MakeMeMaster();
+                foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerListOthers)
                 {
-                    Utility.BetaCrashPlayer(player);
-                    PhotonNetwork.SendAllOutgoingCommands();
+                    if (Utility.RightTrigger)
+                    {
+                        Utility.BetaCrashPlayer(player);
+                        PhotonNetwork.SendAllOutgoingCommands();
+                    }
                 }
             }
         }
@@ -666,11 +676,7 @@ namespace JupiterX.Mods
         {
             get
             {
-                return GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
-            }
-            set
-            {
-                value = GameObject.Find("Global/Halloween Ghost/FloatingChaseSkeleton").GetComponent<HalloweenGhostChaser>();
+                return GameObject.FindObjectsOfType<HalloweenGhostChaser>()[0] ?? GameObject.FindObjectsOfType<HalloweenGhostChaser>().FirstOrDefault();
             }
         }
 
@@ -788,7 +794,7 @@ namespace JupiterX.Mods
                     VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
                     if (Utility.IsMaster())
                     {
-                        if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                        if (rig != null && rig != Utility.myVRRig())
                         {
                             lucy.currentState = HalloweenGhostChaser.ChaseState.Chasing;
                             lucy.targetPlayer = RigManager.GetPlayerFromVRRig(rig);
@@ -822,7 +828,7 @@ namespace JupiterX.Mods
                     VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
                     if (Utility.IsMaster())
                     {
-                        if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                        if (rig != null && rig != Utility.myVRRig())
                         {
                             lucy.currentState = HalloweenGhostChaser.ChaseState.Grabbing;
                             lucy.grabTime = Time.time;
@@ -872,7 +878,7 @@ namespace JupiterX.Mods
                     VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
                     if (Utility.IsMaster())
                     {
-                        if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                        if (rig != null && rig != Utility.myVRRig())
                         {
                             lucy.transform.RotateAround(rig.headMesh.transform.position, Vector3.up, 90f * Time.deltaTime);
                             lucy.transform.LookAt(rig.headMesh.transform);
@@ -890,7 +896,7 @@ namespace JupiterX.Mods
                 lucy.targetPlayer = PhotonNetwork.LocalPlayer;
                 lucy.currentState = HalloweenGhostChaser.ChaseState.Grabbing;
                 lucy.timeRiseStarted = 0f;
-                lucy.followTarget = GorillaTagger.Instance.myVRRig.head.rigTarget;
+                lucy.followTarget = Utility.myVRRig().head.rigTarget;
             }
             else { NotificationManager.SendNotification("<color=red>[ERROR]</color> You are not master client!", 3f); }
         }

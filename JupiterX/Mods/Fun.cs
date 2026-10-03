@@ -127,7 +127,7 @@ namespace JupiterX.Mods
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
                         PhotonNetwork.Instantiate("bulletPrefab", rig.transform.position + new Vector3(0, 0, 0.6f), rig.headConstraint.transform.rotation);
                     }
@@ -138,6 +138,12 @@ namespace JupiterX.Mods
         public static void FixMic()
         {
             Recorder rec = GameObject.FindObjectsOfType<Recorder>().FirstOrDefault();
+            if (rec == null)
+            {
+                NotificationManager.SendNotification("<color=yellow>[NULL]</color> 'rec' is null how the fuck did this happen 😭");
+                return;
+            }
+
             rec.Bitrate = 20000;
             rec.SourceType = Recorder.InputSourceType.Microphone;
             rec.SourceType = Recorder.InputSourceType.Microphone;
@@ -149,6 +155,12 @@ namespace JupiterX.Mods
         public static void LowQualityMic()
         {
             Recorder rec = GameObject.FindObjectsOfType<Recorder>().FirstOrDefault();
+            if (rec == null)
+            {
+                NotificationManager.SendNotification("<color=yellow>[NULL]</color> 'rec' is null how the fuck did this happen 😭");
+                return;
+            }
+
             rec.SourceType = Recorder.InputSourceType.Microphone;
             rec.Bitrate = 12000;
             rec.VoiceDetection = true;
@@ -162,6 +174,12 @@ namespace JupiterX.Mods
         public static void HighQualityMic()
         {
             Recorder rec = GameObject.FindObjectsOfType<Recorder>().FirstOrDefault();
+            if (rec == null)
+            {
+                NotificationManager.SendNotification("<color=yellow>[NULL]</color> 'rec' is null how the fuck did this happen 😭");
+                return;
+            }
+
             rec.SourceType = Recorder.InputSourceType.Microphone;
             rec.Bitrate = 32000;
             rec.VoiceDetection = false;
@@ -174,6 +192,12 @@ namespace JupiterX.Mods
         public static void BassBoostMic()
         {
             Recorder rec = GameObject.FindObjectsOfType<Recorder>().FirstOrDefault();
+            if (rec == null)
+            {
+                NotificationManager.SendNotification("<color=yellow>[NULL]</color> 'rec' is null how the fuck did this happen 😭");
+                return;
+            }
+
             rec.SourceType = Recorder.InputSourceType.Microphone;
             rec.Bitrate = 18000;
             rec.VoiceDetection = false;
@@ -185,6 +209,12 @@ namespace JupiterX.Mods
         public static void BassBoostMicExtreme()
         {
             Recorder rec = GameObject.FindObjectsOfType<Recorder>().FirstOrDefault();
+            if (rec == null)
+            {
+                NotificationManager.SendNotification("<color=yellow>[NULL]</color> 'rec' is null how the fuck did this happen 😭");
+                return;
+            }
+
             rec.SourceType = Recorder.InputSourceType.Microphone;
             rec.Bitrate = 16000;
             rec.VoiceDetection = false;
@@ -291,29 +321,13 @@ namespace JupiterX.Mods
             autoclickstate = !autoclickstate;
             if (Utility.LeftTriggerFloat > 0.5f)
             {
-                if (PhotonNetwork.InRoom)
-                {
-                    GorillaTagger.Instance.myVRRig.leftHand.calcT = autoclickstate ? 1f : 0f;
-                    GorillaTagger.Instance.myVRRig.leftHand.MapMyFinger(1f);
-                }
-                else
-                {
-                    GorillaTagger.Instance.offlineVRRig.leftHand.calcT = autoclickstate ? 1f : 0f;
-                    GorillaTagger.Instance.offlineVRRig.leftHand.MapMyFinger(1f);
-                }
+                Utility.ActualRig().leftHand.calcT = autoclickstate ? 1f : 0f;
+                Utility.ActualRig().leftHand.MapMyFinger(autoclickstate ? 1f : 0f);
             }
             if (Utility.RightTriggerFloat > 0.5f)
             {
-                if (PhotonNetwork.InRoom)
-                {
-                    GorillaTagger.Instance.myVRRig.rightHand.calcT = autoclickstate ? 1f : 0f;
-                    GorillaTagger.Instance.myVRRig.rightHand.MapMyFinger(1f);
-                }
-                else
-                {
-                    GorillaTagger.Instance.offlineVRRig.rightHand.calcT = autoclickstate ? 1f : 0f;
-                    GorillaTagger.Instance.offlineVRRig.rightHand.MapMyFinger(1f);
-                }
+                Utility.ActualRig().rightHand.calcT = autoclickstate ? 1f : 0f;
+                Utility.ActualRig().rightHand.MapMyFinger(autoclickstate ? 1f : 0f);
             }
         }
 
@@ -359,24 +373,30 @@ namespace JupiterX.Mods
 
         public static void MuteAll()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    rig.muted = true;
-                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Mute);
+                    if (rig != null && rig != Utility.myVRRig())
+                    {
+                        rig.muted = true;
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Mute);
+                    }
                 }
             }
         }
 
         public static void UnMuteAll()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    rig.muted = false;
-                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(false, GorillaPlayerLineButton.ButtonType.Mute);
+                    if (rig != null && rig != Utility.myVRRig())
+                    {
+                        rig.muted = false;
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(false, GorillaPlayerLineButton.ButtonType.Mute);
+                    }
                 }
             }
         }
@@ -392,7 +412,7 @@ namespace JupiterX.Mods
                 if (Main.GetGunInput(true))
                 {
                     VRRig rig = Ray.collider.GetComponentInParent<VRRig>();
-                    if (rig)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
                         GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Report);
                         GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Cheating);
@@ -404,13 +424,16 @@ namespace JupiterX.Mods
 
         public static void ReportAll()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            if (PhotonNetwork.InRoom)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Report);
-                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Cheating);
-                    GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).ReportPlayer(rig.photonView.Owner.UserId, GorillaPlayerLineButton.ButtonType.Cheating, rig.photonView.Owner.NickName);
+                    if (rig != null && rig != Utility.myVRRig())
+                    {
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Report);
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).PressButton(true, GorillaPlayerLineButton.ButtonType.Cheating);
+                        GameObject.FindObjectsOfType<GorillaPlayerScoreboardLine>().FirstOrDefault<GorillaPlayerScoreboardLine>(line => line.linePlayer.UserId == rig.photonView.Owner.UserId).ReportPlayer(rig.photonView.Owner.UserId, GorillaPlayerLineButton.ButtonType.Cheating, rig.photonView.Owner.NickName);
+                    }
                 }
             }
         }

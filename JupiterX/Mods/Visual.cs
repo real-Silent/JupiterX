@@ -87,19 +87,25 @@ namespace JupiterX.Mods
 
         public static void NoSmoothRigs()
         {
-            foreach (var vrrig in GorillaParent.instance.vrrigs.ToArray().Where(vrrig => vrrig != GorillaTagger.Instance.myVRRig))
+            if (PhotonNetwork.InRoom)
             {
-                vrrig.lerpValueBody = 2f;
-                vrrig.lerpValueFingers = 1f;
+                foreach (var vrrig in GorillaParent.instance.vrrigs.ToArray().Where(vrrig => vrrig != Utility.myVRRig()))
+                {
+                    vrrig.lerpValueBody = 2f;
+                    vrrig.lerpValueFingers = 1f;
+                }
             }
         }
 
         public static void ReSmoothRigs()
         {
-            foreach (var vrrig in GorillaParent.instance.vrrigs.ToArray().Where(vrrig => vrrig != GorillaTagger.Instance.myVRRig))
+            if (PhotonNetwork.InRoom)
             {
-                vrrig.lerpValueBody = GorillaTagger.Instance.myVRRig.lerpValueBody;
-                vrrig.lerpValueFingers = GorillaTagger.Instance.myVRRig.lerpValueFingers;
+                foreach (var vrrig in GorillaParent.instance.vrrigs.ToArray().Where(vrrig => vrrig != Utility.myVRRig()))
+                {
+                    vrrig.lerpValueBody = Utility.myVRRig().lerpValueBody;
+                    vrrig.lerpValueFingers = Utility.myVRRig().lerpValueFingers;
+                }
             }
         }
 
@@ -129,7 +135,7 @@ namespace JupiterX.Mods
             }
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                if (rig != null && rig != Utility.myVRRig())
                 {
                     if (!boxEspPool.TryGetValue(rig, out GameObject box))
                     {
@@ -183,7 +189,7 @@ namespace JupiterX.Mods
             }
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                if (rig != null && rig != Utility.myVRRig())
                 {
                     if (!capsuleEspPool.TryGetValue(rig, out GameObject box))
                     {
@@ -238,7 +244,7 @@ namespace JupiterX.Mods
             }
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                if (rig != null && rig != Utility.myVRRig())
                 {
                     if (!sphereEspPool.TryGetValue(rig, out GameObject box))
                     {
@@ -291,7 +297,7 @@ namespace JupiterX.Mods
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
                         DrawTag(rig, CleanPlayerName(rig.photonView.Owner.NickName), rig.playerColor(), 0);
                     }
@@ -304,7 +310,7 @@ namespace JupiterX.Mods
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
                         DrawTag(rig, rig.photonView.Owner.UserId, rig.playerColor(), 1);
                     }
@@ -318,7 +324,7 @@ namespace JupiterX.Mods
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
                         DrawTag(rig, rig.GetPlatform(), rig.playerColor(), 2);
                     }
@@ -332,7 +338,7 @@ namespace JupiterX.Mods
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
                         DrawTag(rig, rig.photonView.Owner.IsMasterClient ? "Master" : "Not Master", rig.playerColor(), 3);
                     }
@@ -346,7 +352,7 @@ namespace JupiterX.Mods
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
                         DrawTag(rig, rig.IsTagged() ? "Tagged" : "", rig.playerColor(), 4);
                     }
@@ -378,7 +384,7 @@ namespace JupiterX.Mods
             }
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
-                if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                if (rig != null && rig != Utility.myVRRig())
                 {
                     List<VRRig> remove = null;
                     foreach (var pair in tracersPool)
@@ -433,7 +439,7 @@ namespace JupiterX.Mods
             {
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
-                    if (rig != null && rig != GorillaTagger.Instance.myVRRig)
+                    if (rig != null && rig != Utility.myVRRig())
                     {
                         bool isTagged = rig.mainSkin.material.name.Contains("fected");
                         if (chams)
@@ -472,7 +478,7 @@ namespace JupiterX.Mods
         public static void VelocityLabel()
         {
             Rigidbody rb = GorillaTagger.Instance.bodyCollider.attachedRigidbody;
-            DrawLabel(GorillaTagger.Instance.rightHandTransform, "Velocity", $"{rb.velocity.magnitude:F1}m/s", rb.velocity.magnitude >= GorillaLocomotion.Player.Instance.maxJumpSpeed ? Color.green : Color.white);
+            DrawLabel(Utility.RightHandTransform(), "Velocity", $"{rb.velocity.magnitude:F1}m/s", rb.velocity.magnitude >= GorillaLocomotion.Player.Instance.maxJumpSpeed ? Color.green : Color.white);
         }
 
         private static string FormatTimer(int seconds)
@@ -496,7 +502,7 @@ namespace JupiterX.Mods
                 return;
             }
 
-            bool playerIsTagged = GorillaTagger.Instance.myVRRig.IsTagged();
+            bool playerIsTagged = Utility.myVRRig().IsTagged();
             switch (playerIsTagged)
             {
                 case true when !lastWasTagged:
@@ -507,14 +513,14 @@ namespace JupiterX.Mods
                     break;
             }
             lastWasTagged = playerIsTagged;
-            DrawLabel(GorillaTagger.Instance.rightHandTransform, "Time", FormatTimer(Mathf.FloorToInt(playerIsTagged ? endTime : Time.time - startTime)), playerIsTagged ? Color.green : Color.white);
+            DrawLabel(Utility.RightHandTransform(), "Time", FormatTimer(Mathf.FloorToInt(playerIsTagged ? endTime : Time.time - startTime)), playerIsTagged ? Color.green : Color.white);
         }
 
         public static void NearbyTaggerLabel()
         {
             if (GorillaTagger.Instance == null || GorillaParent.instance == null)
                 return;
-            if (GorillaTagger.Instance.myVRRig.IsTagged())
+            if (Utility.myVRRig().IsTagged())
                 return;
 
             float closest = float.MaxValue;
@@ -533,7 +539,7 @@ namespace JupiterX.Mods
             if (closest < 30f) colorn = Color.yellow;
             if (closest < 20f) colorn = new Color32(255, 90, 0, 255);
             if (closest < 10f) colorn = Color.red;
-            DrawLabel(GorillaTagger.Instance.leftHandTransform, "NearbyTagger", $"{closest:F1}m", colorn);
+            DrawLabel(Utility.LeftHandTransform(), "NearbyTagger", $"{closest:F1}m", colorn);
         }
         public static void LastLabel()
         {
@@ -542,7 +548,7 @@ namespace JupiterX.Mods
             if (InfectedList().Count == 0)
                 return;
             int left = PhotonNetwork.PlayerList.Length - InfectedList().Count;
-            DrawLabel(GorillaTagger.Instance.leftHandTransform, "LastLabel", left + " left", left <= 1 && !GorillaTagger.Instance.myVRRig.IsTagged() ? Color.green : Color.white);
+            DrawLabel(Utility.LeftHandTransform(), "LastLabel", left + " left", left <= 1 && !Utility.myVRRig().IsTagged() ? Color.green : Color.white);
         }
 
         public static List<Photon.Realtime.Player> InfectedList()

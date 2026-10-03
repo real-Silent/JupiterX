@@ -41,12 +41,6 @@ namespace JupiterX.Mods
                             balloonHoldable.OwnerPopBalloon();
                             balloonHoldable.PopBalloon();
                             balloonHoldable.OnActivate();
-                            VRRig[] rigs = GorillaParent.instance.vrrigs.ToArray();
-                            for (int i = 0; i < rigs.Length; i++)
-                            {
-                                balloonHoldable.OnHover(null, rigs[i].rightHandTransform.gameObject);
-                                balloonHoldable.OwnerPopBalloon();
-                            }
                             balloonHoldable.OwnerPopBalloon();
                             balloonHoldable.PopBalloonRemote();
                             balloonHoldable.photonView.RPC("RPCWorldShareable", RpcTarget.All, null);
@@ -119,13 +113,12 @@ namespace JupiterX.Mods
         }
 
 
-        public static void GrabGameInfo()
-        {
+        public static void GrabGameInfo() =>
             File.WriteAllText(Path.Combine(Application.persistentDataPath, "JupiterX/RpcData.txt"), $"Title: {PlayFabSettings.TitleId}\nRealtime: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime}\nVoice: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}");
-        }
-
+        
         public static void SpazForestTargets()
         {
+            Utility.MakeMeMaster();
             foreach (HitTargetWithScoreCounter target in GameObject.FindObjectsOfType<HitTargetWithScoreCounter>())
             {
                 target.digitsChange = true;
@@ -165,7 +158,7 @@ namespace JupiterX.Mods
             GorillaComputer.instance.OnConnectedToMasterStuff();
         }
 
-        public static void GetFucked() 
+        public static void GetFucked() // This took me ages bro -nova 😭
         {
             PhotonNetwork.Instantiate("STICKABLE TARGET", new Vector3(-60.36f, 8.03f, -66.21f), Quaternion.Euler(40.00f, 90.00f, 0.00f));
             PhotonNetwork.Instantiate("STICKABLE TARGET", new Vector3(-60.36f, 7.30f, -67.61f), Quaternion.Euler(40.00f, 90.00f, 0.00f));
@@ -314,8 +307,6 @@ namespace JupiterX.Mods
             PhotonNetwork.Instantiate("STICKABLE TARGET", new Vector3(-60.36f, 8.00f, -56.83f), Quaternion.Euler(40.00f, 90.00f, 0.00f));
         }
        
-
-
 
 
 
