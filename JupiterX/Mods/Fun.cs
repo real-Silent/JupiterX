@@ -273,26 +273,17 @@ namespace JupiterX.Mods
             }
         }
 
-        public static void FixHandTaps()
-        {
+        public static void FixHandTaps() =>
             GorillaTagger.Instance.handTapVolume = 0.1f;
-        }
-        public static void LoadHandTaps()
-        {
+        public static void LoadHandTaps() =>
             GorillaTagger.Instance.handTapVolume = float.MaxValue;
-        }
-        public static void SilentHandTaps()
-        {
+        public static void SilentHandTaps() =>
             GorillaTagger.Instance.handTapVolume = 0f;
-        }
-        public static void NoTapCooldown()
-        {
+        public static void NoTapCooldown() =>
             GorillaTagger.Instance.tapCoolDown = 0f;
-        }
-        public static void ResetTapcooldown()
-        {
+        public static void ResetTapcooldown() =>
             GorillaTagger.Instance.tapCoolDown = 0.33f;
-        }
+
 
         private static bool autoclickstate;
         public static void AutoClicker()
@@ -424,9 +415,7 @@ namespace JupiterX.Mods
             }
         }
 
-        public static void ChangeDoorState(GTDoor.DoorState state)
-        {
+        public static void ChangeDoorState(GTDoor.DoorState state) =>
             RPCManager.GTDoorRPC("ChangeDoorState", RpcTarget.AllViaServer, new object[] { state });
-        }
     }
 }

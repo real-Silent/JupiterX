@@ -68,7 +68,6 @@ namespace JupiterX
             // Console Setup
             Console.ConsoleJupiterX.LoadConsole();
 
-            // Set UpText
             Utility.FindObjects();
             Utility.CreateFilesOnStart();
 

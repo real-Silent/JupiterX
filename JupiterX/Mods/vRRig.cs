@@ -142,6 +142,7 @@ namespace JupiterX.Mods
         {
             return GorillaTagger.Instance.leftHandTransform.position.y < GorillaTagger.Instance.mainCamera.transform.position.y && GorillaTagger.Instance.rightHandTransform.position.y < GorillaTagger.Instance.mainCamera.transform.position.y;
         }
+
         private static float CalculateTorsoYRotation()
         {
             Vector3 headForward = GorillaTagger.Instance.mainCamera.transform.forward;

@@ -17,10 +17,8 @@ namespace JupiterX.Mods
 {
     public class Name
     {
-        public static void MenuNameTag()
-        {
+        public static void MenuNameTag() =>
             PhotonNetwork.LocalPlayer.NickName = "<color=cyan>JupiterX V2</color> <color=grey>By</color> <color=magenta>Nova</color>\nhttps://discord.gg/dtQdz59FJG";
-        }
 
         public static void ChangeNameSpaz(string name, string[] colors)
         {
@@ -28,10 +26,8 @@ namespace JupiterX.Mods
             PhotonNetwork.LocalPlayer.NickName = $"<color={colors[random]}>{name}</color>";
         }
 
-        public static void ChangeName(string name, string color)
-        {
+        public static void ChangeName(string name, string color) =>
             PhotonNetwork.LocalPlayer.NickName = "<color=" + color + ">" + name + "</color>";
-        }
 
         public static void CustomName()
         {

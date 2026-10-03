@@ -107,7 +107,10 @@ namespace JupiterX.Mods
         public static void BoxESP()
         {
             if (!PhotonNetwork.InRoom)
+            {
+                DisableBoxESP();
                 return;
+            }
             List<VRRig> remove = null;
             foreach (var pair in boxEspPool)
             {
@@ -158,7 +161,10 @@ namespace JupiterX.Mods
         public static void CapsuleESP()
         {
             if (!PhotonNetwork.InRoom)
+            {
+                DisableCapsuleESP();
                 return;
+            }
             List<VRRig> remove = null;
             foreach (var pair in capsuleEspPool)
             {
@@ -210,7 +216,10 @@ namespace JupiterX.Mods
         public static void SphereESP()
         {
             if (!PhotonNetwork.InRoom)
+            {
+                DisableSphereESP();
                 return;
+            }
             List<VRRig> remove = null;
             foreach (var pair in sphereEspPool)
             {
@@ -363,7 +372,10 @@ namespace JupiterX.Mods
         public static void Tracers()
         {
             if (!PhotonNetwork.InRoom)
+            {
+                CleanUpTracers();
                 return;
+            }
             foreach (VRRig rig in GorillaParent.instance.vrrigs)
             {
                 if (rig != null && rig != GorillaTagger.Instance.myVRRig)

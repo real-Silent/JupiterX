@@ -174,10 +174,8 @@ namespace JupiterX.Mods
             NoClip(Utility.RightPrimary);
         }
 
-        public static void Mosaboost()
-        {
+        public static void Mosaboost() =>
             GorillaLocomotion.Player.Instance.maxJumpSpeed = 9.5f;
-        }
 
         public static void Speedboost()
         {
@@ -247,41 +245,40 @@ namespace JupiterX.Mods
 
         public static void FollowPlayerGun()
         {
-            if (Main.GetGunInput(false))
+            if (GetGunInput(false))
             {
-                var GunData = Main.RenderGun();
+                var GunData = RenderGun();
                 GameObject NewPointer = GunData.Pointer;
                 RaycastHit Ray = GunData.Ray;
 
-
-                if (Main.gunLocked && Main.lockTarget != null)
+                if (gunLocked && lockTarget != null)
                 {
                     Utility.ActualRig().enabled = false;
-                    Utility.ActualRig().transform.position = Main.lockTarget.transform.position;
-                    Utility.ActualRig().rightHandTransform.position = Main.lockTarget.rightHandTransform.position;
-                    Utility.ActualRig().rightHandTransform.rotation = Main.lockTarget.rightHandTransform.rotation;
-                    Utility.ActualRig().leftHandTransform.position = Main.lockTarget.leftHandTransform.position;
-                    Utility.ActualRig().leftHandTransform.rotation = Main.lockTarget.leftHandTransform.rotation;
-                    Utility.ActualRig().headConstraint.transform.position = Main.lockTarget.headConstraint.transform.position;
-                    Utility.ActualRig().headConstraint.transform.rotation = Main.lockTarget.headConstraint.transform.rotation;
+                    Utility.ActualRig().transform.position = lockTarget.transform.position;
+                    Utility.ActualRig().rightHandTransform.position = lockTarget.rightHandTransform.position;
+                    Utility.ActualRig().rightHandTransform.rotation = lockTarget.rightHandTransform.rotation;
+                    Utility.ActualRig().leftHandTransform.position = lockTarget.leftHandTransform.position;
+                    Utility.ActualRig().leftHandTransform.rotation = lockTarget.leftHandTransform.rotation;
+                    Utility.ActualRig().headConstraint.transform.position = lockTarget.headConstraint.transform.position;
+                    Utility.ActualRig().headConstraint.transform.rotation = lockTarget.headConstraint.transform.rotation;
                     Utility.GhostView(true);
                 }
 
-                if (Main.GetGunInput(true))
+                if (GetGunInput(true))
                 {
                     VRRig who = Ray.collider.GetComponentInParent<VRRig>();
                     if (who)
                     {
-                        Main.gunLocked = true;
-                        Main.lockTarget = who;
+                        gunLocked = true;
+                        lockTarget = who;
                     }
                 }
             }
             else
             {
-                Main.lockTarget = null;
-                if (Main.gunLocked)
-                    Main.gunLocked = false;
+                lockTarget = null;
+                if (gunLocked)
+                    gunLocked = false;
 
                 Utility.ActualRig().enabled = true;
                 Utility.GhostView(false);
@@ -337,8 +334,11 @@ namespace JupiterX.Mods
 
         public static void ExcelFly()
         {
-            if (Utility.RightPrimary) Utility.RigidbodyTransform().velocity += Utility.RightHandTransform().right / 2f;
-            if (Utility.LeftPrimary) Utility.RigidbodyTransform().velocity += -Utility.LeftHandTransform().right / 2f;
+            if (Utility.RightPrimary) 
+                Utility.RigidbodyTransform().velocity += Utility.RightHandTransform().right / 2f;
+
+            if (Utility.LeftPrimary) 
+                Utility.RigidbodyTransform().velocity += -Utility.LeftHandTransform().right / 2f;
         }
 
         public static void FlyTowardsGun()
@@ -493,11 +493,15 @@ namespace JupiterX.Mods
         }
         public static void NoTagFreeze(int type)
         {
-            switch (type) { case 0: Utility.GetTagFreeze(true); break; case 1: Utility.GetTagFreeze(false); break; }
-        }
-        public static void SpeedBoost()
-        {
-            GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f; GorillaLocomotion.Player.Instance.jumpMultiplier = 13f;
+            switch (type) 
+            { 
+                case 0: 
+                    Utility.GetTagFreeze(true); 
+                    break; 
+                case 1: 
+                    Utility.GetTagFreeze(false); 
+                    break; 
+            }
         }
 
         public static void UpAndDown()
@@ -538,17 +542,20 @@ namespace JupiterX.Mods
 
         public static void Platforms()
         {
-            Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
+            Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, 
+                Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
         }
 
         public static void TriggerPlatforms()
         {
-            Utility.CreatePlatform(true, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
+            Utility.CreatePlatform(true, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, 
+                Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey);
         }
 
         public static void InvisablePlatforms()
         {
-            Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey, true);
+            Utility.CreatePlatform(false, Utility.RightHandTransform(), Utility.LeftHandTransform(), Utility.RightHandTransform().rotation, 
+                Utility.LeftHandTransform().rotation, new Vector3(0.0125f, 0.28f, 0.3825f), Color.grey, true);
         }
 
         private static readonly Dictionary<bool, List<GameObject>> frozonicPlatforms = new Dictionary<bool, List<GameObject>>();

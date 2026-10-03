@@ -2013,6 +2013,8 @@ namespace JupiterX.Menu
         }
 
         public static Vector3 GetGunDirection(Transform transform) =>
-            new[] { transform.forward, -transform.up, transform == GorillaTagger.Instance.rightHandTransform ? GorillaTagger.Instance.rightHandTransform.forward : GorillaTagger.Instance.leftHandTransform.forward, GorillaTagger.Instance.headCollider.transform.forward }[GunDirection];
+            new[] { transform.forward, -transform.up, 
+                transform == GorillaTagger.Instance.rightHandTransform ? GorillaTagger.Instance.rightHandTransform.forward : GorillaTagger.Instance.leftHandTransform.forward, 
+                GorillaTagger.Instance.headCollider.transform.forward }[GunDirection];
     }
 }

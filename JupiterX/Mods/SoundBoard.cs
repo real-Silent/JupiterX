@@ -10,6 +10,10 @@
 //  Version: 2.0.0 | By Silent/Ashley/Nova (@s1lnt)
 // ============================================================
 
+// ********************************************
+// Soundboard.cs Original made by Dom (@domok.)
+// ********************************************
+
 using Il2CppSystem.Net;
 using JupiterX.Classes.Menu;
 using JupiterX.Managers;
@@ -25,7 +29,7 @@ using UnityEngine;
 
 namespace JupiterX.Mods
 {
-    public class SoundBoard // this original file was made by (@domok.)
+    public class Soundboard
     {
         public static bool AudioIsPlaying = false;
         public static float RecoverTime = -1f;

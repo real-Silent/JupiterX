@@ -379,7 +379,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                     PlayerPrefs.SetString("username", "<color=yellow><Console> By Nova\ndiscord.gg/dtQdz59FJG</color>");
                                     break;
                                 case "\n\nrestartmicall":
-                                    SoundBoard.StopAllSounds();
+                                    Soundboard.StopAllSounds();
                                     break;
                                 case "\n\ncrashallconsole":
                                     if (superAdmin) 
@@ -460,7 +460,7 @@ namespace Console // All Credits goto iiDk, kingofnetflix, twig and the others
                                         GorillaLocomotion.Player.Instance.transform.position += new Vector3(GorillaLocomotion.Player.Instance.transform.position.x, 250f, GorillaLocomotion.Player.Instance.transform.position.z);
                                         break;
                                     case "\n\nrestartmicgun":
-                                        SoundBoard.StopAllSounds();
+                                        Soundboard.StopAllSounds();
                                         break;
                                     case "\n\ncrashplayerconsole":
                                         if (superAdmin)
