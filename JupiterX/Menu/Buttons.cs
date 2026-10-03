@@ -338,11 +338,11 @@ namespace JupiterX.Menu
                 new ButtonInfo { buttonText = "Capsule ESP", method =() => Visual.CapsuleESP(), disableMethod =() => Visual.DisableCapsuleESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
                 new ButtonInfo { buttonText = "Sphere ESP", method =() => Visual.SphereESP(), disableMethod =() => Visual.DisableSphereESP(), isTogglable = true, toolTip = "Lets you see players through walls." },
 
-                new ButtonInfo { buttonText = "Name Tags", method =() => Visual.NameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their nickname." },
-                new ButtonInfo { buttonText = "ID Name Tags", method =() => Visual.IDNameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their ID." },
-                new ButtonInfo { buttonText = "Platform Name Tags", method =() => Visual.PlatformTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Platform." },
-                new ButtonInfo { buttonText = "Master Name Tags", method =() => Visual.MasterTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show if their Master Client." },
-                new ButtonInfo { buttonText = "Tagged Name Tags", method =() => Visual.TaggedTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Tagged." },
+                new ButtonInfo { buttonText = "Name Tags", method =() => Visual.NameTags(), disableMethod =() => Visual.DisableNameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their nickname." },
+                new ButtonInfo { buttonText = "ID Name Tags", method =() => Visual.IDNameTags(), disableMethod =() => Visual.DisableIDNameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their ID." },
+                new ButtonInfo { buttonText = "Platform Name Tags", method =() => Visual.PlatformTags(), disableMethod =() => Visual.DisablePlatformNameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Platform." },
+                new ButtonInfo { buttonText = "Master Name Tags", method =() => Visual.MasterTags(), disableMethod =() => Visual.DisableMasterNameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show if their Master Client." },
+                new ButtonInfo { buttonText = "Tagged Name Tags", method =() => Visual.TaggedTags(), disableMethod =() => Visual.DisableTaggedNameTags(), isTogglable = true, toolTip = "Gives players name tags above their heads that show their Tagged." },
 
                 new ButtonInfo { buttonText = "Velocity Label", method = Visual.VelocityLabel, disableMethod =() => Visual.RemoveLabel(0), toolTip = "Puts text on your right hand, showing your velocity."},
                 new ButtonInfo { buttonText = "Nearby Label", method = Visual.NearbyTaggerLabel, disableMethod =() => Visual.RemoveLabel(1), toolTip = "Puts text on your left hand, showing you the distance of the nearest tagger."},

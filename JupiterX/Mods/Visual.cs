@@ -14,6 +14,7 @@ using Console;
 using GorillaNetworking;
 using JupiterX.Menu;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -55,7 +56,7 @@ namespace JupiterX.Mods
 		public static void DisableDrawGun()
 		{
 			if (trailRenderer != null)
-				Object.Destroy(trailRenderer.gameObject);
+                GameObject.Destroy(trailRenderer.gameObject);
 
 			trailRenderer = null;
 		}
@@ -125,7 +126,7 @@ namespace JupiterX.Mods
                     remove ??= new List<VRRig>();
                     remove.Add(pair.Key);
                     if (pair.Value != null)
-                        Object.Destroy(pair.Value);
+                        GameObject.Destroy(pair.Value);
                 }
             }
             if (remove != null)
@@ -158,7 +159,7 @@ namespace JupiterX.Mods
             foreach (var obj in boxEspPool.Values)
             {
                 if (obj != null)
-                    Object.Destroy(obj);
+                    GameObject.Destroy(obj);
             }
             boxEspPool.Clear();
         }
@@ -179,7 +180,7 @@ namespace JupiterX.Mods
                     remove ??= new List<VRRig>();
                     remove.Add(pair.Key);
                     if (pair.Value != null)
-                        Object.Destroy(pair.Value);
+                        GameObject.Destroy(pair.Value);
                 }
             }
             if (remove != null)
@@ -212,7 +213,7 @@ namespace JupiterX.Mods
             foreach (var obj in capsuleEspPool.Values)
             {
                 if (obj != null)
-                    Object.Destroy(obj);
+                    GameObject.Destroy(obj);
             }
             capsuleEspPool.Clear();
         }
@@ -234,7 +235,7 @@ namespace JupiterX.Mods
                     remove ??= new List<VRRig>();
                     remove.Add(pair.Key);
                     if (pair.Value != null)
-                        Object.Destroy(pair.Value);
+                        GameObject.Destroy(pair.Value);
                 }
             }
             if (remove != null)
@@ -267,30 +268,16 @@ namespace JupiterX.Mods
             foreach (var obj in sphereEspPool.Values)
             {
                 if (obj != null)
-                    Object.Destroy(obj);
+                    GameObject.Destroy(obj);
             }
             sphereEspPool.Clear();
         }
 
-        private static void DrawTag(VRRig rig, string text, Color color, int index)
-        {
-            GameObject textHolder = new GameObject("Tag");
-            TextMesh nametag = textHolder.AddComponent<TextMesh>();
-            Font arial = Resources.GetBuiltinResource<Font>("Arial.ttf");
-            nametag.font = arial;
-            textHolder.GetComponent<MeshRenderer>().material = arial.material;
-            nametag.text = text;
-            nametag.color = color;
-            nametag.fontSize = 38;
-            nametag.characterSize = 0.03f;
-            nametag.anchor = TextAnchor.MiddleCenter;
-            nametag.alignment = TextAlignment.Center;
-            textHolder.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (index * -0.15f), 0f);
-            textHolder.transform.LookAt(Camera.main.transform);
-            textHolder.transform.Rotate(0f, 180f, 0f);
-            Object.Destroy(textHolder, Time.deltaTime);
-        }
-
+        private static Dictionary<VRRig, TextMesh> nameTagPool = new Dictionary<VRRig, TextMesh>();
+        private static Dictionary<VRRig, TextMesh> IDnameTagPool = new Dictionary<VRRig, TextMesh>();
+        private static Dictionary<VRRig, TextMesh> PlatformnameTagPool = new Dictionary<VRRig, TextMesh>();
+        private static Dictionary<VRRig, TextMesh> MasternameTagPool = new Dictionary<VRRig, TextMesh>();
+        private static Dictionary<VRRig, TextMesh> TaggednameTagPool = new Dictionary<VRRig, TextMesh>();
         public static void NameTags()
         {
             if (PhotonNetwork.InRoom)
@@ -299,11 +286,36 @@ namespace JupiterX.Mods
                 {
                     if (rig != null && rig != Utility.myVRRig())
                     {
-                        DrawTag(rig, CleanPlayerName(rig.photonView.Owner.NickName), rig.playerColor(), 0);
+                        if (!nameTagPool.TryGetValue(rig, out TextMesh nametag))
+                        {
+                            GameObject holder = new GameObject();
+                            nametag = holder.AddComponent<TextMesh>();
+                            nametag.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                            nametag.fontSize = 38;
+                            nametag.characterSize = 0.03f;
+                            nametag.anchor = TextAnchor.MiddleCenter;
+                            nametag.alignment = TextAlignment.Center;
+                            nameTagPool[rig] = nametag;
+                        }
+                        nametag.text = CleanPlayerName(rig.photonView.Owner.NickName);
+                        nametag.color = rig.playerColor();
+                        nametag.gameObject.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (0 * -0.15f), 0f);
+                        nametag.gameObject.transform.LookAt(Camera.main.transform);
+                        nametag.gameObject.transform.Rotate(0f, 180f, 0f);
                     }
                 }
             }
         }
+        public static void DisableNameTags()
+        {
+            foreach (var obj in nameTagPool.Values)
+            {
+                if (obj != null)
+                    GameObject.Destroy(obj);
+            }
+            nameTagPool.Clear();
+        }
+
         public static void IDNameTags()
         {
             if (PhotonNetwork.InRoom)
@@ -312,10 +324,34 @@ namespace JupiterX.Mods
                 {
                     if (rig != null && rig != Utility.myVRRig())
                     {
-                        DrawTag(rig, rig.photonView.Owner.UserId, rig.playerColor(), 1);
+                        if (!IDnameTagPool.TryGetValue(rig, out TextMesh nametag))
+                        {
+                            GameObject holder = new GameObject();
+                            nametag = holder.AddComponent<TextMesh>();
+                            nametag.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                            nametag.fontSize = 38;
+                            nametag.characterSize = 0.03f;
+                            nametag.anchor = TextAnchor.MiddleCenter;
+                            nametag.alignment = TextAlignment.Center;
+                            IDnameTagPool[rig] = nametag;
+                        }
+                        nametag.text = rig.photonView.Owner.UserId;
+                        nametag.color = rig.playerColor();
+                        nametag.gameObject.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (1 * -0.15f), 0f);
+                        nametag.gameObject.transform.LookAt(Camera.main.transform);
+                        nametag.gameObject.transform.Rotate(0f, 180f, 0f);
                     }
                 }
             }
+        }
+        public static void DisableIDNameTags()
+        {
+            foreach (var obj in IDnameTagPool.Values)
+            {
+                if (obj != null)
+                    GameObject.Destroy(obj);
+            }
+            IDnameTagPool.Clear();
         }
 
         public static void PlatformTags()
@@ -326,10 +362,34 @@ namespace JupiterX.Mods
                 {
                     if (rig != null && rig != Utility.myVRRig())
                     {
-                        DrawTag(rig, rig.GetPlatform(), rig.playerColor(), 2);
+                        if (!PlatformnameTagPool.TryGetValue(rig, out TextMesh nametag))
+                        {
+                            GameObject holder = new GameObject();
+                            nametag = holder.AddComponent<TextMesh>();
+                            nametag.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                            nametag.fontSize = 38;
+                            nametag.characterSize = 0.03f;
+                            nametag.anchor = TextAnchor.MiddleCenter;
+                            nametag.alignment = TextAlignment.Center;
+                            PlatformnameTagPool[rig] = nametag;
+                        }
+                        nametag.text = rig.GetPlatform();
+                        nametag.color = rig.playerColor();
+                        nametag.gameObject.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (2 * -0.15f), 0f);
+                        nametag.gameObject.transform.LookAt(Camera.main.transform);
+                        nametag.gameObject.transform.Rotate(0f, 180f, 0f);
                     }
                 }
             }
+        }
+        public static void DisablePlatformNameTags()
+        {
+            foreach (var obj in PlatformnameTagPool.Values)
+            {
+                if (obj != null)
+                    GameObject.Destroy(obj);
+            }
+            PlatformnameTagPool.Clear();
         }
 
         public static void MasterTags()
@@ -340,10 +400,34 @@ namespace JupiterX.Mods
                 {
                     if (rig != null && rig != Utility.myVRRig())
                     {
-                        DrawTag(rig, rig.photonView.Owner.IsMasterClient ? "Master" : "Not Master", rig.playerColor(), 3);
+                        if (!MasternameTagPool.TryGetValue(rig, out TextMesh nametag))
+                        {
+                            GameObject holder = new GameObject();
+                            nametag = holder.AddComponent<TextMesh>();
+                            nametag.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                            nametag.fontSize = 38;
+                            nametag.characterSize = 0.03f;
+                            nametag.anchor = TextAnchor.MiddleCenter;
+                            nametag.alignment = TextAlignment.Center;
+                            MasternameTagPool[rig] = nametag;
+                        }
+                        nametag.text = rig.photonView.Owner.IsMasterClient ? "Master" : "Not Master";
+                        nametag.color = rig.playerColor();
+                        nametag.gameObject.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (3 * -0.15f), 0f);
+                        nametag.gameObject.transform.LookAt(Camera.main.transform);
+                        nametag.gameObject.transform.Rotate(0f, 180f, 0f);
                     }
                 }
             }
+        }
+        public static void DisableMasterNameTags()
+        {
+            foreach (var obj in MasternameTagPool.Values)
+            {
+                if (obj != null)
+                    GameObject.Destroy(obj);
+            }
+            MasternameTagPool.Clear();
         }
 
         public static void TaggedTags()
@@ -354,10 +438,34 @@ namespace JupiterX.Mods
                 {
                     if (rig != null && rig != Utility.myVRRig())
                     {
-                        DrawTag(rig, rig.IsTagged() ? "Tagged" : "", rig.playerColor(), 4);
+                        if (!TaggednameTagPool.TryGetValue(rig, out TextMesh nametag))
+                        {
+                            GameObject holder = new GameObject();
+                            nametag = holder.AddComponent<TextMesh>();
+                            nametag.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                            nametag.fontSize = 38;
+                            nametag.characterSize = 0.03f;
+                            nametag.anchor = TextAnchor.MiddleCenter;
+                            nametag.alignment = TextAlignment.Center;
+                            TaggednameTagPool[rig] = nametag;
+                        }
+                        nametag.text = rig.IsTagged() ? "Tagged" : "";
+                        nametag.color = rig.playerColor();
+                        nametag.gameObject.transform.position = rig.headConstraint.transform.position + new Vector3(0f, 1.15f + (4 * -0.15f), 0f);
+                        nametag.gameObject.transform.LookAt(Camera.main.transform);
+                        nametag.gameObject.transform.Rotate(0f, 180f, 0f);
                     }
                 }
             }
+        }
+        public static void DisableTaggedNameTags()
+        {
+            foreach (var obj in TaggednameTagPool.Values)
+            {
+                if (obj != null)
+                    GameObject.Destroy(obj);
+            }
+            TaggednameTagPool.Clear();
         }
 
         public static string NoRichtextTags(string input, string replace = "")
@@ -415,7 +523,7 @@ namespace JupiterX.Mods
             {
                 LineRenderer line = tracersPool[rig];
                 if (line != null)
-                    Object.Destroy(line.gameObject);
+                    GameObject.Destroy(line.gameObject);
                 tracersPool.Remove(rig);
             }
         }
@@ -424,7 +532,7 @@ namespace JupiterX.Mods
             foreach (LineRenderer line in tracersPool.Values)
             {
                 if (line != null)
-                    Object.Destroy(line.gameObject);
+                    GameObject.Destroy(line.gameObject);
             }
             tracersPool.Clear();
         }
